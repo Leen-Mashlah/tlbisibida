@@ -3,24 +3,37 @@ import 'package:lambda_dent_dash/view/clients/client_details_page.dart';
 
 const rootRoute = "/";
 
+const authenticationPageDisplayName = "Authentication";
+const authenticationPageRoute = "/auth";
+
 const homePageDisplayName = "Home";
 const homePageRoute = "/home";
-
-const clientPageDisplayName = "Clients";
-const clientPageRoute = "/clients";
-
-const clientDetailsPageDisplayName = "Client Details";
-const clientDetailsPageRoute = "/client_details";
 
 const billsPageDisplayName = "Bills";
 const billsPageRoute = "/bills";
 
 const casesPageDisplayName = "Cases";
 const casesPageRoute = "/cases";
+const caseDetailsPageDisplayNamel = 'Case Details';
+const caseDetailsPageRoute =  '/case_details';
 
-const authenticationPageDisplayName = "Bills";
-const authenticationPageRoute = "/";
+const clientPageDisplayName = "Clients";
+const clientPageRoute = "/clients";
+const clientDetailsPageDisplayName = "Client Details";
+const clientDetailsPageRoute = "/client_details";
 
+
+const employeesPageDisplayName = 'Employees';
+const employeesPageRoute = '/employees';
+
+const inventoryPageDisplayName = 'Inventory';
+const inventoryPageRoute = '/inventory';
+
+const paymentsLogPageDisplayName = 'Payments';
+const paymentsLogPageRoute = '/payments_log';
+
+const statisticsPageDisplayName = 'Statistics';
+const statisticsPageRoute = '/stats';
 
 
 // class MenuItem {

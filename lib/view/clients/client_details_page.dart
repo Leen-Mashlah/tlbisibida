@@ -4,9 +4,9 @@ import 'package:info_popup/info_popup.dart';
 
 import 'package:lambda_dent_dash/constant/constants/constants.dart';
 
-import 'package:lambda_dent_dash/view/clients/components/client_bills_table.dart';
-import 'package:lambda_dent_dash/view/clients/components/client_cases_table.dart';
-import 'package:lambda_dent_dash/view/clients/components/payments_log_dialog.dart';
+import 'package:lambda_dent_dash/view/clients/components/tables/client_bills_table.dart';
+import 'package:lambda_dent_dash/view/clients/components/tables/client_cases_table.dart';
+import 'package:lambda_dent_dash/view/clients/components/dialogs/payments_log_dialog.dart';
 import 'package:lambda_dent_dash/view/payments/components/dialogs/add_constant_payment_dialog.dart';
 // import 'package:lambda_dent_dash/view/clients/clients_table.dart';
 

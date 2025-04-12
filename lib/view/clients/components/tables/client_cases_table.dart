@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 
 import 'package:lambda_dent_dash/constant/components/custom_text.dart';
 import 'package:lambda_dent_dash/constant/constants/constants.dart';
+import 'package:lambda_dent_dash/services/navigation/locator.dart';
+import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
+import 'package:lambda_dent_dash/services/navigation/routes.dart';
 import 'package:lambda_dent_dash/view/bills/components/bill_details_dialog.dart';
 
 /// Example without datasource
@@ -18,8 +21,7 @@ class ClientCasesTable extends StatelessWidget {
           color: Colors.white,
           border: Border.all(color: cyan200, width: .5),
           boxShadow: const [
-            BoxShadow(
-                offset: Offset(0, 6), color: Colors.grey, blurRadius: 12)
+            BoxShadow(offset: Offset(0, 6), color: Colors.grey, blurRadius: 12)
           ],
           borderRadius: BorderRadius.circular(8),
         ),
@@ -71,10 +73,8 @@ class ClientCasesTable extends StatelessWidget {
                     DataCell(Center(
                         child: IconButton(
                       onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) => const BillDetailsDialog(),
-                        );
+                        locator<NavigationService>()
+                            .navigateTo(caseDetailsPageRoute);
                       },
                       icon: const Icon(
                         Icons.arrow_circle_left_outlined,
@@ -86,7 +86,8 @@ class ClientCasesTable extends StatelessWidget {
                       text: 'جاهزة',
                     ))),
                     const DataCell(Center(child: CustomText(text: 'تحسين'))),
-                    const DataCell(Center(child: CustomText(text: '5/11/2024'))),
+                    const DataCell(
+                        Center(child: CustomText(text: '5/11/2024'))),
                   ],
                 ),
               ),

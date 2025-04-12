@@ -2,8 +2,8 @@ import 'package:choice/choice.dart';
 import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/constant/components/float_button.dart';
 import 'package:lambda_dent_dash/constant/constants/constants.dart';
-import 'package:lambda_dent_dash/view/clients/components/client_requests_table.dart';
-import 'package:lambda_dent_dash/view/clients/components/clients_table.dart';
+import 'package:lambda_dent_dash/view/clients/components/tables/client_requests_table.dart';
+import 'package:lambda_dent_dash/view/clients/components/tables/clients_table.dart';
 import 'package:lambda_dent_dash/view/clients/components/dialogs/add_client_dialog.dart';
 
 

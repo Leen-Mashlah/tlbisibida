@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/constant/components/reponsiveness.dart';
 import 'package:lambda_dent_dash/constant/components/top_nav.dart';
-import 'package:lambda_dent_dash/services/navigation/controllers.dart';
+import 'package:lambda_dent_dash/services/navigation/locator.dart';
 import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
 import 'package:lambda_dent_dash/services/navigation/router.dart';
 import 'package:lambda_dent_dash/services/navigation/routes.dart';

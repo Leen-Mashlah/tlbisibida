@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/constant/components/default_button.dart';
 import 'package:lambda_dent_dash/constant/components/default_textfield.dart';
 import 'package:lambda_dent_dash/constant/constants/constants.dart';
-import 'package:lambda_dent_dash/view/clients/components/payment_log_table.dart';
+import 'package:lambda_dent_dash/view/clients/components/tables/payment_log_table.dart';
 
 Dialog paymentLogDialog(BuildContext context) {
   TextEditingController itemnamecontroller = TextEditingController();
