@@ -4,9 +4,9 @@ import 'package:lambda_dent_dash/constant/constants/constants.dart';
 import 'package:lambda_dent_dash/services/navigation/locator.dart';
 import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
 import 'package:lambda_dent_dash/services/navigation/routes.dart';
+import 'package:lambda_dent_dash/services/navigation/stack_observer.dart';
 
 AppBar topNavigationBar(BuildContext context) {
-  RouteSettings curroute = ModalRoute.of(context)!.settings;
   return AppBar(
     scrolledUnderElevation: 1,
     leading: Image.asset(
