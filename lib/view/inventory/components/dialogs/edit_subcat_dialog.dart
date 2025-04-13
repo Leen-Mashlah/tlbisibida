@@ -4,8 +4,7 @@ import 'package:lambda_dent_dash/constant/components/default_textfield.dart';
 import 'package:lambda_dent_dash/constant/constants/constants.dart';
 
 Dialog editSubcatDialog(BuildContext context) {
-  TextEditingController itemnamecontroller = TextEditingController();
-  TextEditingController itemstandardquantitycontroller =
+  TextEditingController catnamecontroller =
       TextEditingController();
 
   return Dialog(
@@ -45,7 +44,7 @@ Dialog editSubcatDialog(BuildContext context) {
                     SizedBox(
                       width: 250,
                       child: defaultTextField(
-                          itemstandardquantitycontroller, context, ''),
+                          catnamecontroller, context, ''),
                     ),
                     const SizedBox(
                       height: 10,

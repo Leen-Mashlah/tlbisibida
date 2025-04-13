@@ -6,9 +6,7 @@ import 'package:lambda_dent_dash/constant/constants/constants.dart';
 import 'package:lambda_dent_dash/services/navigation/locator.dart';
 import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
 import 'package:lambda_dent_dash/services/navigation/routes.dart';
-import 'package:lambda_dent_dash/view/bills/components/bill_details_dialog.dart';
 
-/// Example without datasource
 // ignore: must_be_immutable
 class ClientCasesTable extends StatelessWidget {
   const ClientCasesTable({super.key});

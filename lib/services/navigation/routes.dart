@@ -1,5 +1,4 @@
 
-import 'package:lambda_dent_dash/view/clients/client_details_page.dart';
 
 const rootRoute = "/";
 
