@@ -13,7 +13,7 @@ const billsPageRoute = "/bills";
 
 const casesPageDisplayName = "Cases";
 const casesPageRoute = "/cases";
-const caseDetailsPageDisplayNamel = 'Case Details';
+const caseDetailsPageDisplayName = 'Case Details';
 const caseDetailsPageRoute =  '/case_details';
 
 const clientPageDisplayName = "Clients";
@@ -33,6 +33,9 @@ const paymentsLogPageRoute = '/payments_log';
 
 const statisticsPageDisplayName = 'Statistics';
 const statisticsPageRoute = '/stats';
+
+const profilePageDisplayName = 'Profile';
+const profilePageRoute = '/profile';
 
 
 // class MenuItem {

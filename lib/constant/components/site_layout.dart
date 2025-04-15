@@ -15,12 +15,12 @@ class SiteLayout extends StatelessWidget {
     return Scaffold(
       key: scaffoldKey,
       extendBodyBehindAppBar: false,
-      appBar: topNavigationBar(context),
+      appBar: TopNavigationBar(),
       body: ResponsiveWidget(
         largeScreen: Navigator(
           key: locator<NavigationService>().navigatorKey,
           onGenerateRoute: generateRoute,
-          initialRoute: homePageRoute,
+          initialRoute: rootRoute, // Change to rootRoute
         ),
       ),
     );
