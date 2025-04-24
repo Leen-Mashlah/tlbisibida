@@ -1,7 +1,7 @@
 import 'package:chat_bubbles/bubbles/bubble_special_three.dart';
 import 'package:chat_bubbles/message_bars/message_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:lambda_dent_dash/constant/constants/constants.dart';
+import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:lambda_dent_dash/view/cases/components/case_details_table.dart';
 import 'package:lambda_dent_dash/view/cases/components/case_process_timeline.dart';
 

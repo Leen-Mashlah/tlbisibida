@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lambda_dent_dash/constant/components/custom_text.dart';
-import 'package:lambda_dent_dash/constant/constants/constants.dart';
+import 'package:lambda_dent_dash/components/custom_text.dart';
+import 'package:lambda_dent_dash/constants/constants.dart';
 
 class AuthenticationPage extends StatelessWidget {
   // AdminLoginController adminAuth=Get.put(AdminLoginController());

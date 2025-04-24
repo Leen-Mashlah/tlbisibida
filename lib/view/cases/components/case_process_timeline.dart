@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:lambda_dent_dash/constant/constants/constants.dart';
+import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:timelines_plus/timelines_plus.dart';
 
 const kTileHeight = 50.0;
@@ -12,6 +12,7 @@ const todoColor = Color(0xffd1d2d7);
 
 const _processes = [
   'Ordered',
+  'Confirmed',
   'In Progress',
   'Ready',
   'Delivered',
@@ -43,7 +44,7 @@ class _CaseProcessTimelineState extends State<CaseProcessTimeline> {
       children: [
         SizedBox(
           height: 100,
-          width: MediaQuery.of(context).size.width / 5,
+          width: MediaQuery.of(context).size.width / 4.5,
           child: Timeline.tileBuilder(
             theme: TimelineThemeData(
               direction: Axis.horizontal,
@@ -55,7 +56,7 @@ class _CaseProcessTimelineState extends State<CaseProcessTimeline> {
             builder: TimelineTileBuilder.connected(
               connectionDirection: ConnectionDirection.before,
               itemExtentBuilder: (_, __) =>
-                  MediaQuery.of(context).size.width / 5 / _processes.length,
+                  MediaQuery.of(context).size.width / 4.5 / _processes.length,
               oppositeContentsBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 15.0),

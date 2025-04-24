@@ -1,8 +1,8 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 
-import 'package:lambda_dent_dash/constant/components/custom_text.dart';
-import 'package:lambda_dent_dash/constant/constants/constants.dart';
+import 'package:lambda_dent_dash/components/custom_text.dart';
+import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:lambda_dent_dash/view/bills/components/bill_details_dialog.dart';
 
 /// Example without datasource

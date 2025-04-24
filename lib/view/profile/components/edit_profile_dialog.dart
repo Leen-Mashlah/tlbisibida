@@ -1,15 +1,30 @@
-import 'package:flutter/material.dart';
-import 'package:lambda_dent_dash/constant/components/default_button.dart';
-import 'package:lambda_dent_dash/constant/components/default_textfield.dart';
-import 'package:lambda_dent_dash/constant/constants/constants.dart';
+import 'dart:io';
 
-class EditProfileDialog extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:image_picker_web/image_picker_web.dart';
+import 'package:lambda_dent_dash/components/default_button.dart';
+import 'package:lambda_dent_dash/components/default_textfield.dart';
+import 'package:lambda_dent_dash/components/image_picker.dart';
+import 'package:lambda_dent_dash/constants/constants.dart';
+
+class EditProfileDialog extends StatefulWidget {
   EditProfileDialog({
     super.key,
   });
+
+  @override
+  State<EditProfileDialog> createState() => _EditProfileDialogState();
+}
+
+class _EditProfileDialogState extends State<EditProfileDialog> {
+  List<Image> images = [];
+
   TextEditingController profilenamecontroller = TextEditingController();
+
   TextEditingController phonenumbercontroller = TextEditingController();
+
   TextEditingController addresscontroller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -60,6 +75,10 @@ class EditProfileDialog extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
+              imagePicker(images),
+              SizedBox(
+                height: 20,
+              ),
               defaultButton(
                   text: 'تعديل',
                   function: () {
@@ -71,4 +90,8 @@ class EditProfileDialog extends StatelessWidget {
       ),
     );
   }
+}
+
+void image_picker(Image images) async {
+  Image? images = await ImagePickerWeb.getImageAsWidget();
 }

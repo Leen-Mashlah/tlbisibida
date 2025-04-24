@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lambda_dent_dash/constant/components/default_button.dart';
-import 'package:lambda_dent_dash/constant/constants/constants.dart';
+import 'package:lambda_dent_dash/components/default_button.dart';
+import 'package:lambda_dent_dash/constants/constants.dart';
 
 Dialog catDeleteConfirmationDialog(BuildContext context) {
   return Dialog(

@@ -1,7 +1,7 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:lambda_dent_dash/constant/constants/constants.dart';
+import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:lambda_dent_dash/view/inventory/components/buttom_action_buttons.dart';
 import 'package:lambda_dent_dash/view/inventory/components/dialogs/buttom_action_payments_log_buttons.dart';
 import 'package:lambda_dent_dash/view/inventory/components/percent_gauge.dart';

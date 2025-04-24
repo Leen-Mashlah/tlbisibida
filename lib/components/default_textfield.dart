@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lambda_dent_dash/constant/constants/constants.dart';
+import 'package:lambda_dent_dash/constants/constants.dart';
 // import 'package:power_overload/Shared/constants.dart';
 
 Widget defaultTextField(

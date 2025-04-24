@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lambda_dent_dash/constant/components/default_textfield.dart';
-import 'package:lambda_dent_dash/constant/components/float_button.dart';
+import 'package:lambda_dent_dash/components/default_textfield.dart';
+import 'package:lambda_dent_dash/components/float_button.dart';
 import 'package:lambda_dent_dash/view/bills/components/bills_table.dart';
 import 'package:lambda_dent_dash/view/bills/components/add_bill_dialog.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lambda_dent_dash/constant/components/default_button.dart';
-import 'package:lambda_dent_dash/constant/constants/constants.dart';
+import 'package:lambda_dent_dash/components/default_button.dart';
+import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:lambda_dent_dash/view/inventory/components/dialogs/add_cat_dialog%20.dart';
 import 'package:lambda_dent_dash/view/inventory/components/dialogs/add_subcat_dialog%20.dart';
 import 'package:lambda_dent_dash/view/inventory/components/dialogs/cat_delete_dialog.dart';
