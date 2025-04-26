@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:lambda_dent_dash/services/dio/dio.dart';
 import 'package:lambda_dent_dash/services/navigation/locator.dart';
@@ -27,7 +26,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return MaterialApp(
       // Remove initialRoute to prevent double initialization
       onGenerateRoute: (settings) => generateRoute(settings),
       title: 'LambdaDent Admin Dashboard',
