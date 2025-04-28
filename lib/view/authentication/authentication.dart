@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:google_fonts/google_fonts.dart';
+//import 'package:google_fonts/google_fonts.dart';
 import 'package:lambda_dent_dash/components/custom_text.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
 
@@ -36,8 +36,8 @@ class AuthenticationPage extends StatelessWidget {
               Row(
                 children: [
                   Text("Login",
-                      style: GoogleFonts.roboto(
-                          fontSize: 30, fontWeight: FontWeight.bold)),
+                      style:
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
                 ],
               ),
               const SizedBox(
