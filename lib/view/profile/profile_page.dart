@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:lambda_dent_dash/view/profile/components/profile_card.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -9,7 +10,8 @@ class ProfilePage extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 80.0, vertical: 40.0),
         child: Card(
-          color: const Color.fromARGB(61, 245, 245, 245),
+          // color: const Color.fromARGB(61, 245, 245, 245),
+          color: const Color.fromARGB(215, 211, 241, 238),
           child: Padding(
             padding: const EdgeInsets.all(30.0),
             child: Row(
