@@ -42,6 +42,7 @@ dependencies:
   fl_chart:
   percent_indicator:
   flip_card:
+  searchable_listview:
   info_popup:
 
   # The following adds the Cupertino Icons font to your application.
