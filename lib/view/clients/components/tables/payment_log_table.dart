@@ -1,14 +1,13 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 
-import 'package:lambda_dent_dash/constant/components/custom_text.dart';
-import 'package:lambda_dent_dash/constant/constants/constants.dart';
-import 'package:lambda_dent_dash/view/bills/components/bill_details_dialog.dart';
+import 'package:lambda_dent_dash/components/custom_text.dart';
+import 'package:lambda_dent_dash/constants/constants.dart';
 
 /// Example without datasource
 // ignore: must_be_immutable
-class ClientBillsTable extends StatelessWidget {
-  const ClientBillsTable({super.key});
+class PaymentLogTable extends StatelessWidget {
+  const PaymentLogTable({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +17,7 @@ class ClientBillsTable extends StatelessWidget {
           color: Colors.white,
           border: Border.all(color: cyan200, width: .5),
           boxShadow: const [
-            BoxShadow(
-                offset: Offset(0, 6), color: Colors.grey, blurRadius: 12)
+            BoxShadow(offset: Offset(0, 6), color: Colors.grey, blurRadius: 12)
           ],
           borderRadius: BorderRadius.circular(8),
         ),
@@ -38,21 +36,14 @@ class ClientBillsTable extends StatelessWidget {
                 DataColumn(
                   label: Center(
                       child: Text(
-                    'التفاصيل',
+                    'المبلغ المضاف',
                     style: TextStyle(color: cyan300),
                   )),
                 ),
                 DataColumn(
                   label: Center(
                       child: Text(
-                    'رقم الفاتورة',
-                    style: TextStyle(color: cyan300),
-                  )),
-                ),
-                DataColumn(
-                  label: Center(
-                      child: Text(
-                    'تاريخ الفاتورة',
+                    'تاريخ الدفع',
                     style: TextStyle(color: cyan300),
                   )),
                 ),
@@ -61,24 +52,12 @@ class ClientBillsTable extends StatelessWidget {
                 50,
                 (index) => DataRow(
                   cells: [
-                    DataCell(Center(
-                        child: IconButton(
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) => const BillDetailsDialog(),
-                        );
-                      },
-                      icon: const Icon(
-                        Icons.arrow_circle_left_outlined,
-                        color: cyan300,
-                      ),
-                    ))),
                     const DataCell(Center(
                         child: CustomText(
-                      text: '001',
+                      text: '1.000.000',
                     ))),
-                    const DataCell(Center(child: CustomText(text: '5/11/2024'))),
+                    const DataCell(
+                        Center(child: CustomText(text: '5/11/2024'))),
                   ],
                 ),
               ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lambda_dent_dash/constant/components/date_picker.dart';
-import 'package:lambda_dent_dash/constant/components/default_button.dart';
-import 'package:lambda_dent_dash/constant/components/default_textfield.dart';
-import 'package:lambda_dent_dash/constant/constants/constants.dart';
+import 'package:lambda_dent_dash/components/date_picker.dart';
+import 'package:lambda_dent_dash/components/default_button.dart';
+import 'package:lambda_dent_dash/components/default_textfield.dart';
+import 'package:lambda_dent_dash/constants/constants.dart';
 
 class AddConstantPaymentDialog extends StatelessWidget {
   AddConstantPaymentDialog({

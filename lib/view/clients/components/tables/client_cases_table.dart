@@ -1,13 +1,15 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 
-import 'package:lambda_dent_dash/constant/components/custom_text.dart';
-import 'package:lambda_dent_dash/constant/constants/constants.dart';
+import 'package:lambda_dent_dash/components/custom_text.dart';
+import 'package:lambda_dent_dash/constants/constants.dart';
+import 'package:lambda_dent_dash/services/navigation/locator.dart';
+import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
+import 'package:lambda_dent_dash/services/navigation/routes.dart';
 
-/// Example without datasource
 // ignore: must_be_immutable
-class ClientsTable extends StatelessWidget {
-  const ClientsTable({super.key});
+class ClientCasesTable extends StatelessWidget {
+  const ClientCasesTable({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,35 +45,21 @@ class ClientsTable extends StatelessWidget {
                 DataColumn(
                   label: Center(
                       child: Text(
-                    'اسم الزبون',
+                    ' وضع الحالة',
                     style: TextStyle(color: cyan300),
                   )),
                 ),
                 DataColumn(
                   label: Center(
                       child: Text(
-                    'رقم الهاتف',
+                    'اسم المريض',
                     style: TextStyle(color: cyan300),
                   )),
                 ),
                 DataColumn(
                   label: Center(
                       child: Text(
-                    'العنوان',
-                    style: TextStyle(color: cyan300),
-                  )),
-                ),
-                DataColumn(
-                  label: Center(
-                      child: Text(
-                    'تاريخ الانضمام',
-                    style: TextStyle(color: cyan300),
-                  )),
-                ),
-                DataColumn(
-                  label: Center(
-                      child: Text(
-                    'الرصيد',
+                    'تاريخ الحالة',
                     style: TextStyle(color: cyan300),
                   )),
                 ),
@@ -83,7 +71,8 @@ class ClientsTable extends StatelessWidget {
                     DataCell(Center(
                         child: IconButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/client_details');
+                        locator<NavigationService>()
+                            .navigateTo(caseDetailsPageRoute);
                       },
                       icon: const Icon(
                         Icons.arrow_circle_left_outlined,
@@ -92,14 +81,11 @@ class ClientsTable extends StatelessWidget {
                     ))),
                     const DataCell(Center(
                         child: CustomText(
-                      text: 'تحسين',
+                      text: 'جاهزة',
                     ))),
+                    const DataCell(Center(child: CustomText(text: 'تحسين'))),
                     const DataCell(
-                        Center(child: CustomText(text: '0992532588'))),
-                    const DataCell(Center(child: CustomText(text: 'هونولولو'))),
-                    const DataCell(
-                        Center(child: CustomText(text: '10/4/2024'))),
-                    const DataCell(Center(child: CustomText(text: '350000'))),
+                        Center(child: CustomText(text: '5/11/2024'))),
                   ],
                 ),
               ),

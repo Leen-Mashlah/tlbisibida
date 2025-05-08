@@ -1,14 +1,30 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker_web/image_picker_web.dart';
 import 'package:lambda_dent_dash/components/default_button.dart';
 import 'package:lambda_dent_dash/components/default_textfield.dart';
+import 'package:lambda_dent_dash/components/image_picker.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
 
-class AddClientDialog extends StatelessWidget {
-  AddClientDialog({
+class EditProfileDialog extends StatefulWidget {
+  EditProfileDialog({
     super.key,
   });
-  TextEditingController titleController = TextEditingController();
-  TextEditingController costController = TextEditingController();
+
+  @override
+  State<EditProfileDialog> createState() => _EditProfileDialogState();
+}
+
+class _EditProfileDialogState extends State<EditProfileDialog> {
+  List<Image> images = [];
+
+  TextEditingController profilenamecontroller = TextEditingController();
+
+  TextEditingController phonenumbercontroller = TextEditingController();
+
+  TextEditingController addresscontroller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -20,7 +36,7 @@ class AddClientDialog extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               const Text(
-                'إضافة طبيب محلياً',
+                'تعديل الملف الشخصي',
                 style: TextStyle(fontSize: 20),
               ),
               const SizedBox(
@@ -39,15 +55,17 @@ class AddClientDialog extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    defaultTextField(titleController, context, 'اسم الطبيب'),
+                    defaultTextField(
+                        profilenamecontroller, context, 'اسم المخبر'),
                     const SizedBox(
                       height: 20,
                     ),
-                    defaultTextField(costController, context, 'رقم الهاتف'),
+                    defaultTextField(
+                        phonenumbercontroller, context, 'رقم الهاتف'),
                     const SizedBox(
                       height: 20,
                     ),
-                    defaultTextField(costController, context, 'العنوان'),
+                    defaultTextField(addresscontroller, context, 'العنوان'),
                     const SizedBox(
                       height: 20,
                     ),
@@ -57,8 +75,12 @@ class AddClientDialog extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
+              imagePicker(images),
+              SizedBox(
+                height: 20,
+              ),
               defaultButton(
-                  text: 'إضافة',
+                  text: 'تعديل',
                   function: () {
                     Navigator.pop(context);
                   })
@@ -68,4 +90,8 @@ class AddClientDialog extends StatelessWidget {
       ),
     );
   }
+}
+
+void image_picker(Image images) async {
+  Image? images = await ImagePickerWeb.getImageAsWidget();
 }

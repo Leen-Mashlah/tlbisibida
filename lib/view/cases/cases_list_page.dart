@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lambda_dent_dash/constant/components/float_button.dart';
-import 'package:lambda_dent_dash/constant/constants/constants.dart';
+import 'package:lambda_dent_dash/components/float_button.dart';
+import 'package:lambda_dent_dash/constants/constants.dart';
+import 'package:lambda_dent_dash/services/navigation/locator.dart';
+import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
+import 'package:lambda_dent_dash/services/navigation/routes.dart';
 
 class CasesListPage extends StatelessWidget {
   const CasesListPage({super.key});
@@ -23,10 +26,10 @@ class CasesListPage extends StatelessWidget {
                     //   color: cyan400,
                     // ),
                     _column('To Do', const Icon(Icons.checklist), cyan400),
-                    _column('In Progress', const Icon(Icons.work_history_rounded),
-                        Colors.amber),
-                    _column('Need Confirmation', const Icon(Icons.warning_rounded),
-                        Colors.redAccent),
+                    _column('In Progress',
+                        const Icon(Icons.work_history_rounded), Colors.amber),
+                    _column('Need Confirmation',
+                        const Icon(Icons.warning_rounded), Colors.redAccent),
                     // _columnEntity(),
                   ]),
             ),
@@ -98,6 +101,7 @@ Widget _itembuilder(
   Color color,
 ) {
   return InkWell(
+    onTap: () => locator<NavigationService>().navigateTo(caseDetailsPageRoute),
     child: Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),

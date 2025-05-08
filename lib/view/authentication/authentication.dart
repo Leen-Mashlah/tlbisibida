@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:lambda_dent_dash/constant/components/custom_text.dart';
-import 'package:lambda_dent_dash/constant/constants/constants.dart';
+//import 'package:google_fonts/google_fonts.dart';
+import 'package:lambda_dent_dash/components/custom_text.dart';
+import 'package:lambda_dent_dash/constants/constants.dart';
 
 class AuthenticationPage extends StatelessWidget {
   // AdminLoginController adminAuth=Get.put(AdminLoginController());
@@ -37,8 +36,8 @@ class AuthenticationPage extends StatelessWidget {
               Row(
                 children: [
                   Text("Login",
-                      style: GoogleFonts.roboto(
-                          fontSize: 30, fontWeight: FontWeight.bold)),
+                      style:
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
                 ],
               ),
               const SizedBox(
@@ -95,33 +94,32 @@ class AuthenticationPage extends StatelessWidget {
               const SizedBox(
                 height: 15,
               ),
-              Obx(() => InkWell(
-                    // onTap: adminAuth.isLoading.value
-                    //     ? null
-                    //     : ()async {
-                    //         adminAuth.admin_login(email.text, password.text);
-                    //          Get.offNamed("Employees");
+              InkWell(
+                // onTap: adminAuth.isLoading.value
+                //     ? null
+                //     : ()async {
+                //         adminAuth.admin_login(email.text, password.text);
+                //          Get.offNamed("Employees");
 
-                    //       },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: cyan400,
-                          borderRadius: BorderRadius.circular(20)),
-                      alignment: Alignment.center,
-                      width: double.maxFinite,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      child:
-                          //  adminAuth.isLoading.value
-                          //     ? CircularProgressIndicator(
-                          //         valueColor:
-                          //             AlwaysStoppedAnimation<Color>(Colors.white))
-                          //     :
-                          const CustomText(
-                        text: "Login",
-                        color: Colors.white,
-                      ),
-                    ),
-                  )),
+                //       },
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: cyan400, borderRadius: BorderRadius.circular(20)),
+                  alignment: Alignment.center,
+                  width: double.maxFinite,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child:
+                      //  adminAuth.isLoading.value
+                      //     ? CircularProgressIndicator(
+                      //         valueColor:
+                      //             AlwaysStoppedAnimation<Color>(Colors.white))
+                      //     :
+                      const CustomText(
+                    text: "Login",
+                    color: Colors.white,
+                  ),
+                ),
+              ),
               const SizedBox(
                 height: 15,
               ),

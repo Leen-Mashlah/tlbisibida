@@ -1,14 +1,14 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 
-import 'package:lambda_dent_dash/constant/components/custom_text.dart';
-import 'package:lambda_dent_dash/constant/constants/constants.dart';
+import 'package:lambda_dent_dash/components/custom_text.dart';
+import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:lambda_dent_dash/view/bills/components/bill_details_dialog.dart';
 
 /// Example without datasource
 // ignore: must_be_immutable
-class ClientCasesTable extends StatelessWidget {
-  const ClientCasesTable({super.key});
+class ClientBillsTable extends StatelessWidget {
+  const ClientBillsTable({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,21 +45,14 @@ class ClientCasesTable extends StatelessWidget {
                 DataColumn(
                   label: Center(
                       child: Text(
-                    ' وضع الحالة',
+                    'رقم الفاتورة',
                     style: TextStyle(color: cyan300),
                   )),
                 ),
                 DataColumn(
                   label: Center(
                       child: Text(
-                    'اسم المريض',
-                    style: TextStyle(color: cyan300),
-                  )),
-                ),
-                DataColumn(
-                  label: Center(
-                      child: Text(
-                    'تاريخ الحالة',
+                    'تاريخ الفاتورة',
                     style: TextStyle(color: cyan300),
                   )),
                 ),
@@ -83,9 +76,8 @@ class ClientCasesTable extends StatelessWidget {
                     ))),
                     const DataCell(Center(
                         child: CustomText(
-                      text: 'جاهزة',
+                      text: '001',
                     ))),
-                    const DataCell(Center(child: CustomText(text: 'تحسين'))),
                     const DataCell(Center(child: CustomText(text: '5/11/2024'))),
                   ],
                 ),

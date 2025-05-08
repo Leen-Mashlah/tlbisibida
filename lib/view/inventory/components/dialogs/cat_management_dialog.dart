@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:lambda_dent_dash/constant/components/default_button.dart';
-import 'package:lambda_dent_dash/constant/components/default_textfield.dart';
-import 'package:lambda_dent_dash/constant/constants/constants.dart';
+import 'package:lambda_dent_dash/components/default_button.dart';
+import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:lambda_dent_dash/view/inventory/components/dialogs/add_cat_dialog%20.dart';
 import 'package:lambda_dent_dash/view/inventory/components/dialogs/add_subcat_dialog%20.dart';
 import 'package:lambda_dent_dash/view/inventory/components/dialogs/cat_delete_dialog.dart';
-import 'package:lambda_dent_dash/view/inventory/components/dialogs/edit_cat_dialog%20%20copy.dart';
-import 'package:lambda_dent_dash/view/inventory/components/dialogs/edit_subcat_dialog%20%20copy.dart';
-import 'package:lambda_dent_dash/view/inventory/components/dialogs/subcat_delete_dialog.dart';
+import 'package:lambda_dent_dash/view/inventory/components/dialogs/edit_cat_dialog.dart';
+import 'package:lambda_dent_dash/view/inventory/components/dialogs/edit_subcat_dialog.dart';
+import 'package:lambda_dent_dash/view/inventory/components/dialogs/subCat_delete_dialog.dart';
 
 Dialog CatManagementDialog(BuildContext context) {
   final TextEditingController catmenuController = TextEditingController();

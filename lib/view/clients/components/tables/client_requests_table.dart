@@ -1,14 +1,14 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 
-import 'package:lambda_dent_dash/constant/components/custom_text.dart';
-import 'package:lambda_dent_dash/constant/constants/constants.dart';
-import 'package:lambda_dent_dash/view/bills/components/bill_details_dialog.dart';
+import 'package:lambda_dent_dash/components/custom_text.dart';
+import 'package:lambda_dent_dash/constants/constants.dart';
+import 'package:lambda_dent_dash/view/clients/components/dialogs/confirm_add_dialog%20.dart';
 
 /// Example without datasource
 // ignore: must_be_immutable
-class BillsTable extends StatelessWidget {
-  const BillsTable({super.key});
+class ClientsReqTable extends StatelessWidget {
+  const ClientsReqTable({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +18,7 @@ class BillsTable extends StatelessWidget {
           color: Colors.white,
           border: Border.all(color: cyan200, width: .5),
           boxShadow: const [
-            BoxShadow(
-                offset: Offset(0, 6), color: Colors.grey, blurRadius: 12)
+            BoxShadow(offset: Offset(0, 6), color: Colors.grey, blurRadius: 12)
           ],
           borderRadius: BorderRadius.circular(8),
         ),
@@ -38,28 +37,35 @@ class BillsTable extends StatelessWidget {
                 DataColumn(
                   label: Center(
                       child: Text(
-                    'التفاصيل',
+                    'تأكيد الإضافة',
                     style: TextStyle(color: cyan300),
                   )),
                 ),
                 DataColumn(
                   label: Center(
                       child: Text(
-                    'رقم الفاتورة',
+                    'تاريخ إرسال الطلب',
                     style: TextStyle(color: cyan300),
                   )),
                 ),
                 DataColumn(
                   label: Center(
                       child: Text(
-                    'اسم الزبون',
+                    'رقم الهاتف',
                     style: TextStyle(color: cyan300),
                   )),
                 ),
                 DataColumn(
                   label: Center(
                       child: Text(
-                    'تاريخ الفاتورة',
+                    'العنوان',
+                    style: TextStyle(color: cyan300),
+                  )),
+                ),
+                DataColumn(
+                  label: Center(
+                      child: Text(
+                    'اسم الطبيب',
                     style: TextStyle(color: cyan300),
                   )),
                 ),
@@ -71,19 +77,26 @@ class BillsTable extends StatelessWidget {
                     DataCell(Center(
                         child: IconButton(
                       onPressed: () {
-                        showDialog(context: context, builder:(context) => const BillDetailsDialog(), );
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return confirmAddDialog(context);
+                            });
                       },
                       icon: const Icon(
-                        Icons.arrow_circle_left_outlined,
+                        Icons.check_circle_outline,
                         color: cyan300,
                       ),
                     ))),
+                    const DataCell(
+                        Center(child: CustomText(text: '9/10/2024'))),
+                    const DataCell(
+                        Center(child: CustomText(text: '0992532588'))),
+                    const DataCell(Center(child: CustomText(text: 'هونولولو'))),
                     const DataCell(Center(
                         child: CustomText(
-                      text: '001',
+                      text: 'تحسين',
                     ))),
-                    const DataCell(Center(child: CustomText(text: 'تحسين'))),
-                    const DataCell(Center(child: CustomText(text: '5/11/2024'))),
                   ],
                 ),
               ),

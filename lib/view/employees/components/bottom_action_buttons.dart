@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lambda_dent_dash/constant/constants/constants.dart';
+import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:lambda_dent_dash/view/employees/components/Dialogs/employee_delete_dialog.dart';
 import 'package:lambda_dent_dash/view/employees/components/Dialogs/employee_edit_dialog.dart';
 

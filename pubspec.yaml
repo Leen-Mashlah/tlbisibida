@@ -30,8 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  google_fonts:
-  get:
+  #google_fonts:
+  #get:
   shared_preferences:
   dio:
   flutter_animate:
@@ -44,6 +44,8 @@ dependencies:
   flip_card:
   searchable_listview:
   info_popup:
+  image_picker_web:
+  cross_file:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

@@ -2,9 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:get/get.dart';
-import 'package:lambda_dent_dash/constant/constants/constants.dart';
-import 'package:lambda_dent_dash/services/navigation/controllers.dart';
+import 'package:lambda_dent_dash/constants/constants.dart';
+import 'package:lambda_dent_dash/services/navigation/locator.dart';
 import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
 import 'package:lambda_dent_dash/services/navigation/routes.dart';
 
@@ -20,7 +19,7 @@ class NinjaStarShape extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                blade('الحالات', 'casesPageRoute'),
+                blade('الحالات', casesPageRoute),
                 Transform.rotate(
                     angle: 180 * pi / 180,
                     child: blade("الفواتير", billsPageRoute)),
@@ -33,10 +32,10 @@ class NinjaStarShape extends StatelessWidget {
               children: [
                 Transform.rotate(
                     angle: -90 * pi / 180,
-                    child: blade("الاحصائيات", 'statisticsPageRoute')),
+                    child: blade("المدفوعات", paymentsLogPageRoute)),
                 Transform.rotate(
                     angle: 90 * pi / 180,
-                    child: blade("المخزن", 'inventoryPageRoute')),
+                    child: blade("المخزن", inventoryPageRoute)),
               ],
             ),
           ),

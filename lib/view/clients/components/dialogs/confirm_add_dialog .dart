@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lambda_dent_dash/constant/components/default_button.dart';
-import 'package:lambda_dent_dash/constant/components/default_textfield.dart';
-import 'package:lambda_dent_dash/constant/constants/constants.dart';
+import 'package:lambda_dent_dash/components/default_button.dart';
+import 'package:lambda_dent_dash/constants/constants.dart';
 
-Dialog editSubcatDialog(BuildContext context) {
-  TextEditingController itemnamecontroller = TextEditingController();
-  TextEditingController itemstandardquantitycontroller =
-      TextEditingController();
-
+Dialog confirmAddDialog(BuildContext context) {
   return Dialog(
     child: Padding(
       padding: const EdgeInsets.all(16.0),
@@ -26,7 +21,7 @@ Dialog editSubcatDialog(BuildContext context) {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     const Text(
-                      'تعديل صنف فرعي',
+                      'تأكيد الإضافة',
                       style: TextStyle(
                           color: cyan400,
                           fontSize: 18,
@@ -41,17 +36,12 @@ Dialog editSubcatDialog(BuildContext context) {
                     const SizedBox(
                       height: 10,
                     ),
-                    Text('أدخل الاسم الجديد'),
-                    SizedBox(
-                      width: 250,
-                      child: defaultTextField(
-                          itemstandardquantitycontroller, context, ''),
-                    ),
+                    Text('هل أنت متأكد من إضافة هذا الطبيب؟'),
                     const SizedBox(
                       height: 10,
                     ),
                     defaultButton(
-                        text: 'تعديل',
+                        text: 'إضافة',
                         function: () {
                           Navigator.of(context).pop();
                         })

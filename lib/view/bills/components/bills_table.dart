@@ -1,13 +1,14 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 
-import 'package:lambda_dent_dash/constant/components/custom_text.dart';
-import 'package:lambda_dent_dash/constant/constants/constants.dart';
+import 'package:lambda_dent_dash/components/custom_text.dart';
+import 'package:lambda_dent_dash/constants/constants.dart';
+import 'package:lambda_dent_dash/view/bills/components/bill_details_dialog.dart';
 
 /// Example without datasource
 // ignore: must_be_immutable
-class PaymentLogTable extends StatelessWidget {
-  const PaymentLogTable({super.key});
+class BillsTable extends StatelessWidget {
+  const BillsTable({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,8 @@ class PaymentLogTable extends StatelessWidget {
           color: Colors.white,
           border: Border.all(color: cyan200, width: .5),
           boxShadow: const [
-            BoxShadow(offset: Offset(0, 6), color: Colors.grey, blurRadius: 12)
+            BoxShadow(
+                offset: Offset(0, 6), color: Colors.grey, blurRadius: 12)
           ],
           borderRadius: BorderRadius.circular(8),
         ),
@@ -36,14 +38,28 @@ class PaymentLogTable extends StatelessWidget {
                 DataColumn(
                   label: Center(
                       child: Text(
-                    'المبلغ المضاف',
+                    'التفاصيل',
                     style: TextStyle(color: cyan300),
                   )),
                 ),
                 DataColumn(
                   label: Center(
                       child: Text(
-                    'تاريخ الدفع',
+                    'رقم الفاتورة',
+                    style: TextStyle(color: cyan300),
+                  )),
+                ),
+                DataColumn(
+                  label: Center(
+                      child: Text(
+                    'اسم الزبون',
+                    style: TextStyle(color: cyan300),
+                  )),
+                ),
+                DataColumn(
+                  label: Center(
+                      child: Text(
+                    'تاريخ الفاتورة',
                     style: TextStyle(color: cyan300),
                   )),
                 ),
@@ -52,12 +68,22 @@ class PaymentLogTable extends StatelessWidget {
                 50,
                 (index) => DataRow(
                   cells: [
+                    DataCell(Center(
+                        child: IconButton(
+                      onPressed: () {
+                        showDialog(context: context, builder:(context) => const BillDetailsDialog(), );
+                      },
+                      icon: const Icon(
+                        Icons.arrow_circle_left_outlined,
+                        color: cyan300,
+                      ),
+                    ))),
                     const DataCell(Center(
                         child: CustomText(
-                      text: '1.000.000',
+                      text: '001',
                     ))),
-                    const DataCell(
-                        Center(child: CustomText(text: '5/11/2024'))),
+                    const DataCell(Center(child: CustomText(text: 'تحسين'))),
+                    const DataCell(Center(child: CustomText(text: '5/11/2024'))),
                   ],
                 ),
               ),
