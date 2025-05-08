@@ -35,7 +35,7 @@ Widget itemEditQuantityCard(BuildContext context, {VoidCallback? onTap}) {
                           width: 10,
                         ),
                         SizedBox(
-                          width: 115,
+                          width: 150,
                           child: defaultTextField(
                             itemnamecontroller,
                             context,
@@ -53,42 +53,6 @@ Widget itemEditQuantityCard(BuildContext context, {VoidCallback? onTap}) {
                 ),
               ),
             ),
-            // child: SizedBox(
-            //   height: 300,
-            //   child: Column(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       Padding(
-            //         padding: const EdgeInsets.all(8.0),
-            //         child: Column(
-            //           mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //           children: [
-            //             Text(
-            //               info['name'],
-            //               style: const TextStyle(color: cyan500, fontSize: 18),
-            //             ),
-            //             const SizedBox(
-            //               height: 10,
-            //             ),
-            //             Container(
-            //               height: .5,
-            //               width: 100,
-            //               color: cyan200,
-            //             ),
-            //             const SizedBox(
-            //               height: 10,
-            //             ),
-            //             Padding(
-            //               padding: const EdgeInsets.all(20.0),
-            //               child: percentCircle(context, info),
-            //             ),
-            //           ],
-            //         ),
-            //       ),
-            //       bottomActionPaymentsLogButtons(context),
-            //     ],
-            //   ),
-            // ),
           ),
           back: Card(
             child: Container(
@@ -106,7 +70,7 @@ Widget itemEditQuantityCard(BuildContext context, {VoidCallback? onTap}) {
                     Column(
                       children: [
                         SizedBox(
-                          width: 130,
+                          width: 150,
                           child: defaultTextField(
                             itemnamecontroller,
                             context,
