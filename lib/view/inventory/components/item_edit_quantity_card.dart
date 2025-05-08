@@ -1,7 +1,7 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
-import 'package:lambda_dent_dash/constant/components/default_textfield.dart';
-import 'package:lambda_dent_dash/constant/constants/constants.dart';
+import 'package:lambda_dent_dash/components/default_textfield.dart';
+import 'package:lambda_dent_dash/constants/constants.dart';
 
 Widget itemEditQuantityCard(BuildContext context, {VoidCallback? onTap}) {
   TextEditingController itemnamecontroller = TextEditingController();
