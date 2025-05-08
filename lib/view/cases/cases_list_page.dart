@@ -20,11 +20,6 @@ class CasesListPage extends StatelessWidget {
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    // Container(
-                    //   height: 50,
-                    //   width: 50,
-                    //   color: cyan400,
-                    // ),
                     _column('To Do', const Icon(Icons.checklist), cyan400),
                     _column('In Progress',
                         const Icon(Icons.work_history_rounded), Colors.amber),
