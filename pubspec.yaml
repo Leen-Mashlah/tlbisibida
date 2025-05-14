@@ -41,7 +41,9 @@ dependencies:
   choice:
   fl_chart: ^0.69.2
   percent_indicator:
+  animated_checkmark: ^1.0.1
   flip_card:
+  dotted_border: ^2.1.0
   searchable_listview:
   info_popup:
   image_picker_web:
