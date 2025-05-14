@@ -13,6 +13,7 @@ import 'package:lambda_dent_dash/view/home/home_page.dart';
 import 'package:lambda_dent_dash/view/inventory/inventory_page.dart';
 import 'package:lambda_dent_dash/view/payments/payments_log_page.dart';
 import 'package:lambda_dent_dash/view/profile/profile_page.dart';
+import 'package:lambda_dent_dash/view/statistics/statistics_page.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   print('generateRoute: ${settings.name}');
@@ -58,9 +59,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case profilePageRoute:
       return _getPageRoute(ProfilePage(), profilePageDisplayName);
 
-    //TODO: Statistics Page
-    // case statisticsPageRoute:
-    // return _getPageRoute(StatisticsPage());
+    //Statistics Page
+    case statisticsPageRoute:
+      return _getPageRoute(StatisticsPage(),statisticsPageDisplayName);
 
     default:
       return _getPageRoute(const HomePage(), homePageDisplayName);
