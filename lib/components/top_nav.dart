@@ -28,7 +28,10 @@ class TopNavigationBar extends StatelessWidget implements PreferredSizeWidget {
                       color: cyan500,
                     )
                   : SizedBox(),
-              title: Text(title),
+              title: Text(
+                title,
+                style: TextStyle(color: cyan500),
+              ),
               centerTitle: true,
               iconTheme: const IconThemeData(color: cyan500),
               elevation: 0,
@@ -39,7 +42,8 @@ class TopNavigationBar extends StatelessWidget implements PreferredSizeWidget {
                   icon: const Icon(Icons.home_rounded),
                 ),
                 IconButton(
-                  onPressed: () => navigationService.navigateTo(statisticsPageRoute),
+                  onPressed: () =>
+                      navigationService.navigateTo(statisticsPageRoute),
                   icon: const Icon(CupertinoIcons.chart_pie_fill),
                 ),
                 IconButton(
