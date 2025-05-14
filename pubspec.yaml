@@ -39,7 +39,7 @@ dependencies:
   data_table_2:
   buildcondition:
   choice:
-  fl_chart: ^0.67.0
+  fl_chart: ^0.69.2
   percent_indicator:
   flip_card:
   searchable_listview:
@@ -90,6 +90,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  fonts:
+    - family: TuskIcons
+      fonts:
+        - asset: assets/icons/TuskIcons.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:
