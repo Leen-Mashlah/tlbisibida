@@ -7,8 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/components/tusk_icons.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
 
-
-
 // Define a class for the dynamic input data structure
 class ClientData {
   const ClientData({
@@ -80,8 +78,7 @@ class _BarChartSample7State extends State<RevenuePerClientChart> {
   }
 
   // Method to map dynamic data to _BarData with assigned colors from the predefined lists
-  List<_BarData> _processClientData(
-      List<ClientData> dynamicData) {
+  List<_BarData> _processClientData(List<ClientData> dynamicData) {
     return dynamicData.asMap().entries.map((e) {
       final index = e.key;
       final data = e.value;
@@ -124,20 +121,55 @@ class _BarChartSample7State extends State<RevenuePerClientChart> {
 
   int touchedGroupIndex = -1;
 
+  int maxval() {
+    int max = 0;
+    for (var element in widget.clientRevenueData) {
+      element.value > max ? max = element.value.toInt() : max = max;
+      element.shadowValue > max ? max = element.shadowValue.toInt() : max = max;
+    }
+
+    for (var i = 0; i < 100; i++) {
+      if (max % 100 != 0) {
+        max--;
+      }
+    }
+    print(max);
+    print('max val = $max');
+    return max + findLargestPowerOf10(max);
+  }
+
+  int findLargestPowerOf10(int number) {
+    if (number < 0) {
+      throw ArgumentError('Input must be a non-negative number.');
+    }
+
+    if (number == 0) {
+      return 1;
+    }
+
+    int result = 1;
+
+    while (result * 10 <= number) {
+      result *= 10;
+    }
+
+    return result;
+  }
+
   @override
   Widget build(BuildContext context) {
     // Find the maximum value in the processed _barDataList to set maxY dynamically
-    double maxY = 0;
-    for (var data in _barDataList) {
-      if (data.value > maxY) {
-        maxY = data.value;
-      }
-      if (data.shadowValue > maxY) {
-        maxY = data.shadowValue;
-      }
-    }
-    // Add some padding to the maxY for better visualization
-    maxY = maxY * 1.1;
+    int maxY = 0;
+    // for (var data in _barDataList) {
+    //   if (data.value > maxY) {
+    //     maxY = data.value;
+    //   }
+    //   if (data.shadowValue > maxY) {
+    //     maxY = data.shadowValue;
+    //   }
+    // }
+    // // Add some padding to the maxY for better visualization
+    maxY = maxval();
 
     return Padding(
       padding: const EdgeInsets.all(24),
@@ -154,7 +186,7 @@ class _BarChartSample7State extends State<RevenuePerClientChart> {
           RotatedBox(
             quarterTurns: 1,
             child: AspectRatio(
-              aspectRatio: .8,
+              aspectRatio: .7,
               child: BarChart(
                 BarChartData(
                   alignment: BarChartAlignment.spaceBetween,
@@ -169,12 +201,14 @@ class _BarChartSample7State extends State<RevenuePerClientChart> {
                     leftTitles: AxisTitles(
                       drawBelowEverything: true,
                       sideTitles: SideTitles(
+                        interval: findLargestPowerOf10(maxY) * 1.0,
                         getTitlesWidget: (value, meta) => SideTitleWidget(
+                            space: 20,
                             angle: -pi / 2,
                             child: Text(value.toInt().toString()),
                             axisSide: AxisSide.left),
                         showTitles: true,
-                        reservedSize: 30,
+                        reservedSize: 50,
                       ),
                     ),
                     bottomTitles: AxisTitles(
@@ -241,7 +275,7 @@ class _BarChartSample7State extends State<RevenuePerClientChart> {
                     );
                   }).toList(),
                   // Use the dynamic maxY
-                  maxY: maxY,
+                  maxY: maxY * 1.0,
                   barTouchData: BarTouchData(
                     enabled: true,
                     handleBuiltInTouches: false,
