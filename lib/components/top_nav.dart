@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:lambda_dent_dash/services/navigation/locator.dart';
@@ -36,6 +37,10 @@ class TopNavigationBar extends StatelessWidget implements PreferredSizeWidget {
                 IconButton(
                   onPressed: () => navigationService.navigateTo(homePageRoute),
                   icon: const Icon(Icons.home_rounded),
+                ),
+                IconButton(
+                  onPressed: () => navigationService.navigateTo(statisticsPageRoute),
+                  icon: const Icon(CupertinoIcons.chart_pie_fill),
                 ),
                 IconButton(
                   onPressed: () =>
