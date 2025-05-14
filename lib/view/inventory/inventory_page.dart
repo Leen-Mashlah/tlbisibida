@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:lambda_dent_dash/view/inventory/components/buttom_action_buttons.dart';
-import 'package:lambda_dent_dash/view/inventory/components/dialogs/buttom_action_payments_log_buttons.dart';
+import 'package:lambda_dent_dash/view/inventory/components/dialogs/bottom_action_payments_log_buttons.dart';
 import 'package:lambda_dent_dash/view/inventory/components/percent_gauge.dart';
 import 'package:lambda_dent_dash/view/inventory/components/pie_chart.dart';
 import 'package:lambda_dent_dash/view/inventory/components/triangle_card.dart';
@@ -218,24 +218,6 @@ class InventoryPage extends StatelessWidget {
                                   '2/5/2024',
                                   style: TextStyle(color: cyan300),
                                 ),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
-                                Text('الحد الادنى'),
                                 Text('الحد الادنى'),
                                 Text(
                                   '50',

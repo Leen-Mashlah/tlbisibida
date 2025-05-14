@@ -42,6 +42,7 @@ dependencies:
   fl_chart: ^0.67.0
   percent_indicator:
   flip_card:
+  searchable_listview:
   info_popup:
   image_picker_web:
   cross_file:
