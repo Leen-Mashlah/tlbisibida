@@ -25,16 +25,19 @@ class MonthlyFinancialData {
 class MonthlyFinancialChart extends StatelessWidget {
   List<MonthlyFinancialData> chartData;
 
-  final double _mainBarWidth = 30.0;
-  final double _rodBorderRadius = 8;
+  final double _mainBarWidth = 14.0;
+  final double _rodBorderRadius = 5;
   double _minY = -10000000;
   double _maxY = 10000000;
   double _yAxisInterval = 1000;
 
   final Color _revenueColor = cyan500;
-  final Color _expensesColor = Colors.red.shade800;
+  // final Color _expensesColor = Colors.red.shade800;
+  final Color _expensesColor = Colors.indigo.shade700;
+
   final Color _profitColor = cyan300;
-  final Color _lossColor = Colors.red.shade200;
+  // final Color _lossColor = Colors.red.shade200;
+  final Color _lossColor = Colors.indigo.shade200;
   final Color _gridColor = cyan400;
   final Color _borderColor = cyan400;
   final Color _axisTextColor = cyan600;
