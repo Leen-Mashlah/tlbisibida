@@ -1,41 +1,41 @@
-
-
 const rootRoute = "/";
 
 const authenticationPageDisplayName = "Authentication";
 const authenticationPageRoute = "/auth";
 
-const homePageDisplayName = "Home";
+const homePageDisplayName = "الصفحة الرئيسية";
 const homePageRoute = "/home";
 
-const billsPageDisplayName = "Bills";
+const billsPageDisplayName = "الفواتير";
 const billsPageRoute = "/bills";
 
-const casesPageDisplayName = "Cases";
+const casesPageDisplayName = "الحالات";
 const casesPageRoute = "/cases";
-const caseDetailsPageDisplayName = 'Case Details';
-const caseDetailsPageRoute =  '/case_details';
+const caseDetailsPageDisplayName = 'تفاصيلل الحالة';
+const caseDetailsPageRoute = '/case_details';
 
-const clientPageDisplayName = "Clients";
+const clientPageDisplayName = "الزبائن";
 const clientPageRoute = "/clients";
-const clientDetailsPageDisplayName = "Client Details";
+const clientDetailsPageDisplayName = "معلومات الزبون";
 const clientDetailsPageRoute = "/client_details";
 
-
-const employeesPageDisplayName = 'Employees';
+const employeesPageDisplayName = 'الموظفين';
 const employeesPageRoute = '/employees';
 
-const inventoryPageDisplayName = 'Inventory';
+const inventoryPageDisplayName = 'المخزن';
 const inventoryPageRoute = '/inventory';
 
-const paymentsLogPageDisplayName = 'Payments';
+const paymentsLogPageDisplayName = 'المدفوعات';
 const paymentsLogPageRoute = '/payments_log';
 
-const statisticsPageDisplayName = 'Statistics';
+const statisticsPageDisplayName = 'الإحصائيات';
 const statisticsPageRoute = '/stats';
 
-const profilePageDisplayName = 'Profile';
+const profilePageDisplayName = 'الملف الشخصي';
 const profilePageRoute = '/profile';
+
+const settingsPageDisplayName = 'الإعدادات';
+const settingsPageRoute = '/settings';
 
 
 // class MenuItem {

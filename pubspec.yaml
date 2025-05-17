@@ -40,6 +40,8 @@ dependencies:
   buildcondition:
   choice:
   fl_chart: ^0.69.2
+  pie_menu: ^2.0.2
+  dropdown_search:
   percent_indicator:
   animated_checkmark: ^1.0.1
   flip_card:

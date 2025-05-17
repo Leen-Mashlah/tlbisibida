@@ -94,6 +94,15 @@ class _BarChartSample7State extends State<RevenuePerClientChart> {
     }).toList();
   }
 
+  String _formatYValue(double value) {
+    if (value.abs() >= 1000000) {
+      return '${(value / 1000000).toStringAsFixed(value.abs() % 1000000 == 0 ? 0 : 1)} مليون';
+    } else if (value.abs() >= 1000) {
+      return '${(value / 1000).toStringAsFixed(0)} ألف';
+    }
+    return value.toStringAsFixed(0);
+  }
+
   BarChartGroupData generateBarGroup(
     int x,
     Color color,
@@ -175,18 +184,18 @@ class _BarChartSample7State extends State<RevenuePerClientChart> {
       padding: const EdgeInsets.all(24),
       child: Column(
         children: [
-          const Text(
-            'أكثر 10 زبائن مردوداً', // Title remains static
-            style: TextStyle(
-              color: cyan500,
-              fontSize: 20,
-            ),
-          ),
-          const SizedBox(height: 18),
+          // const Text(
+          //   'أكثر 10 زبائن مردوداً', // Title remains static
+          //   style: TextStyle(
+          //     color: cyan500,
+          //     fontSize: 20,
+          //   ),
+          // ),
+          // const SizedBox(height: 18),
           RotatedBox(
             quarterTurns: 1,
             child: AspectRatio(
-              aspectRatio: .7,
+              aspectRatio: .9,
               child: BarChart(
                 BarChartData(
                   alignment: BarChartAlignment.spaceBetween,
@@ -205,7 +214,11 @@ class _BarChartSample7State extends State<RevenuePerClientChart> {
                         getTitlesWidget: (value, meta) => SideTitleWidget(
                             space: 20,
                             angle: -pi / 2,
-                            child: Text(value.toInt().toString()),
+                            child: Text(
+                              textAlign: TextAlign.center,
+                              _formatYValue(value),
+                              style: TextStyle(color: cyan500, fontSize: 12),
+                            ),
                             axisSide: AxisSide.left),
                         showTitles: true,
                         reservedSize: 50,
