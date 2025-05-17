@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker_web/image_picker_web.dart';
@@ -8,7 +7,7 @@ import 'package:lambda_dent_dash/components/image_picker.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
 
 class EditProfileDialog extends StatefulWidget {
-  EditProfileDialog({
+  const EditProfileDialog({
     super.key,
   });
 
@@ -76,7 +75,7 @@ class _EditProfileDialogState extends State<EditProfileDialog> {
                 height: 20,
               ),
               imagePicker(images),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               defaultButton(
@@ -92,6 +91,7 @@ class _EditProfileDialogState extends State<EditProfileDialog> {
   }
 }
 
-void image_picker(Image images) async {
+void imagePick(Image images) async {
+  // ignore: unused_local_variable
   Image? images = await ImagePickerWeb.getImageAsWidget();
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:lambda_dent_dash/view/profile/components/profile_card.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -23,7 +22,7 @@ class ProfilePage extends StatelessWidget {
                     child: ProfileSection()),
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 2.5,
-                  child: Column(
+                  child: const Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       AccountsSection(),

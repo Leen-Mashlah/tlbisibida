@@ -19,14 +19,14 @@ class PaymentsLogPage extends StatelessWidget {
           SingleChildScrollView(
               child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Searchbar(context),
-              SizedBox(
+              searchBar(context),
+              const SizedBox(
                 height: 20,
               ),
-              PaymentsLogTable(),
+              const PaymentsLogTable(),
             ],
           )),
           addconstantpayment(context),
