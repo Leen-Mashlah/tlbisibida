@@ -34,6 +34,9 @@ const statisticsPageRoute = '/stats';
 const profilePageDisplayName = 'الملف الشخصي';
 const profilePageRoute = '/profile';
 
+const settingsPageDisplayName = 'الإعدادات';
+const settingsPageRoute = '/settings';
+
 
 // class MenuItem {
 //   final String name;

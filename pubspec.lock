@@ -381,6 +381,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.3"
+  pie_menu:
+    dependency: "direct main"
+    description:
+      name: pie_menu
+      sha256: "362bff5488616ec148ddcaebabf94c85c1a58a8c253cd5f11a814a99a8a2d67c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.2"
   platform:
     dependency: transitive
     description:

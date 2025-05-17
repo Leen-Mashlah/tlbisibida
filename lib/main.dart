@@ -5,16 +5,17 @@ import 'package:lambda_dent_dash/services/navigation/locator.dart';
 import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
 import 'package:lambda_dent_dash/services/navigation/router.dart';
 import 'package:lambda_dent_dash/components/site_layout.dart';
+import 'package:pie_menu/pie_menu.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   DioHelper.init();
   setupLocator();
-  
+
   // Initialize navigation service after setup
   final navigationService = locator<NavigationService>();
   runApp(const MyApp());
-  
+
   // Set initial title after app starts
   WidgetsBinding.instance.addPostFrameCallback((_) {
     navigationService.init();
