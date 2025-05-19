@@ -4,16 +4,13 @@ import 'package:lambda_dent_dash/components/default_textfield.dart';
 
 //import 'package:google_fonts/google_fonts.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
-import 'package:lambda_dent_dash/services/navigation/locator.dart';
-import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
-import 'package:lambda_dent_dash/services/navigation/routes.dart';
 
-class AuthenticationPage extends StatelessWidget {
+class RegisterPage extends StatelessWidget {
   // AdminLoginController adminAuth=Get.put(AdminLoginController());
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
 
-  AuthenticationPage({super.key});
+  RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +80,7 @@ class AuthenticationPage extends StatelessWidget {
                         height: 35,
                       ),
                       const Text(
-                        'تسجيل الدخول',
+                        'التسجيل',
                         style: TextStyle(
                             shadows: [
                               Shadow(
@@ -97,6 +94,69 @@ class AuthenticationPage extends StatelessWidget {
                       ),
                       Expanded(
                         child: Container(),
+                      ),
+                      TextField(
+                        controller: email,
+                        decoration: InputDecoration(
+                          labelText: "اسم المخبر",
+                          labelStyle: const TextStyle(color: white),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide: BorderSide(
+                                color: cyan200,
+                                width: 2,
+                              )),
+                          // hintText: "abc@domain.com",
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: cyan50,
+                              width: .5,
+                            ),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                      ),
+                      TextField(
+                        controller: email,
+                        decoration: InputDecoration(
+                          labelText: "اسم المدير",
+                          labelStyle: const TextStyle(color: white),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide: BorderSide(
+                                color: cyan200,
+                                width: 2,
+                              )),
+                          // hintText: "abc@domain.com",
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: cyan50,
+                              width: .5,
+                            ),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                      ),
+                      TextField(
+                        controller: email,
+                        decoration: InputDecoration(
+                          labelText: "اسم المخبر",
+                          labelStyle: const TextStyle(color: white),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide: BorderSide(
+                                color: cyan200,
+                                width: 2,
+                              )),
+                          // hintText: "abc@domain.com",
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: cyan50,
+                              width: .5,
+                            ),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
                       ),
                       TextField(
                         controller: email,
@@ -127,6 +187,30 @@ class AuthenticationPage extends StatelessWidget {
                         obscureText: true,
                         decoration: InputDecoration(
                           labelText: "كلمة السر",
+
+                          labelStyle: const TextStyle(color: white),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide: BorderSide(
+                                color: cyan200,
+                                width: 2,
+                              )),
+                          // hintText: "abc@domain.com",
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: cyan50,
+                              width: .5,
+                            ),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                      ),
+                      TextField(
+                        controller: password,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          labelText: "تأكيد كلمة السر",
+
                           labelStyle: const TextStyle(color: white),
                           focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(30),
@@ -147,51 +231,7 @@ class AuthenticationPage extends StatelessWidget {
                       const SizedBox(
                         height: 25,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              const Text(
-                                "تذكّرني",
-                                style: TextStyle(
-                                  shadows: [
-                                    Shadow(
-                                        color: Colors.black54,
-                                        blurRadius: 8,
-                                        offset: Offset(1, 1))
-                                  ],
-                                  color: white,
-                                ),
-                              ),
-                              Checkbox(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5)),
-                                value: true,
-                                onChanged: (value) {},
-                                //fillColor: WidgetStatePropertyAll(cyan500),
-                                checkColor: white,
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          TextButton(
-                              style: const ButtonStyle(
-                                  elevation: WidgetStatePropertyAll(0)),
-                              onPressed: () {},
-                              child: const Text(
-                                'هل نسيت كلمة السر؟',
-                                style: TextStyle(color: white, shadows: [
-                                  Shadow(
-                                      color: Colors.black54,
-                                      blurRadius: 8,
-                                      offset: Offset(1, 1))
-                                ]),
-                              ))
-                        ],
-                      ),
+
                       const SizedBox(
                         height: 25,
                       ),
@@ -261,10 +301,7 @@ class AuthenticationPage extends StatelessWidget {
                           TextButton(
                               style: const ButtonStyle(
                                   elevation: WidgetStatePropertyAll(0)),
-                              onPressed: () {
-                                locator<NavigationService>()
-                                    .navigateTo(registerPageRoute);
-                              },
+                              onPressed: () {},
                               child: const Text(
                                 'اطلب التسجيل الآن!',
                                 style: TextStyle(color: white, shadows: [
