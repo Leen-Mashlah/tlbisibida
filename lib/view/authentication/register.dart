@@ -1,3 +1,4 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/components/custom_text.dart';
 import 'package:lambda_dent_dash/components/default_textfield.dart';
@@ -9,6 +10,24 @@ class RegisterPage extends StatelessWidget {
   // AdminLoginController adminAuth=Get.put(AdminLoginController());
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  TextEditingController _addressController = TextEditingController();
+  final List<String> provincesList = [
+    'دمشق',
+    'ريف دمشق',
+    'القنيطرة',
+    'درعا',
+    'السويداء',
+    'حمص',
+    'حماة',
+    'اللاذقية',
+    'طرطوس',
+    'حلب',
+    'إدلب',
+    'الرقة',
+    'دير الزور',
+    'الحسكة',
+  ];
+  String selectedProvince = 'دمشق';
 
   RegisterPage({super.key});
 
@@ -63,24 +82,21 @@ class RegisterPage extends StatelessWidget {
                         ])),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
-                      vertical: 20.0, horizontal: 62),
+                      vertical: 15.0, horizontal: 62),
                   child: Column(
-                    mainAxisSize: MainAxisSize.min,
+                    // mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       const SizedBox(
-                        width: 200,
-                        height: 200,
+                        width: 100,
+                        height: 100,
                         child: Image(
                             image: AssetImage(
                           "assets/logo_v2.png",
                         )),
                       ),
-                      const SizedBox(
-                        height: 35,
-                      ),
                       const Text(
-                        'التسجيل',
+                        'إنشاء حساب',
                         style: TextStyle(
                             shadows: [
                               Shadow(
@@ -92,71 +108,58 @@ class RegisterPage extends StatelessWidget {
                             color: cyan50,
                             fontWeight: FontWeight.bold),
                       ),
-                      Expanded(
-                        child: Container(),
-                      ),
-                      TextField(
-                        controller: email,
-                        decoration: InputDecoration(
-                          labelText: "اسم المخبر",
-                          labelStyle: const TextStyle(color: white),
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
-                              borderSide: BorderSide(
-                                color: cyan200,
-                                width: 2,
-                              )),
-                          // hintText: "abc@domain.com",
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: cyan50,
-                              width: .5,
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: email,
+                              decoration: InputDecoration(
+                                labelText: "اسم المخبر",
+                                labelStyle: const TextStyle(color: white),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                    borderSide: BorderSide(
+                                      color: cyan200,
+                                      width: 2,
+                                    )),
+                                // hintText: "abc@domain.com",
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: cyan50,
+                                    width: .5,
+                                  ),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
                             ),
-                            borderRadius: BorderRadius.circular(20),
                           ),
-                        ),
-                      ),
-                      TextField(
-                        controller: email,
-                        decoration: InputDecoration(
-                          labelText: "اسم المدير",
-                          labelStyle: const TextStyle(color: white),
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
-                              borderSide: BorderSide(
-                                color: cyan200,
-                                width: 2,
-                              )),
-                          // hintText: "abc@domain.com",
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: cyan50,
-                              width: .5,
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: TextField(
+                              controller: email,
+                              decoration: InputDecoration(
+                                labelText: "اسم المدير",
+                                labelStyle: const TextStyle(color: white),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                    borderSide: BorderSide(
+                                      color: cyan200,
+                                      width: 2,
+                                    )),
+                                // hintText: "abc@domain.com",
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: cyan50,
+                                    width: .5,
+                                  ),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
                             ),
-                            borderRadius: BorderRadius.circular(20),
                           ),
-                        ),
-                      ),
-                      TextField(
-                        controller: email,
-                        decoration: InputDecoration(
-                          labelText: "اسم المخبر",
-                          labelStyle: const TextStyle(color: white),
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
-                              borderSide: BorderSide(
-                                color: cyan200,
-                                width: 2,
-                              )),
-                          // hintText: "abc@domain.com",
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: cyan50,
-                              width: .5,
-                            ),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
+                        ],
                       ),
                       TextField(
                         controller: email,
@@ -178,9 +181,6 @@ class RegisterPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20),
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 25,
                       ),
                       TextField(
                         controller: password,
@@ -228,12 +228,116 @@ class RegisterPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 25,
+                      TextField(
+                        controller: email,
+                        decoration: InputDecoration(
+                          labelText: "رقم الهاتف",
+                          labelStyle: const TextStyle(color: white),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide: BorderSide(
+                                color: cyan200,
+                                width: 2,
+                              )),
+                          // hintText: "abc@domain.com",
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: cyan50,
+                              width: .5,
+                            ),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
                       ),
-
-                      const SizedBox(
-                        height: 25,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 3,
+                            child: DropdownSearch<String>(
+                              decoratorProps: DropDownDecoratorProps(
+                                  baseStyle: TextStyle(color: Colors.white),
+                                  decoration: InputDecoration(
+                                      // labelText: 'المحافظة',
+                                      // labelStyle:
+                                      //     TextStyle(color: Colors.white),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: cyan50,
+                                          width: .5,
+                                        ),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      isCollapsed: true,
+                                      // label: Text('المحافظة'),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ))),
+                              mode: Mode.form,
+                              selectedItem: selectedProvince,
+                              onChanged: (value) {
+                                selectedProvince = value.toString();
+                              },
+                              items: (f, cs) => provincesList,
+                              suffixProps: DropdownSuffixProps(
+                                clearButtonProps:
+                                    ClearButtonProps(isVisible: false),
+                              ),
+                              dropdownBuilder: (context, selectedItem) {
+                                if (selectedItem == null) {
+                                  return SizedBox.shrink();
+                                }
+                                return ListTile(
+                                  titleAlignment: ListTileTitleAlignment.center,
+                                  title: Text(selectedItem,
+                                      style: TextStyle(color: white)),
+                                );
+                              },
+                              popupProps: PopupProps.menu(
+                                disableFilter: true,
+                                showSearchBox: true,
+                                showSelectedItems: true,
+                                itemBuilder:
+                                    (ctx, item, isDisabled, isSelected) {
+                                  return ListTile(
+                                    selected: isSelected,
+                                    title: Text(
+                                      item,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          //
+                          Expanded(
+                            flex: 4,
+                            child: TextField(
+                              controller: email,
+                              decoration: InputDecoration(
+                                labelText: "العنوان",
+                                labelStyle: const TextStyle(color: white),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                    borderSide: BorderSide(
+                                      color: cyan200,
+                                      width: 2,
+                                    )),
+                                // hintText: "abc@domain.com",
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: cyan50,
+                                    width: .5,
+                                  ),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       ElevatedButton(
                         onPressed: () {
@@ -274,48 +378,9 @@ class RegisterPage extends StatelessWidget {
                             //         valueColor:
                             //             AlwaysStoppedAnimation<Color>(Colors.white))
                             //
-                            text: "تسجيل الدخول",
+                            text: "إنشاء حساب",
                             color: cyan500),
                       ),
-                      const SizedBox(
-                        height: 25,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'لا تملك حساباً؟',
-                            style: TextStyle(
-                              color: cyan100,
-                              shadows: [
-                                Shadow(
-                                    color: Colors.black54,
-                                    blurRadius: 8,
-                                    offset: Offset(1, 1))
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          TextButton(
-                              style: const ButtonStyle(
-                                  elevation: WidgetStatePropertyAll(0)),
-                              onPressed: () {},
-                              child: const Text(
-                                'اطلب التسجيل الآن!',
-                                style: TextStyle(color: white, shadows: [
-                                  Shadow(
-                                      color: Colors.black54,
-                                      blurRadius: 8,
-                                      offset: Offset(1, 1))
-                                ]),
-                              ))
-                        ],
-                      ),
-                      // const SizedBox(
-                      //   height: 25,
-                      // )
                     ],
                   ),
                   // const SizedBox(
