@@ -98,6 +98,7 @@ Widget mydefaultButton(
 
 class EditProfileDialog extends StatefulWidget {
   const EditProfileDialog({
+  const EditProfileDialog({
     super.key,
   });
 

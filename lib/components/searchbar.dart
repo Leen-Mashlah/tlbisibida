@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
 
-Widget Searchbar(BuildContext context) {
+Widget searchBar(BuildContext context) {
   return Padding(
     padding: const EdgeInsets.only(bottom: 1.0),
     child: Row(

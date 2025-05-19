@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker_web/image_picker_web.dart';
 
@@ -26,9 +24,9 @@ Widget imagePicker(List<Image> images) {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
-                  child: image,
                   width: 100,
                   height: 100,
+                  child: image,
                 ),
               );
             }).toList(),
