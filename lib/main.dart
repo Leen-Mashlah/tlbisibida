@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:lambda_dent_dash/services/dio/dio.dart';
 import 'package:lambda_dent_dash/services/navigation/locator.dart';
@@ -31,6 +32,16 @@ class MyApp extends StatelessWidget {
       // Remove initialRoute to prevent double initialization
       onGenerateRoute: (settings) => generateRoute(settings),
       title: 'LambdaDent Admin Dashboard',
+      locale: const Locale('ar'),
+      supportedLocales: const [
+        Locale('ar'),
+        Locale('en'),
+      ],
+      localizationsDelegates: const [
+        GlobalCupertinoLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,

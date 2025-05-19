@@ -41,6 +41,7 @@ dependencies:
   choice:
   fl_chart: ^0.69.2
   pie_menu: ^2.0.2
+  cupertino_calendar_picker: ^2.2.4
   dropdown_search:
   percent_indicator:
   animated_checkmark: ^1.0.1

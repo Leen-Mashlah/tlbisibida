@@ -50,7 +50,7 @@ class TopNavigationBar extends StatelessWidget implements PreferredSizeWidget {
                   icon: const Icon(Icons.notifications_none_rounded),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 5.0, right: 10),
+                  padding: const EdgeInsets.only(left: 15.0, right: 10),
                   child: PieMenu(
                       theme: const PieTheme(
                           tooltipCanvasAlignment: Alignment.centerRight,
@@ -59,7 +59,7 @@ class TopNavigationBar extends StatelessWidget implements PreferredSizeWidget {
                           pointerColor: Colors.transparent,
                           overlayColor: Colors.transparent,
                           delayDuration: Duration.zero,
-                          customAngle: 247,
+                          customAngle: 247 + 70,
                           angleOffset: 10,
                           spacing: 3,
                           radius: 120,

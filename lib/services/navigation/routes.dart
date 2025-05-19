@@ -1,6 +1,6 @@
 const rootRoute = "/";
 
-const authenticationPageDisplayName = "Authentication";
+const authenticationPageDisplayName = "تسجيل الدخول";
 const authenticationPageRoute = "/auth";
 
 const homePageDisplayName = "الصفحة الرئيسية";

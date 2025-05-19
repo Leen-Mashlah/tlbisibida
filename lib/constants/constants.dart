@@ -16,7 +16,7 @@ const Color cyan_navbar_300 = Color.fromARGB(150, 48, 195, 177);
 const Color cyan200 = Color.fromARGB(255, 143, 229, 220);
 const Color cyan300 = Color.fromARGB(255, 48, 195, 177);
 const Color cyan400 = Color.fromARGB(255, 41, 157, 144);
-const Color cyan500 = Color.fromARGB(255, 18, 124, 114);
+const Color cyan500 = Color(0xFF127C72);
 const Color cyan600 = Color.fromARGB(255, 11, 71, 65);
 
 //Danger Reds
