@@ -71,9 +71,10 @@ class TopNavigationBar extends StatelessWidget implements PreferredSizeWidget {
                         PieAction(
                             tooltip: const SizedBox(),
                             onSelect: () {
-                              navigationService.navigateTo(settingsPageRoute);
+                              navigationService.navigateTo(employeesPageRoute);
                             },
-                            child: const Icon(Icons.settings_rounded)),
+                            child: const Icon(CupertinoIcons
+                                .rectangle_stack_person_crop_fill)),
                         PieAction(
                           tooltip: const SizedBox(),
                           onSelect: () {
