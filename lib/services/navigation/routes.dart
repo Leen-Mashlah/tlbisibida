@@ -14,7 +14,7 @@ const billsPageRoute = "/bills";
 
 const casesPageDisplayName = "الحالات";
 const casesPageRoute = "/cases";
-const caseDetailsPageDisplayName = 'تفاصيلل الحالة';
+const caseDetailsPageDisplayName = 'تفاصيل الحالة';
 const caseDetailsPageRoute = '/case_details';
 
 const clientPageDisplayName = "الزبائن";

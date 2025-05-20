@@ -20,7 +20,7 @@ Dialog CatManagementDialog(BuildContext context) {
               border: Border.all(width: 2, color: cyan200),
               borderRadius: BorderRadius.circular(20)),
           width: MediaQuery.of(context).size.width / 3,
-          height: MediaQuery.of(context).size.height / 1.3,
+          height: MediaQuery.of(context).size.height / 2,
           child: CustomScrollView(slivers: [
             SliverFillRemaining(
               child: Padding(
@@ -44,42 +44,6 @@ Dialog CatManagementDialog(BuildContext context) {
                     ),
                     Row(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            IconButton(
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return catDeleteConfirmationDialog(
-                                            context);
-                                      });
-                                },
-                                icon: Icon(Icons.delete_outline_rounded)),
-                            IconButton(
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return editCatDialog(context);
-                                      });
-                                },
-                                icon: Icon(Icons.edit_note_rounded)),
-                            IconButton(
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return addCatDialog(context);
-                                      });
-                                },
-                                icon: Icon(Icons.post_add_rounded)),
-                          ],
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
                         DropdownMenu<String>(
                             //initialSelection: menuItems.first,
                             width: MediaQuery.of(context).size.width / 5 - 16,
@@ -108,18 +72,9 @@ Dialog CatManagementDialog(BuildContext context) {
                                   value: 'صنف3', label: 'بودرة خزف'),
                               DropdownMenuEntry(value: 'صنف4', label: 'شمع'),
                             ]),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      height: 1,
-                      width: 100,
-                      color: cyan300,
-                    ),
-                    Row(
-                      children: [
+                        SizedBox(
+                          width: 20,
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -128,34 +83,49 @@ Dialog CatManagementDialog(BuildContext context) {
                                   showDialog(
                                       context: context,
                                       builder: (context) {
-                                        return subcatDeleteConfirmationDialog(
+                                        return addCatDialog(context);
+                                      });
+                                },
+                                icon: Icon(
+                                  Icons.post_add_rounded,
+                                  color: cyan600,
+                                )),
+                            IconButton(
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return editCatDialog(
+                                          context,
+                                        );
+                                      });
+                                },
+                                icon: Icon(
+                                  Icons.edit_note_rounded,
+                                  color: cyan300,
+                                )),
+                            IconButton(
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return catDeleteConfirmationDialog(
                                             context);
                                       });
                                 },
-                                icon: Icon(Icons.delete_outline_rounded)),
-                            IconButton(
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return editSubcatDialog(context);
-                                      });
-                                },
-                                icon: Icon(Icons.edit_note_rounded)),
-                            IconButton(
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return addSubcatDialog(context);
-                                      });
-                                },
-                                icon: Icon(Icons.post_add_rounded)),
+                                icon: Icon(
+                                  Icons.delete_outline_rounded,
+                                  color: redmain,
+                                )),
                           ],
                         ),
-                        SizedBox(
-                          width: 20,
-                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
                         DropdownMenu<String>(
                             //initialSelection: menuItems.first,
                             //width: MediaQuery.of(context).size.width - 16.0,
@@ -184,6 +154,53 @@ Dialog CatManagementDialog(BuildContext context) {
                                   value: 'صنف4', label: 'عالي شفوفية'),
                               DropdownMenuEntry(value: 'صنف5', label: 'كتيم'),
                             ]),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return addSubcatDialog(context);
+                                      });
+                                },
+                                icon: Icon(
+                                  Icons.post_add_rounded,
+                                  color: cyan600,
+                                )),
+                            IconButton(
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return editSubcatDialog(
+                                          context,
+                                        );
+                                      });
+                                },
+                                icon: Icon(
+                                  Icons.edit_note_rounded,
+                                  color: cyan300,
+                                )),
+                            IconButton(
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return subcatDeleteConfirmationDialog(
+                                            context);
+                                      });
+                                },
+                                icon: Icon(
+                                  Icons.delete_outline_rounded,
+                                  color: redmain,
+                                )),
+                          ],
+                        ),
                       ],
                     ),
                     const SizedBox(

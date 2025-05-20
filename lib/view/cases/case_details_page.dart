@@ -13,44 +13,40 @@ class CaseDetails extends StatelessWidget {
         body: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width - 80,
-                  child: Row(
+              padding: const EdgeInsets.only(
+                  left: 40, right: 40, top: 10, bottom: 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CaseProcessTimeline(),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Container(
                         clipBehavior: Clip.antiAlias,
                         width: 400,
-                        height: MediaQuery.of(context).size.height / 1.3,
+                        height: (MediaQuery.of(context).size.height / 1.3) - 50,
                         decoration: BoxDecoration(
                             color: cyan300,
                             border: Border.all(color: cyan300, width: .5),
                             borderRadius: BorderRadius.circular(50)),
                         child: const CaseDetailsTable(),
                       ),
-                      Column(
-                        children: [
-                          CaseProcessTimeline(),
-                          Container(
-                            width: 400,
-                            height:
-                                (MediaQuery.of(context).size.height / 1.3) - 50,
-                            decoration: BoxDecoration(
-                                color: cyan300,
-                                border: Border.all(color: cyan300, width: .5),
-                                borderRadius: BorderRadius.circular(50)),
-                            child: Image.asset(
-                              fit: BoxFit.fill,
-                              'diagram.jpg',
-                              errorBuilder: (context, error, stackTrace) {
-                                return Icon(Icons.do_not_disturb_outlined);
-                              },
-                            ),
-                          ),
-                        ],
+                      Container(
+                        clipBehavior: Clip.antiAlias,
+                        width: 350,
+                        height: (MediaQuery.of(context).size.height / 1.3) - 50,
+                        decoration: BoxDecoration(
+                            color: cyan300,
+                            border: Border.all(color: cyan300, width: .5),
+                            borderRadius: BorderRadius.circular(50)),
+                        child: Image.asset(
+                          fit: BoxFit.fill,
+                          'diagram.jpg',
+                          errorBuilder: (context, error, stackTrace) {
+                            return Icon(Icons.do_not_disturb_outlined);
+                          },
+                        ),
                       ),
                       Container(
                         decoration: BoxDecoration(
@@ -58,7 +54,7 @@ class CaseDetails extends StatelessWidget {
                             border: Border.all(color: cyan500, width: .5),
                             borderRadius: BorderRadius.circular(50)),
                         width: 400,
-                        height: MediaQuery.of(context).size.height / 1.3,
+                        height: (MediaQuery.of(context).size.height / 1.3) - 50,
                         child: SingleChildScrollView(
                           child: Column(
                             children: [
@@ -281,7 +277,7 @@ class CaseDetails extends StatelessWidget {
                       ),
                     ],
                   ),
-                ),
+                ],
               ),
             ),
             Positioned(
@@ -318,7 +314,7 @@ class CaseDetails extends StatelessWidget {
                             ],
                           ),
                           onPressed: () {
-                            Scaffold.of(context).openEndDrawer();
+                            Scaffold.of(context).openDrawer();
                           },
                         ),
                       ],
@@ -327,7 +323,7 @@ class CaseDetails extends StatelessWidget {
                 )),
           ],
         ),
-        endDrawer: Drawer(
+        drawer: Drawer(
           width: MediaQuery.of(context).size.width / 3,
           child: Column(
             children: [
@@ -347,9 +343,13 @@ class CaseDetails extends StatelessWidget {
                   ),
                 ),
               ),
-              Spacer(),
+              Spacer(
+                flex: 2,
+              ),
               Expanded(
+                flex: 1,
                 child: ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
                     padding: EdgeInsets.zero, // Ensure no extra padding
                     itemCount: messages.length,
                     itemBuilder: (context, index) =>
@@ -361,10 +361,17 @@ class CaseDetails extends StatelessWidget {
                         .viewInsets
                         .bottom), // Accounts for keyboard height
                 child: MessageBar(
-                  messageBarHintText: 'اكتب تعليقك هنا',
-                  sendButtonColor: cyan400,
-                  onSend: (_) => print(_),
-                ),
+                    messageBarHintText: 'اكتب تعليقك هنا',
+                    sendButtonColor: cyan400,
+                    onSend: (_) {
+                      messages.add({
+                        'text': _,
+                        'color': cyan400,
+                        'tail': true,
+                        'isSender': true
+                      });
+                      print(_);
+                    }),
               ),
             ],
           ),
