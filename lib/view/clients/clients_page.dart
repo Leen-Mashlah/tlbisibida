@@ -6,7 +6,6 @@ import 'package:lambda_dent_dash/view/clients/components/tables/client_requests_
 import 'package:lambda_dent_dash/view/clients/components/tables/clients_table.dart';
 import 'package:lambda_dent_dash/view/clients/components/dialogs/add_client_dialog.dart';
 
-
 class ClientsPage extends StatelessWidget {
   ClientsPage({super.key});
 
@@ -47,7 +46,7 @@ class ClientsPage extends StatelessWidget {
                           onSelected: state.onSelected(
                               choices[i] == 'registered' ? true : false),
                           label: Text(choices[i] == 'registered'
-                              ? 'الأطباء المسجلين'
+                              ? 'الزبائن'
                               : 'طلبات الانضمام'),
                         );
                       },

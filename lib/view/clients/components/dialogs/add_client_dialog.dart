@@ -20,7 +20,7 @@ class AddClientDialog extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               const Text(
-                'إضافة طبيب محلياً',
+                'إضافة زبون محلياً',
                 style: TextStyle(fontSize: 20),
               ),
               const SizedBox(
@@ -39,7 +39,7 @@ class AddClientDialog extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    defaultTextField(titleController, context, 'اسم الطبيب'),
+                    defaultTextField(titleController, context, 'اسم الزبون'),
                     const SizedBox(
                       height: 20,
                     ),
