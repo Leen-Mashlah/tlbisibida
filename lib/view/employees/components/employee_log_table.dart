@@ -30,7 +30,7 @@ class EmployeeLogTable extends StatelessWidget {
             DataColumn(
               label: Center(
                   child: Text(
-                'تاريخ التسريح',
+                'الاسم',
                 style: TextStyle(color: cyan300),
               )),
             ),
@@ -44,7 +44,7 @@ class EmployeeLogTable extends StatelessWidget {
             DataColumn(
               label: Center(
                   child: Text(
-                'الاسم',
+                'تاريخ التسريح',
                 style: TextStyle(color: cyan300),
               )),
             ),
@@ -53,14 +53,14 @@ class EmployeeLogTable extends StatelessWidget {
             20,
             (index) => const DataRow(
               cells: [
-                DataCell(Center(child: CustomText(text: '8/8/2024'))),
-                DataCell(Center(child: CustomText(text: '7/8/2024'))),
                 DataCell(Center(
                     child: CustomText(
                   alignment: TextAlign.center,
                   text: 'تحسين التحسيني',
                   size: 14,
                 ))),
+                DataCell(Center(child: CustomText(text: '7/8/2024'))),
+                DataCell(Center(child: CustomText(text: '8/8/2024'))),
               ],
             ),
           ),
