@@ -16,8 +16,7 @@ class PaymentsLogTable extends StatelessWidget {
           color: Colors.white,
           border: Border.all(color: cyan200, width: .5),
           boxShadow: const [
-            BoxShadow(
-                offset: Offset(0, 6), color: Colors.grey, blurRadius: 12)
+            BoxShadow(offset: Offset(0, 6), color: Colors.grey, blurRadius: 12)
           ],
           borderRadius: BorderRadius.circular(8),
         ),
@@ -36,28 +35,7 @@ class PaymentsLogTable extends StatelessWidget {
                 DataColumn(
                   label: Center(
                       child: Text(
-                    'تاريخ الشراء',
-                    style: TextStyle(color: cyan300),
-                  )),
-                ),
-                DataColumn(
-                  label: Center(
-                      child: Text(
-                    'البائع',
-                    style: TextStyle(color: cyan300),
-                  )),
-                ),
-                DataColumn(
-                  label: Center(
-                      child: Text(
-                    'المجموع',
-                    style: TextStyle(color: cyan300),
-                  )),
-                ),
-                DataColumn(
-                  label: Center(
-                      child: Text(
-                    'سعر العنصر الواحد',
+                    'اسم العنصر',
                     style: TextStyle(color: cyan300),
                   )),
                 ),
@@ -71,7 +49,21 @@ class PaymentsLogTable extends StatelessWidget {
                 DataColumn(
                   label: Center(
                       child: Text(
-                    'اسم العنصر',
+                    'سعر العنصر الواحد',
+                    style: TextStyle(color: cyan300),
+                  )),
+                ),
+                DataColumn(
+                  label: Center(
+                      child: Text(
+                    'المجموع',
+                    style: TextStyle(color: cyan300),
+                  )),
+                ),
+                DataColumn(
+                  label: Center(
+                      child: Text(
+                    'تاريخ الشراء',
                     style: TextStyle(color: cyan300),
                   )),
                 ),
@@ -93,28 +85,24 @@ class PaymentsLogTable extends StatelessWidget {
                     //     color: cyan300,
                     //   ),
                     // ))),
-                    DataCell(Center(child: CustomText(text: '5/11/2024'))),
+                    DataCell(Center(
+                        child: CustomText(
+                      text: 'امريكي',
+                    ))),
 
-                    DataCell(Center(
-                        child: CustomText(
-                      text: 'تحسين',
-                    ))),
-                    DataCell(Center(
-                        child: CustomText(
-                      text: '50.000',
-                    ))),
-                    DataCell(Center(
-                        child: CustomText(
-                      text: '50.000',
-                    ))),
                     DataCell(Center(
                         child: CustomText(
                       text: '50',
                     ))),
                     DataCell(Center(
                         child: CustomText(
-                      text: 'امريكي',
+                      text: '50,000',
                     ))),
+                    DataCell(Center(
+                        child: CustomText(
+                      text: '250,000',
+                    ))),
+                    DataCell(Center(child: CustomText(text: '5/11/2024'))),
                   ],
                 ),
               ),

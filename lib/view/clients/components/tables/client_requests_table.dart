@@ -37,14 +37,7 @@ class ClientsReqTable extends StatelessWidget {
                 DataColumn(
                   label: Center(
                       child: Text(
-                    'تأكيد الإضافة',
-                    style: TextStyle(color: cyan300),
-                  )),
-                ),
-                DataColumn(
-                  label: Center(
-                      child: Text(
-                    'تاريخ إرسال الطلب',
+                    'اسم الطبيب',
                     style: TextStyle(color: cyan300),
                   )),
                 ),
@@ -65,7 +58,14 @@ class ClientsReqTable extends StatelessWidget {
                 DataColumn(
                   label: Center(
                       child: Text(
-                    'اسم الطبيب',
+                    'تاريخ إرسال الطلب',
+                    style: TextStyle(color: cyan300),
+                  )),
+                ),
+                DataColumn(
+                  label: Center(
+                      child: Text(
+                    'تأكيد الإضافة',
                     style: TextStyle(color: cyan300),
                   )),
                 ),
@@ -74,6 +74,15 @@ class ClientsReqTable extends StatelessWidget {
                 50,
                 (index) => DataRow(
                   cells: [
+                    const DataCell(Center(
+                        child: CustomText(
+                      text: 'تحسين',
+                    ))),
+                    const DataCell(Center(child: CustomText(text: 'هونولولو'))),
+                    const DataCell(
+                        Center(child: CustomText(text: '0992532588'))),
+                    const DataCell(
+                        Center(child: CustomText(text: '9/10/2024'))),
                     DataCell(Center(
                         child: IconButton(
                       onPressed: () {
@@ -87,15 +96,6 @@ class ClientsReqTable extends StatelessWidget {
                         Icons.check_circle_outline,
                         color: cyan300,
                       ),
-                    ))),
-                    const DataCell(
-                        Center(child: CustomText(text: '9/10/2024'))),
-                    const DataCell(
-                        Center(child: CustomText(text: '0992532588'))),
-                    const DataCell(Center(child: CustomText(text: 'هونولولو'))),
-                    const DataCell(Center(
-                        child: CustomText(
-                      text: 'تحسين',
                     ))),
                   ],
                 ),

@@ -38,7 +38,7 @@ class ClientCasesTable extends StatelessWidget {
                 DataColumn(
                   label: Center(
                       child: Text(
-                    'التفاصيل',
+                    'اسم المريض',
                     style: TextStyle(color: cyan300),
                   )),
                 ),
@@ -52,14 +52,14 @@ class ClientCasesTable extends StatelessWidget {
                 DataColumn(
                   label: Center(
                       child: Text(
-                    'اسم المريض',
+                    'تاريخ الحالة',
                     style: TextStyle(color: cyan300),
                   )),
                 ),
                 DataColumn(
                   label: Center(
                       child: Text(
-                    'تاريخ الحالة',
+                    'التفاصيل',
                     style: TextStyle(color: cyan300),
                   )),
                 ),
@@ -68,6 +68,13 @@ class ClientCasesTable extends StatelessWidget {
                 50,
                 (index) => DataRow(
                   cells: [
+                    const DataCell(Center(child: CustomText(text: 'تحسين'))),
+                    const DataCell(Center(
+                        child: CustomText(
+                      text: 'جاهزة',
+                    ))),
+                    const DataCell(
+                        Center(child: CustomText(text: '5/11/2024'))),
                     DataCell(Center(
                         child: IconButton(
                       onPressed: () {
@@ -79,13 +86,6 @@ class ClientCasesTable extends StatelessWidget {
                         color: cyan300,
                       ),
                     ))),
-                    const DataCell(Center(
-                        child: CustomText(
-                      text: 'جاهزة',
-                    ))),
-                    const DataCell(Center(child: CustomText(text: 'تحسين'))),
-                    const DataCell(
-                        Center(child: CustomText(text: '5/11/2024'))),
                   ],
                 ),
               ),
