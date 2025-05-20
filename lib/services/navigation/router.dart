@@ -5,8 +5,8 @@ import 'package:lambda_dent_dash/services/navigation/routes.dart';
 import 'package:lambda_dent_dash/view/authentication/authentication.dart';
 import 'package:lambda_dent_dash/view/authentication/register.dart';
 import 'package:lambda_dent_dash/view/bills/bills_page.dart';
-import 'package:lambda_dent_dash/view/cases/case_details_page.dart';
-import 'package:lambda_dent_dash/view/cases/cases_list_page.dart';
+import 'package:lambda_dent_dash/view/cases/pages/case_details_page.dart';
+import 'package:lambda_dent_dash/view/cases/pages/cases_list_page.dart';
 import 'package:lambda_dent_dash/view/clients/client_details_page.dart';
 import 'package:lambda_dent_dash/view/clients/clients_page.dart';
 import 'package:lambda_dent_dash/view/employees/emplyoees_page.dart';
@@ -38,8 +38,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     //Cases
     case casesPageRoute:
       return _getPageRoute(const CasesListPage(), casesPageDisplayName);
+
     case caseDetailsPageRoute:
       return _getPageRoute(CaseDetails(), caseDetailsPageDisplayName);
+
+    case addCasePageRoute:
+      return _getPageRoute(CaseDetails(), addCasePageDisplayName);
 
     //Clients
     case clientPageRoute:
