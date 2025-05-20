@@ -20,11 +20,12 @@ class CasesListPage extends StatelessWidget {
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    _column('To Do', const Icon(Icons.checklist), cyan400),
-                    _column('In Progress',
+                    _column(
+                        'لم تنجز بعد', const Icon(Icons.checklist), cyan400),
+                    _column('قيد الإنجاز',
                         const Icon(Icons.work_history_rounded), Colors.amber),
-                    _column('Need Confirmation',
-                        const Icon(Icons.warning_rounded), Colors.redAccent),
+                    _column('بحاجة موافقة', const Icon(Icons.warning_rounded),
+                        Colors.redAccent),
                     // _columnEntity(),
                   ]),
             ),
@@ -112,11 +113,11 @@ Widget _itembuilder(
             const SizedBox(
               height: 10,
             ),
-            const Text('Client Name'),
+            const Text('الطبيب: د. تحسين التحسيني'),
             const SizedBox(
               height: 10,
             ),
-            const Text('Patient Name'),
+            const Text('المريض: اسماعيل أحمد كنباوي'),
             const SizedBox(
               height: 10,
             ),

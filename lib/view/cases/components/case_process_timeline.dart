@@ -11,11 +11,11 @@ const inProgressColor = cyan300;
 const todoColor = Color(0xffd1d2d7);
 
 const _processes = [
-  'Ordered',
-  'Confirmed',
-  'In Progress',
-  'Ready',
-  'Delivered',
+  'الطلب',
+  'تم التأكيد',
+  'قيد الإنجاز',
+  'جاهزة',
+  'تم التسليم',
 ];
 
 class CaseProcessTimeline extends StatefulWidget {
@@ -41,10 +41,11 @@ class _CaseProcessTimelineState extends State<CaseProcessTimeline> {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
           height: 100,
-          width: MediaQuery.of(context).size.width / 4.5,
+          width: MediaQuery.of(context).size.width / 5.5,
           child: Timeline.tileBuilder(
             theme: TimelineThemeData(
               direction: Axis.horizontal,
@@ -56,7 +57,7 @@ class _CaseProcessTimelineState extends State<CaseProcessTimeline> {
             builder: TimelineTileBuilder.connected(
               connectionDirection: ConnectionDirection.before,
               itemExtentBuilder: (_, __) =>
-                  MediaQuery.of(context).size.width / 4.5 / _processes.length,
+                  MediaQuery.of(context).size.width / 5.5 / _processes.length,
               oppositeContentsBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 15.0),
@@ -137,13 +138,13 @@ class _CaseProcessTimelineState extends State<CaseProcessTimeline> {
                     List<Color> gradientColors;
                     if (type == ConnectorType.start) {
                       gradientColors = [
+                        color,
                         Color.lerp(prevColor, color, 0.5)!,
-                        color
                       ];
                     } else {
                       gradientColors = [
+                        Color.lerp(prevColor, color, 0.5)!,
                         prevColor,
-                        Color.lerp(prevColor, color, 0.5)!
                       ];
                     }
                     return DecoratedLineConnector(
