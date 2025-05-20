@@ -153,12 +153,13 @@ class AddBillDialog extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(
-                        height: 30,
+                        height: 15,
                       ),
                     ],
                   ),
                 ),
               ),
+              SizedBox(height: 10),
               defaultButton(
                   text: 'إرسال',
                   function: () {
