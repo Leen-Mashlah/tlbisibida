@@ -18,8 +18,7 @@ class ClientBillsTable extends StatelessWidget {
           color: Colors.white,
           border: Border.all(color: cyan200, width: .5),
           boxShadow: const [
-            BoxShadow(
-                offset: Offset(0, 6), color: Colors.grey, blurRadius: 12)
+            BoxShadow(offset: Offset(0, 6), color: Colors.grey, blurRadius: 12)
           ],
           borderRadius: BorderRadius.circular(8),
         ),
@@ -38,13 +37,6 @@ class ClientBillsTable extends StatelessWidget {
                 DataColumn(
                   label: Center(
                       child: Text(
-                    'التفاصيل',
-                    style: TextStyle(color: cyan300),
-                  )),
-                ),
-                DataColumn(
-                  label: Center(
-                      child: Text(
                     'رقم الفاتورة',
                     style: TextStyle(color: cyan300),
                   )),
@@ -56,11 +48,24 @@ class ClientBillsTable extends StatelessWidget {
                     style: TextStyle(color: cyan300),
                   )),
                 ),
+                DataColumn(
+                  label: Center(
+                      child: Text(
+                    'التفاصيل',
+                    style: TextStyle(color: cyan300),
+                  )),
+                ),
               ],
               rows: List<DataRow>.generate(
                 50,
                 (index) => DataRow(
                   cells: [
+                    const DataCell(Center(
+                        child: CustomText(
+                      text: '001',
+                    ))),
+                    const DataCell(
+                        Center(child: CustomText(text: '5/11/2024'))),
                     DataCell(Center(
                         child: IconButton(
                       onPressed: () {
@@ -74,11 +79,6 @@ class ClientBillsTable extends StatelessWidget {
                         color: cyan300,
                       ),
                     ))),
-                    const DataCell(Center(
-                        child: CustomText(
-                      text: '001',
-                    ))),
-                    const DataCell(Center(child: CustomText(text: '5/11/2024'))),
                   ],
                 ),
               ),

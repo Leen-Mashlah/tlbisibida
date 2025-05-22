@@ -28,134 +28,147 @@ class ClientDetailsPage extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(18.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  width: 300,
-                  child: InlineChoice<bool>.single(
-                      value: _iscase.value,
-                      onChanged: (value) {
-                        value == null ? value = false : value = value;
-                        _iscase.value = value;
-                      },
-                      clearable: false,
-                      itemCount: choices.length,
-                      itemBuilder: (state, i) {
-                        return ChoiceChip(
-                          selectedColor: cyan200,
-                          side: const BorderSide(color: cyan300),
-                          selected: state
-                              .selected(choices[i] == 'cases' ? true : false),
-                          onSelected: state
-                              .onSelected(choices[i] == 'cases' ? true : false),
-                          label: Text(
-                              choices[i] == 'cases' ? 'الحالات' : 'الفواتير'),
-                        );
-                      },
-                      listBuilder: ChoiceList.createWrapped(
-                          runAlignment: WrapAlignment.center,
-                          alignment: WrapAlignment.center,
-                          direction: Axis.horizontal,
-                          textDirection: TextDirection.rtl,
-                          //spacing: 10,
-                          //runSpacing: 10,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 5,
-                          ))),
-                ),
-                const SizedBox(
-                  width: 30,
-                ),
-                Row(
-                  children: [
-                    // TextButton(
-                    //     onPressed: () {
-                    //       showDialog(
-                    //         context: context,
-                    //         builder: (context) => paymentLogDialog(context),
-                    //       );
-                    //     },
-                    //     child: const Text('300.000.000')),
-                    showpaymentlog(context),
-                    // Text(
-                    //   '3.000.000',
-                    //   style: TextStyle(fontSize: 18),
-                    // ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    const Icon(Icons.credit_card_rounded)
-                  ],
-                ),
-                const SizedBox(
-                  width: 30,
-                ),
-                const Row(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          'دمشق والسبع بحرات',
-                          style: TextStyle(fontSize: 14),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Icon(Icons.location_on_rounded)
-                      ],
-                    ),
-                    SizedBox(
-                      width: 35,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          '0945454545',
-                          style: TextStyle(
-                            fontSize: 14,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Icon(Icons.phone_rounded)
-                      ],
-                    ),
-                    SizedBox(
-                      width: 35,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Text(
-                          'تحسين التحسيني',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Icon(Icons.person_2_rounded),
-                      ],
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                        color: cyan500,
-                        borderRadius: BorderRadius.circular(50),
-                        border: Border.all(
-                          color: cyan300,
-                          width: .5,
-                        )),
+            child: Directionality(
+              textDirection: TextDirection.ltr,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: 300,
+                    child: InlineChoice<bool>.single(
+                        value: _iscase.value,
+                        onChanged: (value) {
+                          value == null ? value = false : value = value;
+                          _iscase.value = value;
+                        },
+                        clearable: false,
+                        itemCount: choices.length,
+                        itemBuilder: (state, i) {
+                          return ChoiceChip(
+                            selectedColor: cyan200,
+                            side: const BorderSide(color: cyan300),
+                            selected: state
+                                .selected(choices[i] == 'cases' ? true : false),
+                            onSelected: state.onSelected(
+                                choices[i] == 'cases' ? true : false),
+                            label: Text(
+                                choices[i] == 'cases' ? 'الحالات' : 'الفواتير'),
+                          );
+                        },
+                        listBuilder: ChoiceList.createWrapped(
+                            runAlignment: WrapAlignment.center,
+                            alignment: WrapAlignment.center,
+                            direction: Axis.horizontal,
+                            textDirection: TextDirection.rtl,
+                            //spacing: 10,
+                            //runSpacing: 10,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 5,
+                            ))),
                   ),
-                ),
-              ],
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  Row(
+                    children: [
+                      // TextButton(
+                      //     onPressed: () {
+                      //       showDialog(
+                      //         context: context,
+                      //         builder: (context) => paymentLogDialog(context),
+                      //       );
+                      //     },
+                      //     child: const Text('300.000.000')),
+                      showpaymentlog(context),
+                      // Text(
+                      //   '3.000.000',
+                      //   style: TextStyle(fontSize: 18),
+                      // ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      const Icon(
+                        Icons.credit_card_rounded,
+                        color: cyan500,
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  const Row(
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            'دمشق - السبع بحرات',
+                            style: TextStyle(fontSize: 14, color: cyan600),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Icon(
+                            Icons.location_on_rounded,
+                            color: cyan500,
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        width: 35,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            '0945454545',
+                            style: TextStyle(fontSize: 14, color: cyan600),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Icon(
+                            Icons.phone_rounded,
+                            color: cyan500,
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        width: 35,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text(
+                            'تحسين التحسيني',
+                            style: TextStyle(fontSize: 18, color: cyan600),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Icon(
+                            Icons.person_2_rounded,
+                            color: cyan500,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: Container(
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                          color: cyan500,
+                          borderRadius: BorderRadius.circular(50),
+                          border: Border.all(
+                            color: cyan300,
+                            width: .5,
+                          )),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           const SizedBox(
@@ -205,7 +218,7 @@ class ClientDetailsPage extends StatelessWidget {
                     builder: (context) => paymentLogDialog(context),
                   );
                 },
-                child: const Text('300.000.000'))),
+                child: const Text('300,000,000'))),
       ),
     );
   }
