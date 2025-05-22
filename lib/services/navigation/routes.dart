@@ -6,6 +6,12 @@ const authenticationPageRoute = "/auth";
 const registerPageDisplayName = "طلب التسجيل";
 const registerPageRoute = "/register";
 
+const register2PageDisplayName = "متابعة طلب التسجيل";
+const register2PageRoute = "/register2";
+
+const rolePageDisplayName = "";
+const rolePageRoute = "/role";
+
 const homePageDisplayName = "الصفحة الرئيسية";
 const homePageRoute = "/home";
 
