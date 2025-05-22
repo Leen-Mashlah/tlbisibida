@@ -44,6 +44,9 @@ const profilePageRoute = '/profile';
 const settingsPageDisplayName = 'الإعدادات';
 const settingsPageRoute = '/settings';
 
+const emailVerificationDisplayName = 'التحقق من البريد الإلكتروني';
+const emailVerificationPageRoute = '/verify-email';
+
 
 // class MenuItem {
 //   final String name;

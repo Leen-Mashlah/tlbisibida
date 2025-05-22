@@ -1,4 +1,3 @@
-import 'package:animated_checkmark/animated_checkmark.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
@@ -26,7 +25,7 @@ class CustomChoiceItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return DottedBorder(
       color: cyan500,
-      dashPattern: [7, 2],
+      dashPattern: const [7, 2],
       borderType: BorderType.Circle,
       child: AnimatedContainer(
         width: width,
@@ -40,7 +39,7 @@ class CustomChoiceItem extends StatelessWidget {
                   colors: [cyan500, cyan300],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter)
-              : SweepGradient(
+              : const SweepGradient(
                   colors: [cyan100, cyan200, cyan300],
                   center: Alignment.topCenter),
           // : const RadialGradient(

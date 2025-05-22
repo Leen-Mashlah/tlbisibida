@@ -1,19 +1,15 @@
-// import 'package:fl_chart_app/presentation/resources/app_resources.dart';
 import 'package:fl_chart/fl_chart.dart';
-// import 'package:fl_chart_app/presentation/widgets/indicator.dart';
 import 'package:flutter/material.dart';
-//  Assuming this contains your Indicator widget
 import 'package:intl/intl.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
-import 'package:lambda_dent_dash/view/statistics/components/charts/indicator.dart'; // Import for number formatting
-// import 'dart:math'; // Import for random number generation (not needed for this approach)
+import 'package:lambda_dent_dash/view/statistics/components/charts/indicator.dart';
 
-// Define a class to hold the data for each section
+
 class ChartData {
   final String text;
   final double value;
-  final double count; // Added count field
-  final Color color; // Color is now assigned dynamically
+  final double count;
+  final Color color; 
 
   ChartData(
       {required this.text,
@@ -23,13 +19,12 @@ class ChartData {
 }
 
 class InventoryCountChart extends StatefulWidget {
-  // Make rawChartData a required parameter
   const InventoryCountChart({
     super.key,
     required this.rawChartData,
   });
 
-  final List<Map<String, dynamic>> rawChartData; // Dynamic data input
+  final List<Map<String, dynamic>> rawChartData;
 
   @override
   State<StatefulWidget> createState() => InventoryCountChartState();

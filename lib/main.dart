@@ -6,8 +6,6 @@ import 'package:lambda_dent_dash/services/navigation/locator.dart';
 import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
 import 'package:lambda_dent_dash/services/navigation/router.dart';
 import 'package:lambda_dent_dash/components/site_layout.dart';
-import 'package:lambda_dent_dash/view/authentication/authentication.dart';
-import 'package:pie_menu/pie_menu.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,6 +1,7 @@
 import 'package:chat_bubbles/bubbles/bubble_special_three.dart';
 import 'package:chat_bubbles/message_bars/message_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:lambda_dent_dash/components/image_gallery.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:lambda_dent_dash/view/cases/components/case_details_table.dart';
 import 'package:lambda_dent_dash/view/cases/components/case_process_timeline.dart';
@@ -37,15 +38,25 @@ class CaseDetails extends StatelessWidget {
                         width: 350,
                         height: (MediaQuery.of(context).size.height / 1.3) - 50,
                         decoration: BoxDecoration(
-                            color: cyan300,
+                            color: cyan200,
                             border: Border.all(color: cyan300, width: .5),
                             borderRadius: BorderRadius.circular(50)),
-                        child: Image.asset(
-                          fit: BoxFit.fill,
-                          'diagram.jpg',
-                          errorBuilder: (context, error, stackTrace) {
-                            return Icon(Icons.do_not_disturb_outlined);
-                          },
+                        // child: Image.asset(
+                        //   fit: BoxFit.fill,
+                        //   'diagram.jpg',
+                        //   errorBuilder: (context, error, stackTrace) {
+                        //     return Icon(Icons.do_not_disturb_outlined);
+                        //   },
+                        // ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: ImageGallery(imageUrls: [
+                            'https://picsum.photos/200/300',
+                            'https://files.gamebanana.com/bitpit/diagram.jpg',
+                            'https://traveltodentist.com/wp-content/uploads/2020/04/dinti-noi-zirconiu-ceramica.jpg',
+                            'https://traveltodentist.com/wp-content/uploads/2020/04/dinti-afectati-de-parodontoza-1.jpg',
+                            'https://traveltodentist.com/wp-content/uploads/2020/04/caz-clinic-inainte-si-dupa-tratament-parodontoza-moldova.jpg',
+                          ]),
                         ),
                       ),
                       Container(

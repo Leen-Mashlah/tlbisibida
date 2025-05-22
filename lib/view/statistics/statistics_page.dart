@@ -1,15 +1,12 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
-import 'package:lambda_dent_dash/view/statistics/components/charts/cases_chart.dart';
 import 'package:lambda_dent_dash/view/statistics/components/charts/inventory_count_chart.dart';
 import 'package:lambda_dent_dash/view/statistics/components/charts/items_line_chart.dart';
-import 'package:lambda_dent_dash/view/statistics/components/charts/line_chart.dart';
 import 'package:lambda_dent_dash/view/statistics/components/charts/monthly_financial_chart.dart';
 import 'package:lambda_dent_dash/view/statistics/components/charts/monthly_op_expenses_chart.dart';
 import 'package:lambda_dent_dash/view/statistics/components/charts/monthly_teeth_type_chart.dart';
 import 'package:lambda_dent_dash/view/statistics/components/charts/revenue_per_client.dart';
-import 'package:lambda_dent_dash/view/statistics/components/searchable_drop.dart';
 import 'package:lambda_dent_dash/view/statistics/components/taps.dart';
 
 class StatisticsPage extends StatelessWidget {
@@ -166,7 +163,7 @@ class StatisticsPage extends StatelessWidget {
                                         const SizedBox(
                                           height: 20,
                                         ),
-                                        Text('الزبائن الأكثر مردودا',
+                                        const Text('الزبائن الأكثر مردودا',
                                             style: TextStyle(
                                                 color: cyan600, fontSize: 16)),
                                         const SizedBox(
@@ -371,7 +368,7 @@ class StatisticsPage extends StatelessWidget {
                                       const SizedBox(
                                         height: 20,
                                       ),
-                                      Text('عدد القطع المصنعة شهريا',
+                                      const Text('عدد القطع المصنعة شهريا',
                                           style: TextStyle(
                                               color: cyan600, fontSize: 16)),
                                       const SizedBox(
@@ -382,7 +379,7 @@ class StatisticsPage extends StatelessWidget {
                                         color: cyan400,
                                         width: 200,
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 20,
                                       ),
                                       MonthlySessionsTypeChart(data: [

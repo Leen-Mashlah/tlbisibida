@@ -12,26 +12,27 @@ class PaymentsLogPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Stack(
-        children: [
-          SingleChildScrollView(
-              child: Column(
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              searchBar(context),
-              const SizedBox(
-                height: 20,
-              ),
-              const PaymentsLogTable(),
-            ],
-          )),
-          addconstantpayment(context),
-        ],
-      ),
+        body: Stack(
+      children: [
+        SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                searchBar(context),
+                const SizedBox(
+                  height: 20,
+                ),
+                const PaymentsLogTable(),
+              ],
+            ),
+          ),
+        ),
+        addconstantpayment(context),
+      ],
     ));
   }
 
@@ -42,7 +43,7 @@ class PaymentsLogPage extends StatelessWidget {
       child: InfoPopupWidget(
         enabledAutomaticConstraint: false,
         arrowTheme: const InfoPopupArrowTheme(arrowSize: Size(0, 0)),
-        contentOffset: const Offset(-130, 55),
+        contentOffset: const Offset(-100, 55),
         customContent: () => Container(
           decoration: const BoxDecoration(
               color: cyan50op,
@@ -52,7 +53,7 @@ class PaymentsLogPage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
           height: 60,
           child: const Text(
-            'إضافة مدفوعات ثابتة',
+            'إضافة مدفوعات تشغيلية',
             style: TextStyle(color: cyan500),
           ),
         ),
@@ -63,7 +64,7 @@ class PaymentsLogPage extends StatelessWidget {
                 builder: (context) => paymentLogDialog(context));
           },
           child: floatButton(
-            icon: Icons.add,
+            icon: Icons.post_add_rounded,
           ),
         ),
       ),

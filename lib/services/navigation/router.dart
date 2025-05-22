@@ -3,6 +3,7 @@ import 'package:lambda_dent_dash/services/navigation/locator.dart';
 import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
 import 'package:lambda_dent_dash/services/navigation/routes.dart';
 import 'package:lambda_dent_dash/view/authentication/authentication.dart';
+import 'package:lambda_dent_dash/view/authentication/email_verification.dart';
 import 'package:lambda_dent_dash/view/authentication/register.dart';
 import 'package:lambda_dent_dash/view/bills/bills_page.dart';
 import 'package:lambda_dent_dash/view/cases/pages/case_details_page.dart';
@@ -74,6 +75,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     //Settings Page
     case settingsPageRoute:
       return _getPageRoute(const Settings(), settingsPageDisplayName);
+
+    case emailVerificationPageRoute:
+      return _getPageRoute(
+          EmailVerificationPage(), emailVerificationDisplayName);
 
     default:
       return _getPageRoute(const HomePage(), homePageDisplayName);

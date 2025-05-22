@@ -5,6 +5,9 @@ import 'package:lambda_dent_dash/components/default_textfield.dart';
 
 //import 'package:google_fonts/google_fonts.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
+import 'package:lambda_dent_dash/services/navigation/locator.dart';
+import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
+import 'package:lambda_dent_dash/services/navigation/routes.dart';
 
 class RegisterPage extends StatelessWidget {
   // AdminLoginController adminAuth=Get.put(AdminLoginController());
@@ -348,6 +351,8 @@ class RegisterPage extends StatelessWidget {
                           //          Get.offNamed("Employees");
 
                           //       },
+                          locator<NavigationService>()
+                              .navigateTo(emailVerificationPageRoute);
                         },
                         style: ButtonStyle(
                             shadowColor: const WidgetStatePropertyAll(cyan200),
