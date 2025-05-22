@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/components/custom_text.dart';
@@ -5,6 +7,9 @@ import 'package:lambda_dent_dash/components/default_textfield.dart';
 
 //import 'package:google_fonts/google_fonts.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
+import 'package:lambda_dent_dash/services/navigation/locator.dart';
+import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
+import 'package:lambda_dent_dash/services/navigation/routes.dart';
 
 class RegisterPage extends StatelessWidget {
   // AdminLoginController adminAuth=Get.put(AdminLoginController());
@@ -341,6 +346,8 @@ class RegisterPage extends StatelessWidget {
                       ),
                       ElevatedButton(
                         onPressed: () {
+                          locator<NavigationService>()
+                              .navigateTo(register2PageRoute);
                           // onTap: adminAuth.isLoading.value
                           //     ? null
                           //     : ()async {
@@ -373,147 +380,10 @@ class RegisterPage extends StatelessWidget {
                                     side: const BorderSide(color: cyan500),
                                     borderRadius: BorderRadius.circular(15)))),
                         child: const CustomText(
-                            //  adminAuth.isLoading.value
-                            //     ? CircularProgressIndicator(
-                            //         valueColor:
-                            //             AlwaysStoppedAnimation<Color>(Colors.white))
-                            //
-                            text: "إنشاء حساب",
-                            color: cyan500),
+                            text: "متابعة إنشاء حساب", color: cyan500),
                       ),
                     ],
                   ),
-                  // const SizedBox(
-                  //   height: 15,
-                  // ),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //   children: [
-                  //     Row(
-                  //       children: [
-                  //         Checkbox(value: true, onChanged: (value) {}),
-                  //         const CustomText(
-                  //           text: "Remeber Me",
-                  //         ),
-                  //       ],
-                  //     ),
-                  //     const CustomText(text: "Forgot password?", color: cyan400)
-                  //   ],
-                  // ),
-                  // const SizedBox(
-                  //   height: 15,
-                  // ),
-
-                  // Padding(
-                  //   padding: const EdgeInsets.only(right: 12),
-                  //   child: Image.asset(
-                  //     "assets/logo_v2.png",
-                  //     width: 250,
-                  //     height: 250,
-                  //   ),
-                  // ),
-                  // Expanded(child: Container()),
-                  // const SizedBox(
-                  //   height: 30,
-                  // ),
-                  // Row(
-                  //   children: [
-                  //     Text("Login",
-                  //         style: TextStyle(
-                  //             fontSize: 30, fontWeight: FontWeight.bold)),
-                  //   ],
-                  // ),
-                  // const SizedBox(
-                  //   height: 10,
-                  // ),
-                  // Row(
-                  //   children: [
-                  //     CustomText(
-                  //       text: "Welcome back to the admin panel.",
-                  //       color: Colors.grey[300],
-                  //     ),
-                  //   ],
-                  // ),
-                  // const SizedBox(
-                  //   height: 15,
-                  // ),
-                  // // TextField(
-                  // //   controller: email,
-                  // //   decoration: InputDecoration(
-                  // //       labelText: "Email",
-                  // //       hintText: "abc@domain.com",
-                  // //       border: OutlineInputBorder(
-                  // //           borderRadius: BorderRadius.circular(20))),
-                  // // ),
-                  // const SizedBox(
-                  //   height: 15,
-                  // ),
-                  // // TextField(
-                  // //   controller: password,
-                  // //   obscureText: true,
-                  // //   decoration: InputDecoration(
-                  // //       labelText: "Password",
-                  // //       hintText: "123",
-                  // //       border: OutlineInputBorder(
-                  // //           borderRadius: BorderRadius.circular(20))),
-                  // // ),
-                  // const SizedBox(
-                  //   height: 15,
-                  // ),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //   children: [
-                  //     Row(
-                  //       children: [
-                  //         Checkbox(value: true, onChanged: (value) {}),
-                  //         const CustomText(
-                  //           text: "Remeber Me",
-                  //         ),
-                  //       ],
-                  //     ),
-                  //     const CustomText(text: "Forgot password?", color: cyan400)
-                  //   ],
-                  // ),
-                  // const SizedBox(
-                  //   height: 15,
-                  // ),
-                  // // InkWell(
-                  // //   // onTap: adminAuth.isLoading.value
-                  // //   //     ? null
-                  // //   //     : ()async {
-                  // //   //         adminAuth.admin_login(email.text, password.text);
-                  // //   //          Get.offNamed("Employees");
-
-                  // //   //       },
-                  // //   child: Container(
-                  // //     decoration: BoxDecoration(
-                  // //         color: cyan400,
-                  // //         borderRadius: BorderRadius.circular(20)),
-                  // //     alignment: Alignment.center,
-                  // //     // width: double.maxFinite,
-                  // //     padding: const EdgeInsets.symmetric(vertical: 16),
-                  // //     child:
-                  // //         //  adminAuth.isLoading.value
-                  // //         //     ? CircularProgressIndicator(
-                  // //         //         valueColor:
-                  // //         //             AlwaysStoppedAnimation<Color>(Colors.white))
-                  // //         //     :
-                  // //         const CustomText(
-                  // //       text: "Login",
-                  // //       color: Colors.white,
-                  // //     ),
-                  // //   ),
-                  // // ),
-                  // const SizedBox(
-                  //   height: 15,
-                  // ),
-                  // RichText(
-                  //     text: const TextSpan(children: [
-                  //   TextSpan(text: "Do not have admin credentials? "),
-                  //   TextSpan(
-                  //       text: "Request Credentials! ",
-                  //       style: TextStyle(color: cyan400))
-                  // ]))
                 ),
               ),
             ),
