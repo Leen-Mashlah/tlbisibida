@@ -47,8 +47,7 @@ class ProfilePage extends StatelessWidget {
             defaultButton(
                 text: 'تسجيل الخروج',
                 function: () {
-                  locator<NavigationService>()
-                      .navigateTo(authenticationPageRoute);
+                  locator<NavigationService>().navigateTo(rolePageRoute);
                 })
           ],
         ));

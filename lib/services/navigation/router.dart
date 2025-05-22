@@ -3,6 +3,7 @@ import 'package:lambda_dent_dash/services/navigation/locator.dart';
 import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
 import 'package:lambda_dent_dash/services/navigation/routes.dart';
 import 'package:lambda_dent_dash/view/authentication/authentication.dart';
+import 'package:lambda_dent_dash/view/authentication/choose_rool_page.dart';
 import 'package:lambda_dent_dash/view/authentication/register.dart';
 import 'package:lambda_dent_dash/view/bills/bills_page.dart';
 import 'package:lambda_dent_dash/view/cases/pages/case_details_page.dart';
@@ -24,8 +25,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     //Auth
     case authenticationPageRoute:
       return _getPageRoute(AuthenticationPage(), authenticationPageDisplayName);
+
     case registerPageRoute:
       return _getPageRoute(RegisterPage(), registerPageDisplayName);
+
+    case rolePageRoute:
+      return _getPageRoute(const ChooseRolePage(), rolePageDisplayName);
 
     //Home
     case homePageRoute:
