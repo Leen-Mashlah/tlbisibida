@@ -211,7 +211,7 @@ class EmailVerificationPage extends StatelessWidget {
 
                                 //       },
                                 locator<NavigationService>()
-                                    .navigateTo(rootRoute);
+                                    .navigateTo(register2PageRoute);
                               },
                               style: ButtonStyle(
                                   shadowColor:

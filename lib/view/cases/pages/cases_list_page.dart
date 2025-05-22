@@ -1,3 +1,6 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/components/float_button.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
@@ -13,21 +16,46 @@ class CasesListPage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          Center(
-            child: SizedBox(
-              height: 500,
-              width: 1000,
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    _column(
-                        'لم تنجز بعد', const Icon(Icons.checklist), cyan400),
-                    _column('قيد الإنجاز',
-                        const Icon(Icons.work_history_rounded), Colors.amber),
-                    _column('بحاجة موافقة', const Icon(Icons.warning_rounded),
-                        Colors.redAccent),
-                    // _columnEntity(),
-                  ]),
+          Padding(
+            padding: const EdgeInsets.only(top: 75.0),
+            child: Center(
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width / 1.3,
+                // height: MediaQuery.of(context).size.height / 1.4,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _column(
+                          'لم تنجز بعد',
+                          const Icon(
+                            Icons.checklist,
+                            color: cyan500,
+                          ),
+                          Color.fromARGB(50, 41, 157, 144),
+                          cyan500,
+                          context),
+                      _column(
+                          'قيد الإنجاز',
+                          const Icon(
+                            Icons.work_history_rounded,
+                            color: Color.fromARGB(91, 130, 99, 6),
+                          ),
+                          Color.fromARGB(50, 255, 193, 7),
+                          Color.fromARGB(91, 94, 72, 8),
+                          context),
+                      _column(
+                        'بحاجة موافقة',
+                        const Icon(
+                          Icons.warning_rounded,
+                          color: redmid,
+                        ),
+                        Color.fromARGB(50, 255, 82, 82),
+                        redmid,
+                        context,
+                      ),
+                      // _columnEntity(),
+                    ]),
+              ),
             ),
           ),
           Positioned(
@@ -44,36 +72,58 @@ class CasesListPage extends StatelessWidget {
   }
 }
 
-Widget _column(String title, Widget icon, Color color) {
+Widget _column(String title, Widget icon, Color color, Color secondaryColor,
+    BuildContext context) {
   return SizedBox(
-    width: 300,
-    height: 800,
+    width: MediaQuery.of(context).size.width / 4.8,
+    // height: MediaQuery.of(context).size.height / 1.2,
     child: Column(
       children: [
         Container(
+            clipBehavior: Clip.antiAlias,
+            // width: 300,
             height: 60,
+            decoration: BoxDecoration(
+                border: Border.all(color: white, width: .1),
+                color: color,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    bottomRight: Radius.circular(16))),
+
             //width: 200,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
-            child: Card(
-                child: Padding(
+            // decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
+            child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Text(title),
-                    Container(
-                      width: 25,
-                      height: 25,
-                      decoration: BoxDecoration(
-                          color: color, borderRadius: BorderRadius.circular(5)),
-                      child: const Center(
-                          child: Text(
-                        '5',
-                        style: TextStyle(color: white),
-                      )),
-                    )
+                    SizedBox(
+                      width: 100,
+                      height: 50,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 5.0),
+                            child: Text(
+                              '5',
+                              style: TextStyle(
+                                  color: secondaryColor,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Text(title),
+                        ],
+                      ),
+                    ),
+                    icon,
                   ]),
-            ))),
+            )),
+        SizedBox(
+          height: 010,
+        ),
         Expanded(
             child: ListView.separated(
           itemBuilder: (context, index) {
@@ -82,7 +132,7 @@ Widget _column(String title, Widget icon, Color color) {
           itemCount: 5,
           separatorBuilder: (context, index) {
             return const SizedBox(
-              height: 25,
+              height: 10,
             );
           },
         ))
@@ -96,56 +146,118 @@ Widget _itembuilder(
   Widget icon,
   Color color,
 ) {
-  return InkWell(
-    onTap: () => locator<NavigationService>().navigateTo(caseDetailsPageRoute),
-    child: Card(
+  return Card(
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+            topRight: Radius.circular(16), bottomLeft: Radius.circular(16))),
+    // decoration: BoxDecoration(
+    //     backgroundBlendMode: BlendMode.clear,
+    //     color: bglight,
+    //     borderRadius: BorderRadius.only(
+    //         topRight: Radius.circular(16), bottomLeft: Radius.circular(16))),
+    clipBehavior: Clip.antiAlias,
+    child: InkWell(
+      borderRadius: BorderRadius.only(
+          topRight: Radius.circular(16), bottomLeft: Radius.circular(16)),
+      hoverColor: const Color.fromARGB(63, 48, 195, 178),
+      onTap: () =>
+          locator<NavigationService>().navigateTo(caseDetailsPageRoute),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-                height: 50,
-                width: 50,
-                decoration: BoxDecoration(
-                    color: color, borderRadius: BorderRadius.circular(5)),
-                child: icon),
-            const SizedBox(
-              height: 10,
-            ),
-            const Text('الطبيب: د. تحسين التحسيني'),
-            const SizedBox(
-              height: 10,
-            ),
-            const Text('المريض: اسماعيل أحمد كنباوي'),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
+              width: 250,
+              height: 40,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5), color: cyan100),
-              child: const Padding(
-                padding: EdgeInsets.all(4.0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      color: cyan500,
-                      Icons.timer,
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      '2024/11/15',
-                      style: TextStyle(
-                        color: cyan500,
+                  borderRadius: BorderRadius.circular(5),
+                  color: cyan50op,
+                  border: Border.all(color: cyan100, width: .5)),
+              child: DottedBorder(
+                strokeWidth: .4,
+                radius: Radius.circular(5),
+                borderType: BorderType.RRect,
+                color: cyan600,
+                dashPattern: [7, 2],
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    // mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        '2024/11/15',
+                        style: TextStyle(
+                          color: cyan500,
+                        ),
                       ),
-                    )
-                  ],
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Icon(
+                        color: cyan500,
+                        Icons.calendar_month_outlined,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            )
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Container(
+              clipBehavior: Clip.antiAlias,
+              height: 100,
+              width: 250,
+              decoration: BoxDecoration(
+                  color: cyan50op,
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all(color: cyan100, width: .5)),
+
+              // border: Border.all(color: cyan200, width: .5),
+
+              child: DottedBorder(
+                strokeWidth: .4,
+                radius: Radius.circular(5),
+                borderType: BorderType.RRect,
+                color: cyan600,
+                dashPattern: [7, 2],
+                child: SingleChildScrollView(
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'الطبيب: د. تحسين التحسيني',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: cyan500,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const Text(
+                            'المريض: اسماعيل أحمد كنباوي',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: cyan500,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

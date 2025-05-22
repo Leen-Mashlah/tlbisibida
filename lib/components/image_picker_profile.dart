@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker_web/image_picker_web.dart';
+import 'package:lambda_dent_dash/constants/constants.dart';
 
 Widget imagePickerPro(List<Image> images) {
   return StatefulBuilder(
@@ -17,7 +18,10 @@ Widget imagePickerPro(List<Image> images) {
                 }
               });
             },
-            icon: Icon(Icons.image_search),
+            icon: Icon(
+              Icons.image_search,
+              color: cyan500,
+            ),
           ),
           // const SizedBox(height: 10),
           // Wrap(

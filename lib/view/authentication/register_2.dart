@@ -201,7 +201,7 @@ class Register2Page extends StatelessWidget {
                                   CupertinoTimePickerButton(
                                     mainColor: cyan400,
                                     initialTime:
-                                        const TimeOfDay(hour: 9, minute: 41),
+                                        const TimeOfDay(hour: 19, minute: 41),
                                     onTimeChanged: (time) {},
                                   ),
                                 ],
@@ -223,7 +223,7 @@ class Register2Page extends StatelessWidget {
                             children: [
                               Text(
                                 'اختر صورة الملف الشخصي',
-                                style: TextStyle(color: cyan500, fontSize: 14),
+                                style: TextStyle(color: cyan600, fontSize: 14),
                               ),
                               SizedBox(
                                 width: 50,
