@@ -25,7 +25,7 @@ const caseDetailsPageDisplayName = 'تفاصيل الحالة';
 const caseDetailsPageRoute = '/case_details';
 
 const addCasePageDisplayName = 'إضافة حالة';
-const addCasePageRoute = '/case_details';
+const addCasePageRoute = '/add_case';
 
 const clientPageDisplayName = "الزبائن";
 const clientPageRoute = "/clients";

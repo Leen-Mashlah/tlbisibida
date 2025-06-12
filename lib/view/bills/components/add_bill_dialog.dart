@@ -4,9 +4,10 @@ import 'package:lambda_dent_dash/components/default_button.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
 
 class AddBillDialog extends StatelessWidget {
-  const AddBillDialog({
+  AddBillDialog({
     super.key,
   });
+  DateTime birthdate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +88,7 @@ class AddBillDialog extends StatelessWidget {
                               const SizedBox(
                                 width: 30,
                               ),
-                              datePicker(context),
+                              datePicker(context, birthdate),
                               const SizedBox(
                                 width: 30,
                               ),
@@ -109,7 +110,7 @@ class AddBillDialog extends StatelessWidget {
                               const SizedBox(
                                 width: 30,
                               ),
-                              datePicker(context),
+                              datePicker(context, birthdate),
                               const SizedBox(
                                 width: 30,
                               ),

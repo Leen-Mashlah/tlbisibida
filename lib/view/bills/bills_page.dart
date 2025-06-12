@@ -61,8 +61,7 @@ class BillsPage extends StatelessWidget {
               icon: Icons.add,
               onTap: () {
                 showDialog(
-                    context: context,
-                    builder: (context) => const AddBillDialog());
+                    context: context, builder: (context) => AddBillDialog());
               },
             ),
           ),

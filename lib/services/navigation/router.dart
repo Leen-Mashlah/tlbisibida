@@ -8,6 +8,7 @@ import 'package:lambda_dent_dash/view/authentication/choose_rool_page.dart';
 import 'package:lambda_dent_dash/view/authentication/register.dart';
 import 'package:lambda_dent_dash/view/authentication/register_2.dart';
 import 'package:lambda_dent_dash/view/bills/bills_page.dart';
+import 'package:lambda_dent_dash/view/cases/pages/add_case_page.dart';
 import 'package:lambda_dent_dash/view/cases/pages/case_details_page.dart';
 import 'package:lambda_dent_dash/view/cases/pages/cases_list_page.dart';
 import 'package:lambda_dent_dash/view/clients/client_details_page.dart';
@@ -53,7 +54,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(CaseDetails(), caseDetailsPageDisplayName);
 
     case addCasePageRoute:
-      return _getPageRoute(CaseDetails(), addCasePageDisplayName);
+      return _getPageRoute(AddCasePage(), addCasePageDisplayName);
 
     //Clients
     case clientPageRoute:

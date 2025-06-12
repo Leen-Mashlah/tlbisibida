@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker_web/image_picker_web.dart';
@@ -11,6 +12,7 @@ class EditProfileDialog extends StatefulWidget {
   EditProfileDialog({
     super.key,
   });
+  List<Uint8List> images = [];
 
   @override
   State<EditProfileDialog> createState() => _EditProfileDialogState();
@@ -101,7 +103,9 @@ class _EditProfileDialogState extends State<EditProfileDialog> {
               const SizedBox(
                 height: 20,
               ),
-              imagePicker(images),
+              imagePicker(
+                images,
+              ),
               SizedBox(
                 height: 20,
               ),

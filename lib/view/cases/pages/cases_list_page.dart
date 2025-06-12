@@ -63,7 +63,9 @@ class CasesListPage extends StatelessWidget {
             right: 20,
             child: floatButton(
               icon: Icons.add,
-              onTap: () {},
+              onTap: () {
+                locator<NavigationService>().navigateTo(addCasePageRoute);
+              },
             ),
           ),
         ],

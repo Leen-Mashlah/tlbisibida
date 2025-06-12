@@ -10,6 +10,8 @@ class AddConstantPaymentDialog extends StatelessWidget {
   });
   TextEditingController titleController = TextEditingController();
   TextEditingController costController = TextEditingController();
+  DateTime birthdate = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -62,7 +64,7 @@ class AddConstantPaymentDialog extends StatelessWidget {
                           const SizedBox(
                             width: 30,
                           ),
-                          datePicker(context),
+                          datePicker(context, birthdate),
                           const SizedBox(
                             width: 30,
                           ),
