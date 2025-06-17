@@ -5,6 +5,7 @@ Widget imagePicker(List<Image> images) {
   return StatefulBuilder(
     builder: (context, setState) {
       return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ElevatedButton(
             onPressed: () async {
@@ -20,6 +21,7 @@ Widget imagePicker(List<Image> images) {
           // const SizedBox(height: 10),
           Wrap(
             direction: Axis.horizontal,
+            alignment: WrapAlignment.center,
             children: images.map((image) {
               return Padding(
                 padding: const EdgeInsets.all(8.0),

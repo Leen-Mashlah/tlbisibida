@@ -11,6 +11,8 @@ Widget defaultTextField(
     bool obscureText = false,
     String? Function(String?)? validator,
     TextInputType? keyboardType,
+    Color inactiveColor = Colors.grey,
+    Color activeColor = cyan300,
     bool autofocus = false}) {
   return TextFormField(
     autofocus: autofocus,
@@ -25,15 +27,14 @@ Widget defaultTextField(
       prefixIcon: prefixIcon,
       suffixIcon: postfixicon,
       enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.grey, width: 2.0),
+          borderSide: BorderSide(color: inactiveColor, width: 1.0),
           borderRadius: standardBorderRadius),
       focusedBorder: OutlineInputBorder(
-        borderSide:
-            BorderSide(color: Theme.of(context).primaryColor, width: 3.0),
+        borderSide: BorderSide(color: activeColor, width: 1.5),
         borderRadius: standardBorderRadius,
       ),
       errorBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: Colors.redAccent, width: 2.0),
+        borderSide: const BorderSide(color: redmain, width: 2.0),
         borderRadius: activeBorderRadius,
       ),
     ),

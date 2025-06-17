@@ -29,6 +29,9 @@ class _ShadeSelectionButtonState extends State<ShadeSelectionButton> {
   void _showShadeGuidesSheet() {
     showModalBottomSheet(
       context: context,
+      constraints: BoxConstraints(
+        maxWidth: MediaQuery.of(context).size.width / 1.1,
+      ),
       isScrollControlled: true, // Allows the sheet to take up more height
       builder: (BuildContext context) {
         return DentalShadeGuidesModalContent(

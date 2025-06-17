@@ -30,6 +30,7 @@ environment:
 dependencies:
   animated_checkmark: ^1.0.1
   buildcondition: null
+  bloc:
   chat_bubbles: ^1.6.0
   choice: null
   cross_file: null
@@ -44,6 +45,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_animate: null
+  flutter_bloc:
   flutter_localizations:
     sdk: flutter
   flutter_shapes: null
@@ -53,9 +55,11 @@ dependencies:
   lottie: ^3.2.0
   percent_indicator: null
   pie_menu: ^2.0.2
+  path_drawing: ^1.0.1
   searchable_listview: null
   shared_preferences: null
   timelines_plus: ^1.0.6
+  xml: ^6.5.0
 
 dev_dependencies:
   # The "flutter_lints" package below contains a set of recommended lints to

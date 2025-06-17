@@ -326,10 +326,7 @@ class _EditProfileDialogState extends State<EditProfileDialog> {
                   text: 'تعديل',
                   textsize: 18,
                   function: () {
-                    showDialog(
-                      builder: (context) => EditProfileDialog(),
-                      context: context,
-                    );
+                    Navigator.pop(context);
                   }),
             ],
           ),
