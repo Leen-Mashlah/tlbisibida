@@ -18,11 +18,13 @@ class Register2Page extends StatelessWidget {
   TextEditingController password = TextEditingController();
   TextEditingController _addressController = TextEditingController();
 
-  List _labtypes = ['تعويض', 'تقويم', 'بدلات'];
+  final List _labtypes = ['تعويض', 'تقويم', 'بدلات'];
+  final List _subsicribe = ['سنوي', 'نصف سنوي', 'ربع سنوي'];
   final ValueNotifier<List<String>> _targetlabtype =
       ValueNotifier<List<String>>([
     'تعويض',
   ]);
+  final ValueNotifier<String> _subtype = ValueNotifier('سنوي');
   final List<String> provincesList = [
     'دمشق',
     'ريف دمشق',
@@ -127,7 +129,7 @@ class Register2Page extends StatelessWidget {
                             color: cyan50op,
                             borderRadius: BorderRadius.circular(20)),
                         width: 500,
-                        height: 120,
+                        height: 100,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -175,7 +177,7 @@ class Register2Page extends StatelessWidget {
                             color: cyan50op,
                             borderRadius: BorderRadius.circular(20)),
                         width: 500,
-                        height: 120,
+                        height: 100,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -215,7 +217,7 @@ class Register2Page extends StatelessWidget {
                             color: cyan50op,
                             borderRadius: BorderRadius.circular(30)),
                         width: 500,
-                        height: 120,
+                        height: 100,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 50.0),
                           child: Row(
@@ -234,6 +236,54 @@ class Register2Page extends StatelessWidget {
                               ),
                             ],
                           ),
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: cyan50op,
+                            borderRadius: BorderRadius.circular(20)),
+                        width: 500,
+                        height: 100,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              'اختر الاشتراك',
+                              style: TextStyle(color: cyan500, fontSize: 16),
+                            ),
+                            SizedBox(
+                              width: double.infinity,
+                              child: InlineChoice<String>.single(
+                                  value: _subtype.value,
+                                  onChanged: (obj) {
+                                    _subtype.value = obj!;
+                                    // print(_targetlabtype.toString());
+                                  },
+                                  clearable: false,
+                                  itemCount: _subsicribe.length,
+                                  itemBuilder: (state, i) {
+                                    return ChoiceChip(
+                                      selectedColor: cyan200,
+                                      side: const BorderSide(color: cyan300),
+                                      selected: state.selected(_subsicribe[i]),
+                                      onSelected:
+                                          state.onSelected(_subsicribe[i]),
+                                      label: Text(_subsicribe[i]),
+                                    );
+                                  },
+                                  listBuilder: ChoiceList.createWrapped(
+                                      runAlignment: WrapAlignment.center,
+                                      alignment: WrapAlignment.center,
+                                      direction: Axis.horizontal,
+                                      textDirection: TextDirection.rtl,
+                                      //spacing: 10,
+                                      //runSpacing: 10,
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 20,
+                                        vertical: 5,
+                                      ))),
+                            ),
+                          ],
                         ),
                       ),
                       ElevatedButton(
