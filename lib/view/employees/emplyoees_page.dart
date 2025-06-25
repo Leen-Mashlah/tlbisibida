@@ -18,7 +18,7 @@ class EmplyoeesPage extends StatelessWidget {
             width: 50,
           ),
           shrinkWrap: true,
-          itemCount: 3,
+          itemCount: 2,
           itemBuilder: (context, index) => employeeCard(context, index),
           scrollDirection: Axis.horizontal,
         ),
@@ -83,15 +83,17 @@ Widget employeeCard(context, index) {
                               const Column(
                                 children: [
                                   Text(
-                                    'العنوان: شارع بغداد',
-                                    style: TextStyle(fontSize: 16),
+                                    'abcabcabcabcabsabs@example.com',
+                                    style:
+                                        TextStyle(fontSize: 12, color: cyan500),
                                   ),
                                   SizedBox(
                                     height: 5,
                                   ),
                                   Text(
-                                    'الرقم: 0933225511',
-                                    style: TextStyle(fontSize: 16),
+                                    '0933225511',
+                                    style:
+                                        TextStyle(fontSize: 14, color: cyan600),
                                   ),
                                 ],
                               ),
@@ -110,14 +112,14 @@ Widget employeeCard(context, index) {
                                 children: [
                                   Text(
                                     'تاريخ بدء العمل: ',
-                                    style: TextStyle(fontSize: 16),
+                                    style: TextStyle(fontSize: 14),
                                   ),
                                   SizedBox(
                                     height: 5,
                                   ),
                                   Text(
                                     '8/12/2024',
-                                    style: TextStyle(fontSize: 16),
+                                    style: TextStyle(fontSize: 14),
                                   ),
                                 ],
                               ),

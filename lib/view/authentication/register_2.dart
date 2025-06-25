@@ -19,11 +19,11 @@ class Register2Page extends StatelessWidget {
   TextEditingController _addressController = TextEditingController();
 
   final List _labtypes = ['تعويض', 'تقويم', 'بدلات'];
-  final List _subsicribe = ['سنوي', 'نصف سنوي', 'ربع سنوي'];
   final ValueNotifier<List<String>> _targetlabtype =
       ValueNotifier<List<String>>([
     'تعويض',
   ]);
+  final List _subsicribe = ['سنوي', 'نصف سنوي', 'ربع سنوي'];
   final ValueNotifier<String> _subtype = ValueNotifier('سنوي');
   final List<String> provincesList = [
     'دمشق',

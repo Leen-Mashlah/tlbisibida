@@ -7,7 +7,7 @@ Dialog employeeEditDialog(BuildContext context) {
   TextEditingController employeenamecontroller =
       TextEditingController(text: 'تحسين التحسيني');
   TextEditingController employeeaddresscontroller =
-      TextEditingController(text: 'شارع بغداد');
+      TextEditingController(text: 'absabsabsabsabs@gmail.com');
   TextEditingController employeephonecontroller =
       TextEditingController(text: '0933225511');
 
@@ -52,7 +52,7 @@ Dialog employeeEditDialog(BuildContext context) {
                     defaultTextField(
                       employeeaddresscontroller,
                       context,
-                      'العنوان',
+                      'البريد الالكتروني',
                     ),
                     const SizedBox(
                       height: 10,
