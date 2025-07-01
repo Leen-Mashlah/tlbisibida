@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:lambda_dent_dash/components/float_button.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
+import 'package:lambda_dent_dash/view/employees/components/Dialogs/employee_add_dialog.dart';
 import 'package:lambda_dent_dash/view/employees/components/bottom_action_buttons.dart';
 import 'package:lambda_dent_dash/view/employees/components/employee_log_table.dart';
 
@@ -10,18 +12,40 @@ class EmplyoeesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SizedBox(
-        height: MediaQuery.sizeOf(context).height / 1.2,
-        child: ListView.separated(
-          separatorBuilder: (context, index) => SizedBox(
-            width: 50,
+    return Scaffold(
+      body: Stack(
+        children: [
+          Center(
+            child: SizedBox(
+              height: MediaQuery.sizeOf(context).height / 1.2,
+              child: ListView.separated(
+                separatorBuilder: (context, index) => SizedBox(
+                  width: 50,
+                ),
+                shrinkWrap: true,
+                itemCount: 2,
+                itemBuilder: (context, index) => employeeCard(context, index),
+                scrollDirection: Axis.horizontal,
+              ),
+            ),
           ),
-          shrinkWrap: true,
-          itemCount: 3,
-          itemBuilder: (context, index) => employeeCard(context, index),
-          scrollDirection: Axis.horizontal,
-        ),
+          Positioned(
+            bottom: 20,
+            right: 20,
+            child: floatButton(
+              icon: Icons.add,
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return employeeAddDialog(context);
+                  },
+                );
+                // locator<NavigationService>().navigateTo(addCasePageRoute);
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -83,15 +107,17 @@ Widget employeeCard(context, index) {
                               const Column(
                                 children: [
                                   Text(
-                                    'العنوان: شارع بغداد',
-                                    style: TextStyle(fontSize: 16),
+                                    'abcabcabcabcabsabs@example.com',
+                                    style:
+                                        TextStyle(fontSize: 12, color: cyan500),
                                   ),
                                   SizedBox(
                                     height: 5,
                                   ),
                                   Text(
-                                    'الرقم: 0933225511',
-                                    style: TextStyle(fontSize: 16),
+                                    '0933225511',
+                                    style:
+                                        TextStyle(fontSize: 14, color: cyan600),
                                   ),
                                 ],
                               ),
@@ -110,14 +136,14 @@ Widget employeeCard(context, index) {
                                 children: [
                                   Text(
                                     'تاريخ بدء العمل: ',
-                                    style: TextStyle(fontSize: 16),
+                                    style: TextStyle(fontSize: 14),
                                   ),
                                   SizedBox(
                                     height: 5,
                                   ),
                                   Text(
                                     '8/12/2024',
-                                    style: TextStyle(fontSize: 16),
+                                    style: TextStyle(fontSize: 14),
                                   ),
                                 ],
                               ),

@@ -9,8 +9,15 @@ import 'package:lambda_dent_dash/components/image_picker.dart';
 import 'package:lambda_dent_dash/components/teeth_selection_screen.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:lambda_dent_dash/view/cases/components/shade_guides/guide_button.dart';
+import 'package:lambda_dent_dash/view/cases/pages/search_for_lab.dart';
 
 class AddCasePage extends StatelessWidget {
+  final List<String> _labslist = [
+    ' الحموي',
+    ' الحمصي',
+    ' الشامي',
+    ' التحسيني',
+  ];
   AddCasePage({super.key});
   bool v = true;
   DateTime birthdate = DateTime.now();
@@ -31,6 +38,7 @@ class AddCasePage extends StatelessWidget {
   List<Image> images = [];
 
   var patientnamecontroller = TextEditingController(text: 'تحسين التحسيني');
+  var docnamecontroller = TextEditingController(text: 'تحسين التحسيني');
   String? selectedLabName;
   var agecontroller = TextEditingController(text: '45');
   var notecontroller = TextEditingController(
@@ -129,6 +137,17 @@ class AddCasePage extends StatelessWidget {
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
+                      ChoiceButtonWithSearch(
+                          names: _labslist,
+                          hintText:
+                              'اختر الزبون', // Example hint text in Arabic
+                          onNameSelected: (selectedName) {
+                            print('Selected: $selectedName');
+                            // Do something with the selected name
+                          }),
+                      SizedBox(
+                        height: 15,
+                      ),
                       SizedBox(
                         //width: 250,
                         child: defaultTextField(
