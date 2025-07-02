@@ -4,7 +4,7 @@ import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
 import 'package:lambda_dent_dash/services/navigation/routes.dart';
 import 'package:lambda_dent_dash/view/authentication/authentication.dart';
 import 'package:lambda_dent_dash/view/authentication/email_verification.dart';
-import 'package:lambda_dent_dash/view/authentication/choose_rool_page.dart';
+import 'package:lambda_dent_dash/view/authentication/choose_role_page.dart';
 import 'package:lambda_dent_dash/view/authentication/register.dart';
 import 'package:lambda_dent_dash/view/authentication/register_2.dart';
 import 'package:lambda_dent_dash/view/bills/bills_page.dart';
