@@ -2,10 +2,11 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
+import 'package:lambda_dent_dash/view/cases/components/cost_dialog.dart';
 import 'package:timelines_plus/timelines_plus.dart';
 
-const kTileHeight = 50.0;
 
+const kTileHeight = 50.0;
 const completeColor = Color(0xff5e6172);
 const inProgressColor = cyan300;
 const todoColor = Color(0xffd1d2d7);
@@ -38,6 +39,32 @@ class _CaseProcessTimelineState extends State<CaseProcessTimeline> {
     }
   }
 
+  void _nextProcess() async {
+    if (_processIndex == 2) {
+      // If currently at "قيد الإنجاز", show the cost dialog
+      final result = await showDialog<String>(
+        context: context,
+        builder: (BuildContext context) {
+          return const CostDialog(); // Use your separate CostDialog widget
+        },
+      );
+
+      // Check if a cost was submitted (result is not null)
+      if (result != null) {
+        print("Received cost from dialog: $result");
+        // Update the process index only if a cost was submitted
+        setState(() {
+          _processIndex = 3; // Move to "جاهزة"
+        });
+      }
+    } else if (_processIndex != _processes.length - 1) {
+      // For other stages, just increment the index
+      setState(() {
+        _processIndex = (_processIndex + 1) % (_processes.length + 1);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -49,7 +76,7 @@ class _CaseProcessTimelineState extends State<CaseProcessTimeline> {
           child: Timeline.tileBuilder(
             theme: TimelineThemeData(
               direction: Axis.horizontal,
-              connectorTheme: ConnectorThemeData(
+              connectorTheme: const ConnectorThemeData(
                 space: 5.0,
                 thickness: 5.0,
               ),
@@ -73,11 +100,11 @@ class _CaseProcessTimelineState extends State<CaseProcessTimeline> {
               },
               indicatorBuilder: (_, index) {
                 var color;
-                var child;
+                Widget? child; // Made nullable
                 if (index == _processIndex) {
                   color = inProgressColor;
-                  child = Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  child = const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: CircularProgressIndicator(
                       strokeWidth: 3.0,
                       valueColor: AlwaysStoppedAnimation(Colors.white),
@@ -85,7 +112,7 @@ class _CaseProcessTimelineState extends State<CaseProcessTimeline> {
                   );
                 } else if (index < _processIndex) {
                   color = completeColor;
-                  child = Icon(
+                  child = const Icon(
                     Icons.check,
                     color: Colors.white,
                     size: 15.0,
@@ -98,7 +125,7 @@ class _CaseProcessTimelineState extends State<CaseProcessTimeline> {
                   return Stack(
                     children: [
                       CustomPaint(
-                        size: Size(30.0, 30.0),
+                        size: const Size(30.0, 30.0),
                         painter: _BezierPainter(
                           color: color,
                           drawStart: index > 0,
@@ -116,7 +143,7 @@ class _CaseProcessTimelineState extends State<CaseProcessTimeline> {
                   return Stack(
                     children: [
                       CustomPaint(
-                        size: Size(15.0, 15.0),
+                        size: const Size(15.0, 15.0),
                         painter: _BezierPainter(
                           color: color,
                           drawEnd: index < _processes.length - 1,
@@ -168,18 +195,14 @@ class _CaseProcessTimelineState extends State<CaseProcessTimeline> {
           ),
         ),
         ElevatedButton(
-            style:
-                ButtonStyle(backgroundColor: WidgetStatePropertyAll(cyan300)),
-            onPressed: () {
-              setState(() {
-                if (_processIndex != _processes.length - 1)
-                  _processIndex = (_processIndex + 1) % (_processes.length + 1);
-              });
-            },
-            child: Icon(
-              Icons.navigate_next_rounded,
-              color: white,
-            )),
+          style: const ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(cyan300)),
+          onPressed: _nextProcess, // Call the new _nextProcess method
+          child: const Icon(
+            Icons.navigate_next_rounded,
+            color: white,
+          ),
+        ),
       ],
     );
   }

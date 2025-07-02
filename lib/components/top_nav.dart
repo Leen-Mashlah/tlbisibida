@@ -5,7 +5,6 @@ import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:lambda_dent_dash/services/navigation/locator.dart';
 import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
 import 'package:lambda_dent_dash/services/navigation/routes.dart';
-import 'package:pie_menu/pie_menu.dart';
 
 class TopNavigationBar extends StatelessWidget implements PreferredSizeWidget {
   const TopNavigationBar({super.key});
@@ -19,11 +18,9 @@ class TopNavigationBar extends StatelessWidget implements PreferredSizeWidget {
 
     return ValueListenableBuilder(
       valueListenable: navigationService.currentTitle,
-      builder: (context, title, _) {
-        return ValueListenableBuilder(
+      builder: (context, title, _) => ValueListenableBuilder(
           valueListenable: navigationService.showBackButton,
-          builder: (context, showBack, _) {
-            return AppBar(
+          builder: (context, showBack, _) => AppBar(
               foregroundColor: cyan_navbar_600,
               scrolledUnderElevation: 1,
               leading: showBack
@@ -55,10 +52,8 @@ class TopNavigationBar extends StatelessWidget implements PreferredSizeWidget {
                   child: myPieMenu(navigationService),
                 ),
               ],
-            );
-          },
-        );
-      },
+            ),
+        ),
     );
   }
 }
