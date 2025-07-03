@@ -1,9 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
 
+void _handleDigitInput(
+    BuildContext context, String value, FocusNode? nextFocusNode) {
+  if (value.length == 1) {
+    if (nextFocusNode != null) {
+      nextFocusNode.requestFocus();
+    } else {
+      // Last digit entered, hide keyboard
+      FocusScope.of(context).unfocus();
+    }
+  }
+}
+
 Widget NumInput(BuildContext context,
-    {autofocus = false, TextEditingController? controller}) {
-  return SizedBox(
+    {autofocus = false,
+    TextEditingController? controller,
+    FocusNode? focusNode,
+    FocusNode? nextFocus}) => SizedBox(
     width: 35,
     height: 70,
     child: TextFormField(
@@ -12,7 +27,9 @@ Widget NumInput(BuildContext context,
       cursorColor: cyan50,
       maxLength: 1,
       maxLines: 1,
+      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
       keyboardType: TextInputType.number,
+      focusNode: focusNode,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.all(5),
         counterText: '',
@@ -27,13 +44,6 @@ Widget NumInput(BuildContext context,
           borderRadius: BorderRadius.circular(10.0),
         ),
       ),
-      onChanged: (value) {
-        nextFocus(context);
-      },
+      onChanged: (value) => _handleDigitInput(context, value, nextFocus),
     ),
   );
-}
-
-void nextFocus(BuildContext context) {
-  FocusScope.of(context).nextFocus();
-}
