@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lambda_dent_dash/data/repo/email_repo.dart';
+import 'package:lambda_dent_dash/data/repo/db_email_repo.dart';
 import 'package:lambda_dent_dash/services/navigation/locator.dart';
 import 'package:lambda_dent_dash/presentation/authentication/Cubits/email_cubit.dart';
 import 'package:lambda_dent_dash/presentation/authentication/Views/email_verification.dart';

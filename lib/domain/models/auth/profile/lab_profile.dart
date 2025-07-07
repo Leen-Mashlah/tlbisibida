@@ -1,17 +1,15 @@
-// Reuse common_models.dart for LabPhone
-// common_models.dart (contents remain the same)
-// class LabPhone { ... }
+import 'package:lambda_dent_dash/domain/repo/lapphone_chat.dart';
 
-class DBLabManagerProfileResponse {
+class LabManagerProfileResponse {
   bool? status;
   int? successCode;
   LabProfile? profile;
   String? successMessage;
 
-  DBLabManagerProfileResponse(
+  LabManagerProfileResponse(
       {this.status, this.successCode, this.profile, this.successMessage});
 
-  DBLabManagerProfileResponse.fromJson(Map<String, dynamic> json) {
+  LabManagerProfileResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     successCode = json['success_code'];
     profile =
@@ -43,7 +41,7 @@ class LabProfile {
   String? labName;
   String? labAddress;
   String? labProvince;
-  String? labPhone; // This will be parsed from a string
+  List<String>? labPhone; // This will be parsed from a string
   String? labLogo;
   String? labFromHour;
   String? labToHour;
@@ -84,7 +82,7 @@ class LabProfile {
     labName = json['lab_name'];
     labAddress = json['lab_address'];
     labProvince = json['lab_province'];
-    labPhone = json['lab_phone'];
+    labPhone = decodeLabPhoneNumbers(json['lab_phone']);
 
     labLogo = json['lab_logo'];
     labFromHour = json['lab_from_hour'];
@@ -107,9 +105,7 @@ class LabProfile {
     data['lab_name'] = labName;
     data['lab_address'] = labAddress;
     data['lab_province'] = labProvince;
-    data['lab_phone'] = labPhone;
-
-    // IMPORTANT: Convert LabPhone object back to a JSON string
+    data['lab_phone'] = encodeLabPhoneNumbers(labPhone!);
 
     data['lab_logo'] = labLogo;
     data['lab_from_hour'] = labFromHour;
@@ -119,4 +115,5 @@ class LabProfile {
     data['register_accepted'] = registerAccepted;
     return data;
   }
+
 }

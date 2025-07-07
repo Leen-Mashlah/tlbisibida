@@ -1,17 +1,20 @@
-class LabManagerProfileResponse {
+import 'package:lambda_dent_dash/domain/models/auth/profile/lab_profile.dart';
+import 'package:lambda_dent_dash/domain/repo/lapphone_chat.dart';
+
+class DBLabManagerProfileResponse {
   bool? status;
   int? successCode;
-  LabProfile? profile;
+  DBLabProfile? profile;
   String? successMessage;
 
-  LabManagerProfileResponse(
+  DBLabManagerProfileResponse(
       {this.status, this.successCode, this.profile, this.successMessage});
 
-  LabManagerProfileResponse.fromJson(Map<String, dynamic> json) {
+  DBLabManagerProfileResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     successCode = json['success_code'];
     profile =
-        json['profile'] != null ? LabProfile.fromJson(json['profile']) : null;
+        json['profile'] != null ? DBLabProfile.fromJson(json['profile']) : null;
     successMessage = json['success_message'];
   }
 
@@ -27,7 +30,7 @@ class LabManagerProfileResponse {
   }
 }
 
-class LabProfile {
+class DBLabProfile {
   int? id;
   String? firstName;
   String? lastName;
@@ -47,7 +50,7 @@ class LabProfile {
   int? subscriptionIsValidNow;
   int? registerAccepted;
 
-  LabProfile({
+  DBLabProfile({
     this.id,
     this.firstName,
     this.lastName,
@@ -68,7 +71,7 @@ class LabProfile {
     this.registerAccepted,
   });
 
-  LabProfile.fromJson(Map<String, dynamic> json) {
+  DBLabProfile.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     firstName = json['first_name'];
     lastName = json['last_name'];
@@ -105,6 +108,8 @@ class LabProfile {
     data['lab_province'] = labProvince;
     data['lab_phone'] = labPhone;
 
+    // IMPORTANT: Convert LabPhone object back to a JSON string
+
     data['lab_logo'] = labLogo;
     data['lab_from_hour'] = labFromHour;
     data['lab_to_hour'] = labToHour;
@@ -112,5 +117,28 @@ class LabProfile {
     data['subscription_is_valid_now'] = subscriptionIsValidNow;
     data['register_accepted'] = registerAccepted;
     return data;
+  }
+
+  LabProfile todomain() {
+    return LabProfile(
+      id: id,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      emailVerifiedAt: emailVerifiedAt,
+      emailIsVerified: emailIsVerified,
+      verificationCode: verificationCode,
+      labType: labType,
+      labName: labName,
+      labAddress: labAddress,
+      labProvince: labProvince,
+      labPhone: decodeLabPhoneNumbers(labPhone ?? ''),
+      labLogo: labLogo,
+      labFromHour: labFromHour,
+      labToHour: labToHour,
+      registerDate: registerDate,
+      subscriptionIsValidNow: subscriptionIsValidNow,
+      registerAccepted: registerAccepted,
+    );
   }
 }
