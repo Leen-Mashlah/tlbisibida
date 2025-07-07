@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/components/date_picker.dart';
 import 'package:lambda_dent_dash/components/default_button.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
+import 'package:lambda_dent_dash/view/cases/pages/search_for_lab.dart';
 
 class AddBillDialog extends StatelessWidget {
   AddBillDialog({
     super.key,
   });
   DateTime birthdate = DateTime.now();
-
+  final List<String> _labslist = [
+    ' الحموي',
+    ' الحمصي',
+    ' الشامي',
+    ' التحسيني',
+  ];
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -38,43 +44,40 @@ class AddBillDialog extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Column(
+                      Column(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            'اسم الزبون',
-                            style: TextStyle(fontSize: 18),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Text(
-                            'تحسين',
-                            style: TextStyle(fontSize: 18),
-                          ),
-                          SizedBox(
+                          ChoiceButtonWithSearch(
+                              names: _labslist,
+                              hintText:
+                                  'اختر الزبون', // Example hint text in Arabic
+                              onNameSelected: (selectedName) {
+                                print('Selected: $selectedName');
+                                // Do something with the selected name
+                              }),
+                          const SizedBox(
                             height: 30,
                           ),
-                          Text(
-                            'رصيد الزبون',
-                            style: TextStyle(fontSize: 18),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Text(
-                            '5.000.000',
-                            style: TextStyle(
-                                color: Colors.redAccent,
-                                fontSize: 18,
-                                decoration: TextDecoration.underline,
-                                decorationColor: Colors.redAccent,
-                                decorationThickness: .5),
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
+                          // const Text(
+                          //   'رصيد الزبون',
+                          //   style: TextStyle(fontSize: 18),
+                          // ),
+                          // const SizedBox(
+                          //   height: 15,
+                          // ),
+                          // const Text(
+                          //   '5.000.000',
+                          //   style: TextStyle(
+                          //       color: Colors.redAccent,
+                          //       fontSize: 18,
+                          //       decoration: TextDecoration.underline,
+                          //       decorationColor: Colors.redAccent,
+                          //       decorationThickness: .5),
+                          // ),
+                          // const SizedBox(
+                          //   height: 30,
+                          // ),
                         ],
                       ),
                       const SizedBox(
