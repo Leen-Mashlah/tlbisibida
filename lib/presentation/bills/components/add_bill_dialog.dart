@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/components/date_picker.dart';
 import 'package:lambda_dent_dash/components/default_button.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
-import 'package:lambda_dent_dash/view/cases/pages/search_for_lab.dart';
+import 'package:lambda_dent_dash/presentation/cases/pages/search_for_lab.dart';
 
 class AddBillDialog extends StatelessWidget {
   AddBillDialog({
