@@ -8,7 +8,6 @@ import 'package:lambda_dent_dash/presentation/clients/components/tables/client_b
 import 'package:lambda_dent_dash/presentation/clients/components/tables/client_cases_table.dart';
 import 'package:lambda_dent_dash/presentation/clients/components/dialogs/payments_log_dialog.dart';
 import 'package:lambda_dent_dash/presentation/payments/components/dialogs/add_constant_payment_dialog.dart';
-import 'package:lottie/lottie.dart';
 // import 'package:lambda_dent_dash/view/clients/clients_table.dart';
 
 class ClientDetailsPage extends StatelessWidget {

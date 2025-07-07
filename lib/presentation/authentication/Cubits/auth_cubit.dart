@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lambda_dent_dash/domain/models/auth/profile/lab_profile.dart';
 import 'package:lambda_dent_dash/domain/repo/auth_repo.dart';
 import 'package:lambda_dent_dash/services/Cache/cache_helper.dart';
 
@@ -89,5 +90,24 @@ class AuthCubit extends Cubit<String> {
     success ? emit('registered') : emit('error');
     CacheHelper.setString('email', registrydata['email']);
     print(state);
+  }
+
+
+  
+  LabProfile? profile;
+  Future<void> getProfile() async {
+    emit('profile_loading'); 
+    try {
+      profile = await repo.getProfile();
+      if (profile != null) {
+        emit('profile_loaded');
+      } else {
+        emit('no_profile');
+      }
+    } on Exception catch (e) {
+      emit('error');
+      print("Error loading profile: ${e.toString()}");
+    }
+    print("Profile state: $state, Profile: ${profile}");
   }
 }

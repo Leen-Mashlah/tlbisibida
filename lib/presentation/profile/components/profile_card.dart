@@ -1,34 +1,38 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lambda_dent_dash/components/default_button.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
+import 'package:lambda_dent_dash/presentation/authentication/Cubits/auth_cubit.dart';
 import 'package:lambda_dent_dash/presentation/profile/components/edit_profile_dialog.dart';
 
 class ProfileSection extends StatelessWidget {
   ProfileSection({super.key});
-  List userInfo = [
-    {
-      'title': 'البريد الالكتروني',
-      'info': 'hamwi.lab@gmail.com',
-      // controller.profileModel!.firstName +
-      //     controller.profileModel!.lastName,
-      'icon': Icons.mail_rounded,
-    },
-    {
-      'title': 'الهاتف',
-      'info': '+963 999 222 111',
-      //  controller.profileModel!.phoneNumber,
-      'icon': CupertinoIcons.phone_circle_fill,
-    },
-    {
-      'title': 'العنوان',
-      'info': 'دمشق - ساحة الجبة',
-      //controller.profileModel!.wallet,
-      'icon': Icons.location_on_rounded,
-    },
-  ];
+
   @override
   Widget build(BuildContext context) {
+    final AuthCubit cubit = context.read<AuthCubit>();
+    List userInfo = [
+      {
+        'title': 'البريد الالكتروني',
+        'info': cubit.profile!.email,
+        // controller.profileModel!.firstName +
+        //     controller.profileModel!.lastName,
+        'icon': Icons.mail_rounded,
+      },
+      {
+        'title': 'الهاتف',
+        'info': cubit.profile!.labPhone,
+        //  controller.profileModel!.phoneNumber,
+        'icon': CupertinoIcons.phone_circle_fill,
+      },
+      {
+        'title': 'العنوان',
+        'info': cubit.profile!.labAddress,
+        //controller.profileModel!.wallet,
+        'icon': Icons.location_on_rounded,
+      },
+    ];
     return SizedBox(
       child: Card(
         child: Padding(
@@ -37,7 +41,7 @@ class ProfileSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               SizedBox(height: 20),
-              Text('Hamwi Lab',
+              Text(cubit.profile!.labName!,
                   style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
@@ -91,15 +95,26 @@ class ProfileSection extends StatelessWidget {
             model['icon'],
             color: cyan500,
           ),
-          Text(model['info'].toString(),
+          Text(phoneNumberFix(model),
               style: TextStyle(
                 fontSize: 20,
                 color: cyan600,
-                //color: Colors.blueGrey,
               )),
         ],
       ),
     );
+  }
+
+  String phoneNumberFix(model) {
+    if (model['title'] == 'الهاتف') {
+      String phones = '';
+      for (var phone in model['info']) {
+        phones += phone + '\n';
+      }
+      return phones;
+    } else {
+      return model['info'].toString();
+    }
   }
 }
 
@@ -108,19 +123,13 @@ class AccountsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AuthCubit cubit = context.read<AuthCubit>();
+
     return Card(
       child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 48.0),
-          child:
-              // CircleAvatar(
-              //     //child: ,
-              //     radius: 100,
-              //     backgroundColor: const Color.fromARGB(0, 255, 255, 255),
-              //     backgroundImage: AssetImage('profile.png')
-              //     //minRadius: 20,
-              //     ),
-              Image.asset(
-            'Profile.png',
+          child: Image.asset(
+            'Profile.png', //TODO add image download
             width: MediaQuery.of(context).size.width / 2.5,
             height: 180,
           )),
@@ -133,6 +142,9 @@ class SubscriptionStatus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AuthCubit cubit = context.read<AuthCubit>();
+    String status =
+        cubit.profile!.subscriptionIsValidNow! ? 'فعال' : 'منتهي الصلاحية';
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -143,10 +155,12 @@ class SubscriptionStatus extends StatelessWidget {
                 style: TextStyle(
                     fontSize: 24, fontWeight: FontWeight.bold, color: cyan600)),
             SizedBox(height: 20),
-            BillItem(title: 'حالة الاشتراك - فعال', isPaid: true),
+            BillItem(
+                title: 'حالة الاشتراك - $status',
+                isPaid: cubit.profile!.subscriptionIsValidNow!),
             SizedBox(height: 20),
             Text(
-              'بداية الاشتراك: ' + '22/4/2025',
+              'بداية الاشتراك: ${cubit.profile!.registerDate}',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 18),
             ),

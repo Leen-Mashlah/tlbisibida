@@ -104,8 +104,8 @@ class DBMedicalCase {
     };
   }
 
-  MedicalCase todomain() {
-    return MedicalCase(
+  MedicalCaseinList todomain() {
+    return MedicalCaseinList(
         id: id,
         dentistId: dentistId,
         patientId: patientId,
@@ -114,7 +114,7 @@ class DBMedicalCase {
         dentist: dentist.toDomain());
   }
 
-  static DBMedicalCase fromdomain(MedicalCase medcase) {
+  static DBMedicalCase fromdomain(MedicalCaseinList medcase) {
     return DBMedicalCase(
         id: medcase.id,
         dentistId: medcase.dentistId,

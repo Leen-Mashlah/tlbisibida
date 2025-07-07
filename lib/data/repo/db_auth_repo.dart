@@ -1,3 +1,5 @@
+import 'package:lambda_dent_dash/data/models/auth/profile/db_lab_profile.dart';
+import 'package:lambda_dent_dash/domain/models/auth/profile/lab_profile.dart';
 import 'package:lambda_dent_dash/domain/repo/auth_repo.dart';
 import 'package:lambda_dent_dash/services/Cache/cache_helper.dart';
 import 'package:lambda_dent_dash/services/dio/dio.dart';
@@ -62,5 +64,19 @@ class DBAuthRepo extends AuthRepo {
   Future<bool> postrefreshtoken() {
     // TODO: implement postrefreshtoken
     throw UnimplementedError();
+  }
+
+
+    DBLabManagerProfileResponse? dbLabManagerProfileResponse;
+  @override
+  Future<LabProfile> getProfile() async {
+    await DioHelper.getData('auth/profile', token: CacheHelper.get('token'))
+        .then((value) {
+      dbLabManagerProfileResponse =
+          DBLabManagerProfileResponse.fromJson(value?.data);
+    });
+    LabProfile profile = dbLabManagerProfileResponse!.profile!.todomain();
+
+    return profile;
   }
 }

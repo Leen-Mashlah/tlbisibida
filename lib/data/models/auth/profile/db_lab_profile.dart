@@ -107,9 +107,6 @@ class DBLabProfile {
     data['lab_address'] = labAddress;
     data['lab_province'] = labProvince;
     data['lab_phone'] = labPhone;
-
-    // IMPORTANT: Convert LabPhone object back to a JSON string
-
     data['lab_logo'] = labLogo;
     data['lab_from_hour'] = labFromHour;
     data['lab_to_hour'] = labToHour;
@@ -137,7 +134,7 @@ class DBLabProfile {
       labFromHour: labFromHour,
       labToHour: labToHour,
       registerDate: registerDate,
-      subscriptionIsValidNow: subscriptionIsValidNow,
+      subscriptionIsValidNow: subscriptionIsValidNow == 1 ? true : false,
       registerAccepted: registerAccepted,
     );
   }

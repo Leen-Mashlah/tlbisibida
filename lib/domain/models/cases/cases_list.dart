@@ -1,7 +1,7 @@
 class MedicalCasesByType {
-  final List<MedicalCase> pendingCases;
-  final List<MedicalCase> acceptedCases;
-  final List<MedicalCase> inProgressCases;
+  final List<MedicalCaseinList> pendingCases;
+  final List<MedicalCaseinList> acceptedCases;
+  final List<MedicalCaseinList> inProgressCases;
 
   MedicalCasesByType({
     required this.pendingCases,
@@ -12,13 +12,13 @@ class MedicalCasesByType {
   factory MedicalCasesByType.fromJson(Map<String, dynamic> json) {
     return MedicalCasesByType(
       pendingCases: (json['pending_cases_0'] as List)
-          .map((i) => MedicalCase.fromJson(i))
+          .map((i) => MedicalCaseinList.fromJson(i))
           .toList(),
       acceptedCases: (json['accepted_cases_1'] as List)
-          .map((i) => MedicalCase.fromJson(i))
+          .map((i) => MedicalCaseinList.fromJson(i))
           .toList(),
       inProgressCases: (json['in_progress_2'] as List)
-          .map((i) => MedicalCase.fromJson(i))
+          .map((i) => MedicalCaseinList.fromJson(i))
           .toList(),
     );
   }
@@ -32,7 +32,7 @@ class MedicalCasesByType {
   }
 }
 
-class MedicalCase {
+class MedicalCaseinList {
   final int id;
   final int dentistId;
   final int patientId;
@@ -40,7 +40,7 @@ class MedicalCase {
   final Patient patient;
   final Dentist dentist;
 
-  MedicalCase({
+  MedicalCaseinList({
     required this.id,
     required this.dentistId,
     required this.patientId,
@@ -49,8 +49,8 @@ class MedicalCase {
     required this.dentist,
   });
 
-  factory MedicalCase.fromJson(Map<String, dynamic> json) {
-    return MedicalCase(
+  factory MedicalCaseinList.fromJson(Map<String, dynamic> json) {
+    return MedicalCaseinList(
       id: json['id'],
       dentistId: json['dentist_id'],
       patientId: json['patient_id'],

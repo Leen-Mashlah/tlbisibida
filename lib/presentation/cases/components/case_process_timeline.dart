@@ -2,9 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
-import 'package:lambda_dent_dash/presentation/cases/components/cost_dialog.dart';
+import 'package:lambda_dent_dash/presentation/cases/Components/cost_dialog.dart';
 import 'package:timelines_plus/timelines_plus.dart';
-
 
 const kTileHeight = 50.0;
 const completeColor = Color(0xff5e6172);
@@ -20,19 +19,25 @@ const _processes = [
 ];
 
 class CaseProcessTimeline extends StatefulWidget {
-  const CaseProcessTimeline({super.key});
+  final int currentProcessIndex;
+  final ValueChanged<int> onProcessIndexChanged; // Callback to notify parent
+
+  const CaseProcessTimeline({
+    super.key,
+    required this.currentProcessIndex,
+    required this.onProcessIndexChanged,
+  });
 
   @override
   State<CaseProcessTimeline> createState() => _CaseProcessTimelineState();
 }
 
 class _CaseProcessTimelineState extends State<CaseProcessTimeline> {
-  int _processIndex = 1;
 
   Color getColor(int index) {
-    if (index == _processIndex) {
-      return cyan300;
-    } else if (index < _processIndex) {
+    if (index == widget.currentProcessIndex) {
+      return inProgressColor;
+    } else if (index < widget.currentProcessIndex) {
       return completeColor;
     } else {
       return todoColor;
@@ -40,7 +45,9 @@ class _CaseProcessTimelineState extends State<CaseProcessTimeline> {
   }
 
   void _nextProcess() async {
-    if (_processIndex == 2) {
+    int newProcessIndex = widget.currentProcessIndex; // Start with current
+
+    if (widget.currentProcessIndex == 2) {
       // If currently at "قيد الإنجاز", show the cost dialog
       final result = await showDialog<String>(
         context: context,
@@ -53,15 +60,16 @@ class _CaseProcessTimelineState extends State<CaseProcessTimeline> {
       if (result != null) {
         print("Received cost from dialog: $result");
         // Update the process index only if a cost was submitted
-        setState(() {
-          _processIndex = 3; // Move to "جاهزة"
-        });
+        newProcessIndex = 3; // Move to "جاهزة"
       }
-    } else if (_processIndex != _processes.length - 1) {
+    } else if (widget.currentProcessIndex < _processes.length - 1) {
       // For other stages, just increment the index
-      setState(() {
-        _processIndex = (_processIndex + 1) % (_processes.length + 1);
-      });
+      newProcessIndex = widget.currentProcessIndex + 1;
+    }
+
+    // Only update if the index actually changed
+    if (newProcessIndex != widget.currentProcessIndex) {
+      widget.onProcessIndexChanged(newProcessIndex); // Notify the parent
     }
   }
 
@@ -100,8 +108,8 @@ class _CaseProcessTimelineState extends State<CaseProcessTimeline> {
               },
               indicatorBuilder: (_, index) {
                 var color;
-                Widget? child; // Made nullable
-                if (index == _processIndex) {
+                Widget? child;
+                if (index == widget.currentProcessIndex) {
                   color = inProgressColor;
                   child = const Padding(
                     padding: EdgeInsets.all(8.0),
@@ -110,7 +118,7 @@ class _CaseProcessTimelineState extends State<CaseProcessTimeline> {
                       valueColor: AlwaysStoppedAnimation(Colors.white),
                     ),
                   );
-                } else if (index < _processIndex) {
+                } else if (index < widget.currentProcessIndex) {
                   color = completeColor;
                   child = const Icon(
                     Icons.check,
@@ -121,7 +129,7 @@ class _CaseProcessTimelineState extends State<CaseProcessTimeline> {
                   color = todoColor;
                 }
 
-                if (index <= _processIndex) {
+                if (index <= widget.currentProcessIndex) {
                   return Stack(
                     children: [
                       CustomPaint(
@@ -129,7 +137,7 @@ class _CaseProcessTimelineState extends State<CaseProcessTimeline> {
                         painter: _BezierPainter(
                           color: color,
                           drawStart: index > 0,
-                          drawEnd: index < _processIndex,
+                          drawEnd: index < widget.currentProcessIndex,
                         ),
                       ),
                       DotIndicator(
@@ -159,7 +167,7 @@ class _CaseProcessTimelineState extends State<CaseProcessTimeline> {
               },
               connectorBuilder: (_, index, type) {
                 if (index > 0) {
-                  if (index == _processIndex) {
+                  if (index == widget.currentProcessIndex) {
                     final prevColor = getColor(index - 1);
                     final color = getColor(index);
                     List<Color> gradientColors;
@@ -197,7 +205,7 @@ class _CaseProcessTimelineState extends State<CaseProcessTimeline> {
         ElevatedButton(
           style: const ButtonStyle(
               backgroundColor: WidgetStatePropertyAll(cyan300)),
-          onPressed: _nextProcess, // Call the new _nextProcess method
+          onPressed: _nextProcess,
           child: const Icon(
             Icons.navigate_next_rounded,
             color: white,

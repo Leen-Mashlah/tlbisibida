@@ -8,8 +8,8 @@ import 'package:lambda_dent_dash/components/default_textfield.dart';
 import 'package:lambda_dent_dash/components/image_picker.dart';
 import 'package:lambda_dent_dash/components/teeth_selection_screen.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
-import 'package:lambda_dent_dash/presentation/cases/components/shade_guides/guide_button.dart';
-import 'package:lambda_dent_dash/presentation/cases/pages/search_for_lab.dart';
+import 'package:lambda_dent_dash/presentation/cases/Components/shade_guides/guide_button.dart';
+import 'package:lambda_dent_dash/presentation/cases/Components/search_for_lab.dart';
 
 class AddCasePage extends StatelessWidget {
   final List<String> _labslist = [

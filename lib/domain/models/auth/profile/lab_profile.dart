@@ -1,34 +1,5 @@
 import 'package:lambda_dent_dash/domain/repo/lapphone_chat.dart';
 
-class LabManagerProfileResponse {
-  bool? status;
-  int? successCode;
-  LabProfile? profile;
-  String? successMessage;
-
-  LabManagerProfileResponse(
-      {this.status, this.successCode, this.profile, this.successMessage});
-
-  LabManagerProfileResponse.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    successCode = json['success_code'];
-    profile =
-        json['profile'] != null ? LabProfile.fromJson(json['profile']) : null;
-    successMessage = json['success_message'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['success_code'] = successCode;
-    if (profile != null) {
-      data['profile'] = profile!.toJson();
-    }
-    data['success_message'] = successMessage;
-    return data;
-  }
-}
-
 class LabProfile {
   int? id;
   String? firstName;
@@ -36,17 +7,17 @@ class LabProfile {
   String? email;
   String? emailVerifiedAt;
   int? emailIsVerified;
-  String? verificationCode; // Can be null, but here it's a string
+  String? verificationCode;
   String? labType;
   String? labName;
   String? labAddress;
   String? labProvince;
-  List<String>? labPhone; // This will be parsed from a string
+  List<String>? labPhone;
   String? labLogo;
   String? labFromHour;
   String? labToHour;
   String? registerDate;
-  int? subscriptionIsValidNow;
+  bool? subscriptionIsValidNow;
   int? registerAccepted;
 
   LabProfile({
@@ -83,7 +54,6 @@ class LabProfile {
     labAddress = json['lab_address'];
     labProvince = json['lab_province'];
     labPhone = decodeLabPhoneNumbers(json['lab_phone']);
-
     labLogo = json['lab_logo'];
     labFromHour = json['lab_from_hour'];
     labToHour = json['lab_to_hour'];
@@ -106,7 +76,6 @@ class LabProfile {
     data['lab_address'] = labAddress;
     data['lab_province'] = labProvince;
     data['lab_phone'] = encodeLabPhoneNumbers(labPhone!);
-
     data['lab_logo'] = labLogo;
     data['lab_from_hour'] = labFromHour;
     data['lab_to_hour'] = labToHour;
@@ -115,5 +84,4 @@ class LabProfile {
     data['register_accepted'] = registerAccepted;
     return data;
   }
-
 }
