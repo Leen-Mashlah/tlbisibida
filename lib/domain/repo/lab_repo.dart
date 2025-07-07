@@ -1,8 +1,5 @@
-abstract class DocRepo {
-  // Future<void> renew(int month, int id);
-  // // Future<void> renewclinics(int month, int id);
-  // Future<void> confirmlabs(int id);
-  // Future<void> confirmclinics(int id);
+abstract class LabRepo {
+
 
   Future<void> getAvailableSlots();
   Future<void> getAppointments();
@@ -21,8 +18,6 @@ abstract class DocRepo {
   Future<void> getCaseDetails(int id);
   Future<void> getcaseList(int id);
   Future<void> getComments(int id);
-  // Future<BillDetailsResponse> getBillDetail();
-  // Future<LabBillsResponse> getLabBill();
 
   Future<void> getLabsListForChoice();
   Future<void> getOpPayments();

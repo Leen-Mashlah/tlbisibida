@@ -29,6 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   animated_checkmark: ^1.0.1
+  animated_snack_bar:
   buildcondition: null
   bloc:
   chat_bubbles: ^1.6.0
