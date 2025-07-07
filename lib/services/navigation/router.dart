@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lambda_dent_dash/presentation/authentication/Providers/email_provider.dart';
 import 'package:lambda_dent_dash/services/navigation/locator.dart';
 import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
 import 'package:lambda_dent_dash/services/navigation/routes.dart';
@@ -88,7 +89,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case emailVerificationPageRoute:
       return _getPageRoute(
-          EmailVerificationPage(), emailVerificationDisplayName);
+          EmailVerifyProvider(), emailVerificationDisplayName);
 
     default:
       return _getPageRoute(const HomePage(), homePageDisplayName);
