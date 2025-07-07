@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lambda_dent_dash/domain/repo/auth_repo.dart';
+import 'package:lambda_dent_dash/services/Cache/cache_helper.dart';
 
 class AuthCubit extends Cubit<String> {
   AuthCubit(this.repo) : super('');
@@ -86,6 +87,7 @@ class AuthCubit extends Cubit<String> {
       print(e.toString());
     }
     success ? emit('registered') : emit('error');
+    CacheHelper.setString('email', registrydata['email']);
     print(state);
   }
 }
