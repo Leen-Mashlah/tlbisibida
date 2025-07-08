@@ -66,16 +66,14 @@ class DBAuthRepo extends AuthRepo {
     throw UnimplementedError();
   }
 
-
-    DBLabManagerProfileResponse? dbLabManagerProfileResponse;
+  DBLabProfileResponse? dblLabProfileResponse;
   @override
   Future<LabProfile> getProfile() async {
     await DioHelper.getData('auth/profile', token: CacheHelper.get('token'))
         .then((value) {
-      dbLabManagerProfileResponse =
-          DBLabManagerProfileResponse.fromJson(value?.data);
+      dblLabProfileResponse = DBLabProfileResponse.fromJson(value?.data);
     });
-    LabProfile profile = dbLabManagerProfileResponse!.profile!.todomain();
+    LabProfile profile = dblLabProfileResponse!.profile!.toDomain();
 
     return profile;
   }

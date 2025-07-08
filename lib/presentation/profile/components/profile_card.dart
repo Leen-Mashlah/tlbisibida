@@ -15,20 +15,20 @@ class ProfileSection extends StatelessWidget {
     List userInfo = [
       {
         'title': 'البريد الالكتروني',
-        'info': cubit.profile!.email,
+        'info': cubit.profile!.profileDetails!.email,
         // controller.profileModel!.firstName +
         //     controller.profileModel!.lastName,
         'icon': Icons.mail_rounded,
       },
       {
         'title': 'الهاتف',
-        'info': cubit.profile!.labPhone,
+        'info': cubit.profile!.profileDetails!.labPhone,
         //  controller.profileModel!.phoneNumber,
         'icon': CupertinoIcons.phone_circle_fill,
       },
       {
         'title': 'العنوان',
-        'info': cubit.profile!.labAddress,
+        'info': cubit.profile!.profileDetails!.labAddress,
         //controller.profileModel!.wallet,
         'icon': Icons.location_on_rounded,
       },
@@ -41,7 +41,7 @@ class ProfileSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               SizedBox(height: 20),
-              Text(cubit.profile!.labName!,
+              Text(cubit.profile!.profileDetails!.labName!,
                   style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
@@ -144,7 +144,7 @@ class SubscriptionStatus extends StatelessWidget {
   Widget build(BuildContext context) {
     final AuthCubit cubit = context.read<AuthCubit>();
     String status =
-        cubit.profile!.subscriptionIsValidNow! ? 'فعال' : 'منتهي الصلاحية';
+        cubit.profile!.lastSubscription!.subscriptionIsValid! ? 'فعال' : 'منتهي الصلاحية';
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -157,16 +157,16 @@ class SubscriptionStatus extends StatelessWidget {
             SizedBox(height: 20),
             BillItem(
                 title: 'حالة الاشتراك - $status',
-                isPaid: cubit.profile!.subscriptionIsValidNow!),
+                isPaid: cubit.profile!.lastSubscription!.subscriptionIsValid!),
             SizedBox(height: 20),
             Text(
-              'بداية الاشتراك: ${cubit.profile!.registerDate}',
+              'بداية الاشتراك: ${cubit.profile!.lastSubscription!.subscriptionFrom}',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 18),
             ),
             SizedBox(height: 20),
             Text(
-              'نهاية الاشتراك: ' + '22/4/2026',
+              'نهاية الاشتراك: ${cubit.profile!.lastSubscription!.subscriptionTo}',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 18),
             ),

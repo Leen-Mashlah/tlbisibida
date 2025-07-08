@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:lambda_dent_dash/data/models/cases/db_case_comments.dart';
 import 'package:lambda_dent_dash/data/models/cases/db_case_details.dart';
 import 'package:lambda_dent_dash/data/models/cases/db_cases_list.dart';
 import 'package:lambda_dent_dash/domain/models/cases/case_details.dart';
@@ -55,11 +58,34 @@ class DBCasesRepo extends CasesRepo {
     return medicalCase;
   }
 
+  DBCommentsResponse? dbLabManagerProfileResponse;
   @override
-  Future<void> getCaseComments() {
-    //TODO
-        throw UnimplementedError();
+  Future<void> getCaseComments(int id) async {
+    return await DioHelper.getData(
+            'lab-manager/medical-cases/show-comments/$id',
+            token: CacheHelper.get('token'))
+        .then((value) {
+      dbLabManagerProfileResponse = DBCommentsResponse.fromJson(value?.data);
+    }).catchError((error) {
+      print('error in getComments: ' + error.toString());
+    });
   }
+
+  @override
+  Future<Uint8List>? getCasesimage(int id) async => await DioHelper.getImage(
+              'lab-manager/medical-cases/download-case-image/$id',
+              token: CacheHelper.get('token'))
+          .then((value) {
+        if (value != null && value.data['status']) {
+          return value.data;
+        } else {
+          print(" failed: ${value?.data['message'] ?? 'Unknown error'}");
+          return null;
+        }
+      }).catchError((error) {
+        print(error.toString());
+        return null;
+      });
 
   @override
   Future<bool> postNewCase() {
