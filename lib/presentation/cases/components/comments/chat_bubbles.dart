@@ -10,7 +10,7 @@ Widget chatBubbleBuilder(
 ) {
   final cubit = context.read<CasesCubit>();
 
-  final message = cubit.comments[index];
+  final message = cubit.comments![index];
   bool isSender = message.labManagerId != null;
 
   return BubbleSpecialThree(

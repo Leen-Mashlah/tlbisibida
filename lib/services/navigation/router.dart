@@ -6,7 +6,6 @@ import 'package:lambda_dent_dash/services/navigation/locator.dart';
 import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
 import 'package:lambda_dent_dash/services/navigation/routes.dart';
 import 'package:lambda_dent_dash/presentation/authentication/Views/authentication.dart';
-import 'package:lambda_dent_dash/presentation/authentication/Views/email_verification.dart';
 import 'package:lambda_dent_dash/presentation/authentication/Views/choose_role_page.dart';
 import 'package:lambda_dent_dash/presentation/authentication/Views/register.dart';
 import 'package:lambda_dent_dash/presentation/authentication/Views/register_2.dart';

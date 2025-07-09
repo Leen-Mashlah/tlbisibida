@@ -1,8 +1,10 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:lambda_dent_dash/components/custom_text.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
+import 'package:lambda_dent_dash/presentation/clients/Cubits/clients_cubit.dart';
 import 'package:lambda_dent_dash/services/navigation/locator.dart';
 import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
 import 'package:lambda_dent_dash/services/navigation/routes.dart';
@@ -13,6 +15,8 @@ class ClientCasesTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final clientsCubit = context.read<ClientsCubit>();
+
     return Center(
       child: Container(
         decoration: BoxDecoration(
@@ -45,7 +49,7 @@ class ClientCasesTable extends StatelessWidget {
                 DataColumn(
                   label: Center(
                       child: Text(
-                    ' وضع الحالة',
+                    'وضع الحالة',
                     style: TextStyle(color: cyan300),
                   )),
                 ),
@@ -65,29 +69,34 @@ class ClientCasesTable extends StatelessWidget {
                 ),
               ],
               rows: List<DataRow>.generate(
-                50,
-                (index) => DataRow(
-                  cells: [
-                    const DataCell(Center(child: CustomText(text: 'تحسين'))),
-                    const DataCell(Center(
-                        child: CustomText(
-                      text: 'جاهزة',
-                    ))),
-                    const DataCell(
-                        Center(child: CustomText(text: '5/11/2024'))),
-                    DataCell(Center(
-                        child: IconButton(
-                      onPressed: () {
-                        locator<NavigationService>()
-                            .navigateTo(caseDetailsPageRoute);
-                      },
-                      icon: const Icon(
-                        Icons.arrow_circle_left_outlined,
-                        color: cyan300,
-                      ),
-                    ))),
-                  ],
-                ),
+                clientsCubit.casesList!.dentistCases.length,
+                (index) {
+                  var caseitem = clientsCubit.casesList!.dentistCases[index];
+                  return DataRow(
+                    cells: [
+                      DataCell(
+                          Center(child: Text(caseitem.patient!.fullName!))),
+                      DataCell(Center(
+                          child: CustomText(
+                        text: caseitem.status!,
+                      ))),
+                      DataCell(Center(
+                          child: CustomText(
+                              text: caseitem.createdAt!.toIso8601String()))),
+                      DataCell(Center(
+                          child: IconButton(
+                        onPressed: () {
+                          locator<NavigationService>()
+                              .navigateTo(caseDetailsPageRoute);
+                        },
+                        icon: const Icon(
+                          Icons.arrow_circle_left_outlined,
+                          color: cyan300,
+                        ),
+                      ))),
+                    ],
+                  );
+                },
               ),
             ),
           ),

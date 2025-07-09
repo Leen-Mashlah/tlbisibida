@@ -36,7 +36,7 @@ Widget caseComments(BuildContext context) {
           child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               padding: EdgeInsets.zero, // Ensure no extra padding
-              itemCount: cubit.comments.length,
+              itemCount: cubit.comments!.length,
               itemBuilder: (context, index) =>
                   chatBubbleBuilder(context, index)),
         ),

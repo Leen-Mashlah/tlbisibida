@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/components/date_picker.dart';
 import 'package:lambda_dent_dash/components/default_button.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
-import 'package:lambda_dent_dash/presentation/bills/components/bill_details_dialog.dart';
 import 'package:lambda_dent_dash/presentation/bills/components/bill_preview_dialog.dart';
 import 'package:lambda_dent_dash/presentation/cases/Components/search_for_lab.dart';
 

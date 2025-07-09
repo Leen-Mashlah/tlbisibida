@@ -27,7 +27,7 @@ class CasesCubit extends Cubit<String> {
     } else {
       emit('error');
     }
-    print("Case List state: $state, Profile: $casesList");
+    print("Case List state: $state, Cases: $casesList");
   }
 
   MedicalCase? medicalCase;
@@ -57,7 +57,7 @@ class CasesCubit extends Cubit<String> {
 
     imgList.isNotEmpty ? emit('images_loaded') : emit('error_images');
 
-    print("Case Details state: $state, Profile: $medicalCase");
+    print("Case Details state: $state, Case: $medicalCase");
   }
 
   List<Uint8List> imgList = [];
@@ -67,15 +67,21 @@ class CasesCubit extends Cubit<String> {
     emit('image_added');
   }
 
-  List<Comment> comments = [];
+  List<Comment>? comments = [];
 
   Future<void> getcomment(int id) async {
     emit('comments_loading');
     try {
-      await repo.getCaseComments(id);
+      comments = await repo.getCaseComments(id);
     } on Exception catch (e) {
       emit('error');
-      print(e.toString());
+      print("Error loading comments list: ${e.toString()}");
     }
+    if (comments != null) {
+      emit('comments_loaded');
+    } else {
+      emit('error');
+    }
+    print("Comments List state: $state, Comments: $casesList");
   }
 }
