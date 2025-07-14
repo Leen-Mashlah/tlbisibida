@@ -1,51 +1,56 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lambda_dent_dash/domain/repo/email_repo.dart';
+import 'email_state.dart';
 
-class EmailCubit extends Cubit<String> {
-  EmailCubit(this.repo) : super('');
+class EmailCubit extends Cubit<EmailState> {
+  EmailCubit(this.repo) : super(EmailInitial());
   final EmailRepo repo;
 
-//Check Verification Code
   bool success = false;
   Future<void> checkVerificationCode(
       String guard, String email, int verificationCode) async {
-    emit('checking');
+    emit(EmailChecking());
     try {
       success =
           await repo.postCheckVerificationCode(guard, email, verificationCode);
-    } on Exception catch (e) {
-      emit('error');
-      print(e.toString());
+      if (success) {
+        emit(EmailChecked());
+      } else {
+        emit(EmailError('Verification failed.'));
+      }
+    } catch (e) {
+      emit(EmailError(e.toString()));
     }
-    success ? emit('checked') : emit('error');
-    print(state);
   }
 
-  //forget pass
   Future<void> forgetpass(
       String guard, String email, String newpass, String newpassconfirm) async {
-    emit('checking');
+    emit(EmailChecking());
     try {
-      success = await repo.postForgetPass(guard, email, newpass, newpassconfirm);
-    } on Exception catch (e) {
-      emit('error');
-      print(e.toString());
+      success =
+          await repo.postForgetPass(guard, email, newpass, newpassconfirm);
+      if (success) {
+        emit(EmailChecked());
+      } else {
+        emit(EmailError('Password reset failed.'));
+      }
+    } catch (e) {
+      emit(EmailError(e.toString()));
     }
-    success ? emit('checked') : emit('error');
-    print(state);
   }
 
-  //stage emp
   Future<void> stageemp(
       String guard, String email, int verificationCode) async {
-    emit('checking');
+    emit(EmailChecking());
     try {
       success = await repo.postStageEmp(guard, email, verificationCode);
-    } on Exception catch (e) {
-      emit('error');
-      print(e.toString());
+      if (success) {
+        emit(EmailChecked());
+      } else {
+        emit(EmailError('Stage emp failed.'));
+      }
+    } catch (e) {
+      emit(EmailError(e.toString()));
     }
-    success ? emit('checked') : emit('error');
-    print(state);
   }
 }

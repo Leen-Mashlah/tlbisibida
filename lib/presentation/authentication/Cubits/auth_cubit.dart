@@ -1,39 +1,49 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lambda_dent_dash/domain/models/auth/profile/lab_profile.dart';
 import 'package:lambda_dent_dash/domain/repo/auth_repo.dart';
-import 'package:lambda_dent_dash/services/Cache/cache_helper.dart';
+import 'auth_state.dart';
 
-class AuthCubit extends Cubit<String> {
-  AuthCubit(this.repo) : super('');
+class AuthCubit extends Cubit<AuthState> {
+  AuthCubit(this.repo) : super(AuthInitial());
   final AuthRepo repo;
 
   bool success = false;
+  String? lastErrorMessage;
 
   Future<void> login(String email, String password, String guard) async {
-    emit('logging_in');
+    emit(AuthLoading());
     try {
       success = await repo.postlogin(email, password, guard);
-    } on Exception catch (e) {
-      emit('error');
-      print(e.toString());
+      if (success) {
+        emit(AuthLoggedIn());
+      } else {
+        lastErrorMessage = 'Login failed. Please check your credentials.';
+        emit(AuthError(lastErrorMessage!));
+      }
+    } catch (e) {
+      lastErrorMessage = e.toString();
+      emit(AuthError(lastErrorMessage!));
     }
-    success ? emit('logged_in') : emit('error');
-    print(state);
   }
 
   Future<void> logout() async {
-    emit('logging_out');
+    emit(AuthLoading());
     try {
       success = await repo.postlogout();
-    } on Exception catch (e) {
-      emit('error');
-      print(e);
+      if (success) {
+        emit(AuthLoggedOut());
+      } else {
+        lastErrorMessage = 'Logout failed.';
+        emit(AuthError(lastErrorMessage!));
+      }
+    } catch (e) {
+      lastErrorMessage = e.toString();
+      emit(AuthError(lastErrorMessage!));
     }
-    success ? emit('logged_out') : emit('error');
-    print(state);
   }
 
   Map<String, dynamic> registrydata = {};
+
   void cookregistryfisrt({
     required String guard,
     required String labName,
@@ -44,9 +54,8 @@ class AuthCubit extends Cubit<String> {
     required List<String> labPhone,
     required String province,
     required String address,
-    // required Map<String, String> workingHours,
   }) {
-    emit('cooking');
+    emit(AuthLoading());
     registrydata = {
       'guard': guard,
       'full_name': fullName,
@@ -58,7 +67,7 @@ class AuthCubit extends Cubit<String> {
       'lab_province': province,
       'lab_address': address,
     };
-    emit('cooked');
+    emit(AuthInitial());
   }
 
   void cookregistrysecond({
@@ -67,47 +76,49 @@ class AuthCubit extends Cubit<String> {
     required String endHour,
     required int subscriptionDuration,
   }) {
-    emit('cooking');
+    emit(AuthLoading());
     registrydata.addAll({
       'lab_type': labType,
       'work_from_hour': startHour,
       'work_to_hour': endHour,
       'register_subscription_duration': subscriptionDuration,
     });
-    emit('cooked');
+    emit(AuthInitial());
     register();
   }
 
-  //Register
   Future<void> register() async {
-    emit('registering');
+    emit(AuthLoading());
     try {
       success = await repo.postregister(registrydata);
-    } on Exception catch (e) {
-      emit('error');
-      print(e.toString());
+      if (success) {
+        emit(AuthRegistered());
+        registrydata.clear();
+      } else {
+        lastErrorMessage = 'Registration failed.';
+        emit(AuthError(lastErrorMessage!));
+      }
+    } catch (e) {
+      lastErrorMessage = e.toString();
+      emit(AuthError(lastErrorMessage!));
     }
-    success ? emit('registered') : emit('error');
-    CacheHelper.setString('email', registrydata['email']);
-    print(state);
   }
 
-
-  
   LabProfile? profile;
+
   Future<void> getProfile() async {
-    emit('profile_loading'); 
+    emit(AuthLoading());
     try {
       profile = await repo.getProfile();
       if (profile != null) {
-        emit('profile_loaded');
+        emit(AuthProfileLoaded(profile!));
       } else {
-        emit('no_profile');
+        lastErrorMessage = 'No profile found.';
+        emit(AuthError(lastErrorMessage!));
       }
-    } on Exception catch (e) {
-      emit('error');
-      print("Error loading profile: ${e.toString()}");
+    } catch (e) {
+      lastErrorMessage = e.toString();
+      emit(AuthError(lastErrorMessage!));
     }
-    print("Profile state: $state, Profile: ${profile}");
   }
 }

@@ -5,9 +5,10 @@ import 'package:lambda_dent_dash/domain/models/cases/case_commnets.dart';
 import 'package:lambda_dent_dash/domain/models/cases/case_details.dart';
 import 'package:lambda_dent_dash/domain/models/cases/cases_list.dart';
 import 'package:lambda_dent_dash/domain/repo/cases_repo.dart';
+import 'cases_state.dart';
 
-class CasesCubit extends Cubit<String> {
-  CasesCubit(this.repo) : super('initial') {
+class CasesCubit extends Cubit<CasesState> {
+  CasesCubit(this.repo) : super(CasesInitial()) {
     getCases();
   }
 
@@ -15,73 +16,53 @@ class CasesCubit extends Cubit<String> {
 
   Map<String, List<MedicalCaseinList>>? casesList;
   Future<void> getCases() async {
-    emit('cases_list_loading');
+    emit(CasesLoading());
     try {
       casesList = await repo.getcaseList();
+      if (casesList != null) {
+        emit(CasesLoaded(casesList!));
+      } else {
+        emit(CasesError('No cases found.'));
+      }
     } on Exception catch (e) {
-      emit('error');
-      print("Error loading cases list: ${e.toString()}");
+      emit(CasesError("Error loading cases list: \\${e.toString()}"));
     }
-    if (casesList != null) {
-      emit('case_list_loaded');
-    } else {
-      emit('error');
-    }
-    print("Case List state: $state, Cases: $casesList");
   }
 
   MedicalCase? medicalCase;
   Future<void> getCaseDetails(int id) async {
-    emit('case_loading');
+    emit(CaseDetailsLoading());
     try {
       medicalCase = await repo.getCaseDetails(id);
-    } on Exception catch (e) {
-      emit('error');
-      print("Error loading case: ${e.toString()}");
-    }
-    if (medicalCase != null) {
-      emit('case_loaded');
-    } else {
-      emit('error');
-    }
-
-    if (medicalCase != null) {
-      emit('case_details_loaded');
-      print(state);
-      for (var file in medicalCase!.medicalCaseFiles!) {
-        getCaseImages(file.id!);
+      if (medicalCase != null) {
+        emit(CaseDetailsLoaded(medicalCase!));
+      } else {
+        emit(CasesError('No case details found.'));
       }
-    } else {
-      emit('error');
+    } on Exception catch (e) {
+      emit(CasesError("Error loading case: \\${e.toString()}"));
     }
-
-    imgList.isNotEmpty ? emit('images_loaded') : emit('error_images');
-
-    print("Case Details state: $state, Case: $medicalCase");
   }
 
   List<Uint8List> imgList = [];
   Future<void> getCaseImages(int id) async {
     var image = await repo.getCasesimage(id);
-    image != null ? imgList.add(image) : image;
-    emit('image_added');
+    if (image != null) imgList.add(image);
+    emit(ImagesLoaded(imgList));
   }
 
   List<Comment>? comments = [];
-
   Future<void> getcomment(int id) async {
-    emit('comments_loading');
+    emit(CommentsLoading());
     try {
       comments = await repo.getCaseComments(id);
+      if (comments != null) {
+        emit(CommentsLoaded(comments!));
+      } else {
+        emit(CasesError('No comments found.'));
+      }
     } on Exception catch (e) {
-      emit('error');
-      print("Error loading comments list: ${e.toString()}");
+      emit(CasesError("Error loading comments list: \\${e.toString()}"));
     }
-    if (comments != null) {
-      emit('comments_loaded');
-    } else {
-      emit('error');
-    }
-    print("Comments List state: $state, Comments: $casesList");
   }
 }

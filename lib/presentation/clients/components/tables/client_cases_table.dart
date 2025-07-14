@@ -31,7 +31,7 @@ class ClientCasesTable extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 30),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           SizedBox(
-            height: (56 * 50) + 40,
+            height: (56 * clientsCubit.casesList!.dentistCases.length) + 40,
             child: DataTable2(
               columnSpacing: 12,
               dataRowHeight: 56,

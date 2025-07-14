@@ -5,6 +5,7 @@ import 'package:info_popup/info_popup.dart';
 
 import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:lambda_dent_dash/presentation/clients/Cubits/clients_cubit.dart';
+import 'package:lambda_dent_dash/presentation/clients/Cubits/clients_state.dart';
 
 import 'package:lambda_dent_dash/presentation/clients/components/tables/client_bills_table.dart';
 import 'package:lambda_dent_dash/presentation/clients/components/tables/client_cases_table.dart';
@@ -20,7 +21,7 @@ class ClientDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: BlocConsumer<ClientsCubit, String>(
+        body: BlocConsumer<ClientsCubit, ClientsState>(
       listener: (context, state) {
         // TODO: implement listener
       },
@@ -175,10 +176,9 @@ class ClientDetailsPage extends StatelessWidget {
                 ValueListenableBuilder(
                     valueListenable: _iscase,
                     builder: (context, isShowingCases, child) {
-                      if (isShowingCases && state == 'client_cases_loaded') {
+                      if (isShowingCases && state is ClientsLoaded) {
                         return const ClientCasesTable();
-                      } else if (!isShowingCases &&
-                          state == 'client_bills_loaded') {
+                      } else if (!isShowingCases && state is ClientsLoaded) {
                         return const ClientBillsTable();
                       } else {
                         return const CircularProgressIndicator();

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lambda_dent_dash/components/custom_text.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:lambda_dent_dash/presentation/authentication/Cubits/auth_cubit.dart';
+import 'package:lambda_dent_dash/presentation/authentication/Cubits/auth_state.dart';
 import 'package:lambda_dent_dash/services/navigation/locator.dart';
 import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
 import 'package:lambda_dent_dash/services/navigation/routes.dart';
@@ -19,9 +20,9 @@ class AuthenticationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     AuthCubit cubit = context.read<AuthCubit>();
     return Scaffold(
-      body: BlocConsumer<AuthCubit, String>(
+      body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
-          if (state == 'logged_in') {
+          if (state is AuthLoggedIn) {
             AnimatedSnackBar.material(
               'تم تسجيل الدخول بنجاح!',
               type: AnimatedSnackBarType.success,
@@ -30,8 +31,7 @@ class AuthenticationPage extends StatelessWidget {
               animationCurve: Easing.standard,
             ).show(context);
             locator<NavigationService>().navigateTo(homePageRoute);
-          }
-          if (state == 'error') {
+          } else if (state is AuthError) {
             AnimatedSnackBar.material(
               'لم يتم تسجيل الدخول ـ تأكد من المعلومات المدخلة ثم حاول مرة أخرى',
               type: AnimatedSnackBarType.error,

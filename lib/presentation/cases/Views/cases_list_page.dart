@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lambda_dent_dash/components/float_button.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:lambda_dent_dash/presentation/cases/Cubits/cases_cubit.dart';
+import 'package:lambda_dent_dash/presentation/cases/Cubits/cases_state.dart';
 import 'package:lambda_dent_dash/services/navigation/locator.dart';
 import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
 import 'package:lambda_dent_dash/services/navigation/routes.dart';
@@ -16,7 +17,7 @@ class CasesListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<CasesCubit, String>(
+      body: BlocConsumer<CasesCubit, CasesState>(
         listener: (context, state) {
           // TODO: implement listener
         },
@@ -27,7 +28,7 @@ class CasesListPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 75.0),
                 child: Center(
-                  child: state == 'case_list_loaded'
+                  child: state is CasesLoaded
                       ? SizedBox(
                           width: MediaQuery.of(context).size.width / 1.3,
                           // height: MediaQuery.of(context).size.height / 1.4,
@@ -71,12 +72,12 @@ class CasesListPage extends StatelessWidget {
                                 // _columnEntity(),
                               ]),
                         )
-                      : state == 'error'
+                      : state is CasesError
                           ? Center(
                               child: Text(
                                   'لم يتم تحميل الحالات، تأكد من اتصال الانترنت'),
                             )
-                          : state == 'cases_list_loading'
+                          : state is CasesLoading
                               ? CircularProgressIndicator(
                                   color: cyan400,
                                 )

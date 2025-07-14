@@ -9,6 +9,7 @@ import 'package:lambda_dent_dash/services/navigation/locator.dart';
 import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
 import 'package:lambda_dent_dash/services/navigation/routes.dart';
 import 'package:lambda_dent_dash/presentation/authentication/Cubits/auth_cubit.dart';
+import 'package:lambda_dent_dash/presentation/authentication/Cubits/auth_state.dart';
 
 class RegisterPage extends StatelessWidget {
   // AdminLoginController adminAuth=Get.put(AdminLoginController());
@@ -44,9 +45,13 @@ class RegisterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     AuthCubit cubit = context.read<AuthCubit>();
     return Scaffold(
-      body: BlocConsumer<AuthCubit, String>(
+      body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
-          // TODO: implement listener
+          if (state is AuthRegistered) {
+            // handle registration success
+          } else if (state is AuthError) {
+            // handle error
+          }
         },
         builder: (context, state) {
           return Container(

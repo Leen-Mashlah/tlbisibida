@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lambda_dent_dash/components/float_button.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:lambda_dent_dash/presentation/clients/Cubits/clients_cubit.dart';
+import 'package:lambda_dent_dash/presentation/clients/Cubits/clients_state.dart';
 import 'package:lambda_dent_dash/presentation/clients/components/tables/client_requests_table.dart';
 import 'package:lambda_dent_dash/presentation/clients/components/tables/clients_table.dart';
 import 'package:lambda_dent_dash/presentation/clients/components/dialogs/add_client_dialog.dart';
@@ -17,7 +18,7 @@ class ClientsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: BlocConsumer<ClientsCubit, String>(
+        body: BlocConsumer<ClientsCubit, ClientsState>(
       listener: (context, state) {
         // TODO: implement listener
       },
@@ -62,8 +63,9 @@ class ClientsPage extends StatelessWidget {
                               side: const BorderSide(color: cyan300),
                               selected: state.selected(isRegisteredTab),
                               onSelected: state.onSelected(isRegisteredTab),
-                              label: Text(
-                                  isRegisteredTab ? 'الزبائن' : 'طلبات الانضمام'),
+                              label: Text(isRegisteredTab
+                                  ? 'الزبائن'
+                                  : 'طلبات الانضمام'),
                             );
                           },
                           listBuilder: ChoiceList.createWrapped(
@@ -83,18 +85,18 @@ class ClientsPage extends StatelessWidget {
                     height: 20,
                   ),
                   ValueListenableBuilder<bool>(
-                          valueListenable: _showregisteredlist,
-                          builder: (context, isShowingRegistered, child) {
-                            if (isShowingRegistered && state == 'clients_loaded') {
-                              return const ClientsTable();
-                            } else if (!isShowingRegistered &&
-                                state == 'requests_loaded') {
-                              return const ClientsReqTable();
-                            } else {
-                              return const CircularProgressIndicator();
-                            }
-                          },
-                        ),
+                    valueListenable: _showregisteredlist,
+                    builder: (context, isShowingRegistered, child) {
+                      if (isShowingRegistered && state is ClientsLoaded) {
+                        return const ClientsTable();
+                      } else if (!isShowingRegistered &&
+                          state is RequestsLoaded) {
+                        return const ClientsReqTable();
+                      } else {
+                        return const CircularProgressIndicator();
+                      }
+                    },
+                  ),
                 ],
               )),
               Positioned(
