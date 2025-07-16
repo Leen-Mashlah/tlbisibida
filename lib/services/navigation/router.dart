@@ -14,7 +14,7 @@ import 'package:lambda_dent_dash/presentation/cases/Views/add_case_page.dart';
 import 'package:lambda_dent_dash/presentation/cases/Views/case_details_page.dart';
 import 'package:lambda_dent_dash/presentation/clients/client_details_page.dart';
 import 'package:lambda_dent_dash/presentation/clients/clients_page.dart';
-import 'package:lambda_dent_dash/presentation/employees/emplyoees_page.dart';
+import 'package:lambda_dent_dash/presentation/employees/employees_page.dart';
 import 'package:lambda_dent_dash/presentation/home/home_page.dart';
 import 'package:lambda_dent_dash/presentation/inventory/inventory_page.dart';
 import 'package:lambda_dent_dash/presentation/payments/payments_log_page.dart';
@@ -64,7 +64,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     //Employees
     case employeesPageRoute:
-      return _getPageRoute(EmplyoeesPage(), employeesPageDisplayName);
+      return _getPageRoute(
+          EmplyoeesPage(), employeesPageDisplayName);
 
     //Inventory
     case inventoryPageRoute:
@@ -87,8 +88,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(const Settings(), settingsPageDisplayName);
 
     case emailVerificationPageRoute:
-      return _getPageRoute(
-          EmailVerifyProvider(), emailVerificationDisplayName);
+      return _getPageRoute(EmailVerifyProvider(), emailVerificationDisplayName);
 
     default:
       return _getPageRoute(const HomePage(), homePageDisplayName);

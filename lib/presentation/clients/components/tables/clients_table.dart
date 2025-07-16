@@ -1,8 +1,10 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:lambda_dent_dash/components/custom_text.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
+import 'package:lambda_dent_dash/presentation/clients/Cubits/clients_cubit.dart';
 
 /// Example without datasource
 // ignore: must_be_immutable
@@ -11,6 +13,9 @@ class ClientsTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final clientsCubit = context.read<ClientsCubit>();
+    
+
     return Center(
       child: Container(
         decoration: BoxDecoration(
@@ -25,7 +30,7 @@ class ClientsTable extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 30),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           SizedBox(
-            height: (56 * 50) + 40,
+            height: (56 * clientsCubit.labClients.length) + 40,
             child: DataTable2(
               columnSpacing: 12,
               dataRowHeight: 56,
@@ -40,13 +45,13 @@ class ClientsTable extends StatelessWidget {
                     style: TextStyle(color: cyan300),
                   )),
                 ),
-                DataColumn(
-                  label: Center(
-                      child: Text(
-                    'الرصيد',
-                    style: TextStyle(color: cyan300),
-                  )),
-                ),
+                // DataColumn(
+                //   label: Center(
+                //       child: Text(
+                //     'الرصيد',
+                //     style: TextStyle(color: cyan300),
+                //   )),
+                // ),
                 DataColumn(
                   label: Center(
                       child: Text(
@@ -77,19 +82,21 @@ class ClientsTable extends StatelessWidget {
                 ),
               ],
               rows: List<DataRow>.generate(
-                50,
-                (index) => DataRow(
+                clientsCubit.labClients.length,
+                (index) {
+                  final client = clientsCubit.labClients[index];
+                  return DataRow(
                   cells: [
-                    const DataCell(Center(
+                     DataCell(Center(
                         child: CustomText(
-                      text: 'تحسين',
+                      text: client.firstName,
                     ))),
-                    const DataCell(Center(child: CustomText(text: '350000'))),
-                    const DataCell(
-                        Center(child: CustomText(text: '0992532588'))),
-                    const DataCell(Center(child: CustomText(text: 'هونولولو'))),
-                    const DataCell(
-                        Center(child: CustomText(text: '10/4/2024'))),
+                    //  DataCell(Center(child: CustomText(text: client..toString()))),
+                     DataCell(
+                        Center(child: CustomText(text:client.phone.toString()))),
+                     DataCell(Center(child: CustomText(text: client.address))),
+                     DataCell(
+                        Center(child: CustomText(text: client.registerDate))),
                     DataCell(Center(
                         child: IconButton(
                       onPressed: () {
@@ -101,7 +108,8 @@ class ClientsTable extends StatelessWidget {
                       ),
                     ))),
                   ],
-                ),
+                );
+                },
               ),
             ),
           ),
