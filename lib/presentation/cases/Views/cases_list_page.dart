@@ -2,8 +2,11 @@
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lambda_dent_dash/components/float_button.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
+import 'package:lambda_dent_dash/presentation/cases/Cubits/cases_cubit.dart';
+import 'package:lambda_dent_dash/presentation/cases/Cubits/cases_state.dart';
 import 'package:lambda_dent_dash/services/navigation/locator.dart';
 import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
 import 'package:lambda_dent_dash/services/navigation/routes.dart';
@@ -14,68 +17,93 @@ class CasesListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 75.0),
-            child: Center(
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width / 1.3,
-                // height: MediaQuery.of(context).size.height / 1.4,
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      _column(
-                          'لم تنجز بعد',
-                          const Icon(
-                            Icons.checklist,
-                            color: cyan500,
-                          ),
-                          Color.fromARGB(50, 41, 157, 144),
-                          cyan500,
-                          context),
-                      _column(
-                          'قيد الإنجاز',
-                          const Icon(
-                            Icons.work_history_rounded,
-                            color: Color.fromARGB(91, 130, 99, 6),
-                          ),
-                          Color.fromARGB(50, 255, 193, 7),
-                          Color.fromARGB(91, 94, 72, 8),
-                          context),
-                      _column(
-                        'بحاجة موافقة',
-                        const Icon(
-                          Icons.warning_rounded,
-                          color: redmid,
-                        ),
-                        Color.fromARGB(50, 255, 82, 82),
-                        redmid,
-                        context,
-                      ),
-                      // _columnEntity(),
-                    ]),
+      body: BlocConsumer<CasesCubit, CasesState>(
+        listener: (context, state) {
+          // TODO: implement listener
+        },
+        builder: (context, state) {
+          CasesCubit casesCubit = context.read<CasesCubit>();
+          return Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 75.0),
+                child: Center(
+                  child: state is CasesLoaded
+                      ? SizedBox(
+                          width: MediaQuery.of(context).size.width / 1.3,
+                          // height: MediaQuery.of(context).size.height / 1.4,
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                _column(
+                                    'accepted',
+                                    casesCubit,
+                                    'لم تنجز بعد',
+                                    const Icon(
+                                      Icons.checklist,
+                                      color: cyan500,
+                                    ),
+                                    Color.fromARGB(50, 41, 157, 144),
+                                    cyan500,
+                                    context),
+                                _column(
+                                    'in_progress',
+                                    casesCubit,
+                                    'قيد الإنجاز',
+                                    const Icon(
+                                      Icons.work_history_rounded,
+                                      color: Color.fromARGB(91, 130, 99, 6),
+                                    ),
+                                    Color.fromARGB(50, 255, 193, 7),
+                                    Color.fromARGB(91, 94, 72, 8),
+                                    context),
+                                _column(
+                                  'pending',
+                                  casesCubit,
+                                  'بحاجة موافقة',
+                                  const Icon(
+                                    Icons.warning_rounded,
+                                    color: redmid,
+                                  ),
+                                  Color.fromARGB(50, 255, 82, 82),
+                                  redmid,
+                                  context,
+                                ),
+                                // _columnEntity(),
+                              ]),
+                        )
+                      : state is CasesError
+                          ? Center(
+                              child: Text(
+                                  'لم يتم تحميل الحالات، تأكد من اتصال الانترنت'),
+                            )
+                          : state is CasesLoading
+                              ? CircularProgressIndicator(
+                                  color: cyan400,
+                                )
+                              : SizedBox(),
+                ),
               ),
-            ),
-          ),
-          Positioned(
-            bottom: 20,
-            right: 20,
-            child: floatButton(
-              icon: Icons.add,
-              onTap: () {
-                locator<NavigationService>().navigateTo(addCasePageRoute);
-              },
-            ),
-          ),
-        ],
+              Positioned(
+                bottom: 20,
+                right: 20,
+                child: floatButton(
+                  icon: Icons.add,
+                  onTap: () {
+                    locator<NavigationService>().navigateTo(addCasePageRoute);
+                  },
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
 }
 
-Widget _column(String title, Widget icon, Color color, Color secondaryColor,
-    BuildContext context) {
+Widget _column(String type, CasesCubit casesCubit, String title, Widget icon,
+    Color color, Color secondaryColor, BuildContext context) {
   return SizedBox(
     width: MediaQuery.of(context).size.width / 4.8,
     // height: MediaQuery.of(context).size.height / 1.2,
@@ -109,7 +137,7 @@ Widget _column(String title, Widget icon, Color color, Color secondaryColor,
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 5.0),
                             child: Text(
-                              '5',
+                              casesCubit.casesList![type]!.length.toString(),
                               style: TextStyle(
                                   color: secondaryColor,
                                   fontSize: 16,
@@ -129,9 +157,9 @@ Widget _column(String title, Widget icon, Color color, Color secondaryColor,
         Expanded(
             child: ListView.separated(
           itemBuilder: (context, index) {
-            return _itembuilder(context, icon, color);
+            return _itembuilder(index, type, casesCubit, context, icon, color);
           },
-          itemCount: 5,
+          itemCount: casesCubit.casesList![type]!.length,
           separatorBuilder: (context, index) {
             return const SizedBox(
               height: 10,
@@ -144,10 +172,14 @@ Widget _column(String title, Widget icon, Color color, Color secondaryColor,
 }
 
 Widget _itembuilder(
+  int index,
+  String type,
+  CasesCubit cubit,
   context,
   Widget icon,
   Color color,
 ) {
+  var info = cubit.casesList![type]![index];
   return Card(
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -187,7 +219,7 @@ Widget _itembuilder(
                     // mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        '2024/11/15',
+                        info.createdAt.toIso8601String(),
                         style: TextStyle(
                           color: cyan500,
                         ),
@@ -233,8 +265,8 @@ Widget _itembuilder(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const Text(
-                            'الطبيب: د. تحسين التحسيني',
+                          Text(
+                            'الطبيب: ${info.dentist.firstName} ${info.dentist.lastName}',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: cyan500,
@@ -243,8 +275,8 @@ Widget _itembuilder(
                           const SizedBox(
                             height: 10,
                           ),
-                          const Text(
-                            'المريض: اسماعيل أحمد كنباوي',
+                          Text(
+                            'المريض: ${info.patient.fullName}',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: cyan500,

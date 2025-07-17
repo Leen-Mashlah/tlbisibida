@@ -7,6 +7,7 @@ import 'package:lambda_dent_dash/services/navigation/locator.dart';
 import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
 import 'package:lambda_dent_dash/services/navigation/routes.dart';
 import 'package:lambda_dent_dash/presentation/authentication/Cubits/email_cubit.dart';
+import 'package:lambda_dent_dash/presentation/authentication/Cubits/email_state.dart';
 
 class EmailVerificationPage extends StatelessWidget {
   // AdminLoginController adminAuth=Get.put(AdminLoginController());
@@ -25,7 +26,7 @@ class EmailVerificationPage extends StatelessWidget {
   FocusNode f5 = FocusNode();
   FocusNode f6 = FocusNode();
 
-  String concatinateCode(List<TextEditingController> controllers){
+  String concatinateCode(List<TextEditingController> controllers) {
     String code = '';
     for (var controller in controllers) {
       code += controller.text;
@@ -37,10 +38,12 @@ class EmailVerificationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<EmailCubit, String>(
+      body: BlocConsumer<EmailCubit, EmailState>(
         listener: (context, state) {
-          if (state == '') {
-            
+          if (state is EmailChecked) {
+            // handle verification success
+          } else if (state is EmailError) {
+            // handle error
           }
         },
         builder: (context, state) {
@@ -250,8 +253,16 @@ class EmailVerificationPage extends StatelessWidget {
                                 ),
                                 ElevatedButton(
                                   onPressed: () {
-                                    String code = concatinateCode([code1, code2,code3,code4,code5,code6]);
-                                  cubit.checkVerificationCode('manager', email, int.parse(code));
+                                    String code = concatinateCode([
+                                      code1,
+                                      code2,
+                                      code3,
+                                      code4,
+                                      code5,
+                                      code6
+                                    ]);
+                                    cubit.checkVerificationCode(
+                                        'manager', email, int.parse(code));
                                     locator<NavigationService>()
                                         .navigateTo(homePageRoute);
                                   },

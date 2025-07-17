@@ -1,8 +1,10 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
-import 'package:lambda_dent_dash/constants/constants.dart'; // Assuming cyan300 is defined here
+import 'package:lambda_dent_dash/constants/constants.dart';
 
 class ImageGallery extends StatefulWidget {
-  final List<String> imageUrls;
+  final List<Uint8List> images;
   final double mainImageHeight;
   final double thumbnailSize;
   final double thumbnailSpacing;
@@ -10,11 +12,11 @@ class ImageGallery extends StatefulWidget {
 
   const ImageGallery({
     super.key,
-    required this.imageUrls,
+    required this.images,
     this.mainImageHeight = 300,
     this.thumbnailSize = 60,
-    this.thumbnailSpacing = 4,
-    this.selectedBorderColor = cyan200,
+    this.thumbnailSpacing = 8,
+    this.selectedBorderColor = cyan300,
   });
 
   @override
@@ -50,105 +52,94 @@ class ImageGalleryState extends State<ImageGallery> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox.expand(
-      // This makes the widget fill its parent in both width and height
-      child: Column(
-        mainAxisSize: MainAxisSize
-            .max, // Ensures the column tries to take max vertical space
-        children: [
-          // Main image display with PageView for animation
-          Expanded(
-            // Allows the main image section to take available space
-            child: PageView.builder(
-              controller: _pageController,
-              onPageChanged: (index) {
-                setState(() {
-                  _selectedIndex = index;
-                });
-              },
-              itemCount: widget.imageUrls.length,
-              itemBuilder: (context, index) {
-                return Container(
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // Main image display with PageView for animation
+        SizedBox(
+          height: widget.mainImageHeight,
+          width: double.infinity,
+          child: PageView.builder(
+            controller: _pageController,
+            onPageChanged: (index) {
+              setState(() {
+                _selectedIndex = index;
+              });
+            },
+            itemCount: widget.images.length,
+            itemBuilder: (context, index) {
+              return Container(
+                clipBehavior: Clip.antiAlias,
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                child: Image.memory(
+                  widget.images[index],
+                  fit: BoxFit.cover,
+                  // loadingBuilder: (context, child, loadingProgress) {
+                  //   if (loadingProgress == null) return child;
+                  //   return Center(
+                  //     child: CircularProgressIndicator(
+                  //       value: loadingProgress.expectedTotalBytes != null
+                  //           ? loadingProgress.cumulativeBytesLoaded /
+                  //               loadingProgress.expectedTotalBytes!
+                  //           : null,
+                  //     ),
+                  //   );
+                  // },
+                  errorBuilder: (context, error, stackTrace) =>
+                      const Icon(Icons.error),
+                ),
+              );
+            },
+          ),
+        ),
+        const SizedBox(height: 16),
+        // Thumbnail list
+        SizedBox(
+          height: widget.thumbnailSize + 8, // Extra space for border
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: widget.images.length,
+            separatorBuilder: (context, index) =>
+                SizedBox(width: widget.thumbnailSpacing),
+            itemBuilder: (context, index) {
+              final isSelected = index == _selectedIndex;
+              return GestureDetector(
+                onTap: () => _onThumbnailTap(index),
+                child: Container(
                   clipBehavior: Clip.antiAlias,
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                  child: Image.network(
-                    widget.imageUrls[index],
-                    fit: BoxFit.cover,
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes!
-                              : null,
-                        ),
-                      );
-                    },
-                    errorBuilder: (context, error, stackTrace) {
-                      return const Center(
-                        child: Icon(
-                          Icons.broken_image,
-                          size: 60,
-                          color: cyan500,
-                        ),
-                      );
-                    },
+                  width: widget.thumbnailSize,
+                  height: widget.thumbnailSize,
+                  decoration: BoxDecoration(
+                    border: isSelected
+                        ? Border.all(
+                            color: widget.selectedBorderColor,
+                            width: 3,
+                          )
+                        : null,
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                );
-              },
-            ),
-          ),
-          const SizedBox(height: 16),
-          SizedBox(
-            height: widget.thumbnailSize + 8,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: widget.imageUrls.length,
-              separatorBuilder: (context, index) =>
-                  SizedBox(width: widget.thumbnailSpacing),
-              itemBuilder: (context, index) {
-                final isSelected = index == _selectedIndex;
-                return GestureDetector(
-                  onTap: () => _onThumbnailTap(index),
-                  child: Container(
-                    clipBehavior: Clip.antiAlias,
-                    width: widget.thumbnailSize,
-                    height: widget.thumbnailSize,
-                    decoration: BoxDecoration(
-                      border: isSelected
-                          ? Border.all(
-                              color: widget.selectedBorderColor,
-                              width: 3,
-                            )
-                          : null,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.network(
-                        widget.imageUrls[index],
-                        fit: BoxFit.cover,
-                        loadingBuilder: (context, child, loadingProgress) {
-                          if (loadingProgress == null) return child;
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        },
-                        errorBuilder: (context, error, stackTrace) {
-                          return const Icon(Icons.broken_image,
-                              size: 18, color: cyan500);
-                        },
-                      ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(2),
+                    child: Image.memory(
+                      widget.images[index],
+                      fit: BoxFit.cover,
+                      // loadingBuilder: (context, child, loadingProgress) {
+                      //   if (loadingProgress == null) return child;
+                      //   return const Center(
+                      //     child: CircularProgressIndicator(),
+                      //   );
+                      // },
+                      errorBuilder: (context, error, stackTrace) =>
+                          const Icon(Icons.error),
                     ),
                   ),
-                );
-              },
-            ),
+                ),
+              );
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

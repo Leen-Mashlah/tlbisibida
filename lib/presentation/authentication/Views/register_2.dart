@@ -12,6 +12,7 @@ import 'package:lambda_dent_dash/services/navigation/locator.dart';
 import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
 import 'package:lambda_dent_dash/services/navigation/routes.dart';
 import 'package:lambda_dent_dash/presentation/authentication/Cubits/auth_cubit.dart';
+import 'package:lambda_dent_dash/presentation/authentication/Cubits/auth_state.dart';
 
 class Register2Page extends StatelessWidget {
   // AdminLoginController adminAuth=Get.put(AdminLoginController());
@@ -34,9 +35,9 @@ class Register2Page extends StatelessWidget {
   Widget build(BuildContext context) {
     AuthCubit cubit = context.read<AuthCubit>();
     return Scaffold(
-      body: BlocConsumer<AuthCubit, String>(
+      body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
-          if (state == 'registered') {
+          if (state is AuthRegistered) {
             AnimatedSnackBar.material(
               'تم تسجيل طلبك بنجاح!',
               type: AnimatedSnackBarType.success,
@@ -45,8 +46,7 @@ class Register2Page extends StatelessWidget {
               animationCurve: Easing.standard,
             ).show(context);
             locator<NavigationService>().navigateTo(emailVerificationPageRoute);
-          }
-          if (state == 'error') {
+          } else if (state is AuthError) {
             AnimatedSnackBar.material(
               'لم يتم تسجيل الطلب ـ تأكد من المعلومات المدخلة ثم حاول مرة أخرى',
               type: AnimatedSnackBarType.error,

@@ -15,8 +15,7 @@ abstract class LabRepo {
   Future<void> getAllLabDetails(int id);
   Future<void> getPatientTreatment(int id);
   Future<void> getTreatmentDetails(int id);
-  Future<void> getCaseDetails(int id);
-  Future<void> getcaseList(int id);
+
   Future<void> getComments(int id);
 
   Future<void> getLabsListForChoice();

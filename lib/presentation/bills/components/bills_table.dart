@@ -1,8 +1,11 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:lambda_dent_dash/components/custom_text.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
+import 'package:lambda_dent_dash/domain/models/bills/bills_list.dart';
+import 'package:lambda_dent_dash/presentation/bills/Cubits/bills_cubit.dart';
 import 'package:lambda_dent_dash/presentation/bills/components/bill_details_dialog.dart';
 
 /// Example without datasource
@@ -12,6 +15,8 @@ class BillsTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BillsCubit billsCubit = context.read<BillsCubit>();
+
     return Center(
       child: Container(
         decoration: BoxDecoration(
@@ -64,31 +69,37 @@ class BillsTable extends StatelessWidget {
                 ),
               ],
               rows: List<DataRow>.generate(
-                50,
-                (index) => DataRow(
-                  cells: [
-                    const DataCell(Center(
-                        child: CustomText(
-                      text: '001',
-                    ))),
-                    const DataCell(Center(child: CustomText(text: 'تحسين'))),
-                    const DataCell(
-                        Center(child: CustomText(text: '5/11/2024'))),
-                    DataCell(Center(
-                        child: IconButton(
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) => const BillDetailsDialog(),
-                        );
-                      },
-                      icon: const Icon(
-                        Icons.arrow_circle_left_outlined,
-                        color: cyan300,
-                      ),
-                    ))),
-                  ],
-                ),
+                billsCubit.billsList!.bills.length,
+                (index) {
+                  BillInList bill = billsCubit.billsList!.bills[index];
+                  return DataRow(
+                    cells: [
+                      DataCell(Center(
+                          child: CustomText(
+                        text: bill.billNumber,
+                      ))),
+                      DataCell(Center(
+                          child: CustomText(
+                              text: '${bill.dentist.firstName} ${bill.dentist.lastName}'))),
+                      DataCell(Center(
+                          child: CustomText(
+                              text: bill.createdAt.toIso8601String()))),
+                      DataCell(Center(
+                          child: IconButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => const BillDetailsDialog(),
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.arrow_circle_left_outlined,
+                          color: cyan300,
+                        ),
+                      ))),
+                    ],
+                  );
+                },
               ),
             ),
           ),

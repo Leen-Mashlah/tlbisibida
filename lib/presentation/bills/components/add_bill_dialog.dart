@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/components/date_picker.dart';
 import 'package:lambda_dent_dash/components/default_button.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
-import 'package:lambda_dent_dash/presentation/cases/pages/search_for_lab.dart';
+import 'package:lambda_dent_dash/presentation/bills/components/bill_preview_dialog.dart';
+import 'package:lambda_dent_dash/presentation/cases/Components/search_for_lab.dart';
 
 class AddBillDialog extends StatelessWidget {
   AddBillDialog({
@@ -59,25 +60,6 @@ class AddBillDialog extends StatelessWidget {
                           const SizedBox(
                             height: 30,
                           ),
-                          // const Text(
-                          //   'رصيد الزبون',
-                          //   style: TextStyle(fontSize: 18),
-                          // ),
-                          // const SizedBox(
-                          //   height: 15,
-                          // ),
-                          // const Text(
-                          //   '5.000.000',
-                          //   style: TextStyle(
-                          //       color: Colors.redAccent,
-                          //       fontSize: 18,
-                          //       decoration: TextDecoration.underline,
-                          //       decorationColor: Colors.redAccent,
-                          //       decorationThickness: .5),
-                          // ),
-                          // const SizedBox(
-                          //   height: 30,
-                          // ),
                         ],
                       ),
                       const SizedBox(
@@ -165,9 +147,13 @@ class AddBillDialog extends StatelessWidget {
               ),
               SizedBox(height: 10),
               defaultButton(
-                  text: 'إرسال',
+                  text: 'معاينة',
                   function: () {
                     Navigator.pop(context);
+                    showDialog(
+                      context: context,
+                      builder: (context) => const BillPreviewDialog(),
+                    );
                   })
             ],
           ),
