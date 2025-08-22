@@ -17,104 +17,117 @@ class ClientsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: BlocConsumer<ClientsCubit, ClientsState>(
-      listener: (context, state) {
-        // TODO: implement listener
-      },
-      builder: (context, state) {
-        ClientsCubit clientsCubit = context.read<ClientsCubit>();
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Stack(
-            children: [
-              SingleChildScrollView(
-                  child: Column(
-                children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(18.0),
-                    child: SizedBox(
-                      width: 500,
-                      child: InlineChoice<bool>.single(
-                          value: _showregisteredlist.value,
-                          onChanged: (value) {
-                            if (value != null) {
-                              _showregisteredlist.value = value;
-                              // Trigger a reload of the relevant data when switching tabs
-                              if (value) {
-                                // clientsCubit.getCases();
-                                //TODO Get Clients list
-                              } else {
-                                // clientsCubit.labload();
-                                //TODO Get Requests Lits
-                              }
-                            }
-                          },
-                          clearable: false,
-                          itemCount: choices.length,
-                          itemBuilder: (state, i) {
-                            final bool isRegisteredTab = i == 0;
+    return BlocConsumer<ClientsCubit, ClientsState>(listener: (context, state) {
+      // TODO: implement listener
+    }, builder: (context, state) {
+      ClientsCubit clientsCubit = context.read<ClientsCubit>();
 
-                            return ChoiceChip(
-                              selectedColor: cyan200,
-                              side: const BorderSide(color: cyan300),
-                              selected: state.selected(isRegisteredTab),
-                              onSelected: state.onSelected(isRegisteredTab),
-                              label: Text(isRegisteredTab
-                                  ? 'الزبائن'
-                                  : 'طلبات الانضمام'),
-                            );
-                          },
-                          listBuilder: ChoiceList.createWrapped(
-                              runAlignment: WrapAlignment.center,
-                              alignment: WrapAlignment.center,
-                              direction: Axis.horizontal,
-                              textDirection: TextDirection.rtl,
-                              //spacing: 10,
-                              //runSpacing: 10,
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 20,
-                                vertical: 5,
-                              ))),
-                    ),
+      // Initial load for registered clients if not loaded yet
+      if (_showregisteredlist.value &&
+          clientsCubit.clientsResponse == null &&
+          state is! ClientsLoading) {
+        clientsCubit.getClients();
+      }
+
+      return Scaffold(
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: SingleChildScrollView(
+                child: Column(
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: SizedBox(
+                    width: 500,
+                    child: InlineChoice<bool>.single(
+                        value: _showregisteredlist.value,
+                        onChanged: (value) {
+                          if (value != null) {
+                            _showregisteredlist.value = value;
+                            // Trigger a reload of the relevant data when switching tabs
+                            if (value) {
+                              clientsCubit.getClients();
+                            } else {
+                              clientsCubit.getJoinRequests();
+                            }
+                          }
+                        },
+                        clearable: false,
+                        itemCount: choices.length,
+                        itemBuilder: (state, i) {
+                          final bool isRegisteredTab = i == 0;
+
+                          return ChoiceChip(
+                            selectedColor: cyan200,
+                            side: const BorderSide(color: cyan300),
+                            selected: state.selected(isRegisteredTab),
+                            onSelected: state.onSelected(isRegisteredTab),
+                            label: Text(
+                                isRegisteredTab ? 'الزبائن' : 'طلبات الانضمام'),
+                          );
+                        },
+                        listBuilder: ChoiceList.createWrapped(
+                            runAlignment: WrapAlignment.center,
+                            alignment: WrapAlignment.center,
+                            direction: Axis.horizontal,
+                            textDirection: TextDirection.rtl,
+                            //spacing: 10,
+                            //runSpacing: 10,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 5,
+                            ))),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  ValueListenableBuilder<bool>(
-                    valueListenable: _showregisteredlist,
-                    builder: (context, isShowingRegistered, child) {
-                      if (isShowingRegistered && state is ClientsLoaded) {
-                        return const ClientsTable();
-                      } else if (!isShowingRegistered &&
-                          state is RequestsLoaded) {
-                        return const ClientsReqTable();
-                      } else {
-                        return const CircularProgressIndicator();
-                      }
-                    },
-                  ),
-                ],
-              )),
-              Positioned(
-                bottom: 20,
-                right: 20,
-                child: floatButton(
-                  icon: Icons.add,
-                  onTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) => AddClientDialog());
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                ValueListenableBuilder<bool>(
+                  valueListenable: _showregisteredlist,
+                  builder: (context, isShowingRegistered, child) {
+                    if (isShowingRegistered && state is ClientsLoaded) {
+                      return const ClientsTable();
+                    } else if (!isShowingRegistered &&
+                        state is RequestsLoaded) {
+                      return const ClientsReqTable();
+                    } else if (state is ClientsError) {
+                      return const Center(
+                          child: Text('حدث خطأ أثناء تحميل الزبائن'));
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
                   },
                 ),
-              ),
-            ],
+              ],
+            )),
           ),
-        );
-      },
-    ));
+          floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+          floatingActionButton: Padding(
+              padding: const EdgeInsets.all(20.0),
+              // child: FloatingActionButton(
+              //   onPressed: () {
+              //     showDialog(
+              //         context: context, builder: (context) => AddBillDialog());
+              //   },
+              //   child: Icon(
+              //     Icons.add,
+              //     color: cyan400,
+              //     size: 25.0,
+              //   ),
+              //   backgroundColor: cyan200,
+              // ),
+              child: floatButton(
+                icon: Icons.add,
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) =>
+                          AddClientDialog(clientsCubit: clientsCubit));
+                },
+              )));
+    });
   }
 }

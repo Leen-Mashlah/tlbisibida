@@ -1,51 +1,49 @@
-class DBClient {
+class DBJoinRequest {
   final int id;
   final String name;
   final int phone;
   final String address;
-  final String joinedOn;
-  final int currentAccount;
+  final String requestDate;
 
-  DBClient({
+  DBJoinRequest({
     required this.id,
     required this.name,
     required this.phone,
     required this.address,
-    required this.joinedOn,
-    required this.currentAccount,
+    required this.requestDate,
   });
 
-  factory DBClient.fromJson(Map<String, dynamic> json) {
-    return DBClient(
+  factory DBJoinRequest.fromJson(Map<String, dynamic> json) {
+    return DBJoinRequest(
       id: json['id'],
       name: json['name'],
       phone: json['phone'],
       address: json['address'],
-      joinedOn: json['joined_on'],
-      currentAccount: json['current_account'],
+      requestDate: json['request_date'],
     );
   }
 }
 
-class DBClientsResponse {
+class DBJoinRequestsResponse {
   final bool status;
   final int successCode;
-  final List<DBClient> clients;
+  final List<DBJoinRequest> joinRequests;
   final String successMessage;
 
-  DBClientsResponse({
+  DBJoinRequestsResponse({
     required this.status,
     required this.successCode,
-    required this.clients,
+    required this.joinRequests,
     required this.successMessage,
   });
 
-  factory DBClientsResponse.fromJson(Map<String, dynamic> json) {
-    return DBClientsResponse(
+  factory DBJoinRequestsResponse.fromJson(Map<String, dynamic> json) {
+    return DBJoinRequestsResponse(
       status: json['status'],
       successCode: json['success_code'],
-      clients:
-          (json['clients'] as List).map((e) => DBClient.fromJson(e)).toList(),
+      joinRequests: (json['join requests'] as List)
+          .map((e) => DBJoinRequest.fromJson(e))
+          .toList(),
       successMessage: json['success_message'],
     );
   }

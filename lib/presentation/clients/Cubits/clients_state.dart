@@ -1,7 +1,8 @@
-import 'package:lambda_dent_dash/domain/models/cases/cases_by_doc.dart';
-import 'package:lambda_dent_dash/domain/models/bills/dentist_bills_list.dart';
 import 'package:lambda_dent_dash/domain/models/lab_clients/lab_client.dart';
+import 'package:lambda_dent_dash/domain/models/bills/dentist_bills_list.dart';
 import 'package:lambda_dent_dash/domain/models/bills/preview_bill.dart';
+import 'package:lambda_dent_dash/domain/models/cases/case_details.dart';
+import 'package:lambda_dent_dash/domain/models/cases/cases_by_doc.dart';
 
 abstract class ClientsState {}
 
@@ -14,8 +15,8 @@ class RequestsLoading extends ClientsState {}
 class RequestsLoaded extends ClientsState {}
 
 class ClientsLoaded extends ClientsState {
-  final MedicalCasesForDentist casesList;
-  ClientsLoaded(this.casesList);
+  final ClientsResponse clientsResponse;
+  ClientsLoaded(this.clientsResponse);
 }
 
 class ClientsError extends ClientsState {
@@ -35,18 +36,6 @@ class DentistBillsError extends ClientsState {
   DentistBillsError(this.message);
 }
 
-class LabClientsLoading extends ClientsState {}
-
-class LabClientsLoaded extends ClientsState {
-  final List<LabClient> labClients;
-  LabClientsLoaded(this.labClients);
-}
-
-class LabClientsError extends ClientsState {
-  final String message;
-  LabClientsError(this.message);
-}
-
 class PreviewBillLoading extends ClientsState {}
 
 class PreviewBillLoaded extends ClientsState {
@@ -57,4 +46,16 @@ class PreviewBillLoaded extends ClientsState {
 class PreviewBillError extends ClientsState {
   final String message;
   PreviewBillError(this.message);
+}
+
+class ClientCasesLoading extends ClientsState {}
+
+class ClientCasesLoaded extends ClientsState {
+  final List<DentistCase> cases;
+  ClientCasesLoaded(this.cases);
+}
+
+class ClientCasesError extends ClientsState {
+  final String message;
+  ClientCasesError(this.message);
 }

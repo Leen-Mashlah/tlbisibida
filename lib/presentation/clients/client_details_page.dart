@@ -14,7 +14,17 @@ import 'package:lambda_dent_dash/presentation/payments/components/dialogs/add_co
 // import 'package:lambda_dent_dash/view/clients/clients_table.dart';
 
 class ClientDetailsPage extends StatelessWidget {
-  ClientDetailsPage({super.key});
+  ClientDetailsPage(
+      {super.key,
+      required this.clientId,
+      this.initialName,
+      this.initialPhone,
+      this.initialAddress});
+
+  final int? clientId;
+  final String? initialName;
+  final String? initialPhone;
+  final String? initialAddress;
   //List choices = ['cases', 'bills'];
   final ValueNotifier<bool> _iscase = ValueNotifier<bool>(true);
 
@@ -22,19 +32,28 @@ class ClientDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: BlocConsumer<ClientsCubit, ClientsState>(
-      listener: (context, state) {
-        // TODO: implement listener
-      },
+      listener: (context, state) {},
       builder: (context, state) {
-        ClientsCubit clientsCubit = context.read<ClientsCubit>();
+        final clientsCubit = context.read<ClientsCubit>();
+
+        // Try to use passed values first
+        final headerName = initialName ?? '—';
+        final headerPhone = initialPhone ?? '—';
+        final headerAddress = initialAddress ?? '—';
+
+        // Initial loads based on default tab
+        if (_iscase.value) {
+          clientsCubit.getCases(clientId ?? 0);
+        } else {
+          clientsCubit.getDentistBills(clientId ?? 0);
+        }
+
         return SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.all(18.0),
                   child: Directionality(
@@ -50,6 +69,11 @@ class ClientDetailsPage extends StatelessWidget {
                                 onChanged: (value) {
                                   value == null ? value = false : value = value;
                                   _iscase.value = value;
+                                  if (value) {
+                                    clientsCubit.getCases(clientId ?? 0);
+                                  } else {
+                                    clientsCubit.getDentistBills(clientId ?? 0);
+                                  }
                                 },
                                 clearable: false,
                                 itemCount: 2,
@@ -69,87 +93,57 @@ class ClientDetailsPage extends StatelessWidget {
                                     alignment: WrapAlignment.center,
                                     direction: Axis.horizontal,
                                     textDirection: TextDirection.rtl,
-                                    //spacing: 10,
-                                    //runSpacing: 10,
                                     padding: const EdgeInsets.symmetric(
                                       horizontal: 20,
                                       vertical: 5,
                                     ))),
                           ),
-                          const SizedBox(
-                            width: 30,
-                          ),
+                          const SizedBox(width: 30),
                           Row(
                             children: [
                               showpaymentlog(context),
-                              const SizedBox(
-                                width: 10,
-                              ),
+                              const SizedBox(width: 10),
                               const Icon(
                                 Icons.credit_card_rounded,
                                 color: cyan500,
                               )
                             ],
                           ),
-                          const SizedBox(
-                            width: 30,
-                          ),
-                          const Row(
+                          const SizedBox(width: 30),
+                          Row(
                             children: [
                               Row(
                                 children: [
-                                  Text(
-                                    'دمشق - السبع بحرات',
-                                    style:
-                                        TextStyle(fontSize: 14, color: cyan600),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Icon(
-                                    Icons.location_on_rounded,
-                                    color: cyan500,
-                                  )
+                                  Text(headerAddress,
+                                      style: const TextStyle(
+                                          fontSize: 14, color: cyan600)),
+                                  const SizedBox(width: 10),
+                                  const Icon(Icons.location_on_rounded,
+                                      color: cyan500)
                                 ],
                               ),
-                              SizedBox(
-                                width: 35,
-                              ),
+                              const SizedBox(width: 35),
                               Row(
                                 children: [
-                                  Text(
-                                    '0945454545',
-                                    style:
-                                        TextStyle(fontSize: 14, color: cyan600),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Icon(
-                                    Icons.phone_rounded,
-                                    color: cyan500,
-                                  )
+                                  Text(headerPhone,
+                                      style: const TextStyle(
+                                          fontSize: 14, color: cyan600)),
+                                  const SizedBox(width: 10),
+                                  const Icon(Icons.phone_rounded,
+                                      color: cyan500)
                                 ],
                               ),
-                              SizedBox(
-                                width: 35,
-                              ),
+                              const SizedBox(width: 35),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: [
-                                  Text(
-                                    'تحسين التحسيني',
-                                    style:
-                                        TextStyle(fontSize: 18, color: cyan600),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Icon(
-                                    Icons.person_2_rounded,
-                                    color: cyan500,
-                                  ),
+                                  Text(headerName,
+                                      style: const TextStyle(
+                                          fontSize: 18, color: cyan600)),
+                                  const SizedBox(width: 10),
+                                  const Icon(Icons.person_2_rounded,
+                                      color: cyan500),
                                 ],
                               ),
                             ],
@@ -158,7 +152,7 @@ class ClientDetailsPage extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(horizontal: 30),
                             child: CircleAvatar(
                               radius: 60,
-                              backgroundImage: NetworkImage(
+                              backgroundImage: const NetworkImage(
                                 'https://media.istockphoto.com/id/1371009338/photo/portrait-of-confident-a-young-dentist-working-in-his-consulting-room.jpg?s=612x612&w=0&k=20&c=I212vN7lPpAOwGKRoEY9kYWunJaMj9vH2g-8YBGc2MI=',
                               ),
                               onBackgroundImageError: (exception, stackTrace) =>
@@ -170,18 +164,20 @@ class ClientDetailsPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 ValueListenableBuilder(
                     valueListenable: _iscase,
                     builder: (context, isShowingCases, child) {
-                      if (isShowingCases && state is ClientsLoaded) {
+                      if (isShowingCases && state is ClientCasesLoaded) {
                         return const ClientCasesTable();
-                      } else if (!isShowingCases && state is ClientsLoaded) {
+                      } else if (!isShowingCases &&
+                          state is DentistBillsLoaded) {
                         return const ClientBillsTable();
+                      } else if (state is ClientsError) {
+                        return const Center(
+                            child: Text('حدث خطأ في تحميل بيانات الزبون'));
                       } else {
-                        return const CircularProgressIndicator();
+                        return const Center(child: CircularProgressIndicator());
                       }
                     }),
               ],
@@ -194,8 +190,6 @@ class ClientDetailsPage extends StatelessWidget {
 
   Positioned showpaymentlog(BuildContext context) {
     return Positioned(
-      // bottom: 505,
-      // right: 100,
       child: InfoPopupWidget(
         enabledAutomaticConstraint: false,
         arrowTheme: const InfoPopupArrowTheme(arrowSize: Size(0, 0)),
@@ -208,10 +202,7 @@ class ClientDetailsPage extends StatelessWidget {
                   right: Radius.elliptical(25, 40))),
           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
           height: 60,
-          child: const Text(
-            'سجل الدفعات',
-            style: TextStyle(color: cyan500),
-          ),
+          child: const Text('سجل الدفعات', style: TextStyle(color: cyan500)),
         ),
         child: InkWell(
             onTap: () {

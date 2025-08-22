@@ -1,21 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lambda_dent_dash/components/date_picker.dart';
 import 'package:lambda_dent_dash/components/default_button.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:lambda_dent_dash/presentation/bills/components/bill_preview_dialog.dart';
 import 'package:lambda_dent_dash/presentation/cases/Components/search_for_lab.dart';
+import 'package:lambda_dent_dash/presentation/clients/Cubits/clients_cubit.dart';
 
-class AddBillDialog extends StatelessWidget {
-  AddBillDialog({
-    super.key,
-  });
-  DateTime birthdate = DateTime.now();
-  final List<String> _labslist = [
-    ' الحموي',
-    ' الحمصي',
-    ' الشامي',
-    ' التحسيني',
+class AddBillDialog extends StatefulWidget {
+  AddBillDialog({super.key, required this.clientsCubit});
+
+  final ClientsCubit clientsCubit;
+
+  @override
+  State<AddBillDialog> createState() => _AddBillDialogState();
+}
+
+class _AddBillDialogState extends State<AddBillDialog> {
+  DateTime fromDate = DateTime.now();
+  DateTime toDate = DateTime.now();
+  int? selectedDentistId;
+
+  final List<Map<String, dynamic>> _labslist = [
+    {'id': 1, 'name': 'الحموي'},
+    {'id': 2, 'name': 'الحمصي'},
+    {'id': 3, 'name': 'الشامي'},
+    {'id': 4, 'name': 'التحسيني'},
   ];
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -26,22 +38,15 @@ class AddBillDialog extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
-                'إضافة فاتورة',
-                style: TextStyle(fontSize: 20),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
+              const Text('إضافة فاتورة', style: TextStyle(fontSize: 20)),
+              const SizedBox(height: 15),
               SingleChildScrollView(
                 child: Container(
                   padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        width: 2,
-                        color: cyan200,
-                      )),
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(width: 2, color: cyan200),
+                  ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -50,115 +55,125 @@ class AddBillDialog extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           ChoiceButtonWithSearch(
-                              names: _labslist,
-                              hintText:
-                                  'اختر الزبون', // Example hint text in Arabic
-                              onNameSelected: (selectedName) {
-                                print('Selected: $selectedName');
-                                // Do something with the selected name
-                              }),
-                          const SizedBox(
-                            height: 30,
+                            names: _labslist
+                                .map((e) => e['name'] as String)
+                                .toList(),
+                            hintText: 'اختر الزبون',
+                            onNameSelected: (selectedName) {
+                              final match = _labslist.firstWhere(
+                                  (e) => e['name'] == selectedName,
+                                  orElse: () => {'id': null});
+                              selectedDentistId = match['id'] as int?;
+                              setState(() {});
+                            },
                           ),
+                          const SizedBox(height: 30),
                         ],
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      const SizedBox(height: 20),
                       Column(
                         children: [
                           Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              const SizedBox(
-                                width: 30,
+                              const SizedBox(width: 30),
+                              GestureDetector(
+                                onTap: () async {
+                                  final picked = await showDatePicker(
+                                    context: context,
+                                    initialDate: fromDate,
+                                    firstDate: DateTime(2000),
+                                    lastDate: DateTime(2050),
+                                  );
+                                  if (picked != null)
+                                    setState(() => fromDate = picked);
+                                },
+                                child: datePicker(context, fromDate),
                               ),
-                              datePicker(context, birthdate),
-                              const SizedBox(
-                                width: 30,
-                              ),
-                              const Text(
-                                'بداية الفاتورة',
-                                style: TextStyle(fontSize: 18),
-                              ),
-                              const SizedBox(
-                                width: 30,
-                              ),
+                              const SizedBox(width: 30),
+                              const Text('بداية الفاتورة',
+                                  style: TextStyle(fontSize: 18)),
+                              const SizedBox(width: 30),
                             ],
                           ),
-                          const SizedBox(
-                            height: 40,
-                          ),
+                          const SizedBox(height: 40),
                           Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              const SizedBox(
-                                width: 30,
+                              const SizedBox(width: 30),
+                              GestureDetector(
+                                onTap: () async {
+                                  final picked = await showDatePicker(
+                                    context: context,
+                                    initialDate: toDate,
+                                    firstDate: DateTime(2000),
+                                    lastDate: DateTime(2050),
+                                  );
+                                  if (picked != null)
+                                    setState(() => toDate = picked);
+                                },
+                                child: datePicker(context, toDate),
                               ),
-                              datePicker(context, birthdate),
-                              const SizedBox(
-                                width: 30,
-                              ),
-                              const Text(
-                                'نهاية الفاتورة',
-                                style: TextStyle(fontSize: 18),
-                              ),
-                              const SizedBox(
-                                width: 30,
-                              ),
+                              const SizedBox(width: 30),
+                              const Text('نهاية الفاتورة',
+                                  style: TextStyle(fontSize: 18)),
+                              const SizedBox(width: 30),
                             ],
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      const Text(
-                        'الفاتورة النهائية',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      const SizedBox(height: 30),
+                      const Text('الفاتورة النهائية',
+                          style: TextStyle(fontSize: 18)),
+                      const SizedBox(height: 20),
                       Container(
                         decoration: BoxDecoration(
-                            border: Border.all(
-                              color: cyan200,
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(20)),
+                          border: Border.all(color: cyan200, width: 1),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                         child: const Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal: 18, vertical: 12),
-                          child: Text(
-                            '3.000.000',
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
-                          ),
+                          child: Text('—', style: TextStyle(fontSize: 20)),
                         ),
                       ),
-                      const SizedBox(
-                        height: 15,
-                      ),
+                      const SizedBox(height: 15),
                     ],
                   ),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               defaultButton(
-                  text: 'معاينة',
-                  function: () {
-                    Navigator.pop(context);
-                    showDialog(
-                      context: context,
-                      builder: (context) => const BillPreviewDialog(),
+                text: 'معاينة',
+                function: () async {
+                  if (selectedDentistId == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('يرجى اختيار الزبون')),
                     );
-                  })
+                    return;
+                  }
+                  final dateFrom = _fmt(fromDate);
+                  final dateTo = _fmt(toDate);
+                  await widget.clientsCubit.previewBill(
+                    dentistId: selectedDentistId!,
+                    dateFrom: dateFrom,
+                    dateTo: dateTo,
+                  );
+                  if (!mounted) return;
+                  Navigator.pop(context);
+                  showDialog(
+                    context: context,
+                    builder: (context) => const BillPreviewDialog(),
+                  );
+                },
+              )
             ],
           ),
         ),
       ),
     );
   }
+
+  String _fmt(DateTime d) =>
+      '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
 }

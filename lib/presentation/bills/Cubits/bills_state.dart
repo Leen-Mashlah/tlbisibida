@@ -1,5 +1,6 @@
 import 'package:lambda_dent_dash/domain/models/bills/bills_list.dart';
 import 'package:lambda_dent_dash/domain/models/bills/dentist_bills_list.dart';
+import 'package:lambda_dent_dash/domain/models/bills/bill_details.dart';
 
 abstract class BillsState {}
 
@@ -27,4 +28,16 @@ class DentistBillsLoaded extends BillsState {
 class DentistBillsError extends BillsState {
   final String message;
   DentistBillsError(this.message);
+}
+
+class BillDetailsLoading extends BillsState {}
+
+class BillDetailsLoaded extends BillsState {
+  final BillDetailsResponse billDetails;
+  BillDetailsLoaded(this.billDetails);
+}
+
+class BillDetailsError extends BillsState {
+  final String message;
+  BillDetailsError(this.message);
 }

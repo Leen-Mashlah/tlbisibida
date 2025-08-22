@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/presentation/authentication/Providers/email_provider.dart';
-import 'package:lambda_dent_dash/presentation/cases/Providers/case_list_provider.dart';
-import 'package:lambda_dent_dash/presentation/profile/profile_provider.dart';
 import 'package:lambda_dent_dash/services/navigation/locator.dart';
 import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
 import 'package:lambda_dent_dash/services/navigation/routes.dart';
-import 'package:lambda_dent_dash/presentation/authentication/Views/authentication.dart';
 import 'package:lambda_dent_dash/presentation/authentication/Views/choose_role_page.dart';
-import 'package:lambda_dent_dash/presentation/authentication/Views/register.dart';
-import 'package:lambda_dent_dash/presentation/authentication/Views/register_2.dart';
-import 'package:lambda_dent_dash/presentation/bills/bills_page.dart';
+import 'package:lambda_dent_dash/presentation/authentication/Providers/unified_auth_provider.dart';
+import 'package:lambda_dent_dash/presentation/cases/Providers/unified_cases_provider.dart';
+import 'package:lambda_dent_dash/presentation/clients/Providers/unified_clients_provider.dart';
+import 'package:lambda_dent_dash/presentation/bills/Providers/unified_bills_clients_provider.dart';
 import 'package:lambda_dent_dash/presentation/cases/Views/add_case_page.dart';
-import 'package:lambda_dent_dash/presentation/cases/Views/case_details_page.dart';
-import 'package:lambda_dent_dash/presentation/clients/client_details_page.dart';
-import 'package:lambda_dent_dash/presentation/clients/clients_page.dart';
 import 'package:lambda_dent_dash/presentation/employees/employees_page.dart';
 import 'package:lambda_dent_dash/presentation/home/home_page.dart';
 import 'package:lambda_dent_dash/presentation/inventory/inventory_page.dart';
@@ -27,13 +22,19 @@ Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
     //Auth
     case authenticationPageRoute:
-      return _getPageRoute(AuthenticationPage(), authenticationPageDisplayName);
+      return _getPageRoute(
+          const UnifiedAuthProvider(pageType: AuthPageType.authentication),
+          authenticationPageDisplayName);
 
     case registerPageRoute:
-      return _getPageRoute(RegisterPage(), registerPageDisplayName);
+      return _getPageRoute(
+          const UnifiedAuthProvider(pageType: AuthPageType.register),
+          registerPageDisplayName);
 
     case register2PageRoute:
-      return _getPageRoute(Register2Page(), register2PageDisplayName);
+      return _getPageRoute(
+          const UnifiedAuthProvider(pageType: AuthPageType.register2),
+          register2PageDisplayName);
 
     case rolePageRoute:
       return _getPageRoute(const ChooseRolePage(), rolePageDisplayName);
@@ -44,28 +45,38 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     //Bills
     case billsPageRoute:
-      return _getPageRoute(BillsPage(), billsPageDisplayName);
+      return _getPageRoute(
+          const UnifiedBillsClientsProvider(
+              pageType: BillsClientsPageType.bills),
+          billsPageDisplayName);
 
     //Cases
     case casesPageRoute:
-      return _getPageRoute(CaseListProvider(), casesPageDisplayName);
+      return _getPageRoute(
+          const UnifiedCasesProvider(pageType: CasesPageType.casesList),
+          casesPageDisplayName);
 
     case caseDetailsPageRoute:
-      return _getPageRoute(CaseDetails(), caseDetailsPageDisplayName);
+      return _getPageRoute(
+          const UnifiedCasesProvider(pageType: CasesPageType.caseDetails),
+          caseDetailsPageDisplayName);
 
     case addCasePageRoute:
       return _getPageRoute(AddCasePage(), addCasePageDisplayName);
 
     //Clients
     case clientPageRoute:
-      return _getPageRoute(ClientsPage(), clientPageDisplayName);
+      return _getPageRoute(
+          const UnifiedClientsProvider(pageType: ClientsPageType.clientsList),
+          clientPageDisplayName);
     case clientDetailsPageRoute:
-      return _getPageRoute(ClientDetailsPage(), clientDetailsPageDisplayName);
+      return _getPageRoute(
+          const UnifiedClientsProvider(pageType: ClientsPageType.clientDetails),
+          clientDetailsPageDisplayName);
 
     //Employees
     case employeesPageRoute:
-      return _getPageRoute(
-          EmplyoeesPage(), employeesPageDisplayName);
+      return _getPageRoute(EmplyoeesPage(), employeesPageDisplayName);
 
     //Inventory
     case inventoryPageRoute:
@@ -77,7 +88,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     //User Profile
     case profilePageRoute:
-      return _getPageRoute(ProfileProvider(), profilePageDisplayName);
+      return _getPageRoute(
+          const UnifiedAuthProvider(pageType: AuthPageType.profile),
+          profilePageDisplayName);
 
     //Statistics Page
     case statisticsPageRoute:

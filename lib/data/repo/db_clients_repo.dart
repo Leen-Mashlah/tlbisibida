@@ -10,6 +10,7 @@ import 'package:lambda_dent_dash/data/models/lab_clients/db_lab_client.dart';
 import 'package:lambda_dent_dash/domain/models/lab_clients/lab_client.dart';
 import 'package:lambda_dent_dash/data/models/bills/db_preview_bill.dart';
 import 'package:lambda_dent_dash/domain/models/bills/preview_bill.dart';
+import 'package:lambda_dent_dash/data/models/lab_clients/db_join_requests.dart';
 
 class DBClientsRepo extends ClientsRepo {
   DBMedicalCasesForDentistResponse? dbMedicalCasesForDentistResponse;
@@ -54,40 +55,29 @@ class DBClientsRepo extends ClientsRepo {
   }
 
   @override
-  Future<LabClientsResponse> getLabClients() async {
-    DBLabClientsResponse? dbLabClientsResponse;
+  Future<ClientsResponse> getClients() async {
+    DBClientsResponse? dbClientsResponse;
     await DioHelper.getData(
       'lab-manager/medical-cases/show-lab-clients',
       token: CacheHelper.get('token'),
     ).then((value) {
-      dbLabClientsResponse = DBLabClientsResponse.fromJson(value?.data);
+      dbClientsResponse = DBClientsResponse.fromJson(value?.data);
     });
-    return LabClientsResponse(
-      status: dbLabClientsResponse?.status ?? false,
-      successCode: dbLabClientsResponse?.successCode ?? 0,
-      labClients: dbLabClientsResponse?.labClients
-              .map((e) => LabClient(
+    return ClientsResponse(
+      status: dbClientsResponse?.status ?? false,
+      successCode: dbClientsResponse?.successCode ?? 0,
+      clients: dbClientsResponse?.clients
+              .map((e) => Client(
                     id: e.id,
-                    firstName: e.firstName,
-                    lastName: e.lastName,
-                    email: e.email,
-                    registerSubscriptionDuration:
-                        e.registerSubscriptionDuration,
+                    name: e.name,
                     phone: e.phone,
                     address: e.address,
-                    emailVerifiedAt: e.emailVerifiedAt,
-                    emailIsVerified: e.emailIsVerified,
-                    verificationCode: e.verificationCode,
-                    imagePath: e.imagePath,
-                    registerAccepted: e.registerAccepted,
-                    registerDate: e.registerDate,
-                    subscriptionIsValidNow: e.subscriptionIsValidNow,
-                    createdAt: e.createdAt,
-                    updatedAt: e.updatedAt,
+                    joinedOn: e.joinedOn,
+                    currentAccount: e.currentAccount,
                   ))
               .toList() ??
           [],
-      successMessage: dbLabClientsResponse?.successMessage ?? '',
+      successMessage: dbClientsResponse?.successMessage ?? '',
     );
   }
 
@@ -132,6 +122,73 @@ class DBClientsRepo extends ClientsRepo {
         totalBillCost: dbPreviewBillResponse?.preview.totalBillCost ?? 0,
       ),
       successMessage: dbPreviewBillResponse?.successMessage ?? '',
+    );
+  }
+
+  Future<bool> addLocalClient({
+    required String firstName,
+    required String lastName,
+    required String phone,
+    required String address,
+  }) async {
+    return await DioHelper.postData(
+      'lab-manager/clients/add-local-client',
+      {
+        'first_name': firstName,
+        'last_name': lastName,
+        'phone': phone,
+        'address': address,
+      },
+      token: CacheHelper.get('token'),
+    ).then((value) {
+      if (value != null && value.data['status'] == true) {
+        return true;
+      } else {
+        return false;
+      }
+    }).catchError((error) {
+      return false;
+    });
+  }
+
+  Future<bool> approveJoinRequest(int id) async {
+    return await DioHelper.postData(
+      'lab-manager/join-requests/$id/approve',
+      {},
+      token: CacheHelper.get('token'),
+    ).then((value) {
+      if (value != null && value.data['status'] == true) {
+        return true;
+      } else {
+        return false;
+      }
+    }).catchError((error) {
+      return false;
+    });
+  }
+
+  Future<JoinRequestsResponse> getJoinRequests() async {
+    DBJoinRequestsResponse? dbResp;
+    await DioHelper.getData(
+      'lab-manager/join-requests',
+      token: CacheHelper.get('token'),
+    ).then((value) {
+      dbResp = DBJoinRequestsResponse.fromJson(value?.data);
+    });
+    return JoinRequestsResponse(
+      status: dbResp?.status ?? false,
+      successCode: dbResp?.successCode ?? 0,
+      joinRequests: dbResp?.joinRequests
+              .map((e) => JoinRequest(
+                    id: e.id,
+                    name: e.name,
+                    phone: e.phone,
+                    address: e.address,
+                    requestDate: e.requestDate,
+                  ))
+              .toList() ??
+          [],
+      successMessage: dbResp?.successMessage ?? '',
     );
   }
 }

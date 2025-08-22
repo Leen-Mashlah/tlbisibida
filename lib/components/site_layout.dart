@@ -22,7 +22,7 @@ class SiteLayout extends StatelessWidget {
           largeScreen: Navigator(
             key: locator<NavigationService>().navigatorKey,
             onGenerateRoute: generateRoute,
-            initialRoute: clientDetailsPageRoute, // Change to rootRoute
+            initialRoute: homePageRoute, // Change to rootRoute
           ),
         ),
       ),

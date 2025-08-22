@@ -1,10 +1,12 @@
 import 'package:lambda_dent_dash/data/models/bills/db_bills_list.dart';
+import 'package:lambda_dent_dash/domain/models/bills/bill_details.dart';
 import 'package:lambda_dent_dash/domain/models/bills/bills_list.dart';
 import 'package:lambda_dent_dash/domain/repo/bills_repo.dart';
 import 'package:lambda_dent_dash/services/Cache/cache_helper.dart';
 import 'package:lambda_dent_dash/services/dio/dio.dart';
 import 'package:lambda_dent_dash/data/models/bills/db_dentist_bills_list.dart';
 import 'package:lambda_dent_dash/domain/models/bills/dentist_bills_list.dart';
+import 'package:lambda_dent_dash/data/models/bills/db_bill_details.dart';
 
 class DBBillsRepo extends BillsRepo {
   DBLabBillsListResponse? dbLabBillsListResponse;
@@ -49,5 +51,17 @@ class DBBillsRepo extends BillsRepo {
       successCode: dbDentistBillsListResponse?.successCode ?? 0,
       successMessage: dbDentistBillsListResponse?.successMessage ?? '',
     );
+  }
+
+  @override
+  Future<BillDetailsResponse> getBillDetails(int billId) async {
+    DBBillDetailsResponse? db;
+    await DioHelper.getData(
+      'lab-manager/bills/show-bill/$billId',
+      token: CacheHelper.get('token'),
+    ).then((value) {
+      db = DBBillDetailsResponse.fromJson(value?.data);
+    });
+    return db!.toDomain();
   }
 }

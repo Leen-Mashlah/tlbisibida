@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lambda_dent_dash/domain/models/bills/bills_list.dart';
 import 'package:lambda_dent_dash/domain/models/bills/dentist_bills_list.dart';
+import 'package:lambda_dent_dash/domain/models/bills/bill_details.dart';
 import 'package:lambda_dent_dash/domain/repo/bills_repo.dart';
 import 'bills_state.dart';
 
@@ -38,6 +39,21 @@ class BillsCubit extends Cubit<BillsState> {
       }
     } catch (e) {
       emit(DentistBillsError("Error loading dentist bills: \\${e.toString()}"));
+    }
+  }
+
+  BillDetailsResponse? billDetails;
+  Future<void> getBillDetails(int billId) async {
+    emit(BillDetailsLoading());
+    try {
+      billDetails = await repo.getBillDetails(billId);
+      if (billDetails != null) {
+        emit(BillDetailsLoaded(billDetails!));
+      } else {
+        emit(BillDetailsError('No bill details found.'));
+      }
+    } catch (e) {
+      emit(BillDetailsError("Error loading bill details: \\${e.toString()}"));
     }
   }
 }

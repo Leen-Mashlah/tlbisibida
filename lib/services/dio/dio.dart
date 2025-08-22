@@ -3,9 +3,11 @@ import 'package:dio/dio.dart';
 class DioHelper {
   static Dio? dio;
   static init() {
-    dio = Dio(BaseOptions(baseUrl: 'http://127.0.0.1:8000/api/', headers: {
-      'Accept': 'application/json',
-    }));
+    dio = Dio(BaseOptions(
+        baseUrl: 'https://tusk-project-production.up.railway.app/api/',
+        headers: {
+          'Accept': 'application/json',
+        }));
   }
 
   static Future<Response?> getData(String url,

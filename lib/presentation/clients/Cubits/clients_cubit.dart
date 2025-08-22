@@ -13,16 +13,16 @@ class ClientsCubit extends Cubit<ClientsState> {
 
   MedicalCasesForDentist? casesList;
   Future<void> getCases(int id) async {
-    emit(ClientsLoading());
+    emit(ClientCasesLoading());
     try {
-      casesList = await repo.getcasebydocList(id);
-      if (casesList != null) {
-        emit(ClientsLoaded(casesList!));
+      final casesForDentist = await repo.getcasebydocList(id);
+      if (casesForDentist != null && casesForDentist.dentistCases.isNotEmpty) {
+        emit(ClientCasesLoaded(casesForDentist.dentistCases));
       } else {
-        emit(ClientsError('No cases found.'));
+        emit(ClientCasesError('No cases found.'));
       }
-    } on Exception catch (e) {
-      emit(ClientsError("Error loading cases list: \\${e.toString()}"));
+    } catch (e) {
+      emit(ClientCasesError('Error loading cases list: \\${e.toString()}'));
     }
   }
 
@@ -41,22 +41,6 @@ class ClientsCubit extends Cubit<ClientsState> {
     }
   }
 
-  List<LabClient> labClients = [];
-  Future<void> getLabClients() async {
-    emit(LabClientsLoading());
-    try {
-      LabClientsResponse labClientsResponse = await repo.getLabClients();
-      labClients = labClientsResponse.labClients;
-      if (labClients.isNotEmpty) {
-        emit(LabClientsLoaded(labClients));
-      } else {
-        emit(LabClientsError('No lab clients found.'));
-      }
-    } catch (e) {
-      emit(LabClientsError('Error loading lab clients: \\${e.toString()}'));
-    }
-  }
-
   PreviewBillPreview? billPreview;
   Future<void> previewBill(
       {required int dentistId,
@@ -70,6 +54,75 @@ class ClientsCubit extends Cubit<ClientsState> {
       emit(PreviewBillLoaded(response));
     } catch (e) {
       emit(PreviewBillError('Error previewing bill: \\${e.toString()}'));
+    }
+  }
+
+  ClientsResponse? clientsResponse;
+  Future<void> getClients() async {
+    emit(ClientsLoading());
+    try {
+      clientsResponse = await repo.getClients();
+      if (clientsResponse != null && clientsResponse!.clients.isNotEmpty) {
+        emit(ClientsLoaded(clientsResponse!));
+      } else {
+        emit(ClientsError('No clients found.'));
+      }
+    } catch (e) {
+      emit(ClientsError('Error loading clients: \\${e.toString()}'));
+    }
+  }
+
+  Future<bool> addLocalClient({
+    required String firstName,
+    required String lastName,
+    required String phone,
+    required String address,
+  }) async {
+    emit(ClientsLoading());
+    try {
+      final success = await repo.addLocalClient(
+        firstName: firstName,
+        lastName: lastName,
+        phone: phone,
+        address: address,
+      );
+      if (success) {
+        await getClients();
+      } else {
+        emit(ClientsError('Failed to add client.'));
+      }
+      return success;
+    } catch (e) {
+      emit(ClientsError('Error adding client: \\${e.toString()}'));
+      return false;
+    }
+  }
+
+  Future<bool> approveJoinRequest(int id) async {
+    emit(ClientsLoading());
+    try {
+      final success = await repo.approveJoinRequest(id);
+      if (success) {
+        await getJoinRequests();
+        await getClients();
+      } else {
+        emit(ClientsError('Failed to approve join request.'));
+      }
+      return success;
+    } catch (e) {
+      emit(ClientsError('Error approving join request: \\${e.toString()}'));
+      return false;
+    }
+  }
+
+  JoinRequestsResponse? joinRequestsResponse;
+  Future<void> getJoinRequests() async {
+    emit(RequestsLoading());
+    try {
+      joinRequestsResponse = await repo.getJoinRequests();
+      emit(RequestsLoaded());
+    } catch (e) {
+      emit(ClientsError('Error loading join requests: \\${e.toString()}'));
     }
   }
 }
