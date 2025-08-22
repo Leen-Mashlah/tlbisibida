@@ -209,7 +209,7 @@ class Register2Page extends StatelessWidget {
                                         initialTime: const TimeOfDay(
                                             hour: 9, minute: 41),
                                         onTimeChanged: (time) {
-                                          time.toString();
+                                          startTime.text = time.toString();
                                         },
                                       ),
                                       Text('إلى'),
@@ -217,7 +217,9 @@ class Register2Page extends StatelessWidget {
                                         mainColor: cyan400,
                                         initialTime: const TimeOfDay(
                                             hour: 19, minute: 41),
-                                        onTimeChanged: (time) {},
+                                        onTimeChanged: (time) {
+                                          endTime.text = time.toString();
+                                        },
                                       ),
                                     ],
                                   ),
