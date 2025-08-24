@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lambda_dent_dash/components/tusk_icons.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
+import 'package:lambda_dent_dash/domain/models/lab_clients/lab_client.dart';
+import 'package:lambda_dent_dash/presentation/clients/Cubits/clients_cubit.dart';
+import 'package:lambda_dent_dash/presentation/clients/Cubits/clients_state.dart';
 
 // A custom widget that acts as a button and shows a searchable list
 // in a bottom modal sheet when pressed.
 class ChoiceButtonWithSearch extends StatefulWidget {
-  // The list of names to display in the selection sheet.
-  final List<String> names;
-  // Optional initial selected name.
-  final String? initialName;
-  // Callback function when a name is selected.
-  final ValueChanged<String>? onNameSelected;
-  // Text to display when no name is selected initially.
+  // Optional initial selected client.
+  final Client? initialClient;
+  // Callback function when a client is selected.
+  final ValueChanged<Client>? onClientSelected;
+  // Text to display when no client is selected initially.
   final String hintText;
 
   const ChoiceButtonWithSearch({
     Key? key,
-    required this.names,
-    this.initialName,
-    this.onNameSelected,
+    this.initialClient,
+    this.onClientSelected,
     this.hintText = 'اختر الزبون',
   }) : super(key: key);
 
@@ -27,33 +28,32 @@ class ChoiceButtonWithSearch extends StatefulWidget {
 }
 
 class _ChoiceButtonWithSearchState extends State<ChoiceButtonWithSearch> {
-  // The currently selected name displayed on the button.
-  String? _selectedName;
+  // The currently selected client displayed on the button.
+  Client? _selectedClient;
 
   @override
   void initState() {
     super.initState();
-    // Initialize the selected name with the initial name provided,
+    // Initialize the selected client with the initial client provided,
     // or null if none is provided.
-    _selectedName = widget.initialName;
+    _selectedClient = widget.initialClient;
   }
 
-  // Function to show the bottom modal sheet for name selection.
-  void _showNameSelectionSheet() {
+  // Function to show the bottom modal sheet for client selection.
+  void _showClientSelectionSheet() {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true, // Allows the sheet to take up more height
       builder: (BuildContext context) {
         // Return the content of the bottom modal sheet.
-        return NameSelectionSheetContent(
-          names: widget.names,
-          onNameSelected: (name) {
-            // Update the selected name in the parent widget's state.
+        return ClientSelectionSheetContent(
+          onClientSelected: (client) {
+            // Update the selected client in the parent widget's state.
             setState(() {
-              _selectedName = name;
+              _selectedClient = client;
             });
             // Call the user-provided callback if it exists.
-            widget.onNameSelected?.call(name);
+            widget.onClientSelected?.call(client);
             // Close the modal sheet.
             Navigator.pop(context);
           },
@@ -64,9 +64,9 @@ class _ChoiceButtonWithSearchState extends State<ChoiceButtonWithSearch> {
 
   @override
   Widget build(BuildContext context) {
-    // The button widget that displays the selected name or hint text.
+    // The button widget that displays the selected client or hint text.
     return InkWell(
-      onTap: _showNameSelectionSheet,
+      onTap: _showClientSelectionSheet,
       child: Container(
           clipBehavior: Clip.antiAlias,
           decoration: BoxDecoration(
@@ -83,8 +83,8 @@ class _ChoiceButtonWithSearchState extends State<ChoiceButtonWithSearch> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  _selectedName ??
-                      widget.hintText, // Display selected name or hint.
+                  _selectedClient?.name ??
+                      widget.hintText, // Display selected client name or hint.
                   style: TextStyle(
                     // Customize text style as needed.
                     color: cyan600,
@@ -104,42 +104,36 @@ class _ChoiceButtonWithSearchState extends State<ChoiceButtonWithSearch> {
 }
 
 // The content widget for the bottom modal sheet containing the searchable list.
-class NameSelectionSheetContent extends StatefulWidget {
-  final List<String> names;
-  final ValueChanged<String> onNameSelected;
+class ClientSelectionSheetContent extends StatefulWidget {
+  final ValueChanged<Client> onClientSelected;
 
-  const NameSelectionSheetContent({
+  const ClientSelectionSheetContent({
     Key? key,
-    required this.names,
-    required this.onNameSelected,
+    required this.onClientSelected,
   }) : super(key: key);
 
   @override
-  _NameSelectionSheetContentState createState() =>
-      _NameSelectionSheetContentState();
+  _ClientSelectionSheetContentState createState() =>
+      _ClientSelectionSheetContentState();
 }
 
-class _NameSelectionSheetContentState extends State<NameSelectionSheetContent> {
+class _ClientSelectionSheetContentState
+    extends State<ClientSelectionSheetContent> {
   // Controller for the search text field.
   final TextEditingController _searchController = TextEditingController();
-  // The full list of names, sorted alphabetically.
-  late List<String> _allNames;
-  // The list of names currently displayed, filtered by the search query.
-  List<String> _filteredNames = [];
+  // The full list of clients, sorted alphabetically.
+  late List<Client> _allClients;
+  // The list of clients currently displayed, filtered by the search query.
+  List<Client> _filteredClients = [];
 
   @override
   void initState() {
     super.initState();
-    // Sort the initial list of names alphabetically (Arabic sorting).
-    // Using compareTo for basic alphabetical sorting. For more complex
-    // Arabic sorting rules (e.g., ignoring diacritics), you might need
-    // a more specialized sorting function or library.
-    _allNames = List.from(widget.names)..sort((a, b) => a.compareTo(b));
-    // Initially, the filtered list contains all names.
-    _filteredNames = _allNames;
+    // Load clients from API
+    _loadClients();
 
     // Add a listener to the search controller to filter the list as the user types.
-    _searchController.addListener(_filterNames);
+    _searchController.addListener(_filterClients);
   }
 
   @override
@@ -149,17 +143,23 @@ class _NameSelectionSheetContentState extends State<NameSelectionSheetContent> {
     super.dispose();
   }
 
-  // Function to filter the list of names based on the search query.
-  void _filterNames() {
+  // Load clients from API
+  Future<void> _loadClients() async {
+    final clientsCubit = context.read<ClientsCubit>();
+    await clientsCubit.getClients();
+  }
+
+  // Function to filter the list of clients based on the search query.
+  void _filterClients() {
     final query = _searchController.text.toLowerCase();
     setState(() {
-      // If the query is empty, show all names.
+      // If the query is empty, show all clients.
       if (query.isEmpty) {
-        _filteredNames = _allNames;
+        _filteredClients = _allClients;
       } else {
-        // Filter names that contain the query (case-insensitive).
-        _filteredNames = _allNames.where((name) {
-          return name.toLowerCase().contains(query);
+        // Filter clients that contain the query (case-insensitive).
+        _filteredClients = _allClients.where((client) {
+          return client.name.toLowerCase().contains(query);
         }).toList();
       }
     });
@@ -201,21 +201,40 @@ class _NameSelectionSheetContentState extends State<NameSelectionSheetContent> {
           ),
           // Expanded widget to make the list take up the remaining space.
           Expanded(
-            child: ListView.builder(
-              itemCount: _filteredNames.length,
-              itemBuilder: (context, index) {
-                final name = _filteredNames[index];
-                // List tile for each name.
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ListTile(
-                    title: Text(name),
-                    onTap: () {
-                      // Call the callback function with the selected name.
-                      widget.onNameSelected(name);
+            child: BlocBuilder<ClientsCubit, ClientsState>(
+              builder: (context, state) {
+                if (state is ClientsLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is ClientsLoaded) {
+                  // Update the clients list
+                  _allClients = state.clientsResponse.clients;
+                  if (_filteredClients.isEmpty) {
+                    _filteredClients = _allClients;
+                  }
+
+                  return ListView.builder(
+                    itemCount: _filteredClients.length,
+                    itemBuilder: (context, index) {
+                      final client = _filteredClients[index];
+                      // List tile for each client.
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ListTile(
+                          title: Text(client.name),
+                          subtitle: Text(client.phone.toString()),
+                          onTap: () {
+                            // Call the callback function with the selected client.
+                            widget.onClientSelected(client);
+                          },
+                        ),
+                      );
                     },
-                  ),
-                );
+                  );
+                } else if (state is ClientsError) {
+                  return Center(child: Text('Error: ${state.message}'));
+                } else {
+                  return const Center(child: Text('No clients found'));
+                }
               },
             ),
           ),

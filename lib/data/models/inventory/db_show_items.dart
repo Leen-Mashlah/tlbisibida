@@ -1,7 +1,9 @@
+import '../../../domain/models/inventory/show_items.dart';
+
 class DBItemsResponse {
   bool? status;
   int? successCode;
-  List<Item>? items;
+  List<DBItem>? items;
   String? successMessage;
 
   DBItemsResponse(
@@ -11,9 +13,9 @@ class DBItemsResponse {
     status = json['status'];
     successCode = json['success_code'];
     if (json['items'] != null) {
-      items = <Item>[];
+      items = <DBItem>[];
       json['items'].forEach((v) {
-        items!.add(Item.fromJson(v));
+        items!.add(DBItem.fromJson(v));
       });
     }
     successMessage = json['success_message'];
@@ -31,7 +33,7 @@ class DBItemsResponse {
   }
 }
 
-class Item {
+class DBItem {
   String? name;
   int? quantity;
   int? standardQuantity;
@@ -39,7 +41,7 @@ class Item {
   String? unit;
   int? isStatic;
 
-  Item({
+  DBItem({
     this.name,
     this.quantity,
     this.standardQuantity,
@@ -48,7 +50,7 @@ class Item {
     this.isStatic,
   });
 
-  Item.fromJson(Map<String, dynamic> json) {
+  DBItem.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     quantity = json['quantity'];
     standardQuantity = json['standard_quantity'];
@@ -66,5 +68,29 @@ class Item {
     data['unit'] = unit;
     data['is_static'] = isStatic;
     return data;
+  }
+
+  // --- TO DOMAIN FUNCTION ---
+  Item toDomain() {
+    return Item(
+      name: name,
+      quantity: quantity,
+      standardQuantity: standardQuantity,
+      minimumQuantity: minimumQuantity,
+      unit: unit,
+      isStatic: isStatic == 1, // Convert int (0 or 1) to bool
+    );
+  }
+
+  // --- FROM DOMAIN FUNCTION ---
+  static DBItem fromDomain(Item domain) {
+    return DBItem(
+      name: domain.name,
+      quantity: domain.quantity,
+      standardQuantity: domain.standardQuantity,
+      minimumQuantity: domain.minimumQuantity,
+      unit: domain.unit,
+      isStatic: domain.isStatic == true ? 1 : 0, // Convert bool to int (1 or 0)
+    );
   }
 }

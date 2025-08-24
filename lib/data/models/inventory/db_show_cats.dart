@@ -1,7 +1,9 @@
+import '../../../domain/models/inventory/show_cats.dart';
+
 class DBCategoriesResponse {
   bool? status;
   int? successCode;
-  List<Category>? categories;
+  List<DBCategory>? categories;
   String? successMessage;
 
   DBCategoriesResponse(
@@ -11,9 +13,9 @@ class DBCategoriesResponse {
     status = json['status'];
     successCode = json['success_code'];
     if (json['categories'] != null) {
-      categories = <Category>[];
+      categories = <DBCategory>[];
       json['categories'].forEach((v) {
-        categories!.add(Category.fromJson(v));
+        categories!.add(DBCategory.fromJson(v));
       });
     }
     successMessage = json['success_message'];
@@ -31,13 +33,13 @@ class DBCategoriesResponse {
   }
 }
 
-class Category {
+class DBCategory {
   int? id;
   String? name;
 
-  Category({this.id, this.name});
+  DBCategory({this.id, this.name});
 
-  Category.fromJson(Map<String, dynamic> json) {
+  DBCategory.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
   }
@@ -47,5 +49,20 @@ class Category {
     data['id'] = id;
     data['name'] = name;
     return data;
+  } // --- TO DOMAIN FUNCTION ---
+
+  Category toDomain() {
+    return Category(
+      id: id,
+      name: name,
+    );
+  }
+
+  // --- FROM DOMAIN FUNCTION ---
+  static DBCategory fromDomain(Category domain) {
+    return DBCategory(
+      id: domain.id,
+      name: domain.name,
+    );
   }
 }

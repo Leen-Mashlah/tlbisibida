@@ -8,6 +8,7 @@ import 'package:lambda_dent_dash/presentation/authentication/Providers/unified_a
 import 'package:lambda_dent_dash/presentation/cases/Providers/unified_cases_provider.dart';
 import 'package:lambda_dent_dash/presentation/clients/Providers/unified_clients_provider.dart';
 import 'package:lambda_dent_dash/presentation/bills/Providers/unified_bills_clients_provider.dart';
+import 'package:lambda_dent_dash/presentation/employees/Providers/unified_employees_provider.dart';
 import 'package:lambda_dent_dash/presentation/cases/Views/add_case_page.dart';
 import 'package:lambda_dent_dash/presentation/employees/employees_page.dart';
 import 'package:lambda_dent_dash/presentation/home/home_page.dart';
@@ -62,7 +63,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           caseDetailsPageDisplayName);
 
     case addCasePageRoute:
-      return _getPageRoute(AddCasePage(), addCasePageDisplayName);
+      //return _getPageRoute(AddCasePage(), addCasePageDisplayName);
+      return _getPageRoute(
+          const UnifiedCasesProvider(pageType: CasesPageType.addCase),
+          addCasePageDisplayName);
 
     //Clients
     case clientPageRoute:
@@ -76,7 +80,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     //Employees
     case employeesPageRoute:
-      return _getPageRoute(EmplyoeesPage(), employeesPageDisplayName);
+      return _getPageRoute(
+          const UnifiedEmployeesProvider(child: EmplyoeesPage()),
+          employeesPageDisplayName);
 
     //Inventory
     case inventoryPageRoute:

@@ -154,6 +154,100 @@ class TeethCubit extends Cubit<TeethState> {
         .toSet();
   }
 
+  // Method to get formatted teeth data for API
+  Map<String, List<String>> getFormattedTeethData() {
+    Map<String, List<String>> formattedData = {
+      'teeth_crown': [],
+      'teeth_pontic': [],
+      'teeth_implant': [],
+      'teeth_veneer': [],
+      'teeth_inlay': [],
+      'teeth_denture': [],
+      'bridges_crown': [],
+      'bridges_pontic': [],
+      'bridges_implant': [],
+      'bridges_veneer': [],
+      'bridges_inlay': [],
+      'bridges_denture': [],
+    };
+
+    // Process selected teeth
+    for (Tooth tooth in getSelectedTeeth()) {
+      if (tooth.treatment != null && tooth.material != null) {
+        String category = _getTeethCategory(tooth.treatment!);
+        String formattedTooth = '${tooth.id},${tooth.material}';
+        formattedData[category]!.add(formattedTooth);
+      }
+    }
+
+    // Process selected connections (bridges)
+    for (ToothConnection connection in getSelectedConnections()) {
+      // For bridges, we need to get the connected teeth and their material
+      Tooth? tooth1 = _data.teeth.values.firstWhere(
+        (tooth) => tooth.id == connection.tooth1Id,
+        orElse: () => Tooth(0, Path()),
+      );
+      Tooth? tooth2 = _data.teeth.values.firstWhere(
+        (tooth) => tooth.id == connection.tooth2Id,
+        orElse: () => Tooth(0, Path()),
+      );
+
+      if (tooth1.id != 0 &&
+          tooth2.id != 0 &&
+          tooth1.treatment != null &&
+          tooth1.material != null &&
+          tooth2.treatment != null &&
+          tooth2.material != null) {
+        String category = _getBridgesCategory(tooth1.treatment!);
+        // For bridges, include both connected teeth
+        String formattedBridge = '${tooth1.id},${tooth2.id},${tooth1.material}';
+        formattedData[category]!.add(formattedBridge);
+      }
+    }
+
+    return formattedData;
+  }
+
+  // Helper method to map treatment to teeth category
+  String _getTeethCategory(String treatment) {
+    switch (treatment) {
+      case 'تاج':
+        return 'teeth_crown';
+      case 'دمية':
+        return 'teeth_pontic';
+      case 'زراعة':
+        return 'teeth_implant';
+      case 'فينير':
+        return 'teeth_veneer';
+      case 'حشوة':
+        return 'teeth_inlay';
+      case 'طقم':
+        return 'teeth_denture';
+      default:
+        return 'teeth_crown'; // Default fallback
+    }
+  }
+
+  // Helper method to map treatment to bridges category
+  String _getBridgesCategory(String treatment) {
+    switch (treatment) {
+      case 'تاج':
+        return 'bridges_crown';
+      case 'دمية':
+        return 'bridges_pontic';
+      case 'زراعة':
+        return 'bridges_implant';
+      case 'فينير':
+        return 'bridges_veneer';
+      case 'حشوة':
+        return 'bridges_inlay';
+      case 'طقم':
+        return 'bridges_denture';
+      default:
+        return 'bridges_crown'; // Default fallback
+    }
+  }
+
   bool canEstablishConnection(ToothConnection connection) {
     final tooth1 = _data.teeth.values
         .firstWhere((tooth) => tooth.id == connection.tooth1Id);

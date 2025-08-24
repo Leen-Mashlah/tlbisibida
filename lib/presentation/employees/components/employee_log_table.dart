@@ -1,71 +1,69 @@
-import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
-
-import 'package:lambda_dent_dash/components/custom_text.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
+import 'package:lambda_dent_dash/domain/models/employees/employees.dart';
+import 'package:lambda_dent_dash/presentation/employees/Cubits/employees_cubit.dart';
+import 'package:lambda_dent_dash/presentation/employees/Cubits/employees_state.dart';
 
-/// Example without datasource
-// ignore: must_be_immutable
 class EmployeeLogTable extends StatelessWidget {
-  const EmployeeLogTable({super.key});
+  final String employeeType; // 'inventory' or 'accountant'
+
+  const EmployeeLogTable({
+    super.key,
+    required this.employeeType,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        decoration: BoxDecoration(
-          color: cyan50op,
-          border: Border.all(color: cyan200, width: .5),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        padding: const EdgeInsets.all(16),
-        // margin: const EdgeInsets.only(bottom: 30),
-        child: DataTable2(
-          columnSpacing: 12,
-          dataRowHeight: 56,
-          headingRowHeight: 40,
-          horizontalMargin: 12,
-          minWidth: 100,
-          columns: const [
-            DataColumn(
-              label: Center(
-                  child: Text(
-                'الاسم',
-                style: TextStyle(color: cyan300),
-              )),
-            ),
-            DataColumn(
-              label: Center(
-                  child: Text(
-                'تاريخ البدء',
-                style: TextStyle(color: cyan300),
-              )),
-            ),
-            DataColumn(
-              label: Center(
-                  child: Text(
-                'تاريخ التسريح',
-                style: TextStyle(color: cyan300),
-              )),
-            ),
-          ],
-          rows: List<DataRow>.generate(
-            20,
-            (index) => const DataRow(
-              cells: [
-                DataCell(Center(
-                    child: CustomText(
-                  alignment: TextAlign.center,
-                  text: 'تحسين التحسيني',
-                  size: 14,
-                ))),
-                DataCell(Center(child: CustomText(text: '7/8/2024'))),
-                DataCell(Center(child: CustomText(text: '8/8/2024'))),
+    return BlocBuilder<EmployeesCubit, EmployeesState>(
+      builder: (context, state) {
+        if (state is EmployeesLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state is EmployeesLoaded) {
+          final employeesCubit = context.read<EmployeesCubit>();
+          List<Employee> inactiveEmployees = employeeType == 'inventory'
+              ? employeesCubit.getInactiveInventoryEmployees()
+              : employeesCubit.getInactiveAccountants();
+
+          if (inactiveEmployees.isEmpty) {
+            return Center(
+              child: Text(
+                'لا يوجد موظفين غير نشطين',
+                style: TextStyle(fontSize: 16, color: Colors.grey),
+              ),
+            );
+          }
+
+          return SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: DataTable(
+              columns: const [
+                DataColumn(label: Text('الاسم')),
+                DataColumn(label: Text('تاريخ البدء')),
+                DataColumn(label: Text('تاريخ الانتهاء')),
               ],
+              rows: inactiveEmployees.map((employee) {
+                return DataRow(
+                  cells: [
+                    DataCell(Text(employee.fullName ?? 'غير محدد')),
+                    DataCell(Text(employee.startAt ?? 'غير محدد')),
+                    DataCell(Text(employee.terminationAt ?? 'غير محدد')),
+                  ],
+                );
+              }).toList(),
             ),
-          ),
-        ),
-      ),
+          );
+        } else if (state is EmployeesError) {
+          return Center(
+            child: Text(
+              'Error: ${state.message}',
+              style: TextStyle(color: Colors.red),
+            ),
+          );
+        } else {
+          return const Center(child: Text('No data available'));
+        }
+      },
     );
   }
 }

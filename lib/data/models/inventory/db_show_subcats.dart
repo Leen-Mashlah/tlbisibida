@@ -1,7 +1,9 @@
+import '../../../domain/models/inventory/show_subcats.dart';
+
 class DBSubCategoryRepositoriesResponse {
   bool? status;
   int? successCode;
-  List<SubCategoryRepository>? subCategoryRepositories;
+  List<DBSubCategoryRepository>? subCategoryRepositories;
   String? successMessage;
 
   DBSubCategoryRepositoriesResponse(
@@ -14,9 +16,9 @@ class DBSubCategoryRepositoriesResponse {
     status = json['status'];
     successCode = json['success_code'];
     if (json['subCategoryRepositories'] != null) {
-      subCategoryRepositories = <SubCategoryRepository>[];
+      subCategoryRepositories = <DBSubCategoryRepository>[];
       json['subCategoryRepositories'].forEach((v) {
-        subCategoryRepositories!.add(SubCategoryRepository.fromJson(v));
+        subCategoryRepositories!.add(DBSubCategoryRepository.fromJson(v));
       });
     }
     successMessage = json['success_message'];
@@ -35,13 +37,13 @@ class DBSubCategoryRepositoriesResponse {
   }
 }
 
-class SubCategoryRepository {
+class DBSubCategoryRepository {
   int? id;
   String? name;
 
-  SubCategoryRepository({this.id, this.name});
+  DBSubCategoryRepository({this.id, this.name});
 
-  SubCategoryRepository.fromJson(Map<String, dynamic> json) {
+  DBSubCategoryRepository.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
   }
@@ -51,5 +53,22 @@ class SubCategoryRepository {
     data['id'] = id;
     data['name'] = name;
     return data;
+  } // --- TO DOMAIN FUNCTION ---
+
+  // Since DBSubCategoryRepository and SubCategoryRepository are identical, the mapping is direct.
+  SubCategoryRepository toDomain() {
+    return SubCategoryRepository(
+      id: id,
+      name: name,
+    );
+  }
+
+  // --- FROM DOMAIN FUNCTION ---
+  // Since DBSubCategoryRepository and SubCategoryRepository are identical, the mapping is direct.
+  static DBSubCategoryRepository fromDomain(SubCategoryRepository domain) {
+    return DBSubCategoryRepository(
+      id: domain.id,
+      name: domain.name,
+    );
   }
 }

@@ -12,27 +12,49 @@ class ProfileSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AuthCubit cubit = context.read<AuthCubit>();
+
+    // Check if profile exists and has required data
+    if (cubit.profile == null || cubit.profile!.profileDetails == null) {
+      return Card(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 40),
+              Icon(Icons.person_off, size: 64, color: Colors.grey),
+              SizedBox(height: 20),
+              Text(
+                'No profile data available',
+                style: TextStyle(fontSize: 18, color: Colors.grey),
+              ),
+              SizedBox(height: 20),
+            ],
+          ),
+        ),
+      );
+    }
+
+    final profileDetails = cubit.profile!.profileDetails!;
+
     List userInfo = [
       {
         'title': 'البريد الالكتروني',
-        'info': cubit.profile!.profileDetails!.email,
-        // controller.profileModel!.firstName +
-        //     controller.profileModel!.lastName,
+        'info': profileDetails.email ?? 'غير محدد',
         'icon': Icons.mail_rounded,
       },
       {
         'title': 'الهاتف',
-        'info': cubit.profile!.profileDetails!.labPhone,
-        //  controller.profileModel!.phoneNumber,
+        'info': profileDetails.labPhone ?? [],
         'icon': CupertinoIcons.phone_circle_fill,
       },
       {
         'title': 'العنوان',
-        'info': cubit.profile!.profileDetails!.labAddress,
-        //controller.profileModel!.wallet,
+        'info': profileDetails.labAddress ?? 'غير محدد',
         'icon': Icons.location_on_rounded,
       },
     ];
+
     return SizedBox(
       child: Card(
         child: Padding(
@@ -41,11 +63,14 @@ class ProfileSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               SizedBox(height: 20),
-              Text(cubit.profile!.profileDetails!.labName!,
-                  style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: cyan600)),
+              Text(
+                profileDetails.labName ?? 'اسم المختبر',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: cyan600,
+                ),
+              ),
               SizedBox(height: 20),
               Container(
                 width: MediaQuery.sizeOf(context).width / 5,
@@ -107,11 +132,15 @@ class ProfileSection extends StatelessWidget {
 
   String phoneNumberFix(model) {
     if (model['title'] == 'الهاتف') {
-      String phones = '';
-      for (var phone in model['info']) {
-        phones += phone + '\n';
+      List<String> phones = model['info'] as List<String>;
+      if (phones.isEmpty) {
+        return 'غير محدد';
       }
-      return phones;
+      String phonesText = '';
+      for (var phone in phones) {
+        phonesText += phone + '\n';
+      }
+      return phonesText.trim();
     } else {
       return model['info'].toString();
     }
@@ -143,8 +172,36 @@ class SubscriptionStatus extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AuthCubit cubit = context.read<AuthCubit>();
+
+    // Check if profile and subscription data exists
+    if (cubit.profile == null || cubit.profile!.lastSubscription == null) {
+      return Card(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text('الاشتراك',
+                  style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: cyan600)),
+              SizedBox(height: 20),
+              Text(
+                'لا توجد بيانات اشتراك متاحة',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 18, color: Colors.grey),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    final subscription = cubit.profile!.lastSubscription!;
     String status =
-        cubit.profile!.lastSubscription!.subscriptionIsValid! ? 'فعال' : 'منتهي الصلاحية';
+        subscription.subscriptionIsValid == true ? 'فعال' : 'منتهي الصلاحية';
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -157,16 +214,16 @@ class SubscriptionStatus extends StatelessWidget {
             SizedBox(height: 20),
             BillItem(
                 title: 'حالة الاشتراك - $status',
-                isPaid: cubit.profile!.lastSubscription!.subscriptionIsValid!),
+                isPaid: subscription.subscriptionIsValid == true),
             SizedBox(height: 20),
             Text(
-              'بداية الاشتراك: ${cubit.profile!.lastSubscription!.subscriptionFrom}',
+              'بداية الاشتراك: ${subscription.subscriptionFrom?.toString() ?? 'غير محدد'}',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 18),
             ),
             SizedBox(height: 20),
             Text(
-              'نهاية الاشتراك: ${cubit.profile!.lastSubscription!.subscriptionTo}',
+              'نهاية الاشتراك: ${subscription.subscriptionTo?.toString() ?? 'غير محدد'}',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 18),
             ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lambda_dent_dash/data/repo/db_cases_repo.dart';
+import 'package:lambda_dent_dash/presentation/cases/Views/add_case_page.dart';
 import 'package:lambda_dent_dash/services/navigation/locator.dart';
 import 'package:lambda_dent_dash/presentation/cases/Cubits/cases_cubit.dart';
 import 'package:lambda_dent_dash/presentation/cases/Views/cases_list_page.dart';
@@ -9,6 +10,7 @@ import 'package:lambda_dent_dash/presentation/cases/Views/case_details_page.dart
 enum CasesPageType {
   casesList,
   caseDetails,
+  addCase
 }
 
 class UnifiedCasesProvider extends StatelessWidget {
@@ -45,6 +47,8 @@ class UnifiedCasesProvider extends StatelessWidget {
         return const CasesListPage();
       case CasesPageType.caseDetails:
         return CaseDetails();
+      case CasesPageType.addCase:
+        return  AddCasePage();
     }
   }
 }

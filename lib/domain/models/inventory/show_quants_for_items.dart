@@ -1,38 +1,38 @@
-class ItemQuantityHistoryResponse {
-  bool? status;
-  int? successCode;
-  List<ItemQuantityHistory>? items;
-  String? successMessage;
+// class ItemQuantityHistoryResponse {
+//   bool? status;
+//   int? successCode;
+//   List<ItemQuantityHistory>? items;
+//   String? successMessage;
 
-  ItemQuantityHistoryResponse({
-    this.status,
-    this.successCode,
-    this.items,
-    this.successMessage,
-  });
+//   ItemQuantityHistoryResponse({
+//     this.status,
+//     this.successCode,
+//     this.items,
+//     this.successMessage,
+//   });
 
-  factory ItemQuantityHistoryResponse.fromJson(Map<String, dynamic> json) {
-    return ItemQuantityHistoryResponse(
-      status: json['status'] as bool?,
-      successCode: json['success_code'] as int?,
-      items: (json['items'] as List<dynamic>?)
-          ?.map((e) => ItemQuantityHistory.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      successMessage: json['success_message'] as String?,
-    );
-  }
+//   factory ItemQuantityHistoryResponse.fromJson(Map<String, dynamic> json) {
+//     return ItemQuantityHistoryResponse(
+//       status: json['status'] as bool?,
+//       successCode: json['success_code'] as int?,
+//       items: (json['items'] as List<dynamic>?)
+//           ?.map((e) => ItemQuantityHistory.fromJson(e as Map<String, dynamic>))
+//           .toList(),
+//       successMessage: json['success_message'] as String?,
+//     );
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['success_code'] = successCode;
-    if (items != null) {
-      data['items'] = items!.map((v) => v.toJson()).toList();
-    }
-    data['success_message'] = successMessage;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = <String, dynamic>{};
+//     data['status'] = status;
+//     data['success_code'] = successCode;
+//     if (items != null) {
+//       data['items'] = items!.map((v) => v.toJson()).toList();
+//     }
+//     data['success_message'] = successMessage;
+//     return data;
+//   }
+// }
 
 class ItemQuantityHistory {
   int? id;

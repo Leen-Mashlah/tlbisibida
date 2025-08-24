@@ -53,7 +53,10 @@ class CaseDetails extends StatelessWidget {
                                   color: cyan300,
                                   border: Border.all(color: cyan300, width: .5),
                                   borderRadius: BorderRadius.circular(50)),
-                              child: const CaseDetailsTable(),
+                              child: CaseDetailsTable(
+                                caseDetails:
+                                    casesCubit.medicalCase?.medicalCaseDetails,
+                              ),
                             ),
                             Container(
                               clipBehavior: Clip.antiAlias,

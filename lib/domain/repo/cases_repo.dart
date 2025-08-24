@@ -11,4 +11,7 @@ abstract class CasesRepo {
 
   Future<List<Comment>?> getCaseComments(int id);
   Future<bool> postNewCase();
+
+  // New method for adding medical case to local client
+  Future<bool> addMedicalCaseToLocalClient(Map<String, dynamic> caseData);
 }

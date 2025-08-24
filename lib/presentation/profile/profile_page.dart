@@ -21,10 +21,78 @@ class ProfilePage extends StatelessWidget {
       },
       builder: (context, state) {
         AuthCubit authCubit = context.read<AuthCubit>();
+
+        // Handle different states
+        if (state is AuthLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        if (state is AuthError) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.error_outline, size: 64, color: Colors.red),
+                SizedBox(height: 20),
+                Text(
+                  'Error: ${state.message}',
+                  style: TextStyle(fontSize: 18, color: Colors.red),
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () => authCubit.getProfile(),
+                  child: Text('Retry'),
+                ),
+              ],
+            ),
+          );
+        }
+
         if (state is AuthProfileLoaded) {
           final profile = state.profile;
-          // Use profile here
+          if (profile == null) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.person_off, size: 64, color: Colors.grey),
+                  SizedBox(height: 20),
+                  Text(
+                    'No profile data available',
+                    style: TextStyle(fontSize: 18, color: Colors.grey),
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () => authCubit.getProfile(),
+                    child: Text('Refresh Profile'),
+                  ),
+                ],
+              ),
+            );
+          }
         }
+
+        // If profile is not loaded yet, load it
+        if (authCubit.profile == null) {
+          // Load profile in the background
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            authCubit.getProfile();
+          });
+
+          return const Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(height: 20),
+                Text('Loading profile...'),
+              ],
+            ),
+          );
+        }
+
         return Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: 80.0, vertical: 20.0),

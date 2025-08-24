@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
-import 'package:lambda_dent_dash/presentation/inventory/components/dialogs/add_quantity_for_item_dialog.dart';
+import 'package:lambda_dent_dash/domain/models/inventory/show_items.dart';
 import 'package:lambda_dent_dash/presentation/inventory/components/dialogs/item_log_dialog.dart';
+import 'package:lambda_dent_dash/presentation/inventory/components/item_edit_quantity_card.dart';
 
-Row bottomActionPaymentsLogButtons(BuildContext context) {
+Row bottomActionPaymentsLogButtons(BuildContext context, Item item) {
   return Row(
     children: [
       Expanded(
@@ -12,7 +13,7 @@ Row bottomActionPaymentsLogButtons(BuildContext context) {
             showDialog(
                 context: context,
                 builder: (context) {
-                  return itemLogDialog(context);
+                  return itemLogDialog(context, item);
                 });
           },
           child: Container(
@@ -28,7 +29,12 @@ Row bottomActionPaymentsLogButtons(BuildContext context) {
             showDialog(
               context: context,
               builder: (context) {
-                return addQuantityForItem(context);
+                return Dialog(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: itemEditQuantityCard(context, item),
+                  ),
+                );
               },
             );
           },

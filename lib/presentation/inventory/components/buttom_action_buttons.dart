@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
+import 'package:lambda_dent_dash/domain/models/inventory/show_items.dart';
 import 'package:lambda_dent_dash/presentation/inventory/components/dialogs/item_add_edit_dialog.dart';
 import 'package:lambda_dent_dash/presentation/inventory/components/dialogs/item_delete_dialog.dart';
 
-Row bottomActionButtons(BuildContext context) {
+Row bottomActionButtons(BuildContext context, Item item) {
   return Row(
     children: [
       Expanded(
@@ -12,7 +13,7 @@ Row bottomActionButtons(BuildContext context) {
             showDialog(
                 context: context,
                 builder: (context) {
-                  return itemDeleteConfirmationDialog(context);
+                  return itemDeleteConfirmationDialog(context, item);
                 });
           },
           child: Container(
@@ -28,7 +29,7 @@ Row bottomActionButtons(BuildContext context) {
             showDialog(
               context: context,
               builder: (context) {
-                return itemAddEditDialog(context);
+                return itemAddEditDialog(context, item: item);
               },
             );
           },

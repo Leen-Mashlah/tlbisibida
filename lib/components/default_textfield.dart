@@ -13,7 +13,8 @@ Widget defaultTextField(
     TextInputType? keyboardType,
     Color inactiveColor = Colors.grey,
     Color activeColor = cyan300,
-    bool autofocus = false}) {
+    bool autofocus = false,
+    Function(String)? onChanged}) {
   return TextFormField(
     autofocus: autofocus,
     minLines: height,
@@ -22,6 +23,7 @@ Widget defaultTextField(
     validator: validator,
     keyboardType: keyboardType,
     obscureText: obscureText,
+    onChanged: onChanged,
     decoration: InputDecoration(
       label: Text(label),
       prefixIcon: prefixIcon,

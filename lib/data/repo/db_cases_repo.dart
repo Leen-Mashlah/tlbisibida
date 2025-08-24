@@ -99,6 +99,29 @@ class DBCasesRepo extends CasesRepo {
       });
 
   @override
+  Future<bool> addMedicalCaseToLocalClient(
+      Map<String, dynamic> caseData) async {
+    try {
+      final response = await DioHelper.postData(
+        'lab-manager/medical-cases/add-medical-case-to-local-client',
+        caseData,
+        token: CacheHelper.get('token'),
+      );
+
+      if (response?.data != null && response!.data['status'] == true) {
+        return true;
+      } else {
+        print(
+            'Failed to add medical case: ${response?.data['message'] ?? 'Unknown error'}');
+        return false;
+      }
+    } catch (error) {
+      print('Error adding medical case: $error');
+      return false;
+    }
+  }
+
+  @override
   Future<bool> postNewCase() {
     // TODO: implement postNewCase
     throw UnimplementedError();

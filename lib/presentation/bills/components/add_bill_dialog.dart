@@ -3,8 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lambda_dent_dash/components/date_picker.dart';
 import 'package:lambda_dent_dash/components/default_button.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
+import 'package:lambda_dent_dash/domain/models/lab_clients/lab_client.dart';
 import 'package:lambda_dent_dash/presentation/bills/components/bill_preview_dialog.dart';
-import 'package:lambda_dent_dash/presentation/cases/Components/search_for_lab.dart';
+import 'package:lambda_dent_dash/presentation/cases/Components/search_for_client.dart';
 import 'package:lambda_dent_dash/presentation/clients/Cubits/clients_cubit.dart';
 
 class AddBillDialog extends StatefulWidget {
@@ -20,13 +21,6 @@ class _AddBillDialogState extends State<AddBillDialog> {
   DateTime fromDate = DateTime.now();
   DateTime toDate = DateTime.now();
   int? selectedDentistId;
-
-  final List<Map<String, dynamic>> _labslist = [
-    {'id': 1, 'name': 'الحموي'},
-    {'id': 2, 'name': 'الحمصي'},
-    {'id': 3, 'name': 'الشامي'},
-    {'id': 4, 'name': 'التحسيني'},
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -55,15 +49,9 @@ class _AddBillDialogState extends State<AddBillDialog> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           ChoiceButtonWithSearch(
-                            names: _labslist
-                                .map((e) => e['name'] as String)
-                                .toList(),
                             hintText: 'اختر الزبون',
-                            onNameSelected: (selectedName) {
-                              final match = _labslist.firstWhere(
-                                  (e) => e['name'] == selectedName,
-                                  orElse: () => {'id': null});
-                              selectedDentistId = match['id'] as int?;
+                            onClientSelected: (client) {
+                              selectedDentistId = client.id;
                               setState(() {});
                             },
                           ),

@@ -1,45 +1,47 @@
-class ItemsResponse {
-  bool? status;
-  int? successCode;
-  List<Item>? items;
-  String? successMessage;
+// class ItemsResponse {
+//   bool? status;
+//   int? successCode;
+//   List<Item>? items;
+//   String? successMessage;
 
-  ItemsResponse(
-      {this.status, this.successCode, this.items, this.successMessage});
+//   ItemsResponse(
+//       {this.status, this.successCode, this.items, this.successMessage});
 
-  ItemsResponse.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    successCode = json['success_code'];
-    if (json['items'] != null) {
-      items = <Item>[];
-      json['items'].forEach((v) {
-        items!.add(Item.fromJson(v));
-      });
-    }
-    successMessage = json['success_message'];
-  }
+//   ItemsResponse.fromJson(Map<String, dynamic> json) {
+//     status = json['status'];
+//     successCode = json['success_code'];
+//     if (json['items'] != null) {
+//       items = <Item>[];
+//       json['items'].forEach((v) {
+//         items!.add(Item.fromJson(v));
+//       });
+//     }
+//     successMessage = json['success_message'];
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['success_code'] = successCode;
-    if (items != null) {
-      data['items'] = items!.map((v) => v.toJson()).toList();
-    }
-    data['success_message'] = successMessage;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = <String, dynamic>{};
+//     data['status'] = status;
+//     data['success_code'] = successCode;
+//     if (items != null) {
+//       data['items'] = items!.map((v) => v.toJson()).toList();
+//     }
+//     data['success_message'] = successMessage;
+//     return data;
+//   }
+// }
 
 class Item {
+  int? id;
   String? name;
   int? quantity;
   int? standardQuantity;
   int? minimumQuantity;
   String? unit;
-  int? isStatic;
+  bool? isStatic;
 
   Item({
+    this.id,
     this.name,
     this.quantity,
     this.standardQuantity,
@@ -49,6 +51,7 @@ class Item {
   });
 
   Item.fromJson(Map<String, dynamic> json) {
+    id = json['id'] as int?;
     name = json['name'];
     quantity = json['quantity'];
     standardQuantity = json['standard_quantity'];
@@ -59,6 +62,7 @@ class Item {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
     data['name'] = name;
     data['quantity'] = quantity;
     data['standard_quantity'] = standardQuantity;

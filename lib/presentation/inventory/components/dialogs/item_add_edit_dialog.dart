@@ -1,24 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lambda_dent_dash/components/default_button.dart';
 import 'package:lambda_dent_dash/components/default_textfield.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
+import 'package:lambda_dent_dash/domain/models/inventory/show_items.dart';
+import 'package:lambda_dent_dash/presentation/inventory/cubit/inventory_cubit.dart';
+import 'package:lambda_dent_dash/presentation/inventory/cubit/inventory_states.dart';
 
-Dialog itemAddEditDialog(BuildContext context) {
+Widget itemAddEditDialog(BuildContext context, {Item? item}) {
+  final bool isEditMode = item != null;
+
   TextEditingController itemnamecontroller =
-      TextEditingController(text: 'سماكة 10');
+      TextEditingController(text: item?.name ?? '');
   TextEditingController itemunitcontroller =
-      TextEditingController(text: 'بلوكة');
+      TextEditingController(text: item?.unit ?? '');
   TextEditingController itemstandardquantitycontroller =
-      TextEditingController(text: '50');
+      TextEditingController(text: '${item?.standardQuantity ?? ''}');
   TextEditingController itemminimumquantitycontroller =
-      TextEditingController(text: '10');
+      TextEditingController(text: '${item?.minimumQuantity ?? ''}');
   final TextEditingController catmenuController = TextEditingController();
   final TextEditingController subcatmenuController = TextEditingController();
 
-  return Dialog(
-    child: Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Container(
+  return BlocBuilder<InventoryCubit, InventoryState>(
+    builder: (context, state) {
+      // Get categories and subcategories from cubit
+      final cubit = context.read<InventoryCubit>();
+      final categories = cubit.categories;
+      final subCategories = cubit.subCategories;
+      final selectedCategory = cubit.selectedCategory;
+      final selectedSubCategory = cubit.selectedSubCategory;
+
+      return Dialog(
+          child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Container(
           decoration: BoxDecoration(
               border: Border.all(width: 2, color: cyan200),
               borderRadius: BorderRadius.circular(20)),
@@ -32,9 +47,9 @@ Dialog itemAddEditDialog(BuildContext context) {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    const Text(
-                      'تعديل مادة',
-                      style: TextStyle(
+                    Text(
+                      isEditMode ? 'تعديل مادة' : 'إضافة مادة جديدة',
+                      style: const TextStyle(
                           color: cyan400,
                           fontSize: 18,
                           fontWeight: FontWeight.bold),
@@ -45,95 +60,113 @@ Dialog itemAddEditDialog(BuildContext context) {
                       color: cyan200,
                       margin: const EdgeInsets.symmetric(vertical: 5),
                     ),
-                    DropdownMenu<String>(
-                        //initialSelection: menuItems.first,
-                        width: MediaQuery.of(context).size.width / 4 - 16,
-                        controller: catmenuController,
-                        hintText: "اختر الصنف",
-                        initialSelection: 'صنف1',
-                        requestFocusOnTap: true,
-                        enableFilter: true,
-                        inputDecorationTheme: InputDecorationTheme(
-                          border: OutlineInputBorder(
-                              borderSide:
-                                  const BorderSide(color: cyan200, width: 1.0),
-                              borderRadius: standardBorderRadius),
-                        ),
-                        menuStyle: const MenuStyle(
-                            backgroundColor: WidgetStatePropertyAll(cyan100)),
-                        label: const Text('الصنف الرئيسي'),
-                        dropdownMenuEntries: const [
-                          DropdownMenuEntry(
-                              value: 'صنف1', label: 'بلوكات زيركون'),
-                          DropdownMenuEntry(
-                              value: 'صنف2', label: 'بلوكات اكريل مؤقت'),
-                          DropdownMenuEntry(value: 'صنف3', label: 'بودرة خزف'),
-                          DropdownMenuEntry(value: 'صنف4', label: 'شمع'),
-                        ]),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    DropdownMenu<String>(
-                        //initialSelection: menuItems.first,
-                        //width: MediaQuery.of(context).size.width - 16.0,
-                        width: MediaQuery.of(context).size.width / 4 - 16,
-                        controller: subcatmenuController,
-                        hintText: "اختر الصنف",
-                        initialSelection: 'صنف1',
-                        requestFocusOnTap: true,
-                        enableFilter: true,
-                        inputDecorationTheme: InputDecorationTheme(
-                          border: OutlineInputBorder(
-                              borderSide:
-                                  const BorderSide(color: cyan200, width: 1.0),
-                              borderRadius: standardBorderRadius),
-                        ),
-                        menuStyle: const MenuStyle(
-                            backgroundColor: WidgetStatePropertyAll(cyan100)),
-                        label: const Text('الصنف الفرعي'),
-                        dropdownMenuEntries: const [
-                          DropdownMenuEntry(value: 'صنف1', label: 'صيني'),
-                          DropdownMenuEntry(value: 'صنف2', label: 'ألماني'),
-                          DropdownMenuEntry(value: 'صنف3', label: 'ملتي لاير'),
-                          DropdownMenuEntry(
-                              value: 'صنف4', label: 'عالي شفوفية'),
-                          DropdownMenuEntry(value: 'صنف5', label: 'كتيم'),
-                        ]),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    // Item name field
                     defaultTextField(
                       itemnamecontroller,
                       context,
                       'اسم المادة',
+                      keyboardType: TextInputType.text,
                     ),
-                    const SizedBox(
-                      height: 10,
+                    const SizedBox(height: 10),
+                    // Unit field
+                    defaultTextField(
+                      itemunitcontroller,
+                      context,
+                      'الوحدة',
+                      keyboardType: TextInputType.text,
                     ),
-                    defaultTextField(itemunitcontroller, context, 'الواحدة'),
-                    const SizedBox(
-                      height: 10,
+                    const SizedBox(height: 10),
+                    // Standard quantity field
+                    defaultTextField(
+                      itemstandardquantitycontroller,
+                      context,
+                      'الكمية القياسية',
+                      keyboardType: TextInputType.number,
                     ),
-                    defaultTextField(itemstandardquantitycontroller, context,
-                        'الكمية القياسية'),
-                    const SizedBox(
-                      height: 10,
+                    const SizedBox(height: 10),
+                    // Minimum quantity field
+                    defaultTextField(
+                      itemminimumquantitycontroller,
+                      context,
+                      'الحد الأدنى',
+                      keyboardType: TextInputType.number,
                     ),
-                    defaultTextField(itemminimumquantitycontroller, context,
-                        'الحد الأدنى للكمية'),
-                    const SizedBox(
-                      height: 10,
+                    const SizedBox(height: 20),
+                    // Action buttons
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.grey[300],
+                              foregroundColor: Colors.grey[700],
+                            ),
+                            child: const Text('إلغاء'),
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: defaultButton(
+                            text: isEditMode ? 'تحديث' : 'إضافة',
+                            function: () {
+                              // Call the real add/edit API
+                              if (isEditMode) {
+                                context
+                                    .read<InventoryCubit>()
+                                    .updateItem(item!.id!, {
+                                  'name': itemnamecontroller.text,
+                                  'unit': itemunitcontroller.text,
+                                  'standard_quantity': int.tryParse(
+                                          itemstandardquantitycontroller
+                                              .text) ??
+                                      0,
+                                  'minimum_quantity': int.tryParse(
+                                          itemminimumquantitycontroller.text) ??
+                                      0,
+                                });
+                              } else {
+                                // Get the current subcategory ID from the cubit
+                                final cubit = context.read<InventoryCubit>();
+                                if (cubit.selectedSubCategory != null) {
+                                  context
+                                      .read<InventoryCubit>()
+                                      .addItem(cubit.selectedSubCategory!.id!, {
+                                    'name': itemnamecontroller.text,
+                                    'unit': itemunitcontroller.text,
+                                    'standard_quantity': int.tryParse(
+                                            itemstandardquantitycontroller
+                                                .text) ??
+                                        0,
+                                    'minimum_quantity': int.tryParse(
+                                            itemminimumquantitycontroller
+                                                .text) ??
+                                        0,
+                                  });
+                                }
+                              }
+
+                              Navigator.of(context).pop();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(isEditMode
+                                      ? 'تم تحديث المادة'
+                                      : 'تم إضافة المادة'),
+                                  backgroundColor: Colors.green,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                    defaultButton(
-                        text: 'تعديل',
-                        function: () {
-                          Navigator.of(context).pop();
-                        })
                   ],
                 ),
               ),
             ),
-          ])),
-    ),
+          ]),
+        ),
+      ));
+    },
   );
 }

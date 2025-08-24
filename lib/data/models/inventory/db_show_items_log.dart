@@ -1,7 +1,9 @@
+import '../../../domain/models/inventory/show_items_log.dart';
+
 class DBRepeatedItemsResponse {
   bool? status;
   int? successCode;
-  List<RepeatedItem>? repeatedItems; // Corrected from Rpeated_items
+  List<DBRepeatedItem>? repeatedItems; // Corrected from Rpeated_items
   String? successMessage;
 
   DBRepeatedItemsResponse({
@@ -18,7 +20,7 @@ class DBRepeatedItemsResponse {
       // Note: We use the original JSON key 'Rpeated_items' for parsing
       // but map it to the Dart field 'repeatedItems'.
       repeatedItems: (json['Rpeated_items'] as List<dynamic>?)
-          ?.map((e) => RepeatedItem.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => DBRepeatedItem.fromJson(e as Map<String, dynamic>))
           .toList(),
       successMessage: json['success_message'] as String?,
     );
@@ -37,22 +39,22 @@ class DBRepeatedItemsResponse {
   }
 }
 
-class RepeatedItem {
+class DBRepeatedItem {
   String? name;
   int? quantity;
   int?
       totalPrice; // Changed to int based on sample, use double if decimals possible
   DateTime? createdAt; // Changed to DateTime
 
-  RepeatedItem({
+  DBRepeatedItem({
     this.name,
     this.quantity,
     this.totalPrice,
     this.createdAt,
   });
 
-  factory RepeatedItem.fromJson(Map<String, dynamic> json) {
-    return RepeatedItem(
+  factory DBRepeatedItem.fromJson(Map<String, dynamic> json) {
+    return DBRepeatedItem(
       name: json['name'] as String?,
       quantity: json['quantity'] as int?,
       totalPrice: json['total_price'] as int?,
@@ -69,5 +71,26 @@ class RepeatedItem {
     data['total_price'] = totalPrice;
     data['created_at'] = createdAt?.toIso8601String();
     return data;
+  } // --- TO DOMAIN FUNCTION ---
+
+  // Since DBRepeatedItem and RepeatedItem are identical, the mapping is direct.
+  RepeatedItem toDomain() {
+    return RepeatedItem(
+      name: name,
+      quantity: quantity,
+      totalPrice: totalPrice,
+      createdAt: createdAt, // Direct mapping of DateTime
+    );
+  }
+
+  // --- FROM DOMAIN FUNCTION ---
+  // Since DBRepeatedItem and RepeatedItem are identical, the mapping is direct.
+  static DBRepeatedItem fromDomain(RepeatedItem domain) {
+    return DBRepeatedItem(
+      name: domain.name,
+      quantity: domain.quantity,
+      totalPrice: domain.totalPrice,
+      createdAt: domain.createdAt, // Direct mapping of DateTime
+    );
   }
 }

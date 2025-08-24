@@ -1,7 +1,9 @@
+import '../../../domain/models/inventory/show_quants_for_items.dart';
+
 class DBItemQuantityHistoryResponse {
   bool? status;
   int? successCode;
-  List<ItemQuantityHistory>? items;
+  List<DBItemQuantityHistory>? items;
   String? successMessage;
 
   DBItemQuantityHistoryResponse({
@@ -16,7 +18,8 @@ class DBItemQuantityHistoryResponse {
       status: json['status'] as bool?,
       successCode: json['success_code'] as int?,
       items: (json['items'] as List<dynamic>?)
-          ?.map((e) => ItemQuantityHistory.fromJson(e as Map<String, dynamic>))
+          ?.map(
+              (e) => DBItemQuantityHistory.fromJson(e as Map<String, dynamic>))
           .toList(),
       successMessage: json['success_message'] as String?,
     );
@@ -34,14 +37,14 @@ class DBItemQuantityHistoryResponse {
   }
 }
 
-class ItemQuantityHistory {
+class DBItemQuantityHistory {
   int? id;
   DateTime? createdAt; // Changed to DateTime
   int? quantity;
   int? newValue;
   int? recentValue;
 
-  ItemQuantityHistory({
+  DBItemQuantityHistory({
     this.id,
     this.createdAt,
     this.quantity,
@@ -49,8 +52,8 @@ class ItemQuantityHistory {
     this.recentValue,
   });
 
-  factory ItemQuantityHistory.fromJson(Map<String, dynamic> json) {
-    return ItemQuantityHistory(
+  factory DBItemQuantityHistory.fromJson(Map<String, dynamic> json) {
+    return DBItemQuantityHistory(
       id: json['id'] as int?,
       createdAt: json['created_at'] != null
           ? DateTime.tryParse(json['created_at'] as String) // Parse to DateTime
@@ -69,5 +72,29 @@ class ItemQuantityHistory {
     data['new_value'] = newValue;
     data['recent_value'] = recentValue;
     return data;
+  }
+
+  // --- TO DOMAIN FUNCTION ---
+  // Since DBItemQuantityHistory and ItemQuantityHistory are identical, the mapping is direct.
+  ItemQuantityHistory toDomain() {
+    return ItemQuantityHistory(
+      id: id,
+      createdAt: createdAt, // Direct mapping of DateTime
+      quantity: quantity,
+      newValue: newValue,
+      recentValue: recentValue,
+    );
+  }
+
+  // --- FROM DOMAIN FUNCTION ---
+  // Since DBItemQuantityHistory and ItemQuantityHistory are identical, the mapping is direct.
+  static DBItemQuantityHistory fromDomain(ItemQuantityHistory domain) {
+    return DBItemQuantityHistory(
+      id: domain.id,
+      createdAt: domain.createdAt, // Direct mapping of DateTime
+      quantity: domain.quantity,
+      newValue: domain.newValue,
+      recentValue: domain.recentValue,
+    );
   }
 }
