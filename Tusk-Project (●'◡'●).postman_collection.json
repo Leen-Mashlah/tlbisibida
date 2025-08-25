@@ -27,7 +27,7 @@
 									"formdata": [
 										{
 											"key": "email",
-											"value": "dentist2@gmail.com",
+											"value": "dentist1@gmail.com",
 											"type": "text"
 										},
 										{
@@ -657,7 +657,7 @@
 									"formdata": [
 										{
 											"key": "email",
-											"value": "manager3@gmail.com",
+											"value": "manager1@gmail.com",
 											"type": "text"
 										},
 										{
@@ -21505,7 +21505,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzUwNjk5MzE3LCJleHAiOjE3NTMyOTEzMTcsIm5iZiI6MTc1MDY5OTMxNywianRpIjoiNmVrUjhOcTFNU1g1c3diNyIsInN1YiI6IjEiLCJwcnYiOiIwMjkwZWZkNjQwZDFhODdiZTQ4OWQ1NmM3MjgwMzFhOGUzOGUyZTYzIn0.HgZhkYFGppRq8Bz8lIYYszG03QoGhPepUgaqsyNEHSQ",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzU2MTEwMTE2LCJleHAiOjE3NTg3MDIxMTYsIm5iZiI6MTc1NjExMDExNiwianRpIjoiOWwzMGhnekxTM244eDBWQyIsInN1YiI6IjEiLCJwcnYiOiIwMjkwZWZkNjQwZDFhODdiZTQ4OWQ1NmM3MjgwMzFhOGUzOGUyZTYzIn0.yiNewusI9nMbbFqIoYy5QJrmy54tItMniCV2REfST3k",
 											"type": "string"
 										}
 									]
@@ -21513,7 +21513,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8000/api/inventory/items/11",
+									"raw": "http://localhost:8000/api/inventory/items/1",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -21523,7 +21523,7 @@
 										"api",
 										"inventory",
 										"items",
-										"11"
+										"1"
 									]
 								}
 							},
@@ -21562,7 +21562,7 @@
 										},
 										{
 											"key": "X-Powered-By",
-											"value": "PHP/8.3.3"
+											"value": "PHP/8.2.12"
 										},
 										{
 											"key": "Cache-Control",
@@ -21570,7 +21570,7 @@
 										},
 										{
 											"key": "Date",
-											"value": "Sun, 01 Jun 2025 12:44:58 GMT"
+											"value": "Mon, 25 Aug 2025 08:34:39 GMT"
 										},
 										{
 											"key": "Content-Type",
@@ -21582,7 +21582,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"status\": true,\n    \"success_code\": 200,\n    \"items\": [\n        {\n            \"name\": \"111\",\n            \"quantity\": 0,\n            \"standard_quantity\": 20,\n            \"minimum_quantity\": 5,\n            \"unit\": \"عبوة\",\n            \"is_static\": 1\n        },\n        {\n            \"name\": \"112\",\n            \"quantity\": 4,\n            \"standard_quantity\": 20,\n            \"minimum_quantity\": 5,\n            \"unit\": \"ماسورة\",\n            \"is_static\": 1\n        }\n    ],\n    \"success_message\": \"   المواد\"\n}"
+									"body": "{\n    \"status\": true,\n    \"success_code\": 200,\n    \"items\": [\n        {\n            \"item\": {\n                \"id\": 1,\n                \"category_id\": 1,\n                \"subcategory_id\": 1,\n                \"creatorable_type\": \"dentist\",\n                \"creatorable_id\": 1,\n                \"name\": \"item1\",\n                \"quantity\": 19,\n                \"standard_quantity\": 5,\n                \"minimum_quantity\": 3,\n                \"is_static\": 1,\n                \"unit\": \"Masks\",\n                \"created_at\": \"2024-06-12T08:06:58.000000Z\",\n                \"updated_at\": \"2024-06-12T08:06:58.000000Z\",\n                \"item_history\": [\n                    {\n                        \"id\": 3,\n                        \"item_id\": 1,\n                        \"unit_price\": 1000,\n                        \"total_price\": 15000,\n                        \"quantity\": 15,\n                        \"created_at\": \"2024-06-28T07:45:45.000000Z\",\n                        \"updated_at\": \"2024-06-28T07:45:45.000000Z\"\n                    }\n                ]\n            },\n            \"unit_price\": 1000,\n            \"created_at\": \"2024-06-28T07:45:45.000000Z\"\n        },\n        {\n            \"item\": {\n                \"id\": 2,\n                \"category_id\": 1,\n                \"subcategory_id\": 1,\n                \"creatorable_type\": \"dentist\",\n                \"creatorable_id\": 1,\n                \"name\": \"item2\",\n                \"quantity\": 19,\n                \"standard_quantity\": 5,\n                \"minimum_quantity\": 3,\n                \"is_static\": 1,\n                \"unit\": \"tools1\",\n                \"created_at\": \"2024-06-12T08:06:58.000000Z\",\n                \"updated_at\": \"2024-06-12T08:06:58.000000Z\",\n                \"item_history\": [\n                    {\n                        \"id\": 4,\n                        \"item_id\": 2,\n                        \"unit_price\": 500,\n                        \"total_price\": 500000,\n                        \"quantity\": 1000,\n                        \"created_at\": \"2024-06-29T07:45:45.000000Z\",\n                        \"updated_at\": \"2024-06-29T07:45:45.000000Z\"\n                    }\n                ]\n            },\n            \"unit_price\": 500,\n            \"created_at\": \"2024-06-29T07:45:45.000000Z\"\n        }\n    ],\n    \"success_message\": \"   المواد\"\n}"
 								}
 							]
 						},
@@ -22197,6 +22197,93 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"status\": true,\n    \"success_code\": 200,\n    \"items\": [\n        {\n            \"id\": 43,\n            \"created_at\": \"2025-06-24T09:16:10.000000Z\",\n            \"quantity\": -8,\n            \"new_value\": -15,\n            \"recent_value\": -7\n        },\n        {\n            \"id\": 42,\n            \"created_at\": \"2025-06-24T09:15:25.000000Z\",\n            \"quantity\": -7,\n            \"new_value\": -7,\n            \"recent_value\": 0\n        },\n        {\n            \"id\": 41,\n            \"created_at\": \"2025-06-23T17:15:21.000000Z\",\n            \"quantity\": -6,\n            \"new_value\": 0,\n            \"recent_value\": 6\n        },\n        {\n            \"id\": 40,\n            \"created_at\": \"2025-06-21T19:35:05.000000Z\",\n            \"quantity\": 6,\n            \"new_value\": 6,\n            \"recent_value\": 0\n        }\n    ],\n    \"success_message\": \"سجل كميات المادة\"\n}"
+								}
+							]
+						},
+						{
+							"name": "عرض كامل سجل المواد للمخبر",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzU2MTE4NjkxLCJleHAiOjE3NTg3MTA2OTEsIm5iZiI6MTc1NjExODY5MSwianRpIjoicFNEOG0xZWRpUVJRTHB4NiIsInN1YiI6IjEiLCJwcnYiOiJmOTE5Njk0YWIyOWM5MDExZTMxNTEyYTI2MzMwOWIwYmIxYWM0NWZjIn0.OSgN05Oin_lvp_S3LBHsCWJHY_ZZOIDUa5VhwK10m8o",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/api/inventory/lab-items-history",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"inventory",
+										"lab-items-history"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "عرض كامل سجل المواد للمخبر",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8000/api/inventory/lab-items-history",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"api",
+												"inventory",
+												"lab-items-history"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "localhost:8000"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.2.12"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 25 Aug 2025 10:47:37 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": true,\n    \"success_code\": 200,\n    \"lab_items_history\": [\n        {\n            \"id\": 3,\n            \"item_id\": 1,\n            \"quantity\": 15,\n            \"unit_price\": 1000,\n            \"total_price\": 15000,\n            \"created_at\": \"2024-06-28T07:45:45.000000Z\",\n            \"item\": {\n                \"id\": 1,\n                \"name\": \"item1\"\n            }\n        },\n        {\n            \"id\": 1,\n            \"item_id\": 1,\n            \"quantity\": 10,\n            \"unit_price\": 2000,\n            \"total_price\": 20000,\n            \"created_at\": \"2024-06-12T08:06:58.000000Z\",\n            \"item\": {\n                \"id\": 1,\n                \"name\": \"item1\"\n            }\n        }\n    ],\n    \"success_message\": \"مواد المخبر\"\n}"
 								}
 							]
 						},
