@@ -26,14 +26,27 @@ class Register2Page extends StatelessWidget {
       ValueNotifier<List<String>>([
     'تعويض',
   ]);
-  final List _subsicribe = ['سنوي', 'نصف سنوي', 'ربع سنوي'];
-  final ValueNotifier<int> _subtype = ValueNotifier(12);
+  final List<int> _subsicribe = [12, 6, 3];
+  final ValueNotifier<int> _subtype = ValueNotifier<int>(12);
   List<Image> images = [];
 
   Register2Page({super.key});
   @override
   Widget build(BuildContext context) {
     AuthCubit cubit = context.read<AuthCubit>();
+    // Initialize default time values if user hasn't interacted yet
+    if (startTime.text.isEmpty) {
+      const def = TimeOfDay(hour: 9, minute: 0);
+      final hh = def.hour.toString().padLeft(2, '0');
+      final mm = def.minute.toString().padLeft(2, '0');
+      startTime.text = '$hh:$mm';
+    }
+    if (endTime.text.isEmpty) {
+      const def = TimeOfDay(hour: 21, minute: 0);
+      final hh = def.hour.toString().padLeft(2, '0');
+      final mm = def.minute.toString().padLeft(2, '0');
+      endTime.text = '$hh:$mm';
+    }
     return Scaffold(
       body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
@@ -207,18 +220,30 @@ class Register2Page extends StatelessWidget {
                                       CupertinoTimePickerButton(
                                         mainColor: cyan400,
                                         initialTime: const TimeOfDay(
-                                            hour: 9, minute: 41),
+                                            hour: 9, minute: 00),
                                         onTimeChanged: (time) {
-                                          startTime.text = time.toString();
+                                          final hh = time.hour
+                                              .toString()
+                                              .padLeft(2, '0');
+                                          final mm = time.minute
+                                              .toString()
+                                              .padLeft(2, '0');
+                                          startTime.text = '$hh:$mm';
                                         },
                                       ),
                                       Text('إلى'),
                                       CupertinoTimePickerButton(
                                         mainColor: cyan400,
                                         initialTime: const TimeOfDay(
-                                            hour: 19, minute: 41),
+                                            hour: 21, minute: 00),
                                         onTimeChanged: (time) {
-                                          endTime.text = time.toString();
+                                          final hh = time.hour
+                                              .toString()
+                                              .padLeft(2, '0');
+                                          final mm = time.minute
+                                              .toString()
+                                              .padLeft(2, '0');
+                                          endTime.text = '$hh:$mm';
                                         },
                                       ),
                                     ],
@@ -274,7 +299,7 @@ class Register2Page extends StatelessWidget {
                                   child: InlineChoice<int>.single(
                                       value: _subtype.value,
                                       onChanged: (obj) {
-                                        _subtype.value = obj!;
+                                        if (obj != null) _subtype.value = obj;
                                         // print(_targetlabtype.toString());
                                       },
                                       clearable: false,
@@ -288,7 +313,13 @@ class Register2Page extends StatelessWidget {
                                               state.selected(_subsicribe[i]),
                                           onSelected:
                                               state.onSelected(_subsicribe[i]),
-                                          label: Text(_subsicribe[i]),
+                                          label: Text(
+                                            _subsicribe[i] == 12
+                                                ? 'سنوي'
+                                                : _subsicribe[i] == 6
+                                                    ? 'نصف سنوي'
+                                                    : 'ربع سنوي',
+                                          ),
                                         );
                                       },
                                       listBuilder: ChoiceList.createWrapped(
@@ -315,10 +346,15 @@ class Register2Page extends StatelessWidget {
                               //          Get.offNamed("Employees");
 
                               //       },
+                              final start = startTime.text.isEmpty
+                                  ? '09:00'
+                                  : startTime.text;
+                              final end =
+                                  endTime.text.isEmpty ? '21:00' : endTime.text;
                               cubit.cookregistrysecond(
                                   labType: _targetlabtype.value[0],
-                                  startHour: startTime.text,
-                                  endHour: endTime.text,
+                                  startHour: start,
+                                  endHour: end,
                                   subscriptionDuration: _subtype.value);
                             },
                             style: ButtonStyle(

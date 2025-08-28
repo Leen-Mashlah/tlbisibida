@@ -26,6 +26,7 @@ class InventoryCubit extends Cubit<InventoryState> {
 
   // Get categories
   Future<void> getCats() async {
+    if (isClosed) return;
     emit(InventoryLoading());
     lastError = null;
     categories.clear();
@@ -36,19 +37,21 @@ class InventoryCubit extends Cubit<InventoryState> {
         categories = repo.dbCategoriesResponse!.categories!
             .map((e) => e.toDomain())
             .toList();
+        if (isClosed) return;
         emit(CategoriesLoaded(categories));
       } else {
         lastError = 'لا توجد فئات.';
-        emit(InventoryError(lastError!));
+        if (!isClosed) emit(InventoryError(lastError!));
       }
     } catch (e, stack) {
       lastError = e.toString();
-      emit(InventoryError(lastError!, stackTrace: stack));
+      if (!isClosed) emit(InventoryError(lastError!, stackTrace: stack));
     }
   }
 
   // Get items by category ID
   Future<void> getItems(int categoryId) async {
+    if (isClosed) return;
     emit(InventoryLoading());
     lastError = null;
     items.clear();
@@ -57,19 +60,21 @@ class InventoryCubit extends Cubit<InventoryState> {
       await repo.getItems(categoryId);
       if (repo.dbItemsResponse?.items != null) {
         items = repo.dbItemsResponse!.items!.map((e) => e.toDomain()).toList();
+        if (isClosed) return;
         emit(ItemsLoaded(items));
       } else {
         lastError = 'لا توجد عناصر في هذه الفئة.';
-        emit(InventoryError(lastError!));
+        if (!isClosed) emit(InventoryError(lastError!));
       }
     } catch (e, stack) {
       lastError = e.toString();
-      emit(InventoryError(lastError!, stackTrace: stack));
+      if (!isClosed) emit(InventoryError(lastError!, stackTrace: stack));
     }
   }
 
   // Get repeated items log
   Future<void> getItemsLog() async {
+    if (isClosed) return;
     emit(InventoryLoading());
     lastError = null;
     repeatedItems.clear();
@@ -81,19 +86,21 @@ class InventoryCubit extends Cubit<InventoryState> {
         repeatedItems = repo.dbRepeatedItemsResponse!.repeatedItems!
             .map((e) => e.toDomain())
             .toList();
+        if (isClosed) return;
         emit(RepeatedItemsLoaded(repeatedItems));
       } else {
         lastError = 'لا توجد سجلات للعناصر المتكررة.';
-        emit(InventoryError(lastError!));
+        if (!isClosed) emit(InventoryError(lastError!));
       }
     } catch (e, stack) {
       lastError = e.toString();
-      emit(InventoryError(lastError!, stackTrace: stack));
+      if (!isClosed) emit(InventoryError(lastError!, stackTrace: stack));
     }
   }
 
   // Get item quantities by item ID
   Future<void> getQuantities(int itemId) async {
+    if (isClosed) return;
     emit(InventoryLoading());
     lastError = null;
     itemQuantities.clear();
@@ -104,19 +111,21 @@ class InventoryCubit extends Cubit<InventoryState> {
         itemQuantities = repo.dbItemQuantityHistoryResponse!.items!
             .map((e) => e.toDomain())
             .toList();
+        if (isClosed) return;
         emit(ItemQuantitiesLoaded(itemQuantities));
       } else {
         lastError = 'لا توجد سجلات للكميات.';
-        emit(InventoryError(lastError!));
+        if (!isClosed) emit(InventoryError(lastError!));
       }
     } catch (e, stack) {
       lastError = e.toString();
-      emit(InventoryError(lastError!, stackTrace: stack));
+      if (!isClosed) emit(InventoryError(lastError!, stackTrace: stack));
     }
   }
 
   // Get subcategories by category ID
   Future<void> getSubCats(int categoryId) async {
+    if (isClosed) return;
     emit(InventoryLoading());
     lastError = null;
     subCategories.clear();
@@ -129,14 +138,15 @@ class InventoryCubit extends Cubit<InventoryState> {
             .dbSubCategoryRepositoriesResponse!.subCategoryRepositories!
             .map((e) => e.toDomain())
             .toList();
+        if (isClosed) return;
         emit(SubCategoriesLoaded(subCategories));
       } else {
         lastError = 'لا توجد فئات فرعية.';
-        emit(InventoryError(lastError!));
+        if (!isClosed) emit(InventoryError(lastError!));
       }
     } catch (e, stack) {
       lastError = e.toString();
-      emit(InventoryError(lastError!, stackTrace: stack));
+      if (!isClosed) emit(InventoryError(lastError!, stackTrace: stack));
     }
   }
 
@@ -144,12 +154,12 @@ class InventoryCubit extends Cubit<InventoryState> {
   void selectCategory(Category category) {
     selectedCategory = category;
     selectedSubCategory = null;
-    emit(CategoriesLoaded(categories));
+    if (!isClosed) emit(CategoriesLoaded(categories));
   }
 
   void selectSubCategory(SubCategoryRepository subCategory) {
     selectedSubCategory = subCategory;
-    emit(SubCategoriesLoaded(subCategories));
+    if (!isClosed) emit(SubCategoriesLoaded(subCategories));
   }
 
   // Clear all data
@@ -161,7 +171,7 @@ class InventoryCubit extends Cubit<InventoryState> {
     subCategories.clear();
     selectedCategory = null;
     selectedSubCategory = null;
-    emit(InventoryInitial());
+    if (!isClosed) emit(InventoryInitial());
   }
 
   // CRUD operations for Categories

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/components/custom_text.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lambda_dent_dash/presentation/payments/cubit/op_payments_cubit.dart';
-import 'package:lambda_dent_dash/presentation/payments/cubit/op_payments_state.dart';
+import 'package:lambda_dent_dash/presentation/payments/cubit/payments_cubit.dart';
+import 'package:lambda_dent_dash/presentation/payments/cubit/payments_state.dart';
 
 /// Example without datasource
 // ignore: must_be_immutable
@@ -27,9 +27,11 @@ class OpPaymentsLogTable extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         margin: const EdgeInsets.only(bottom: 30),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
-          BlocBuilder<OperatingPaymentsCubit, OperatingPaymentsState>(
+          BlocBuilder<PaymentsCubit, PaymentsState>(
             builder: (context, state) {
-              final items = context.read<OperatingPaymentsCubit>().items;
+              final items = (state is PaymentsOpLoaded)
+                  ? state.operatingItems
+                  : context.read<PaymentsCubit>().operatingItems;
               final rowCount = items.isEmpty ? 1 : items.length;
               return SizedBox(
                 height: (56 * rowCount) + 40,

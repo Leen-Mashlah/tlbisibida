@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "454259965932",
+    "project_id": "tlbisibida-f9061",
+    "storage_bucket": "tlbisibida-f9061.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:454259965932:android:f49f3f86f156c773814ac9",
+        "android_client_info": {
+          "package_name": "com.company.tlbisibida"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcJjgUxNO8CJgg7QGYDStojyfOLBeK4j0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:454259965932:android:9cc053dd330e6125814ac9",
+        "android_client_info": {
+          "package_name": "com.example.lambda_dent_dash"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcJjgUxNO8CJgg7QGYDStojyfOLBeK4j0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

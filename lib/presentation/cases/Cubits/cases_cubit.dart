@@ -96,6 +96,20 @@ class CasesCubit extends Cubit<CasesState> {
     }
   }
 
+  Future<bool> sendCaseComment(
+      {required int caseId, required String comment}) async {
+    try {
+      final ok = await repo.postCaseComment(caseId, comment);
+      if (ok) {
+        // Reload comments after successful post
+        await getcomment(caseId);
+      }
+      return ok;
+    } catch (e) {
+      return false;
+    }
+  }
+
   // Form state management methods
   void setSelectedClient(int id, String name) {
     selectedClientId = id;

@@ -22,11 +22,15 @@ class ClientsPage extends StatelessWidget {
     }, builder: (context, state) {
       ClientsCubit clientsCubit = context.read<ClientsCubit>();
 
-      // Initial load for registered clients if not loaded yet
+      // Initial load: request once via microtask to avoid triggering after dispose
       if (_showregisteredlist.value &&
           clientsCubit.clientsResponse == null &&
           state is! ClientsLoading) {
-        clientsCubit.getClients();
+        Future.microtask(() {
+          if (!clientsCubit.isClosed) {
+            clientsCubit.getClients();
+          }
+        });
       }
 
       return Scaffold(
@@ -49,9 +53,13 @@ class ClientsPage extends StatelessWidget {
                             _showregisteredlist.value = value;
                             // Trigger a reload of the relevant data when switching tabs
                             if (value) {
-                              clientsCubit.getClients();
+                              if (!clientsCubit.isClosed) {
+                                clientsCubit.getClients();
+                              }
                             } else {
-                              clientsCubit.getJoinRequests();
+                              if (!clientsCubit.isClosed) {
+                                clientsCubit.getJoinRequests();
+                              }
                             }
                           }
                         },

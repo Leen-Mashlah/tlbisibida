@@ -11,18 +11,26 @@ class ClientsCubit extends Cubit<ClientsState> {
 
   final ClientsRepo repo;
 
+  // Loading guards
+  bool _isLoadingClients = false;
+  bool _hasLoadedClients = false;
+
   MedicalCasesForDentist? casesList;
   Future<void> getCases(int id) async {
+    if (isClosed) return;
     emit(ClientCasesLoading());
     try {
       final casesForDentist = await repo.getcasebydocList(id);
-      if (casesForDentist != null && casesForDentist.dentistCases.isNotEmpty) {
+      if (casesForDentist.dentistCases.isNotEmpty) {
+        if (isClosed) return;
         emit(ClientCasesLoaded(casesForDentist.dentistCases));
       } else {
-        emit(ClientCasesError('No cases found.'));
+        if (!isClosed) emit(ClientCasesError('No cases found.'));
       }
     } catch (e) {
-      emit(ClientCasesError('Error loading cases list: \\${e.toString()}'));
+      if (!isClosed) {
+        emit(ClientCasesError('Error loading cases list: \\${e.toString()}'));
+      }
     }
   }
 
@@ -59,16 +67,25 @@ class ClientsCubit extends Cubit<ClientsState> {
 
   ClientsResponse? clientsResponse;
   Future<void> getClients() async {
+    if (isClosed) return;
+    if (_isLoadingClients || _hasLoadedClients) return;
+    _isLoadingClients = true;
     emit(ClientsLoading());
     try {
       clientsResponse = await repo.getClients();
       if (clientsResponse != null && clientsResponse!.clients.isNotEmpty) {
+        if (isClosed) return;
         emit(ClientsLoaded(clientsResponse!));
+        _hasLoadedClients = true;
       } else {
-        emit(ClientsError('No clients found.'));
+        if (!isClosed) emit(ClientsError('No clients found.'));
       }
     } catch (e) {
-      emit(ClientsError('Error loading clients: \\${e.toString()}'));
+      if (!isClosed) {
+        emit(ClientsError('Error loading clients: \\${e.toString()}'));
+      }
+    } finally {
+      _isLoadingClients = false;
     }
   }
 

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lambda_dent_dash/components/custom_text.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
+import 'package:lambda_dent_dash/presentation/authentication/Views/register_2.dart';
 import 'package:lambda_dent_dash/services/navigation/locator.dart';
 import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
 import 'package:lambda_dent_dash/services/navigation/routes.dart';
@@ -364,7 +365,7 @@ class RegisterPage extends StatelessWidget {
                           ElevatedButton(
                             onPressed: () {
                               cubit.cookregistryfisrt(
-                                guard: 'manager',
+                                guard: 'lab_manager',
                                 fullName: _managerNameController.text,
                                 labName: _labNameController.text,
                                 email: _emailController.text,
@@ -372,11 +373,25 @@ class RegisterPage extends StatelessWidget {
                                 password: _passwordController.text,
                                 passwordConfirmation:
                                     _passwordConfirmController.text,
-                                labPhone: [_phoneNumberController.text],
+                                labPhone: [
+                                  _phoneNumberController.text,
+                                  _phoneNumberController.text
+                                ],
                                 province: selectedProvince,
                               );
-                              locator<NavigationService>()
-                                  .navigateTo(register2PageRoute);
+                              // locator<NavigationService>()
+                              //     .navigateTo(register2PageRoute);
+                              // Navigate preserving the same AuthCubit instance
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) => BlocProvider.value(
+                                    value: cubit,
+                                    child: Register2Page(),
+                                  ),
+                                  settings: const RouteSettings(
+                                      name: register2PageDisplayName),
+                                ),
+                              );
                             },
                             style: ButtonStyle(
                                 shadowColor:

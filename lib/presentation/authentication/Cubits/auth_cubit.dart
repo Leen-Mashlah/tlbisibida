@@ -56,7 +56,7 @@ class AuthCubit extends Cubit<AuthState> {
     required String address,
   }) {
     emit(AuthLoading());
-    registrydata = {
+    registrydata.addAll({
       'guard': guard,
       'full_name': fullName,
       'email': email,
@@ -66,7 +66,8 @@ class AuthCubit extends Cubit<AuthState> {
       'lab_phone': labPhone,
       'lab_province': province,
       'lab_address': address,
-    };
+    });
+    print('first cook: ' + registrydata.toString());
     emit(AuthInitial());
   }
 
@@ -84,6 +85,7 @@ class AuthCubit extends Cubit<AuthState> {
       'register_subscription_duration': subscriptionDuration,
     });
     emit(AuthInitial());
+    print(registrydata);
     register();
   }
 

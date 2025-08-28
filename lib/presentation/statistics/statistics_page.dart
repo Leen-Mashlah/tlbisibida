@@ -8,6 +8,11 @@ import 'package:lambda_dent_dash/presentation/statistics/components/charts/month
 import 'package:lambda_dent_dash/presentation/statistics/components/charts/monthly_teeth_type_chart.dart';
 import 'package:lambda_dent_dash/presentation/statistics/components/charts/revenue_per_client.dart';
 import 'package:lambda_dent_dash/presentation/statistics/components/taps.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lambda_dent_dash/presentation/statistics/cubit/statistics_cubit.dart';
+import 'package:lambda_dent_dash/presentation/statistics/cubit/statistics_state.dart';
+// import 'package:lambda_dent_dash/data/repo/db_statistics_repo.dart';
+// Removed in-page provider; provider is at router-level
 
 class StatisticsPage extends StatelessWidget {
   StatisticsPage({super.key});
@@ -79,29 +84,14 @@ class StatisticsPage extends StatelessWidget {
                                   // margin: const EdgeInsets.symmetric(
                                   //     vertical: 20), // Add some margin
                                 ),
-                                const InventoryCountChart(
-                                  rawChartData: [
-                                    {
-                                      'text': 'معدن صب',
-                                      'count': '320',
-                                      'value': 874100.0
-                                    },
-                                    {
-                                      'text': 'إكريل',
-                                      'count': '10',
-                                      'value': 200000.0
-                                    },
-                                    {
-                                      'text': 'خزف',
-                                      'count': '5',
-                                      'value': 400000.0
-                                    },
-                                    {
-                                      'text': 'بلوكات',
-                                      'count': '65',
-                                      'value': 980000.0
-                                    },
-                                  ],
+                                BlocBuilder<StatisticsCubit, StatisticsState>(
+                                  builder: (context, state) {
+                                    if (state is StatisticsLoaded) {
+                                      return InventoryCountChart(
+                                          rawChartData: state.categories);
+                                    }
+                                    return const SizedBox.shrink();
+                                  },
                                 ),
                               ],
                             ),
@@ -132,7 +122,16 @@ class StatisticsPage extends StatelessWidget {
                                   // margin: const EdgeInsets.symmetric(
                                   //     vertical: 20), // Add some margin
                                 ),
-                                const MonthlyOpExpensesChart()
+                                BlocBuilder<StatisticsCubit, StatisticsState>(
+                                  builder: (context, state) {
+                                    if (state is StatisticsLoaded) {
+                                      return MonthlyOpExpensesChart(
+                                          rawChartData:
+                                              state.operatingPayments);
+                                    }
+                                    return const SizedBox.shrink();
+                                  },
+                                )
                               ],
                             ),
                           ),
@@ -177,59 +176,28 @@ class StatisticsPage extends StatelessWidget {
                                           // margin: const EdgeInsets.symmetric(
                                           //     vertical: 20), // Add some margin
                                         ),
-                                        RevenuePerClientChart(
-                                          clientRevenueData: const [
-                                            ClientData(
-                                              name: 'تحسين التحسيني',
-                                              value: 8000000,
-                                              shadowValue: 186028,
-                                            ),
-                                            ClientData(
-                                              name: 'تحسين التحسيني',
-                                              value: 7500000,
-                                              shadowValue: 35228,
-                                            ),
-                                            ClientData(
-                                              name: 'تحسين التحسيني',
-                                              value: 7000000,
-                                              shadowValue: 332250,
-                                            ),
-                                            ClientData(
-                                              name: 'تحسين التحسيني',
-                                              value: 6000000,
-                                              shadowValue: 402250,
-                                            ),
-                                            ClientData(
-                                              name: 'تحسين التحسيني',
-                                              value: 5000000,
-                                              shadowValue: 1252250,
-                                            ),
-                                            ClientData(
-                                              name: 'تحسين التحسيني',
-                                              value: 4000000,
-                                              shadowValue: 1422530,
-                                            ),
-                                            ClientData(
-                                              name: 'تحسين التحسيني',
-                                              value: 3000000,
-                                              shadowValue: 1552250,
-                                            ),
-                                            ClientData(
-                                              name: 'تحسين التحسيني',
-                                              value: 2000000,
-                                              shadowValue: 22267,
-                                            ),
-                                            ClientData(
-                                              name: 'تحسين التحسيني',
-                                              value: 1000000,
-                                              shadowValue: 20750,
-                                            ),
-                                            ClientData(
-                                              name: 'تحسين التحسيني',
-                                              value: 500000,
-                                              shadowValue: 274750,
-                                            ),
-                                          ],
+                                        BlocBuilder<StatisticsCubit,
+                                            StatisticsState>(
+                                          builder: (context, state) {
+                                            if (state is StatisticsLoaded) {
+                                              final data = state.doctorProfits
+                                                  .map((e) => ClientData(
+                                                        name:
+                                                            e['name'] as String,
+                                                        value:
+                                                            (e['value'] as num)
+                                                                .toDouble(),
+                                                        shadowValue:
+                                                            (e['shadowValue']
+                                                                    as num)
+                                                                .toDouble(),
+                                                      ))
+                                                  .toList();
+                                              return RevenuePerClientChart(
+                                                  clientRevenueData: data);
+                                            }
+                                            return const SizedBox.shrink();
+                                          },
                                         ),
                                       ],
                                     ),
@@ -537,13 +505,21 @@ class StatisticsPage extends StatelessWidget {
                                         color: cyan400,
                                         width: 200,
                                       ),
-                                      const SizedBox(
-                                          child: Padding(
-                                        padding: EdgeInsets.only(
-                                          top: 50.0,
-                                        ),
-                                        child: LineChartSample20(),
-                                      ))
+                                      BlocBuilder<StatisticsCubit,
+                                          StatisticsState>(
+                                        builder: (context, state) {
+                                          if (state is StatisticsLoaded) {
+                                            return Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 50.0),
+                                              child: LineChartSample20(
+                                                  monthlyData:
+                                                      state.itemMonthly),
+                                            );
+                                          }
+                                          return const SizedBox.shrink();
+                                        },
+                                      )
                                     ],
                                   ),
                                 ),

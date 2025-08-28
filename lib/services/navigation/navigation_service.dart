@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:lambda_dent_dash/services/Cache/cache_helper.dart';
 import 'package:lambda_dent_dash/services/navigation/routes.dart';
 
 // class NavigationService {
@@ -24,8 +25,10 @@ class NavigationService {
 
   Future<dynamic> navigateTo(String routeName) {
     final title = _getTitleForRoute(routeName);
-    currentTitle.value = title;
-    showBackButton.value = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      currentTitle.value = title;
+      showBackButton.value = true;
+    });
     if (routeName == homePageRoute) {
       navigatorKey.currentState!.popUntil(ModalRoute.withName('/'));
       return navigatorKey.currentState!.pushNamed(routeName).then((_) {
@@ -44,19 +47,25 @@ class NavigationService {
   }
 
   void updateNavigationState() {
-    final currentContext = navigatorKey.currentContext;
-    if (currentContext == null) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final currentContext = navigatorKey.currentContext;
+      if (currentContext == null) return;
 
-    final currentRoute = ModalRoute.of(currentContext);
-    if (currentRoute != null) {
-      final routeName = currentRoute.settings.name;
-      if (routeName != null && routeName.isNotEmpty && routeName != '/') {
-        currentTitle.value = routeName;
-      } else {
-        currentTitle.value = homePageDisplayName;
+      final currentRoute = ModalRoute.of(currentContext);
+      if (currentRoute != null) {
+        final routeName = currentRoute.settings.name;
+        if (routeName != null && routeName.isNotEmpty && routeName != '/') {
+          currentTitle.value = routeName;
+        } else {
+          if (CacheHelper.get('token') != null &&
+              CacheHelper.get('token') != '') 
+          currentTitle.value = homePageDisplayName;
+          else
+          currentTitle.value = authenticationPageDisplayName;
+        }
       }
-    }
-    showBackButton.value = navigatorKey.currentState?.canPop() ?? false;
+      showBackButton.value = navigatorKey.currentState?.canPop() ?? false;
+    });
   }
 
   String _getTitleForRoute(String routeName) {

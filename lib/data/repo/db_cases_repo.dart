@@ -126,4 +126,25 @@ class DBCasesRepo extends CasesRepo {
     // TODO: implement postNewCase
     throw UnimplementedError();
   }
+
+  @override
+  Future<bool> postCaseComment(int caseId, String comment) async {
+    try {
+      final response = await DioHelper.postData(
+        'lab-manager/medical-cases/add-comment/$caseId',
+        {'comment': comment},
+        token: CacheHelper.get('token'),
+      );
+      if (response?.data != null && response!.data['status'] == true) {
+        return true;
+      } else {
+        print(
+            'Failed to add comment: ${response?.data['message'] ?? 'Unknown error'}');
+        return false;
+      }
+    } catch (error) {
+      print('Error adding comment: $error');
+      return false;
+    }
+  }
 }

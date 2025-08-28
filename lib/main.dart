@@ -6,9 +6,12 @@ import 'package:lambda_dent_dash/services/navigation/locator.dart';
 import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
 import 'package:lambda_dent_dash/services/navigation/router.dart';
 import 'package:lambda_dent_dash/components/site_layout.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:lambda_dent_dash/firebase_options.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   DioHelper.init();
   setupLocator();
 

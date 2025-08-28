@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lambda_dent_dash/presentation/statistics/cubit/statistics_cubit.dart';
+import 'package:lambda_dent_dash/presentation/statistics/cubit/statistics_state.dart';
 
 // Define a data structure for categorized items
 class CategoryItem {
@@ -227,6 +230,20 @@ class _SearchableExpandableDropdownState
     if (widget.onChanged != null) {
       widget.onChanged!(_selectedItem);
     }
+    // Try to trigger statistics cubit item load if name matches list
+    try {
+      final cubit = context.read<StatisticsCubit>();
+      final state = cubit.state;
+      if (state is StatisticsLoaded) {
+        final match = state.itemsList.firstWhere(
+            (e) => (e['name']?.toString() ?? '') == item,
+            orElse: () => {'id': null});
+        final id = match['id'] as int?;
+        if (id != null) {
+          cubit.loadItemMonthly(id);
+        }
+      }
+    } catch (_) {}
     print('Item selected: $item'); // Debug print
   }
 

@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:lambda_dent_dash/data/models/auth/profile/db_lab_profile.dart';
 import 'package:lambda_dent_dash/domain/models/auth/profile/lab_profile.dart';
 import 'package:lambda_dent_dash/domain/repo/auth_repo.dart';
@@ -7,18 +8,16 @@ import 'package:lambda_dent_dash/services/dio/dio.dart';
 class DBAuthRepo extends AuthRepo {
   @override
   Future<bool> postlogin(String email, String password, String guard) async =>
-      await DioHelper.postData('login', {
-        'email': email,
-        'password': password,
-        'guard': 'dentist'
-      }).then((value) {
+      await DioHelper.postData(
+              'login', {'email': email, 'password': password, 'guard': guard})
+          .then((value) {
         if (value != null && value.data['status']) {
           CacheHelper.setString(
               'token', 'Bearer ' + value.data['data']['access_token']);
           print("Login successful. Token: ${CacheHelper.get('token')}");
           return true;
         } else {
-          print("Login failed: ${value?.data['message'] ?? 'Unknown error'}");
+          print("Login failed: ${value?.data ?? 'Unknown error'}");
           return false;
         }
       }).catchError((error) {
@@ -43,22 +42,24 @@ class DBAuthRepo extends AuthRepo {
       });
 
   @override
-  Future<bool> postregister(Map<String, dynamic> data) async =>
-      await DioHelper.postData('register', data).then((value) {
-        if (value != null && value.data['status']) {
-          CacheHelper.setString(
-              'token', 'Bearer ' + value.data['data']['access_token']);
-          print("Register successful. Token: ${CacheHelper.get('token')}");
-          return true;
-        } else {
-          print(
-              "Register failed: ${value?.data['message'] ?? 'Unknown error'}");
-          return false;
-        }
-      }).catchError((error) {
-        print(error.toString());
+  Future<bool> postregister(Map<String, dynamic> data) async {
+    try {
+      final value = await DioHelper.postData('register', data);
+      if (value != null && value.data['status'] == true) {
+        CacheHelper.setString(
+            'token', 'Bearer ' + value.data['data']['access_token']);
+        print("Register successful. Token: ${CacheHelper.get('token')}");
+        return true;
+      } else {
+        print('Register response: ${value?.data}');
+        print("Register failed: ${value?.data['message'] ?? 'Unknown error'}");
         return false;
-      });
+      }
+    } catch (error) {
+      print('Register error: $error');
+      return false;
+    }
+  }
 
   @override
   Future<bool> postrefreshtoken() {

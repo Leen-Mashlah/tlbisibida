@@ -221,7 +221,11 @@ class AuthenticationPage extends StatelessWidget {
                           ),
                           ElevatedButton(
                             onPressed: () {
-                              cubit.login(email.text, password.text, 'manager');
+                              cubit.login(
+                                email.text,
+                                password.text,
+                                'lab_manager',
+                              );
                             },
                             style: ButtonStyle(
                                 shadowColor:
@@ -252,7 +256,7 @@ class AuthenticationPage extends StatelessWidget {
                                         side: const BorderSide(color: cyan500),
                                         borderRadius:
                                             BorderRadius.circular(15)))),
-                            child: cubit.state == 'logging_in'
+                            child: cubit.state is AuthLoading
                                 ? const CircularProgressIndicator(
                                     valueColor:
                                         AlwaysStoppedAnimation<Color>(cyan500))

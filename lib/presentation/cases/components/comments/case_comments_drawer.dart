@@ -48,14 +48,12 @@ Widget caseComments(BuildContext context) {
           child: MessageBar(
               messageBarHintText: 'اكتب تعليقك هنا',
               sendButtonColor: cyan400,
-              onSend: (_) {
-                // cubit.comments.add({
-                //   'text': _,
-                //   'color': cyan400,
-                //   'tail': true,
-                //   'isSender': true
-                // });
-                print(_);
+              onSend: (text) async {
+                final caseId = cubit.medicalCase?.medicalCaseDetails?.id;
+                if (caseId != null && text.trim().isNotEmpty) {
+                  await cubit.sendCaseComment(
+                      caseId: caseId, comment: text.trim());
+                }
               }),
         ),
       ],

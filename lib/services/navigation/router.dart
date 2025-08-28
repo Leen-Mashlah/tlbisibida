@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/presentation/authentication/Providers/email_provider.dart';
+import 'package:lambda_dent_dash/presentation/inventory/provider/inventory_provider.dart';
+import 'package:lambda_dent_dash/presentation/statistics/providers/unified_statistics_provider.dart';
+import 'package:lambda_dent_dash/services/Cache/cache_helper.dart';
 import 'package:lambda_dent_dash/services/navigation/locator.dart';
 import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
 import 'package:lambda_dent_dash/services/navigation/routes.dart';
@@ -9,11 +12,12 @@ import 'package:lambda_dent_dash/presentation/cases/Providers/unified_cases_prov
 import 'package:lambda_dent_dash/presentation/clients/Providers/unified_clients_provider.dart';
 import 'package:lambda_dent_dash/presentation/bills/Providers/unified_bills_clients_provider.dart';
 import 'package:lambda_dent_dash/presentation/employees/Providers/unified_employees_provider.dart';
-import 'package:lambda_dent_dash/presentation/cases/Views/add_case_page.dart';
+// import 'package:lambda_dent_dash/presentation/cases/Views/add_case_page.dart';
 import 'package:lambda_dent_dash/presentation/employees/employees_page.dart';
 import 'package:lambda_dent_dash/presentation/home/home_page.dart';
 import 'package:lambda_dent_dash/presentation/inventory/inventory_page.dart';
 import 'package:lambda_dent_dash/presentation/payments/payments_log_page.dart';
+import 'package:lambda_dent_dash/presentation/payments/providers/unified_payments_provider.dart';
 import 'package:lambda_dent_dash/presentation/settings/settings.dart';
 import 'package:lambda_dent_dash/presentation/statistics/statistics_page.dart';
 
@@ -21,6 +25,15 @@ Route<dynamic> generateRoute(RouteSettings settings) {
   print('generateRoute: ${settings.name}');
 
   switch (settings.name) {
+    case rootRoute:
+      if (CacheHelper.get('token') != null && CacheHelper.get('token') != '') {
+        return _getPageRoute(const HomePage(), homePageDisplayName);
+      } else {
+        return _getPageRoute(
+            const UnifiedAuthProvider(pageType: AuthPageType.authentication),
+            authenticationPageDisplayName);
+      }
+
     //Auth
     case authenticationPageRoute:
       return _getPageRoute(
@@ -86,11 +99,14 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     //Inventory
     case inventoryPageRoute:
-      return _getPageRoute(InventoryPage(), inventoryPageDisplayName);
+      return _getPageRoute(
+          InventoryProvider(child: InventoryPage()), inventoryPageDisplayName);
 
     //Payments
     case paymentsLogPageRoute:
-      return _getPageRoute(PaymentsLogPage(), paymentsLogPageDisplayName);
+      return _getPageRoute(
+          const UnifiedPaymentsProvider(child: PaymentsLogPage()),
+          paymentsLogPageDisplayName);
 
     //User Profile
     case profilePageRoute:
@@ -100,7 +116,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     //Statistics Page
     case statisticsPageRoute:
-      return _getPageRoute(StatisticsPage(), statisticsPageDisplayName);
+      return _getPageRoute(UnifiedStatisticsProvider(child: StatisticsPage()),
+          statisticsPageDisplayName);
 
     //Settings Page
     case settingsPageRoute:
@@ -115,7 +132,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 }
 
 PageRoute _getPageRoute(Widget child, String title) {
-  locator<NavigationService>().currentTitle.value = title;
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    locator<NavigationService>().currentTitle.value = title;
+  });
   return MaterialPageRoute(
     builder: (context) => child,
     settings: RouteSettings(name: title),

@@ -3,9 +3,14 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:lambda_dent_dash/presentation/statistics/components/searchable_drop.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lambda_dent_dash/presentation/statistics/cubit/statistics_cubit.dart';
+import 'package:lambda_dent_dash/presentation/statistics/cubit/statistics_state.dart';
 
 class LineChartSample20 extends StatefulWidget {
-  const LineChartSample20({super.key});
+  const LineChartSample20({super.key, required this.monthlyData});
+
+  final List<Map<String, dynamic>> monthlyData; // [{month:int, value:double}]
 
   @override
   State<LineChartSample20> createState() => _LineChartSample20State();
@@ -19,6 +24,34 @@ class _LineChartSample20State extends State<LineChartSample20> {
 
   bool showAvg = false;
 
+  List<FlSpot> _spots = const [];
+
+  @override
+  void initState() {
+    super.initState();
+    _spots = _buildSpots(widget.monthlyData);
+  }
+
+  @override
+  void didUpdateWidget(covariant LineChartSample20 oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.monthlyData != widget.monthlyData) {
+      setState(() {
+        _spots = _buildSpots(widget.monthlyData);
+      });
+    }
+  }
+
+  List<FlSpot> _buildSpots(List<Map<String, dynamic>> data) {
+    if (data.isEmpty) return const [];
+    final points = List<FlSpot>.from(
+      data.map((e) => FlSpot(
+          (e['month'] as num).toDouble(), (e['value'] as num).toDouble())),
+    );
+    points.sort((a, b) => a.x.compareTo(b.x));
+    return points;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -28,9 +61,7 @@ class _LineChartSample20State extends State<LineChartSample20> {
           child: Padding(
             padding: const EdgeInsets.only(
                 top: 60.0, bottom: 0, right: 16, left: 16),
-            child: LineChart(
-              showAvg ? avgData() : mainData(),
-            ),
+            child: LineChart(showAvg ? avgData() : mainData()),
           ),
         ),
         Row(
@@ -64,21 +95,26 @@ class _LineChartSample20State extends State<LineChartSample20> {
             SizedBox(
               width: 150,
               height: 40,
-              child: SearchableExpandableDropdown(
-                data: [
-                  CategoryItem(
-                    categoryName: 'بلوكات زيركون',
-                    items: ['صيني', 'الماني', 'امريكي'],
-                  ),
-                  CategoryItem(
-                    categoryName: 'خزف',
-                    items: ['ملمع', 'منخفض انصهار', 'عالي انصهار', 'بوستر'],
-                  ),
-                  CategoryItem(
-                    categoryName: 'رمل',
-                    items: ['ناعم', 'خشن'],
-                  ),
-                ],
+              child: BlocBuilder<StatisticsCubit, StatisticsState>(
+                builder: (context, state) {
+                  final List<CategoryItem> dropdownData;
+                  if (state is StatisticsLoaded && state.itemsList.isNotEmpty) {
+                    final itemNames = state.itemsList
+                        .map((e) => (e['name'] ?? '').toString())
+                        .where((name) => name.isNotEmpty)
+                        .toList();
+                    dropdownData = [
+                      CategoryItem(categoryName: 'المواد', items: itemNames),
+                    ];
+                  } else {
+                    dropdownData = [
+                      CategoryItem(categoryName: 'المواد', items: [])
+                    ];
+                  }
+                  return SearchableExpandableDropdown(
+                    data: dropdownData,
+                  );
+                },
               ),
             ),
           ],
@@ -247,25 +283,12 @@ class _LineChartSample20State extends State<LineChartSample20> {
       minX: 0,
       maxX: 13,
       minY: 0,
-      maxY: 10,
+      maxY: _spots.isEmpty
+          ? 10
+          : (_spots.map((e) => e.y).reduce((a, b) => a > b ? a : b) * 1.2),
       lineBarsData: [
         LineChartBarData(
-          spots: const [
-            FlSpot(0, 0),
-            FlSpot(1, 6),
-            FlSpot(2, 8),
-            FlSpot(3, 6.1),
-            FlSpot(4, 4),
-            FlSpot(5, 6),
-            FlSpot(6, 4),
-            FlSpot(7, 7.5),
-            FlSpot(8, 4.1),
-            FlSpot(9, 5),
-            FlSpot(10, 7),
-            FlSpot(11, 4),
-            FlSpot(12, 8.5),
-            FlSpot(13, 5),
-          ],
+          spots: _spots.isEmpty ? const [FlSpot(0, 0)] : _spots,
           isCurved: true,
           gradient: LinearGradient(
             colors: gradientColors,

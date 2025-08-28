@@ -4,6 +4,7 @@ import 'package:lambda_dent_dash/components/searchbar.dart';
 import 'package:lambda_dent_dash/components/float_button.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:lambda_dent_dash/presentation/clients/components/dialogs/payments_log_dialog.dart';
+import 'package:lambda_dent_dash/presentation/payments/components/dialogs/op_payments_log_dialog.dart';
 import 'package:lambda_dent_dash/presentation/payments/components/payments_log_table.dart';
 
 class PaymentsLogPage extends StatelessWidget {
@@ -61,7 +62,7 @@ class PaymentsLogPage extends StatelessWidget {
           onTap: () {
             showDialog(
                 context: context,
-                builder: (context) => paymentLogDialog(context));
+                builder: (context) => OpPaymentsLogDialog(context));
           },
           child: floatButton(
             icon: Icons.post_add_rounded,

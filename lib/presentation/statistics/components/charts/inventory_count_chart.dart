@@ -4,12 +4,11 @@ import 'package:intl/intl.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:lambda_dent_dash/presentation/statistics/components/charts/indicator.dart';
 
-
 class ChartData {
   final String text;
   final double value;
   final double count;
-  final Color color; 
+  final Color color;
 
   ChartData(
       {required this.text,
@@ -44,8 +43,7 @@ class InventoryCountChartState extends State<InventoryCountChart> {
     const Color.fromARGB(255, 201, 118, 114), // Darker pink
   ];
 
-  // Lists to hold processed data for each chart
-  List<ChartData> _countChartData = [];
+  // Lists to hold processed data for the value chart
   List<ChartData> _valueChartData = [];
 
   @override
@@ -114,42 +112,7 @@ class InventoryCountChartState extends State<InventoryCountChart> {
 
     // 3. The value chart data is the processed list directly
     _valueChartData = processedValueSortedDataWithColors;
-
-    // 4. Create the count chart data by sorting the colored data by 'count'
-    _countChartData = List.from(processedValueSortedDataWithColors)
-      ..sort((a, b) => b.count.compareTo(a.count)); // Sort by count
-    // The colors assigned in step 2 are retained with each ChartData object
   }
-
-  // Generates the list of PieChartSectionData for the Count Chart (Bottom)
-  // List<PieChartSectionData> _showingCountSections() {
-  //   double totalCount =
-  //       _countChartData.fold(0, (sum, item) => sum + item.count);
-
-  //   return List.generate(_countChartData.length, (i) {
-  //     // Touch logic is primarily for the top chart, so we don't use touchedIndex here
-  //     // If you need touch feedback on the bottom chart, you'd need more complex touch handling
-  //     final fontSize = 10.0; // Smaller font for bottom chart
-  //     final radius = 80.0; // Smaller radius for bottom chart
-  //     const shadows = [Shadow(color: Colors.black, blurRadius: 5)];
-
-  //     final data = _countChartData[i];
-  //     final percentage = totalCount > 0 ? (data.count / totalCount) * 100 : 0.0;
-
-  //     return PieChartSectionData(
-  //       color: data.color, // Use the color assigned based on value-sorted order
-  //       value: data.count, // Use count value
-  //       title: '${percentage.toStringAsFixed(1)}%',
-  //       radius: radius,
-  //       titleStyle: TextStyle(
-  //         fontSize: fontSize,
-  //         fontWeight: FontWeight.bold,
-  //         color: white,
-  //         shadows: shadows,
-  //       ),
-  //     );
-  //   });
-  // }
 
   // Generates the list of PieChartSectionData for the Value Chart (Top)
   List<PieChartSectionData> _showingValueSections() {
@@ -257,9 +220,6 @@ class InventoryCountChartState extends State<InventoryCountChart> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: _valueChartData.asMap().entries.map((entry) {
-                  // Iterate through the valueChartData (which is sorted by value
-                  // and has colors assigned based on that sort order) to create indicators.
-                  int index = entry.key;
                   ChartData data = entry.value;
                   return Padding(
                     padding: const EdgeInsets.symmetric(
