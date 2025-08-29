@@ -120,7 +120,9 @@ typedef Data = ({
 });
 
 class TeethCubit extends Cubit<TeethState> {
-  TeethCubit() : super(TeethInitial());
+  TeethCubit({this.onTeethDataChanged}) : super(TeethInitial());
+
+  final Function(Map<String, List<String>>)? onTeethDataChanged;
 
   Data _data = (size: Size.zero, teeth: {}, connections: {});
   bool _isCopyModeActive = false;
@@ -135,12 +137,14 @@ class TeethCubit extends Cubit<TeethState> {
       _showConnections; // New: Getter for connections visibility
 
   Future<void> loadTeeth(String asset) async {
+    if (isClosed) return;
     emit(TeethLoading());
     try {
       _data = await _loadTeethData(asset);
+      if (isClosed) return;
       emit(TeethLoaded(_data));
     } catch (e) {
-      emit(TeethError(e.toString()));
+      if (!isClosed) emit(TeethError(e.toString()));
     }
   }
 
@@ -152,6 +156,13 @@ class TeethCubit extends Cubit<TeethState> {
     return _data.connections.values
         .where((connection) => connection.selected)
         .toSet();
+  }
+
+  // Method to notify callback about teeth data changes
+  void _notifyTeethDataChanged() {
+    if (onTeethDataChanged != null) {
+      onTeethDataChanged!(getFormattedTeethData());
+    }
   }
 
   // Method to get formatted teeth data for API
@@ -290,6 +301,8 @@ class TeethCubit extends Cubit<TeethState> {
 
       // Emit state to update the UI
       emit(TeethLoaded(_data));
+      // Notify callback about teeth data changes
+      _notifyTeethDataChanged();
     }
   }
 
@@ -308,6 +321,8 @@ class TeethCubit extends Cubit<TeethState> {
         _copiedMaterial = null;
       }
       emit(TeethLoaded(_data));
+      // Notify callback about teeth data changes
+      _notifyTeethDataChanged();
     } else {
       // print('Select treatment and material before selecting the tooth.');
     }
@@ -328,6 +343,8 @@ class TeethCubit extends Cubit<TeethState> {
     if (!_isCopyModeActive && canEstablishConnection(connection)) {
       connection.selected = !connection.selected;
       emit(TeethLoaded(_data));
+      // Notify callback about teeth data changes
+      _notifyTeethDataChanged();
     } else if (_isCopyModeActive) {
       // print('Cannot select connections in copy mode.');
     }
@@ -352,6 +369,8 @@ class TeethCubit extends Cubit<TeethState> {
       }
     }
     emit(TeethLoaded(_data));
+    // Notify callback about teeth data changes
+    _notifyTeethDataChanged();
   }
 
   // --- New Method to Clear All Teeth ---
@@ -369,6 +388,8 @@ class TeethCubit extends Cubit<TeethState> {
     _isCopyModeActive = false; // Deactivate copy mode when clearing all
 
     emit(TeethLoaded(_data)); // Emit state to update the UI
+    // Notify callback about teeth data changes
+    _notifyTeethDataChanged();
   }
 
   // New: Method to toggle connections visibility

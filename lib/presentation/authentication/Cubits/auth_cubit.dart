@@ -11,34 +11,38 @@ class AuthCubit extends Cubit<AuthState> {
   String? lastErrorMessage;
 
   Future<void> login(String email, String password, String guard) async {
+    if (isClosed) return;
     emit(AuthLoading());
     try {
       success = await repo.postlogin(email, password, guard);
       if (success) {
+        if (isClosed) return;
         emit(AuthLoggedIn());
       } else {
         lastErrorMessage = 'Login failed. Please check your credentials.';
-        emit(AuthError(lastErrorMessage!));
+        if (!isClosed) emit(AuthError(lastErrorMessage!));
       }
     } catch (e) {
       lastErrorMessage = e.toString();
-      emit(AuthError(lastErrorMessage!));
+      if (!isClosed) emit(AuthError(lastErrorMessage!));
     }
   }
 
   Future<void> logout() async {
+    if (isClosed) return;
     emit(AuthLoading());
     try {
       success = await repo.postlogout();
       if (success) {
+        if (isClosed) return;
         emit(AuthLoggedOut());
       } else {
         lastErrorMessage = 'Logout failed.';
-        emit(AuthError(lastErrorMessage!));
+        if (!isClosed) emit(AuthError(lastErrorMessage!));
       }
     } catch (e) {
       lastErrorMessage = e.toString();
-      emit(AuthError(lastErrorMessage!));
+      if (!isClosed) emit(AuthError(lastErrorMessage!));
     }
   }
 
@@ -55,6 +59,7 @@ class AuthCubit extends Cubit<AuthState> {
     required String province,
     required String address,
   }) {
+    if (isClosed) return;
     emit(AuthLoading());
     registrydata.addAll({
       'guard': guard,
@@ -68,7 +73,7 @@ class AuthCubit extends Cubit<AuthState> {
       'lab_address': address,
     });
     print('first cook: ' + registrydata.toString());
-    emit(AuthInitial());
+    if (!isClosed) emit(AuthInitial());
   }
 
   void cookregistrysecond({
@@ -77,6 +82,7 @@ class AuthCubit extends Cubit<AuthState> {
     required String endHour,
     required int subscriptionDuration,
   }) {
+    if (isClosed) return;
     emit(AuthLoading());
     registrydata.addAll({
       'lab_type': labType,
@@ -84,43 +90,47 @@ class AuthCubit extends Cubit<AuthState> {
       'work_to_hour': endHour,
       'register_subscription_duration': subscriptionDuration,
     });
-    emit(AuthInitial());
+    if (!isClosed) emit(AuthInitial());
     print(registrydata);
     register();
   }
 
   Future<void> register() async {
+    if (isClosed) return;
     emit(AuthLoading());
     try {
       success = await repo.postregister(registrydata);
       if (success) {
+        if (isClosed) return;
         emit(AuthRegistered());
         registrydata.clear();
       } else {
         lastErrorMessage = 'Registration failed.';
-        emit(AuthError(lastErrorMessage!));
+        if (!isClosed) emit(AuthError(lastErrorMessage!));
       }
     } catch (e) {
       lastErrorMessage = e.toString();
-      emit(AuthError(lastErrorMessage!));
+      if (!isClosed) emit(AuthError(lastErrorMessage!));
     }
   }
 
   LabProfile? profile;
 
   Future<void> getProfile() async {
+    if (isClosed) return;
     emit(AuthLoading());
     try {
       profile = await repo.getProfile();
       if (profile != null) {
+        if (isClosed) return;
         emit(AuthProfileLoaded(profile!));
       } else {
         lastErrorMessage = 'No profile found.';
-        emit(AuthError(lastErrorMessage!));
+        if (!isClosed) emit(AuthError(lastErrorMessage!));
       }
     } catch (e) {
       lastErrorMessage = e.toString();
-      emit(AuthError(lastErrorMessage!));
+      if (!isClosed) emit(AuthError(lastErrorMessage!));
     }
   }
 }

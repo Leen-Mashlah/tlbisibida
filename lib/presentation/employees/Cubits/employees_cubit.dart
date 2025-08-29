@@ -12,16 +12,18 @@ class EmployeesCubit extends Cubit<EmployeesState> {
   EmployeesResponse? employeesResponse;
 
   Future<void> getEmployees() async {
+    if (isClosed) return;
     emit(EmployeesLoading());
     try {
       employeesResponse = await repo.getEmployees();
       if (employeesResponse != null) {
+        if (isClosed) return;
         emit(EmployeesLoaded(employeesResponse!));
       } else {
-        emit(EmployeesError('No employees found.'));
+        if (!isClosed) emit(EmployeesError('No employees found.'));
       }
     } on Exception catch (e) {
-      emit(EmployeesError("Error loading employees: ${e.toString()}"));
+      if (!isClosed) emit(EmployeesError("Error loading employees: ${e.toString()}"));
     }
   }
 
@@ -46,11 +48,11 @@ class EmployeesCubit extends Cubit<EmployeesState> {
         await getEmployees();
         return true;
       } else {
-        emit(EmployeesError('Failed to create employee.'));
+        if (!isClosed) emit(EmployeesError('Failed to create employee.'));
         return false;
       }
     } on Exception catch (e) {
-      emit(EmployeesError("Error creating employee: ${e.toString()}"));
+      if (!isClosed) emit(EmployeesError("Error creating employee: ${e.toString()}"));
       return false;
     }
   }

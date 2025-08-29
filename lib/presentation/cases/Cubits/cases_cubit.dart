@@ -46,58 +46,77 @@ class CasesCubit extends Cubit<CasesState> {
 
   Map<String, List<MedicalCaseinList>>? casesList;
   Future<void> getCases() async {
+    if (isClosed) return;
     emit(CasesLoading());
     try {
       casesList = await repo.getcaseList();
       if (casesList != null) {
+        if (isClosed) return;
         emit(CasesLoaded(casesList!));
       } else {
-        emit(CasesError('No cases found.'));
+        if (!isClosed) emit(CasesError('No cases found.'));
       }
     } on Exception catch (e) {
-      emit(CasesError("Error loading cases list: \\${e.toString()}"));
+      if (!isClosed)
+        emit(CasesError("Error loading cases list: \\${e.toString()}"));
     }
   }
 
   MedicalCase? medicalCase;
   Future<void> getCaseDetails(int id) async {
+    if (isClosed) return;
     emit(CaseDetailsLoading());
     try {
       medicalCase = await repo.getCaseDetails(id);
       if (medicalCase != null) {
+        if (isClosed) return;
         emit(CaseDetailsLoaded(medicalCase!));
       } else {
-        emit(CasesError('No case details found.'));
+        if (!isClosed) emit(CasesError('No case details found.'));
       }
     } on Exception catch (e) {
-      emit(CasesError("Error loading case: \\${e.toString()}"));
+      if (!isClosed) emit(CasesError("Error loading case: \\${e.toString()}"));
     }
   }
 
   List<Uint8List> imgList = [];
   Future<void> getCaseImages(int id) async {
-    var image = await repo.getCasesimage(id);
-    if (image != null) imgList.add(image);
-    emit(ImagesLoaded(imgList));
+    if (isClosed) return;
+    try {
+      var imageFuture = repo.getCasesimage(id);
+      if (imageFuture != null) {
+        var image = await imageFuture;
+        if (image != null) {
+          imgList.add(image);
+          if (!isClosed) emit(ImagesLoaded(imgList));
+        }
+      }
+    } catch (e) {
+      print('Error loading case images: $e');
+    }
   }
 
   List<Comment>? comments = [];
   Future<void> getcomment(int id) async {
+    if (isClosed) return;
     emit(CommentsLoading());
     try {
       comments = await repo.getCaseComments(id);
       if (comments != null) {
+        if (isClosed) return;
         emit(CommentsLoaded(comments!));
       } else {
-        emit(CasesError('No comments found.'));
+        if (!isClosed) emit(CasesError('No comments found.'));
       }
     } on Exception catch (e) {
-      emit(CasesError("Error loading comments list: \\${e.toString()}"));
+      if (!isClosed)
+        emit(CasesError("Error loading comments list: \\${e.toString()}"));
     }
   }
 
   Future<bool> sendCaseComment(
       {required int caseId, required String comment}) async {
+    if (isClosed) return false;
     try {
       final ok = await repo.postCaseComment(caseId, comment);
       if (ok) {
@@ -106,12 +125,14 @@ class CasesCubit extends Cubit<CasesState> {
       }
       return ok;
     } catch (e) {
+      if (!isClosed) emit(CasesError('Error sending comment: ${e.toString()}'));
       return false;
     }
   }
 
   // Form state management methods
   void setSelectedClient(int id, String name) {
+    if (isClosed) return;
     selectedClientId = id;
     selectedClientName = name;
     emit(CasesInitial()); // Re-emit to update UI
@@ -119,48 +140,63 @@ class CasesCubit extends Cubit<CasesState> {
 
   void updatePatientFullName(String name) {
     patientFullName = name;
+    if (!isClosed) emit(CasesInitial());
   }
 
   void updatePatientPhone(String phone) {
     patientPhone = phone;
+    if (!isClosed) emit(CasesInitial());
   }
 
   void updatePatientBirthdate(DateTime date) {
     patientBirthdate = date;
+    if (!isClosed) emit(CasesInitial());
   }
 
   void updatePatientGender(String gender) {
     patientGender = gender;
+    if (!isClosed) emit(CasesInitial());
   }
 
   void updateIsSmoker(bool smoker) {
     isSmoker = smoker;
+    if (!isClosed) emit(CasesInitial());
   }
 
   void updateShade(String shadeValue) {
     shade = shadeValue;
+    if (!isClosed) emit(CasesInitial());
   }
 
   void updateNeedTrial(bool need) {
     needTrial = need;
+    if (!isClosed) emit(CasesInitial());
   }
 
   void updateRepeat(bool repeatValue) {
     repeat = repeatValue;
+    if (!isClosed) emit(CasesInitial());
   }
 
   void updateNotes(String notesValue) {
     notes = notesValue;
+    if (!isClosed) emit(CasesInitial());
   }
 
   void updateExpectedDeliveryDate(DateTime date) {
     expectedDeliveryDate = date;
+    if (!isClosed) emit(CasesInitial());
   }
 
   // Teeth data management
   void updateSelectedTeeth(String category, List<String> teeth) {
     selectedTeeth[category] = teeth;
+    // Emit state to update UI when teeth data changes
+    if (!isClosed) emit(CasesInitial());
   }
+
+  // Getter for teeth data
+  Map<String, List<String>> get getSelectedTeeth => selectedTeeth;
 
   // Format teeth data for API
   String formatTeethData(List<String> teeth) {
@@ -204,10 +240,11 @@ class CasesCubit extends Cubit<CasesState> {
   // Add medical case method
   Future<bool> addMedicalCase() async {
     if (!validateForm()) {
-      emit(CasesError('Please fill all required fields'));
+      if (!isClosed) emit(CasesError('Please fill all required fields'));
       return false;
     }
 
+    if (isClosed) return false;
     emit(CasesLoading());
 
     try {
@@ -245,14 +282,16 @@ class CasesCubit extends Cubit<CasesState> {
       final success = await repo.addMedicalCaseToLocalClient(caseData);
 
       if (success) {
+        if (isClosed) return true;
         emit(CasesLoaded(casesList!)); // Return to loaded state
         return true;
       } else {
-        emit(CasesError('Failed to add medical case'));
+        if (!isClosed) emit(CasesError('Failed to add medical case'));
         return false;
       }
     } catch (e) {
-      emit(CasesError("Error adding medical case: \\${e.toString()}"));
+      if (!isClosed)
+        emit(CasesError("Error adding medical case: \\${e.toString()}"));
       return false;
     }
   }

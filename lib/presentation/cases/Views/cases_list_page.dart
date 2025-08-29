@@ -79,6 +79,10 @@ class CasesListPage extends StatelessWidget {
                 ),
               ),
             );
+          } else if (state is CasesInitial) {
+            // Show loading when initializing
+            body =
+                const Center(child: CircularProgressIndicator(color: cyan400));
           } else {
             body = const SizedBox();
           }
@@ -106,8 +110,8 @@ class CasesListPage extends StatelessWidget {
 
 Widget _column(String type, CasesCubit casesCubit, String title, Widget icon,
     Color color, Color secondaryColor, BuildContext context) {
-  final List cases =
-      casesCubit.casesList != null ? (casesCubit.casesList![type] ?? []) : [];
+  // Safe access to casesList with null safety
+  final List cases = casesCubit.casesList?[type] ?? [];
   return SizedBox(
     width: MediaQuery.of(context).size.width / 4.8,
     // height: MediaQuery.of(context).size.height / 1.2,
@@ -159,17 +163,28 @@ Widget _column(String type, CasesCubit casesCubit, String title, Widget icon,
           height: 010,
         ),
         Expanded(
-            child: ListView.separated(
-          itemBuilder: (context, index) {
-            return _itembuilder(index, type, casesCubit, context, icon, color);
-          },
-          itemCount: cases.length,
-          separatorBuilder: (context, index) {
-            return const SizedBox(
-              height: 10,
-            );
-          },
-        ))
+            child: cases.isEmpty
+                ? Center(
+                    child: Text(
+                      'لا توجد حالات',
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 16,
+                      ),
+                    ),
+                  )
+                : ListView.separated(
+                    itemBuilder: (context, index) {
+                      return _itembuilder(
+                          index, type, casesCubit, context, icon, color);
+                    },
+                    itemCount: cases.length,
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(
+                        height: 10,
+                      );
+                    },
+                  ))
       ],
     ),
   );
@@ -183,7 +198,8 @@ Widget _itembuilder(
   Widget icon,
   Color color,
 ) {
-  final list = cubit.casesList != null ? (cubit.casesList![type] ?? []) : [];
+  // Safe access to casesList with null safety
+  final list = cubit.casesList?[type] ?? [];
   if (index < 0 || index >= list.length) {
     return const SizedBox.shrink();
   }

@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lambda_dent_dash/components/date_picker.dart';
@@ -9,12 +7,14 @@ import 'package:lambda_dent_dash/components/default_textfield.dart';
 import 'package:lambda_dent_dash/components/image_picker.dart';
 import 'package:lambda_dent_dash/components/teeth_selection_screen.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
-import 'package:lambda_dent_dash/domain/models/lab_clients/lab_client.dart';
 import 'package:lambda_dent_dash/presentation/cases/Components/shade_guides/guide_button.dart';
 import 'package:lambda_dent_dash/presentation/cases/Components/search_for_client.dart';
 import 'package:lambda_dent_dash/presentation/cases/Cubits/cases_cubit.dart';
 import 'package:lambda_dent_dash/presentation/cases/Cubits/cases_state.dart';
-import 'package:lambda_dent_dash/services/BloC/Cubits/teeth_cubit.dart';
+import 'package:lambda_dent_dash/presentation/clients/Cubits/clients_cubit.dart';
+import 'package:lambda_dent_dash/data/repo/db_clients_repo.dart';
+import 'package:lambda_dent_dash/data/repo/db_cases_repo.dart';
+import 'package:lambda_dent_dash/services/navigation/locator.dart';
 
 class AddCasePage extends StatelessWidget {
   AddCasePage({super.key});
@@ -22,17 +22,44 @@ class AddCasePage extends StatelessWidget {
   var formkey = GlobalKey<FormState>();
   List<Image> images = [];
 
+  // Form validation method
+  String? _validateForm(CasesCubit cubit) {
+    if (cubit.selectedClientId == null) {
+      return 'يرجى اختيار الطبيب';
+    }
+    if (cubit.patientFullName.trim().isEmpty) {
+      return 'يرجى إدخال اسم المريض';
+    }
+    if (cubit.patientPhone.trim().isEmpty) {
+      return 'يرجى إدخال رقم هاتف المريض';
+    }
+    if (cubit.shade.trim().isEmpty) {
+      return 'يرجى اختيار لون الأسنان';
+    }
+    if (cubit.getSelectedTeeth.values.expand((list) => list).isEmpty) {
+      return 'يرجى اختيار الأسنان المطلوب علاجها';
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CasesCubit, CasesState>(
-      listener: (context, state) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ClientsCubit>(
+          create: (context) => ClientsCubit(locator<DBClientsRepo>()),
+        ),
+        BlocProvider<CasesCubit>(
+          create: (context) => CasesCubit(locator<DBCasesRepo>()),
+        ),
+      ],
+      child: BlocConsumer<CasesCubit, CasesState>(listener: (context, state) {
         if (state is CasesError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.message)),
           );
         }
-      },
-      builder: (context, state) {
+      }, builder: (context, state) {
         final casesCubit = context.read<CasesCubit>();
 
         return Scaffold(
@@ -113,9 +140,6 @@ class AddCasePage extends StatelessWidget {
                             height: 30,
                           ),
                           imagePicker(images),
-                          SizedBox(
-                            height: 30,
-                          ),
                         ],
                       ),
                     ),
@@ -140,7 +164,8 @@ class AddCasePage extends StatelessWidget {
                               onClientSelected: (client) {
                                 casesCubit.setSelectedClient(
                                     client.id, client.name);
-                              }),
+                              },
+                              clientsCubit: context.read<ClientsCubit>()),
                           SizedBox(
                             height: 15,
                           ),
@@ -149,7 +174,7 @@ class AddCasePage extends StatelessWidget {
                                 TextEditingController(
                                     text: casesCubit.patientFullName),
                                 context,
-                                'اسم المريض',
+                                'اسم المريض *',
                                 inactiveColor: cyan100, onChanged: (value) {
                               casesCubit.updatePatientFullName(value);
                             }),
@@ -162,7 +187,7 @@ class AddCasePage extends StatelessWidget {
                                 TextEditingController(
                                     text: casesCubit.patientPhone),
                                 context,
-                                'رقم الهاتف',
+                                'رقم الهاتف *',
                                 inactiveColor: cyan100, onChanged: (value) {
                               casesCubit.updatePatientPhone(value);
                             }),
@@ -285,7 +310,11 @@ class AddCasePage extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              ShadeSelectionButton(),
+                              ShadeSelectionButton(
+                                onShadeSelected: (shadeName, shadeColor) {
+                                  casesCubit.updateShade(shadeName);
+                                },
+                              ),
                               Container(
                                 width: .5,
                                 height: 100,
@@ -335,6 +364,61 @@ class AddCasePage extends StatelessWidget {
                           SizedBox(
                             height: 30,
                           ),
+                          // Submit button
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                // Validate form manually to show better error messages
+                                String? errorMessage =
+                                    _validateForm(casesCubit);
+                                if (errorMessage == null) {
+                                  final success =
+                                      await casesCubit.addMedicalCase();
+                                  if (success) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('تم إضافة الحالة بنجاح'),
+                                        backgroundColor: Colors.green,
+                                      ),
+                                    );
+                                    // Navigate back to cases list
+                                    Navigator.pop(context);
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('فشل في إضافة الحالة'),
+                                        backgroundColor: Colors.red,
+                                      ),
+                                    );
+                                  }
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(errorMessage),
+                                      backgroundColor: Colors.orange,
+                                    ),
+                                  );
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: cyan500,
+                                foregroundColor: Colors.white,
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 16),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              child: const Text(
+                                'إضافة الحالة',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
                         ]),
                   ),
                 ),
@@ -356,9 +440,15 @@ class AddCasePage extends StatelessWidget {
                           child: TeethSelectionScreen(
                             asset: 'assets/teeth.svg',
                             isDocSheet: false,
+                            onTeethDataChanged: (teethData) {
+                              // Update the cases cubit with the teeth data
+                              for (var entry in teethData.entries) {
+                                casesCubit.updateSelectedTeeth(
+                                    entry.key, entry.value);
+                              }
+                            },
                           ),
                         ),
-                        // SizedBox(height: 20),
                       ],
                     ),
                   ),
@@ -367,7 +457,7 @@ class AddCasePage extends StatelessWidget {
             ),
           ),
         );
-      },
+      }),
     );
   }
 }

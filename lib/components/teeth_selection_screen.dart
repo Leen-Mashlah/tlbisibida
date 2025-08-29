@@ -11,18 +11,22 @@ class TeethSelectionScreen extends StatelessWidget {
   final String asset;
   final bool isDocSheet;
   final bool showConnections; // Made final and passed through constructor
+  final Function(Map<String, List<String>>)?
+      onTeethDataChanged; // Callback for cases cubit
 
   const TeethSelectionScreen({
     super.key,
     required this.asset,
     required this.isDocSheet,
     this.showConnections = true, // Default value, can be overridden
+    this.onTeethDataChanged, // Callback for cases cubit
   });
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TeethCubit()..loadTeeth(asset),
+      create: (context) =>
+          TeethCubit(onTeethDataChanged: onTeethDataChanged)..loadTeeth(asset),
       child: BlocBuilder<TeethCubit, TeethState>(
         builder: (context, state) {
           final cubit = context.read<TeethCubit>();

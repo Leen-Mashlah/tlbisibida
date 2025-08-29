@@ -15,12 +15,15 @@ class ChoiceButtonWithSearch extends StatefulWidget {
   final ValueChanged<Client>? onClientSelected;
   // Text to display when no client is selected initially.
   final String hintText;
+  // ClientsCubit instance to use for loading clients
+  final ClientsCubit? clientsCubit;
 
   const ChoiceButtonWithSearch({
     Key? key,
     this.initialClient,
     this.onClientSelected,
     this.hintText = 'اختر الزبون',
+    this.clientsCubit,
   }) : super(key: key);
 
   @override
@@ -57,6 +60,7 @@ class _ChoiceButtonWithSearchState extends State<ChoiceButtonWithSearch> {
             // Close the modal sheet.
             Navigator.pop(context);
           },
+          clientsCubit: widget.clientsCubit,
         );
       },
     );
@@ -106,10 +110,12 @@ class _ChoiceButtonWithSearchState extends State<ChoiceButtonWithSearch> {
 // The content widget for the bottom modal sheet containing the searchable list.
 class ClientSelectionSheetContent extends StatefulWidget {
   final ValueChanged<Client> onClientSelected;
+  final ClientsCubit? clientsCubit;
 
   const ClientSelectionSheetContent({
     Key? key,
     required this.onClientSelected,
+    this.clientsCubit,
   }) : super(key: key);
 
   @override
@@ -145,8 +151,9 @@ class _ClientSelectionSheetContentState
 
   // Load clients from API
   Future<void> _loadClients() async {
-    final clientsCubit = context.read<ClientsCubit>();
-    await clientsCubit.getClients();
+    if (widget.clientsCubit != null) {
+      await widget.clientsCubit!.getClients();
+    }
   }
 
   // Function to filter the list of clients based on the search query.
@@ -201,42 +208,45 @@ class _ClientSelectionSheetContentState
           ),
           // Expanded widget to make the list take up the remaining space.
           Expanded(
-            child: BlocBuilder<ClientsCubit, ClientsState>(
-              builder: (context, state) {
-                if (state is ClientsLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (state is ClientsLoaded) {
-                  // Update the clients list
-                  _allClients = state.clientsResponse.clients;
-                  if (_filteredClients.isEmpty) {
-                    _filteredClients = _allClients;
-                  }
+            child: widget.clientsCubit != null
+                ? BlocBuilder<ClientsCubit, ClientsState>(
+                    bloc: widget.clientsCubit,
+                    builder: (context, state) {
+                      if (state is ClientsLoading) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (state is ClientsLoaded) {
+                        // Update the clients list
+                        _allClients = state.clientsResponse.clients;
+                        if (_filteredClients.isEmpty) {
+                          _filteredClients = _allClients;
+                        }
 
-                  return ListView.builder(
-                    itemCount: _filteredClients.length,
-                    itemBuilder: (context, index) {
-                      final client = _filteredClients[index];
-                      // List tile for each client.
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ListTile(
-                          title: Text(client.name),
-                          subtitle: Text(client.phone.toString()),
-                          onTap: () {
-                            // Call the callback function with the selected client.
-                            widget.onClientSelected(client);
+                        return ListView.builder(
+                          itemCount: _filteredClients.length,
+                          itemBuilder: (context, index) {
+                            final client = _filteredClients[index];
+                            // List tile for each client.
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ListTile(
+                                title: Text(client.name),
+                                subtitle: Text(client.phone.toString()),
+                                onTap: () {
+                                  // Call the callback function with the selected client.
+                                  widget.onClientSelected(client);
+                                },
+                              ),
+                            );
                           },
-                        ),
-                      );
+                        );
+                      } else if (state is ClientsError) {
+                        return Center(child: Text('Error: ${state.message}'));
+                      } else {
+                        return const Center(child: Text('No clients found'));
+                      }
                     },
-                  );
-                } else if (state is ClientsError) {
-                  return Center(child: Text('Error: ${state.message}'));
-                } else {
-                  return const Center(child: Text('No clients found'));
-                }
-              },
-            ),
+                  )
+                : const Center(child: Text('ClientsCubit not available')),
           ),
         ],
       ),

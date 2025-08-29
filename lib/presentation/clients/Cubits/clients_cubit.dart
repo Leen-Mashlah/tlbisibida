@@ -36,16 +36,20 @@ class ClientsCubit extends Cubit<ClientsState> {
 
   DentistBillsList? dentistBillsList;
   Future<void> getDentistBills(int dentistId) async {
+    if (isClosed) return;
     emit(DentistBillsLoading());
     try {
       dentistBillsList = await repo.getDentistBills(dentistId);
       if (dentistBillsList != null) {
+        if (isClosed) return;
         emit(DentistBillsLoaded(dentistBillsList!));
       } else {
-        emit(DentistBillsError('No dentist bills found.'));
+        if (!isClosed) emit(DentistBillsError('No dentist bills found.'));
       }
     } catch (e) {
-      emit(DentistBillsError("Error loading dentist bills: \\${e.toString()}"));
+      if (!isClosed)
+        emit(DentistBillsError(
+            "Error loading dentist bills: \\${e.toString()}"));
     }
   }
 
@@ -54,14 +58,17 @@ class ClientsCubit extends Cubit<ClientsState> {
       {required int dentistId,
       required String dateFrom,
       required String dateTo}) async {
+    if (isClosed) return;
     emit(PreviewBillLoading());
     try {
       final response = await repo.previewBill(
           dentistId: dentistId, dateFrom: dateFrom, dateTo: dateTo);
       billPreview = response.preview;
+      if (isClosed) return;
       emit(PreviewBillLoaded(response));
     } catch (e) {
-      emit(PreviewBillError('Error previewing bill: \\${e.toString()}'));
+      if (!isClosed)
+        emit(PreviewBillError('Error previewing bill: \\${e.toString()}'));
     }
   }
 
@@ -95,6 +102,7 @@ class ClientsCubit extends Cubit<ClientsState> {
     required String phone,
     required String address,
   }) async {
+    if (isClosed) return false;
     emit(ClientsLoading());
     try {
       final success = await repo.addLocalClient(
@@ -106,16 +114,18 @@ class ClientsCubit extends Cubit<ClientsState> {
       if (success) {
         await getClients();
       } else {
-        emit(ClientsError('Failed to add client.'));
+        if (!isClosed) emit(ClientsError('Failed to add client.'));
       }
       return success;
     } catch (e) {
-      emit(ClientsError('Error adding client: \\${e.toString()}'));
+      if (!isClosed)
+        emit(ClientsError('Error adding client: \\${e.toString()}'));
       return false;
     }
   }
 
   Future<bool> approveJoinRequest(int id) async {
+    if (isClosed) return false;
     emit(ClientsLoading());
     try {
       final success = await repo.approveJoinRequest(id);
@@ -123,23 +133,27 @@ class ClientsCubit extends Cubit<ClientsState> {
         await getJoinRequests();
         await getClients();
       } else {
-        emit(ClientsError('Failed to approve join request.'));
+        if (!isClosed) emit(ClientsError('Failed to approve join request.'));
       }
       return success;
     } catch (e) {
-      emit(ClientsError('Error approving join request: \\${e.toString()}'));
+      if (!isClosed)
+        emit(ClientsError('Error approving join request: \\${e.toString()}'));
       return false;
     }
   }
 
   JoinRequestsResponse? joinRequestsResponse;
   Future<void> getJoinRequests() async {
+    if (isClosed) return;
     emit(RequestsLoading());
     try {
       joinRequestsResponse = await repo.getJoinRequests();
+      if (isClosed) return;
       emit(RequestsLoaded());
     } catch (e) {
-      emit(ClientsError('Error loading join requests: \\${e.toString()}'));
+      if (!isClosed)
+        emit(ClientsError('Error loading join requests: \\${e.toString()}'));
     }
   }
 }
