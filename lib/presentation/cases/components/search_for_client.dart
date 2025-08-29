@@ -22,7 +22,7 @@ class ChoiceButtonWithSearch extends StatefulWidget {
     Key? key,
     this.initialClient,
     this.onClientSelected,
-    this.hintText = 'اختر الزبون',
+    this.hintText = 'اختر الطبيب',
     this.clientsCubit,
   }) : super(key: key);
 
