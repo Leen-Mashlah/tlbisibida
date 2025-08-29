@@ -204,7 +204,10 @@ class AuthenticationPage extends StatelessWidget {
                               TextButton(
                                   style: const ButtonStyle(
                                       elevation: WidgetStatePropertyAll(0)),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    locator<NavigationService>()
+                                        .navigateTo(homePageRoute);
+                                  },
                                   child: const Text(
                                     'هل نسيت كلمة السر؟',
                                     style: TextStyle(color: white, shadows: [

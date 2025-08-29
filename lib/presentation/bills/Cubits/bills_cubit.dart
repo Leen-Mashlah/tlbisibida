@@ -66,3 +66,4 @@ class BillsCubit extends Cubit<BillsState> {
     }
   }
 }
+

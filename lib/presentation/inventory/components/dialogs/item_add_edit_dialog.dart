@@ -114,7 +114,7 @@ Widget itemAddEditDialog(BuildContext context, {Item? item}) {
                               if (isEditMode) {
                                 context
                                     .read<InventoryCubit>()
-                                    .updateItem(item!.id!, {
+                                    .updateItem(item.id!, {
                                   'name': itemnamecontroller.text,
                                   'unit': itemunitcontroller.text,
                                   'standard_quantity': int.tryParse(
@@ -170,3 +170,4 @@ Widget itemAddEditDialog(BuildContext context, {Item? item}) {
     },
   );
 }
+

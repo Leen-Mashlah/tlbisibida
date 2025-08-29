@@ -6,24 +6,29 @@ import 'package:lambda_dent_dash/services/Cache/cache_helper.dart';
 import 'package:lambda_dent_dash/services/dio/dio.dart';
 
 class DBAuthRepo extends AuthRepo {
-  @override
-  Future<bool> postlogin(String email, String password, String guard) async =>
-      await DioHelper.postData(
-              'login', {'email': email, 'password': password, 'guard': guard})
-          .then((value) {
-        if (value != null && value.data['status']) {
-          CacheHelper.setString(
-              'token', 'Bearer ' + value.data['data']['access_token']);
-          print("Login successful. Token: ${CacheHelper.get('token')}");
-          return true;
-        } else {
-          print("Login failed: ${value?.data ?? 'Unknown error'}");
-          return false;
-        }
-      }).catchError((error) {
-        print(error.toString());
+  Future<bool> postlogin(String email, String password, String guard) async {
+    try {
+      final response = await DioHelper.postData(
+        'login',
+        {'email': email, 'password': password, 'guard': guard},
+      );
+
+      if (response != null && response.data['status']) {
+        print('response: ' + response.data.toString());
+        // AWAIT this line to ensure the token is saved before you try to get it
+        await CacheHelper.setString(
+            'token', 'Bearer ' + response.data['data']['access_token']);
+        print("Login successful. Token: ${CacheHelper.get('token')}");
+        return true;
+      } else {
+        print("Login failed: ${response?.data ?? 'Unknown error'}");
         return false;
-      });
+      }
+    } catch (error) {
+      print("PostLogin Error: " + error.toString());
+      rethrow;
+    }
+  }
 
   @override
   Future<bool> postlogout() async =>
@@ -72,7 +77,9 @@ class DBAuthRepo extends AuthRepo {
   Future<LabProfile> getProfile() async {
     await DioHelper.getData('auth/profile', token: CacheHelper.get('token'))
         .then((value) {
+      print(value?.data);
       dblLabProfileResponse = DBLabProfileResponse.fromJson(value?.data);
+      print(dblLabProfileResponse?.profile?.LabProfileDetails?.fullName);
     });
     LabProfile profile = dblLabProfileResponse!.profile!.toDomain();
 

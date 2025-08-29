@@ -5,6 +5,7 @@ import 'package:lambda_dent_dash/data/repo/db_cases_repo.dart';
 import 'package:lambda_dent_dash/data/repo/db_clients_repo.dart';
 import 'package:lambda_dent_dash/data/repo/db_email_repo.dart';
 import 'package:lambda_dent_dash/data/repo/db_employees_repo.dart';
+import 'package:lambda_dent_dash/data/repo/db_inventory_repo.dart';
 import 'package:lambda_dent_dash/data/repo/db_statistics_repo.dart';
 import 'package:lambda_dent_dash/data/repo/db_payments_repo.dart';
 import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
@@ -20,6 +21,6 @@ void setupLocator() {
   locator.registerLazySingleton(() => DBEmployeesRepo());
   locator.registerLazySingleton(() => DBStatisticsRepo());
   locator.registerLazySingleton(() => DBPaymentsRepo());
-
+  locator.registerLazySingleton(() => DbInventoryRepo());
   // locator.registerLazySingleton(() => StackObserver());
 }

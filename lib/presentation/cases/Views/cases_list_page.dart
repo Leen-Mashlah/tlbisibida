@@ -23,67 +23,69 @@ class CasesListPage extends StatelessWidget {
         },
         builder: (context, state) {
           CasesCubit casesCubit = context.read<CasesCubit>();
-          return Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 75.0),
-                child: Center(
-                  child: state is CasesLoaded
-                      ? SizedBox(
-                          width: MediaQuery.of(context).size.width / 1.3,
-                          // height: MediaQuery.of(context).size.height / 1.4,
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                _column(
-                                    'accepted',
-                                    casesCubit,
-                                    'لم تنجز بعد',
-                                    const Icon(
-                                      Icons.checklist,
-                                      color: cyan500,
-                                    ),
-                                    Color.fromARGB(50, 41, 157, 144),
-                                    cyan500,
-                                    context),
-                                _column(
-                                    'in_progress',
-                                    casesCubit,
-                                    'قيد الإنجاز',
-                                    const Icon(
-                                      Icons.work_history_rounded,
-                                      color: Color.fromARGB(91, 130, 99, 6),
-                                    ),
-                                    Color.fromARGB(50, 255, 193, 7),
-                                    Color.fromARGB(91, 94, 72, 8),
-                                    context),
-                                _column(
-                                  'pending',
-                                  casesCubit,
-                                  'بحاجة موافقة',
-                                  const Icon(
-                                    Icons.warning_rounded,
-                                    color: redmid,
-                                  ),
-                                  Color.fromARGB(50, 255, 82, 82),
-                                  redmid,
-                                  context,
-                                ),
-                                // _columnEntity(),
-                              ]),
-                        )
-                      : state is CasesError
-                          ? Center(
-                              child: Text(
-                                  'لم يتم تحميل الحالات، تأكد من اتصال الانترنت'),
-                            )
-                          : state is CasesLoading
-                              ? CircularProgressIndicator(
-                                  color: cyan400,
-                                )
-                              : SizedBox(),
+          Widget body;
+          if (state is CasesLoading) {
+            body =
+                const Center(child: CircularProgressIndicator(color: cyan400));
+          } else if (state is CasesError) {
+            body = const Center(
+              child: Text('لم يتم تحميل الحالات، تأكد من اتصال الانترنت'),
+            );
+          } else if (state is CasesLoaded) {
+            body = Padding(
+              padding: const EdgeInsets.only(top: 75.0),
+              child: Center(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width / 1.3,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _column(
+                          'accepted',
+                          casesCubit,
+                          'لم تنجز بعد',
+                          const Icon(
+                            Icons.checklist,
+                            color: cyan500,
+                          ),
+                          const Color.fromARGB(50, 41, 157, 144),
+                          cyan500,
+                          context),
+                      _column(
+                          'in_progress',
+                          casesCubit,
+                          'قيد الإنجاز',
+                          const Icon(
+                            Icons.work_history_rounded,
+                            color: Color.fromARGB(91, 130, 99, 6),
+                          ),
+                          const Color.fromARGB(50, 255, 193, 7),
+                          const Color.fromARGB(91, 94, 72, 8),
+                          context),
+                      _column(
+                        'pending',
+                        casesCubit,
+                        'بحاجة موافقة',
+                        const Icon(
+                          Icons.warning_rounded,
+                          color: redmid,
+                        ),
+                        const Color.fromARGB(50, 255, 82, 82),
+                        redmid,
+                        context,
+                      ),
+                    ],
+                  ),
                 ),
               ),
+            );
+          } else {
+            body = const SizedBox();
+          }
+
+          return Stack(
+            children: [
+              body,
               Positioned(
                 bottom: 20,
                 right: 20,
@@ -104,6 +106,8 @@ class CasesListPage extends StatelessWidget {
 
 Widget _column(String type, CasesCubit casesCubit, String title, Widget icon,
     Color color, Color secondaryColor, BuildContext context) {
+  final List cases =
+      casesCubit.casesList != null ? (casesCubit.casesList![type] ?? []) : [];
   return SizedBox(
     width: MediaQuery.of(context).size.width / 4.8,
     // height: MediaQuery.of(context).size.height / 1.2,
@@ -137,7 +141,7 @@ Widget _column(String type, CasesCubit casesCubit, String title, Widget icon,
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 5.0),
                             child: Text(
-                              casesCubit.casesList![type]!.length.toString(),
+                              cases.length.toString(),
                               style: TextStyle(
                                   color: secondaryColor,
                                   fontSize: 16,
@@ -159,7 +163,7 @@ Widget _column(String type, CasesCubit casesCubit, String title, Widget icon,
           itemBuilder: (context, index) {
             return _itembuilder(index, type, casesCubit, context, icon, color);
           },
-          itemCount: casesCubit.casesList![type]!.length,
+          itemCount: cases.length,
           separatorBuilder: (context, index) {
             return const SizedBox(
               height: 10,
@@ -179,7 +183,11 @@ Widget _itembuilder(
   Widget icon,
   Color color,
 ) {
-  var info = cubit.casesList![type]![index];
+  final list = cubit.casesList != null ? (cubit.casesList![type] ?? []) : [];
+  if (index < 0 || index >= list.length) {
+    return const SizedBox.shrink();
+  }
+  var info = list[index];
   return Card(
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -219,7 +227,11 @@ Widget _itembuilder(
                     // mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        info.createdAt.toIso8601String(),
+                        (info.createdAt != null)
+                            ? (info.createdAt is DateTime
+                                ? (info.createdAt as DateTime).toIso8601String()
+                                : info.createdAt.toString())
+                            : '-',
                         style: TextStyle(
                           color: cyan500,
                         ),
@@ -266,7 +278,9 @@ Widget _itembuilder(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            'الطبيب: ${info.dentist.firstName} ${info.dentist.lastName}',
+                            'الطبيب: '
+                            '${(info.dentist?.firstName ?? '')} '
+                            '${(info.dentist?.lastName ?? '')}',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: cyan500,
@@ -276,7 +290,7 @@ Widget _itembuilder(
                             height: 10,
                           ),
                           Text(
-                            'المريض: ${info.patient.fullName}',
+                            'المريض: ${info.patient?.fullName ?? '-'}',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: cyan500,

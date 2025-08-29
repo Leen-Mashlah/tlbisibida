@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 
 class DioHelper {
@@ -37,9 +39,12 @@ class DioHelper {
       'Content-Type': 'application/json',
       'Authorization': token,
     };
+    final data = jsonEncode(body);
+    print('sending:  ' + body.toString());
+    print('encoded: ' + data);
+
     try {
-      return await dio?.post(url,
-          data: FormData.fromMap(body), queryParameters: query);
+      return await dio?.post(url, data: data, queryParameters: query);
     } on DioException catch (e) {
       print("Dio Exception, Server response: " + e.response?.data);
     }

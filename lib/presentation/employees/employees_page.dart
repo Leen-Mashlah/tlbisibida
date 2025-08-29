@@ -145,7 +145,7 @@ Widget employeeCard(BuildContext context, int index, Employees employees) {
                     border: Border.all(width: .5, color: cyan200),
                     borderRadius: BorderRadius.circular(10)),
                 width: 380,
-                height: 250,
+                height: 255,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -252,11 +252,12 @@ Widget employeeCard(BuildContext context, int index, Employees employees) {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 30,
-                      child: bottomActionButtons(context),
-                    ),
+                    if (activeEmployee != null)
+                      SizedBox(
+                        width: double.infinity,
+                        height: 30,
+                        child: bottomActionButtons(context),
+                      ),
                   ],
                 ),
               ),

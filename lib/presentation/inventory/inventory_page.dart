@@ -12,6 +12,7 @@ import 'package:lambda_dent_dash/presentation/inventory/components/triangle_card
 import 'package:lambda_dent_dash/presentation/inventory/components/item_edit_quantity_card.dart';
 import 'package:lambda_dent_dash/presentation/inventory/cubit/inventory_cubit.dart';
 import 'package:lambda_dent_dash/presentation/inventory/cubit/inventory_states.dart';
+import 'package:lambda_dent_dash/presentation/inventory/components/dialogs/cat_management_dialog.dart';
 
 class InventoryPage extends StatelessWidget {
   const InventoryPage({super.key});
@@ -62,6 +63,16 @@ class InventoryPage extends StatelessWidget {
               ],
             ),
           );
+        }
+
+        // When there are no categories loaded, allow user to add categories
+        if (state is CategoriesLoaded && state.categories.isEmpty) {
+          return _buildEmptyCategoriesPrompt(context);
+        }
+
+        // When there are no subcategories loaded for a selected category
+        if (state is SubCategoriesLoaded && state.subCategories.isEmpty) {
+          return _buildEmptySubCategoriesPrompt(context);
         }
 
         return SingleChildScrollView(
@@ -188,6 +199,77 @@ class InventoryPage extends StatelessWidget {
         ],
       ),
     ).animate().fadeIn(duration: const Duration(milliseconds: 500));
+  }
+
+  Widget _buildEmptyCategoriesPrompt(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.category_outlined, size: 80, color: cyan300),
+          const SizedBox(height: 20),
+          Text('لا توجد فئات بعد',
+              style: TextStyle(
+                  fontSize: 24, color: cyan500, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 10),
+          Text('أضف فئة جديدة للبدء',
+              style: TextStyle(fontSize: 16, color: Colors.grey[600])),
+          const SizedBox(height: 24),
+          ElevatedButton.icon(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (_) => CatManagementDialog(context),
+              );
+            },
+            icon: Icon(Icons.add, color: cyan500),
+            label: Text('إدارة الفئات', style: TextStyle(color: cyan500)),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: cyan50, side: BorderSide(color: cyan200)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEmptySubCategoriesPrompt(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.subdirectory_arrow_right, size: 80, color: cyan400),
+          const SizedBox(height: 20),
+          Text('لا توجد فئات فرعية',
+              style: TextStyle(
+                  fontSize: 24, color: cyan500, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 10),
+          Text('أضف فئة فرعية جديدة',
+              style: TextStyle(fontSize: 16, color: Colors.grey[600])),
+          const SizedBox(height: 24),
+          ElevatedButton.icon(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (_) => CatManagementDialog(context),
+              );
+            },
+            icon: Icon(Icons.add, color: cyan500),
+            label: Text('إدارة الفئات/الفئات الفرعية',
+                style: TextStyle(color: cyan500)),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: cyan50, side: BorderSide(color: cyan200)),
+          ),
+          const SizedBox(height: 16),
+          ElevatedButton.icon(
+            onPressed: () => context.read<InventoryCubit>().clearData(),
+            icon: Icon(Icons.arrow_back, color: cyan500),
+            label: Text('اختيار فئة أخرى', style: TextStyle(color: cyan500)),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: cyan50, side: BorderSide(color: cyan200)),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildItemsGrid(BuildContext context, ItemsLoaded state) {
