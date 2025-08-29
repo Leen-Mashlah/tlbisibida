@@ -6,7 +6,8 @@ class DioHelper {
   static Dio? dio;
   static init() {
     dio = Dio(BaseOptions(
-        baseUrl: 'https://tusk-project-production.up.railway.app/api/',
+        //baseUrl: 'https://tusk-project-production.up.railway.app/api/',
+        baseUrl: 'http://localhost:8000/api/',
         headers: {
           'Accept': 'application/json',
         }));
