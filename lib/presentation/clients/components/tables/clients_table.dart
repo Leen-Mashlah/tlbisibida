@@ -93,6 +93,13 @@ class ClientsTable extends StatelessWidget {
                   clients.length,
                   (index) {
                     final client = clients[index];
+                    print('ClientsTable - Client data:');
+                    print('  id: ${client.id}');
+                    print('  name: "${client.name}"');
+                    print('  phone: ${client.phone}');
+                    print('  address: "${client.address}"');
+                    print('  joinedOn: "${client.joinedOn}"');
+                    print('  currentAccount: ${client.currentAccount}');
                     return DataRow(
                       cells: [
                         DataCell(Center(
@@ -108,15 +115,19 @@ class ClientsTable extends StatelessWidget {
                         DataCell(Center(
                             child: IconButton(
                           onPressed: () {
+                            final arguments = {
+                              'id': client.id,
+                              'name': client.name,
+                              'phone': client.phone.toString(),
+                              'address': client.address,
+                              'current_account': client.currentAccount,
+                            };
+                            print(
+                                'ClientsTable - Navigating with arguments: $arguments');
                             Navigator.pushNamed(
                               context,
                               '/client_details',
-                              arguments: {
-                                'id': client.id,
-                                'name': client.name,
-                                'phone': client.phone,
-                                'address': client.address,
-                              },
+                              arguments: arguments,
                             );
                           },
                           icon: const Icon(

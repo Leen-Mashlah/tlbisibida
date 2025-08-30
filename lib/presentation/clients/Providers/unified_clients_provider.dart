@@ -35,6 +35,9 @@ class UnifiedClientsProvider extends StatelessWidget {
         return ClientsPage();
       case ClientsPageType.clientDetails:
         final args = ModalRoute.of(context)?.settings.arguments;
+        print('UnifiedClientsProvider - Received arguments: $args');
+        print('UnifiedClientsProvider - Arguments type: ${args.runtimeType}');
+
         int? clientId;
         String? name;
         String? phone;
@@ -45,8 +48,15 @@ class UnifiedClientsProvider extends StatelessWidget {
           final dynamic ph = args['phone'];
           phone = ph?.toString();
           address = args['address'] as String?;
+
+          print('UnifiedClientsProvider - Extracted values:');
+          print('  clientId: $clientId');
+          print('  name: $name');
+          print('  phone: $phone');
+          print('  address: $address');
         } else if (args is int) {
           clientId = args;
+          print('UnifiedClientsProvider - Received int clientId: $clientId');
         }
         return ClientDetailsPage(
           clientId: clientId,

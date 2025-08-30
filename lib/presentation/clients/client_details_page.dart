@@ -34,10 +34,23 @@ class ClientDetailsPage extends StatelessWidget {
       builder: (context, state) {
         final clientsCubit = context.read<ClientsCubit>();
 
-        // Try to use passed values first
-        final headerName = initialName ?? '—';
-        final headerPhone = initialPhone ?? '—';
-        final headerAddress = initialAddress ?? '—';
+        // Try to use passed values first, handle empty strings
+        final headerName =
+            (initialName?.isNotEmpty == true) ? initialName! : '—';
+        final headerPhone =
+            (initialPhone?.isNotEmpty == true) ? initialPhone! : '—';
+        final headerAddress =
+            (initialAddress?.isNotEmpty == true) ? initialAddress! : '—';
+
+        // Debug: Print the received values
+        print('ClientDetailsPage - Received values:');
+        print('  clientId: $clientId');
+        print('  initialName: $initialName');
+        print('  initialPhone: $initialPhone');
+        print('  initialAddress: $initialAddress');
+        print('  headerName: $headerName');
+        print('  headerPhone: $headerPhone');
+        print('  headerAddress: $headerAddress');
 
         // Initial loads based on default tab
         if (_iscase.value) {
