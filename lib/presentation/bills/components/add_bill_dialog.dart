@@ -154,8 +154,9 @@ class _AddBillDialogState extends State<AddBillDialog> {
                     Navigator.pop(context);
                     showDialog(
                       context: context,
-                      builder: (context) => billPreviewDialog(context,
-                          clientsCubit: widget.clientsCubit),
+                      builder: (context) => BillPreviewDialog(
+                        clientsCubit: widget.clientsCubit,
+                      ),
                     );
                   },
                 ),

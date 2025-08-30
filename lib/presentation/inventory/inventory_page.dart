@@ -14,17 +14,35 @@ import 'package:lambda_dent_dash/presentation/inventory/cubit/inventory_cubit.da
 import 'package:lambda_dent_dash/presentation/inventory/cubit/inventory_states.dart';
 import 'package:lambda_dent_dash/presentation/inventory/components/dialogs/cat_management_dialog.dart';
 
-class InventoryPage extends StatelessWidget {
+class InventoryPage extends StatefulWidget {
   const InventoryPage({super.key});
+
+  @override
+  State<InventoryPage> createState() => _InventoryPageState();
+}
+
+class _InventoryPageState extends State<InventoryPage> {
+  @override
+  void initState() {
+    super.initState();
+    // Initialize categories when page loads
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        context.read<InventoryCubit>().getCats();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<InventoryCubit, InventoryState>(
       builder: (context, state) {
-        // Initialize categories when page loads
+        // Initialize categories when page loads if still in initial state
         if (state is InventoryInitial) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            context.read<InventoryCubit>().getCats();
+            if (mounted) {
+              context.read<InventoryCubit>().getCats();
+            }
           });
         }
 
