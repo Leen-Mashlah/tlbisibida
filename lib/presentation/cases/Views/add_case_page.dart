@@ -15,12 +15,17 @@ import 'package:lambda_dent_dash/presentation/clients/Cubits/clients_cubit.dart'
 import 'package:lambda_dent_dash/data/repo/db_clients_repo.dart';
 import 'package:lambda_dent_dash/data/repo/db_cases_repo.dart';
 import 'package:lambda_dent_dash/services/navigation/locator.dart';
+import 'package:screenshot/screenshot.dart';
+import 'dart:typed_data';
 
 class AddCasePage extends StatelessWidget {
   AddCasePage({super.key});
 
   var formkey = GlobalKey<FormState>();
   List<Image> images = [];
+
+  // Screenshot controller for capturing teeth selection
+  final ScreenshotController _screenshotController = ScreenshotController();
 
   // Form validation method
   String? _validateForm(CasesCubit cubit) {
@@ -61,6 +66,11 @@ class AddCasePage extends StatelessWidget {
         }
       }, builder: (context, state) {
         final casesCubit = context.read<CasesCubit>();
+
+        // Clear images when page is initialized
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          casesCubit.clearImages();
+        });
 
         return Scaffold(
           body: Padding(
@@ -139,7 +149,25 @@ class AddCasePage extends StatelessWidget {
                           SizedBox(
                             height: 30,
                           ),
-                          imagePicker(images),
+                          imagePicker(
+                            images,
+                            onImagePicked: (Uint8List imageBytes) {
+                              // Add manual image to cubit when picked
+                              casesCubit.addManualImage(imageBytes);
+                              print(
+                                  'Manual image picked and added: ${imageBytes.length} bytes');
+
+                              // Show feedback to user
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                      'تم إضافة الصورة (${casesCubit.totalImageCount} صورة)'),
+                                  duration: Duration(seconds: 2),
+                                  backgroundColor: Colors.green,
+                                ),
+                              );
+                            },
+                          ),
                         ],
                       ),
                     ),
@@ -373,21 +401,52 @@ class AddCasePage extends StatelessWidget {
                                 String? errorMessage =
                                     _validateForm(casesCubit);
                                 if (errorMessage == null) {
-                                  final success =
-                                      await casesCubit.addMedicalCase();
-                                  if (success) {
+                                  try {
+                                    // Capture screenshot of teeth selection
+                                    final Uint8List? screenshotBytes =
+                                        await _screenshotController.capture();
+
+                                    if (screenshotBytes != null) {
+                                      // Add screenshot to the images list as the first image
+                                      casesCubit
+                                          .addTeethScreenshot(screenshotBytes);
+                                      print(
+                                          'Screenshot captured successfully: ${screenshotBytes.length} bytes');
+                                    } else {
+                                      print('Failed to capture screenshot');
+                                      // Show warning but continue with submission
+                                    }
+
+                                    // Manual images are already added to cubit when picked via callback
+                                    // No need to convert them here
+
+                                    // Submit the case
+                                    final success =
+                                        await casesCubit.addMedicalCase();
+                                    if (success) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content:
+                                              Text('تم إضافة الحالة بنجاح'),
+                                          backgroundColor: Colors.green,
+                                        ),
+                                      );
+                                      // Navigate back to cases list
+                                      Navigator.pop(context);
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text('فشل في إضافة الحالة'),
+                                          backgroundColor: Colors.red,
+                                        ),
+                                      );
+                                    }
+                                  } catch (e) {
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text('تم إضافة الحالة بنجاح'),
-                                        backgroundColor: Colors.green,
-                                      ),
-                                    );
-                                    // Navigate back to cases list
-                                    Navigator.pop(context);
-                                  } else {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text('فشل في إضافة الحالة'),
+                                      SnackBar(
+                                        content: Text('خطأ في التقاط صورة: $e'),
                                         backgroundColor: Colors.red,
                                       ),
                                     );
@@ -410,12 +469,24 @@ class AddCasePage extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
-                              child: const Text(
-                                'إضافة الحالة',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'إضافة الحالة',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  if (casesCubit.totalImageCount > 0)
+                                    Text(
+                                      '(${casesCubit.totalImageCount} صورة)',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.white70,
+                                      ),
+                                    ),
+                                ],
                               ),
                             ),
                           ),
@@ -437,16 +508,19 @@ class AddCasePage extends StatelessWidget {
                     child: Column(
                       children: [
                         Expanded(
-                          child: TeethSelectionScreen(
-                            asset: 'assets/teeth.svg',
-                            isDocSheet: false,
-                            onTeethDataChanged: (teethData) {
-                              // Update the cases cubit with the teeth data
-                              for (var entry in teethData.entries) {
-                                casesCubit.updateSelectedTeeth(
-                                    entry.key, entry.value);
-                              }
-                            },
+                          child: Screenshot(
+                            controller: _screenshotController,
+                            child: TeethSelectionScreen(
+                              asset: 'assets/teeth.svg',
+                              isDocSheet: false,
+                              onTeethDataChanged: (teethData) {
+                                // Update the cases cubit with the teeth data
+                                for (var entry in teethData.entries) {
+                                  casesCubit.updateSelectedTeeth(
+                                      entry.key, entry.value);
+                                }
+                              },
+                            ),
                           ),
                         ),
                       ],

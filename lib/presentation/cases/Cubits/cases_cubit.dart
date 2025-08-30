@@ -294,6 +294,31 @@ class CasesCubit extends Cubit<CasesState> {
     return true;
   }
 
+  // Add teeth screenshot to images list
+  void addTeethScreenshot(Uint8List screenshotBytes) {
+    // Clear existing images and add screenshot as the first image
+    imgList.clear();
+    imgList.add(screenshotBytes);
+    if (!isClosed) emit(ImagesLoaded(imgList));
+    print('Teeth screenshot added to cubit: ${screenshotBytes.length} bytes');
+  }
+
+  // Add manual image to images list
+  void addManualImage(Uint8List imageBytes) {
+    imgList.add(imageBytes);
+    if (!isClosed) emit(ImagesLoaded(imgList));
+    print('Manual image added to cubit: ${imageBytes.length} bytes');
+  }
+
+  // Get total image count
+  int get totalImageCount => imgList.length;
+
+  // Clear images list
+  void clearImages() {
+    imgList.clear();
+    if (!isClosed) emit(ImagesLoaded(imgList));
+  }
+
   // Add medical case method
   Future<bool> addMedicalCase() async {
     if (!validateForm()) {
@@ -332,6 +357,11 @@ class CasesCubit extends Cubit<CasesState> {
         'bridges_inlay': formatTeethData(selectedTeeth['bridges_inlay']!),
         'bridges_denture': formatTeethData(selectedTeeth['bridges_denture']!),
       };
+
+      // Add images to case data if they exist
+      if (imgList.isNotEmpty) {
+        caseData['images'] = imgList;
+      }
 
       // Remove only null values, keep empty strings for teeth data
       caseData.removeWhere((key, value) => value == null);

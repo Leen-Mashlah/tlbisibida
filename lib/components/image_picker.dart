@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker_web/image_picker_web.dart';
+import 'dart:typed_data';
 
-Widget imagePicker(List<Image> images) {
+Widget imagePicker(List<Image> images, {Function(Uint8List)? onImagePicked}) {
   return StatefulBuilder(
     builder: (context, setState) {
       return Column(
@@ -9,12 +10,20 @@ Widget imagePicker(List<Image> images) {
         children: [
           ElevatedButton(
             onPressed: () async {
+              // Get both widget and bytes
               final pickedFile = await ImagePickerWeb.getImageAsWidget();
+              final pickedBytes = await ImagePickerWeb.getImageAsBytes();
+
               setState(() {
                 if (pickedFile != null) {
                   images.add(pickedFile);
                 }
               });
+
+              // Call callback with bytes if provided
+              if (pickedBytes != null && onImagePicked != null) {
+                onImagePicked(pickedBytes);
+              }
             },
             child: Icon(Icons.image_search),
           ),

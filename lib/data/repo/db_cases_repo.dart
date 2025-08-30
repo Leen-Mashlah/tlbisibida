@@ -181,6 +181,21 @@ class DBCasesRepo extends CasesRepo {
         }
       });
 
+      // Add images if they exist
+      if (caseData.containsKey('images') &&
+          caseData['images'] is List<Uint8List>) {
+        List<Uint8List> images = caseData['images'];
+        for (int i = 0; i < images.length; i++) {
+          formData.files.add(MapEntry(
+            'images[$i]',
+            MultipartFile.fromBytes(
+              images[i],
+              filename: 'image_$i.jpg',
+            ),
+          ));
+        }
+      }
+
       final response = await DioHelper.postFormData(
         'lab-manager/medical-cases/add-medical-case-to-local-client',
         formData,
