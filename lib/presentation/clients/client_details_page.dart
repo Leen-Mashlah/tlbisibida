@@ -107,7 +107,8 @@ class ClientDetailsPage extends StatelessWidget {
                           const SizedBox(width: 30),
                           Row(
                             children: [
-                              showpaymentlog(context, headerCurrentAccount),
+                              showpaymentlog(
+                                  context, headerCurrentAccount, clientsCubit),
                               const SizedBox(width: 10),
                               const Icon(
                                 Icons.credit_card_rounded,
@@ -194,7 +195,8 @@ class ClientDetailsPage extends StatelessWidget {
     ));
   }
 
-  Positioned showpaymentlog(BuildContext context, headerCurrentAccount) {
+  Positioned showpaymentlog(
+      BuildContext context, headerCurrentAccount, ClientsCubit clientsCubit) {
     return Positioned(
       child: InfoPopupWidget(
         enabledAutomaticConstraint: false,
@@ -214,15 +216,15 @@ class ClientDetailsPage extends StatelessWidget {
             onTap: () {
               showDialog(
                   context: context,
-                  builder: (context) =>
-                      paymentLogDialog(context, dentistId: clientId ?? 0));
+                  builder: (context) => paymentLogDialog(context,
+                      dentistId: clientId ?? 0, clientsCubit: clientsCubit));
             },
             child: TextButton(
                 onPressed: () {
                   showDialog(
                     context: context,
-                    builder: (context) =>
-                        paymentLogDialog(context, dentistId: clientId ?? 0),
+                    builder: (context) => paymentLogDialog(context,
+                        dentistId: clientId ?? 0, clientsCubit: clientsCubit),
                   );
                 },
                 child: Text(headerCurrentAccount.toString()))),
