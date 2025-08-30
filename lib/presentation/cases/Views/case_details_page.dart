@@ -12,24 +12,24 @@ class CaseDetails extends StatelessWidget {
   CaseDetails({super.key});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: BlocConsumer<CasesCubit, CasesState>(
-          listener: (context, state) {
-            // TODO: implement listener
-            if (state is CommentsLoaded) {
-              Scaffold.of(context).openDrawer();
-            }
-          },
+    return BlocListener<CasesCubit, CasesState>(
+      listener: (context, state) {
+        if (state is CommentsLoaded) {
+          Scaffold.of(context).openDrawer();
+        }
+      },
+      child: Scaffold(
+        body: BlocBuilder<CasesCubit, CasesState>(
           builder: (context, state) {
-            final casesCubit = context.read<CasesCubit>();
-
             // Load case details if not already loaded
-            if (casesCubit.medicalCase == null) {
+            if (state is! CaseDetailsLoading && state is! CaseDetailsLoaded) {
               final int? caseId =
                   ModalRoute.of(context)?.settings.arguments as int?;
+              print('CaseDetails - Loading case details for ID: $caseId');
               if (caseId != null) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  casesCubit.getCaseDetails(caseId);
+                  print('CaseDetails - Calling getCaseDetails for ID: $caseId');
+                  context.read<CasesCubit>().getCaseDetails(caseId);
                 });
               }
             }
@@ -393,6 +393,8 @@ class CaseDetails extends StatelessWidget {
                 child: CircularProgressIndicator()); // Default widget
           },
         ),
-        drawer: caseComments(context));
+        drawer: caseComments(context),
+      ),
+    );
   }
 }
