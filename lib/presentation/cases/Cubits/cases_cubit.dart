@@ -64,10 +64,14 @@ class CasesCubit extends Cubit<CasesState> {
 
   MedicalCase? medicalCase;
   Future<void> getCaseDetails(int id) async {
+    print('CasesCubit - getCaseDetails called with ID: $id');
     if (isClosed) return;
     emit(CaseDetailsLoading());
     try {
+      print('CasesCubit - Calling repo.getCaseDetails');
       medicalCase = await repo.getCaseDetails(id);
+      print(
+          'CasesCubit - Repo returned: ${medicalCase != null ? 'success' : 'null'}');
       if (medicalCase != null) {
         if (isClosed) return;
         emit(CaseDetailsLoaded(medicalCase!));
@@ -75,6 +79,7 @@ class CasesCubit extends Cubit<CasesState> {
         if (!isClosed) emit(CasesError('No case details found.'));
       }
     } on Exception catch (e) {
+      print('CasesCubit - Error in getCaseDetails: $e');
       if (!isClosed) emit(CasesError("Error loading case: \\${e.toString()}"));
     }
   }
