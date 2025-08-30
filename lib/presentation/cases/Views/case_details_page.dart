@@ -26,11 +26,35 @@ class CaseDetails extends StatelessWidget {
               final int? caseId =
                   ModalRoute.of(context)?.settings.arguments as int?;
               print('CaseDetails - Loading case details for ID: $caseId');
+              print(
+                  'CaseDetails - Route arguments: ${ModalRoute.of(context)?.settings.arguments}');
               if (caseId != null) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   print('CaseDetails - Calling getCaseDetails for ID: $caseId');
                   context.read<CasesCubit>().getCaseDetails(caseId);
                 });
+              } else {
+                print('CaseDetails - No case ID provided, showing error');
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.error_outline,
+                          size: 64, color: Colors.red),
+                      const SizedBox(height: 16),
+                      const Text(
+                        'خطأ: لم يتم تحديد معرف الحالة',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('العودة'),
+                      ),
+                    ],
+                  ),
+                );
               }
             }
             if (state is CaseDetailsLoading) {

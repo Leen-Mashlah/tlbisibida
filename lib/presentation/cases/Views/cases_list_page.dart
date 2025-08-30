@@ -218,8 +218,22 @@ Widget _itembuilder(
       borderRadius: BorderRadius.only(
           topRight: Radius.circular(16), bottomLeft: Radius.circular(16)),
       hoverColor: const Color.fromARGB(63, 48, 195, 178),
-      onTap: () =>
-          locator<NavigationService>().navigateTo(caseDetailsPageRoute),
+      onTap: () {
+        // Get the case ID from the current case
+        final caseId = info.id;
+        print('CasesList - Navigating to case details with ID: $caseId');
+        if (caseId != null) {
+          locator<NavigationService>()
+              .navigateTo(caseDetailsPageRoute, arguments: caseId);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('خطأ: لا يمكن العثور على معرف الحالة'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      },
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
