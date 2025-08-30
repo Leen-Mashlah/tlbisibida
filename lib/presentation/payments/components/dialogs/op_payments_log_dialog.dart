@@ -89,8 +89,8 @@ Dialog OpPaymentsLogDialog(BuildContext context,
                             const SizedBox(
                               height: 70,
                             ),
-                            BlocConsumer<PaymentsCubit, PaymentsState>(
-                              listener: (context, state) {},
+                            BlocBuilder<PaymentsCubit, PaymentsState>(
+                              bloc: cubit,
                               builder: (context, state) {
                                 final isSubmitting =
                                     state is PaymentsOpSubmitting;
@@ -111,9 +111,8 @@ Dialog OpPaymentsLogDialog(BuildContext context,
                                         return;
                                       }
                                       () async {
-                                        final ok = await context
-                                            .read<PaymentsCubit>()
-                                            .addOperatingPayment(
+                                        final ok =
+                                            await cubit.addOperatingPayment(
                                                 name: name, value: value);
                                         if (ok) {
                                           Navigator.of(context).pop();
