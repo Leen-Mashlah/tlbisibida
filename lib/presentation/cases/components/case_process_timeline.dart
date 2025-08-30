@@ -1,8 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:lambda_dent_dash/presentation/cases/Components/cost_dialog.dart';
+import 'package:lambda_dent_dash/presentation/cases/Cubits/cases_cubit.dart';
 import 'package:timelines_plus/timelines_plus.dart';
 
 const kTileHeight = 50.0;
@@ -21,11 +23,13 @@ const _processes = [
 class CaseProcessTimeline extends StatefulWidget {
   final int currentProcessIndex;
   final ValueChanged<int> onProcessIndexChanged; // Callback to notify parent
+  final int caseId; // Add case ID for API calls
 
   const CaseProcessTimeline({
     super.key,
     required this.currentProcessIndex,
     required this.onProcessIndexChanged,
+    required this.caseId,
   });
 
   @override
@@ -33,7 +37,6 @@ class CaseProcessTimeline extends StatefulWidget {
 }
 
 class _CaseProcessTimelineState extends State<CaseProcessTimeline> {
-
   Color getColor(int index) {
     if (index == widget.currentProcessIndex) {
       return inProgressColor;
@@ -46,6 +49,7 @@ class _CaseProcessTimelineState extends State<CaseProcessTimeline> {
 
   void _nextProcess() async {
     int newProcessIndex = widget.currentProcessIndex; // Start with current
+    int cost = 0; // Default cost is 0
 
     if (widget.currentProcessIndex == 2) {
       // If currently at "قيد الإنجاز", show the cost dialog
@@ -59,17 +63,43 @@ class _CaseProcessTimelineState extends State<CaseProcessTimeline> {
       // Check if a cost was submitted (result is not null)
       if (result != null) {
         print("Received cost from dialog: $result");
-        // Update the process index only if a cost was submitted
-        newProcessIndex = 3; // Move to "جاهزة"
+        // Parse the cost from the dialog result
+        try {
+          cost = int.parse(result);
+          // Update the process index only if a cost was submitted
+          newProcessIndex = 3; // Move to "جاهزة"
+        } catch (e) {
+          print("Error parsing cost: $e");
+          return; // Don't proceed if cost parsing fails
+        }
+      } else {
+        return; // Don't proceed if no cost was entered
       }
     } else if (widget.currentProcessIndex < _processes.length - 1) {
-      // For other stages, just increment the index
+      // For other stages, just increment the index (cost remains 0)
       newProcessIndex = widget.currentProcessIndex + 1;
     }
 
     // Only update if the index actually changed
     if (newProcessIndex != widget.currentProcessIndex) {
-      widget.onProcessIndexChanged(newProcessIndex); // Notify the parent
+      // Call the cubit to change the case status
+      final cubit = context.read<CasesCubit>();
+      final success = await cubit.changeCaseStatus(newProcessIndex, cost);
+
+      if (success) {
+        // Notify the parent only if the API call was successful
+        widget.onProcessIndexChanged(newProcessIndex);
+      } else {
+        // Show error message if the API call failed
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('فشل في تغيير حالة الحالة'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
     }
   }
 

@@ -49,6 +49,7 @@ class CaseDetails extends StatelessWidget {
                           currentProcessIndex: casesCubit
                               .medicalCase!.medicalCaseDetails!.status!,
                           onProcessIndexChanged: (value) {},
+                          caseId: caseId,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,

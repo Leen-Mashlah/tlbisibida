@@ -17,4 +17,7 @@ abstract class CasesRepo {
 
   // Add a comment to a medical case
   Future<bool> postCaseComment(int caseId, String comment);
+
+  // Change the status of a medical case
+  Future<bool> changeCaseStatus(int caseId, int cost);
 }

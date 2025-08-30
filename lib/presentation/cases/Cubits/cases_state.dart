@@ -33,6 +33,11 @@ class CommentsLoaded extends CasesState {
   CommentsLoaded(this.comments);
 }
 
+class CommentsError extends CasesState {
+  final String message;
+  CommentsError(this.message);
+}
+
 class ImagesLoaded extends CasesState {
   final List<Uint8List> images;
   ImagesLoaded(this.images);

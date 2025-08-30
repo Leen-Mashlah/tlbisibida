@@ -111,11 +111,11 @@ class CasesCubit extends Cubit<CasesState> {
         if (isClosed) return;
         emit(CommentsLoaded(comments!));
       } else {
-        if (!isClosed) emit(CasesError('No comments found.'));
+        if (!isClosed) emit(CommentsError('No comments found.'));
       }
     } on Exception catch (e) {
       if (!isClosed)
-        emit(CasesError("Error loading comments list: \\${e.toString()}"));
+        emit(CommentsError("Error loading comments list: ${e.toString()}"));
     }
   }
 
@@ -130,7 +130,39 @@ class CasesCubit extends Cubit<CasesState> {
       }
       return ok;
     } catch (e) {
-      if (!isClosed) emit(CasesError('Error sending comment: ${e.toString()}'));
+      if (!isClosed)
+        emit(CommentsError('Error sending comment: ${e.toString()}'));
+      return false;
+    }
+  }
+
+  // Change case status method
+  Future<bool> changeCaseStatus(int newStatusIndex, int cost) async {
+    if (isClosed) return false;
+
+    try {
+      final caseId = medicalCase?.medicalCaseDetails?.id;
+      if (caseId == null) {
+        if (!isClosed) emit(CasesError('No case ID found'));
+        return false;
+      }
+
+      final success = await repo.changeCaseStatus(caseId, cost);
+      if (success) {
+        // Update the local case status
+        if (medicalCase?.medicalCaseDetails != null) {
+          medicalCase!.medicalCaseDetails!.status = newStatusIndex;
+          // Emit the updated state
+          if (!isClosed) emit(CaseDetailsLoaded(medicalCase!));
+        }
+        return true;
+      } else {
+        if (!isClosed) emit(CasesError('Failed to change case status'));
+        return false;
+      }
+    } catch (e) {
+      if (!isClosed)
+        emit(CasesError('Error changing case status: ${e.toString()}'));
       return false;
     }
   }

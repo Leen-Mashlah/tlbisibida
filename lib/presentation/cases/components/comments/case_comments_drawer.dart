@@ -4,10 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:lambda_dent_dash/presentation/cases/Components/comments/chat_bubbles.dart';
 import 'package:lambda_dent_dash/presentation/cases/Cubits/cases_cubit.dart';
+import 'package:lambda_dent_dash/presentation/cases/Cubits/cases_state.dart';
 
 Widget caseComments(BuildContext context) {
-  final cubit = context.read<CasesCubit>();
-
   return Drawer(
     width: MediaQuery.of(context).size.width / 3,
     child: Column(
@@ -33,12 +32,54 @@ Widget caseComments(BuildContext context) {
         ),
         Expanded(
           flex: 1,
-          child: ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.zero, // Ensure no extra padding
-              itemCount: cubit.comments!.length,
-              itemBuilder: (context, index) =>
-                  chatBubbleBuilder(context, index)),
+          child: BlocBuilder<CasesCubit, CasesState>(
+            builder: (context, state) {
+              if (state is CommentsLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (state is CommentsLoaded) {
+                final comments = state.comments;
+                if (comments.isEmpty) {
+                  return const Center(
+                    child: Text('لا توجد تعليقات'),
+                  );
+                }
+                return ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.zero,
+                  itemCount: comments.length,
+                  itemBuilder: (context, index) =>
+                      chatBubbleBuilder(context, index),
+                );
+              } else if (state is CommentsError) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('خطأ في تحميل التعليقات'),
+                      Text(state.message),
+                      ElevatedButton(
+                        onPressed: () {
+                          final cubit = context.read<CasesCubit>();
+                          final caseId =
+                              cubit.medicalCase?.medicalCaseDetails?.id;
+                          if (caseId != null) {
+                            cubit.getcomment(caseId);
+                          }
+                        },
+                        child: Text('إعادة المحاولة'),
+                      ),
+                    ],
+                  ),
+                );
+              } else {
+                return const Center(
+                  child: Text('اضغط على زر التعليقات لتحميل التعليقات'),
+                );
+              }
+            },
+          ),
         ),
         Padding(
           padding: EdgeInsets.only(
@@ -49,6 +90,7 @@ Widget caseComments(BuildContext context) {
               messageBarHintText: 'اكتب تعليقك هنا',
               sendButtonColor: cyan400,
               onSend: (text) async {
+                final cubit = context.read<CasesCubit>();
                 final caseId = cubit.medicalCase?.medicalCaseDetails?.id;
                 if (caseId != null && text.trim().isNotEmpty) {
                   await cubit.sendCaseComment(

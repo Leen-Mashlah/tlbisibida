@@ -241,4 +241,29 @@ class DBCasesRepo extends CasesRepo {
       return false;
     }
   }
+
+  @override
+  Future<bool> changeCaseStatus(int caseId, int cost) async {
+    try {
+      final response = await DioHelper.postData(
+        'lab-manager/medical-cases/change-status',
+        {
+          'case_id': caseId,
+          'cost': cost,
+        },
+        token: CacheHelper.get('token'),
+      );
+
+      if (response?.data != null && response!.data['status'] == true) {
+        return true;
+      } else {
+        print(
+            'Failed to change case status: ${response?.data['message'] ?? 'Unknown error'}');
+        return false;
+      }
+    } catch (error) {
+      print('Error changing case status: $error');
+      return false;
+    }
+  }
 }
