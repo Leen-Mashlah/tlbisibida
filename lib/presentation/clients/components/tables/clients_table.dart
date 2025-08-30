@@ -6,6 +6,7 @@ import 'package:lambda_dent_dash/components/custom_text.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:lambda_dent_dash/presentation/clients/Cubits/clients_cubit.dart';
 import 'package:lambda_dent_dash/presentation/clients/Cubits/clients_state.dart';
+import 'package:lambda_dent_dash/presentation/clients/Providers/unified_clients_provider.dart';
 
 /// Example without datasource
 // ignore: must_be_immutable
@@ -93,13 +94,6 @@ class ClientsTable extends StatelessWidget {
                   clients.length,
                   (index) {
                     final client = clients[index];
-                    print('ClientsTable - Client data:');
-                    print('  id: ${client.id}');
-                    print('  name: "${client.name}"');
-                    print('  phone: ${client.phone}');
-                    print('  address: "${client.address}"');
-                    print('  joinedOn: "${client.joinedOn}"');
-                    print('  currentAccount: ${client.currentAccount}');
                     return DataRow(
                       cells: [
                         DataCell(Center(
@@ -115,19 +109,16 @@ class ClientsTable extends StatelessWidget {
                         DataCell(Center(
                             child: IconButton(
                           onPressed: () {
-                            final arguments = {
-                              'id': client.id,
-                              'name': client.name,
-                              'phone': client.phone.toString(),
-                              'address': client.address,
-                              'current_account': client.currentAccount,
-                            };
-                            print(
-                                'ClientsTable - Navigating with arguments: $arguments');
                             Navigator.pushNamed(
                               context,
                               '/client_details',
-                              arguments: arguments,
+                              arguments: {
+                                'id': client.id,
+                                'name': client.name,
+                                'phone': client.phone.toString(),
+                                'address': client.address,
+                                'current_account': client.currentAccount,
+                              },
                             );
                           },
                           icon: const Icon(

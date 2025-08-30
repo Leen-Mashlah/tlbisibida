@@ -42,16 +42,6 @@ class ClientDetailsPage extends StatelessWidget {
         final headerAddress =
             (initialAddress?.isNotEmpty == true) ? initialAddress! : '—';
 
-        // Debug: Print the received values
-        print('ClientDetailsPage - Received values:');
-        print('  clientId: $clientId');
-        print('  initialName: $initialName');
-        print('  initialPhone: $initialPhone');
-        print('  initialAddress: $initialAddress');
-        print('  headerName: $headerName');
-        print('  headerPhone: $headerPhone');
-        print('  headerAddress: $headerAddress');
-
         // Initial loads based on default tab
         if (_iscase.value) {
           clientsCubit.getCases(clientId ?? 0);

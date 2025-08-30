@@ -20,6 +20,10 @@ import 'package:lambda_dent_dash/presentation/payments/payments_log_page.dart';
 import 'package:lambda_dent_dash/presentation/payments/providers/unified_payments_provider.dart';
 import 'package:lambda_dent_dash/presentation/settings/settings.dart';
 import 'package:lambda_dent_dash/presentation/statistics/statistics_page.dart';
+import 'package:lambda_dent_dash/presentation/clients/client_details_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lambda_dent_dash/presentation/clients/Cubits/clients_cubit.dart';
+import 'package:lambda_dent_dash/data/repo/db_clients_repo.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   print('generateRoute: ${settings.name}');
@@ -88,8 +92,36 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           clientPageDisplayName);
     case clientDetailsPageRoute:
       return _getPageRoute(
-          const UnifiedClientsProvider(pageType: ClientsPageType.clientDetails),
-          clientDetailsPageDisplayName);
+        BlocProvider(
+          create: (context) => ClientsCubit(locator<DBClientsRepo>()),
+          child: Builder(
+            builder: (context) {
+              final args = settings.arguments;
+              if (args is Map<String, dynamic>) {
+                final clientId = args['id'] as int?;
+                final name = args['name'] as String?;
+                final phone = args['phone']?.toString();
+                final address = args['address'] as String?;
+
+                return ClientDetailsPage(
+                  clientId: clientId,
+                  initialName: name,
+                  initialPhone: phone,
+                  initialAddress: address,
+                );
+              } else {
+                return ClientDetailsPage(
+                  clientId: 0,
+                  initialName: 'Unknown',
+                  initialPhone: 'Unknown',
+                  initialAddress: 'Unknown',
+                );
+              }
+            },
+          ),
+        ),
+        clientDetailsPageDisplayName,
+      );
 
     //Employees
     case employeesPageRoute:
