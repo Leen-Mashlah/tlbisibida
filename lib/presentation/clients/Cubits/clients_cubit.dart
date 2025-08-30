@@ -1,9 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lambda_dent_dash/domain/models/bills/preview_bill.dart';
 import 'package:lambda_dent_dash/domain/models/cases/cases_by_doc.dart';
 import 'package:lambda_dent_dash/domain/models/bills/dentist_bills_list.dart';
 import 'package:lambda_dent_dash/domain/repo/clients_repo.dart';
 import 'package:lambda_dent_dash/domain/models/lab_clients/lab_client.dart';
+import 'package:lambda_dent_dash/domain/models/clients/dentist_payment.dart';
 import 'clients_state.dart';
 
 class ClientsCubit extends Cubit<ClientsState> {
@@ -161,6 +163,43 @@ class ClientsCubit extends Cubit<ClientsState> {
     } catch (e) {
       if (!isClosed)
         emit(ClientsError('Error loading join requests: \\${e.toString()}'));
+    }
+  }
+
+  // Dentist payments methods
+  DentistPaymentsResponse? dentistPaymentsResponse;
+  Future<void> getDentistPayments(int dentistId) async {
+    if (isClosed) return;
+    emit(DentistPaymentsLoading());
+    try {
+      dentistPaymentsResponse = await repo.getDentistPayments(dentistId);
+      if (isClosed) return;
+      emit(DentistPaymentsLoaded(dentistPaymentsResponse!));
+    } catch (e) {
+      if (!isClosed)
+        emit(DentistPaymentsError(
+            'Error loading dentist payments: \\${e.toString()}'));
+    }
+  }
+
+  Future<bool> addDentistPayment(int dentistId, int value) async {
+    if (isClosed) return false;
+    emit(DentistPaymentsLoading());
+    try {
+      final success = await repo.addDentistPayment(dentistId, value);
+      if (success) {
+        // Reload payments after successful addition
+        await getDentistPayments(dentistId);
+        if (isClosed) return true;
+        emit(DentistPaymentsLoaded(dentistPaymentsResponse!));
+      } else {
+        if (!isClosed) emit(DentistPaymentsError('Failed to add payment.'));
+      }
+      return success;
+    } catch (e) {
+      if (!isClosed)
+        emit(DentistPaymentsError('Error adding payment: \\${e.toString()}'));
+      return false;
     }
   }
 }

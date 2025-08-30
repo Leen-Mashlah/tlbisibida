@@ -2,6 +2,7 @@ import 'package:lambda_dent_dash/domain/models/lab_clients/lab_client.dart';
 import 'package:lambda_dent_dash/domain/models/bills/dentist_bills_list.dart';
 import 'package:lambda_dent_dash/domain/models/bills/preview_bill.dart';
 import 'package:lambda_dent_dash/domain/models/cases/cases_by_doc.dart';
+import 'package:lambda_dent_dash/domain/models/clients/dentist_payment.dart';
 
 abstract class ClientsState {}
 
@@ -57,4 +58,17 @@ class ClientCasesLoaded extends ClientsState {
 class ClientCasesError extends ClientsState {
   final String message;
   ClientCasesError(this.message);
+}
+
+// Dentist payments states
+class DentistPaymentsLoading extends ClientsState {}
+
+class DentistPaymentsLoaded extends ClientsState {
+  final DentistPaymentsResponse dentistPaymentsResponse;
+  DentistPaymentsLoaded(this.dentistPaymentsResponse);
+}
+
+class DentistPaymentsError extends ClientsState {
+  final String message;
+  DentistPaymentsError(this.message);
 }

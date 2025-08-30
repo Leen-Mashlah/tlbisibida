@@ -74,12 +74,16 @@ class EmplyoeesPage extends StatelessWidget {
                 child: floatButton(
                   icon: Icons.add,
                   onTap: () {
+                    final employeesCubit = context.read<EmployeesCubit>();
                     showDialog(
                       context: context,
                       builder: (context) {
-                        return employeeAddDialog(
-                          context,
-                          context.read<EmployeesCubit>(),
+                        return BlocProvider.value(
+                          value: employeesCubit,
+                          child: employeeAddDialog(
+                            context,
+                            employeesCubit,
+                          ),
                         );
                       },
                     );
@@ -155,7 +159,7 @@ Widget employeeCard(BuildContext context, int index, Employees employees) {
                         children: [
                           const Icon(
                             Icons.co_present_outlined,
-                            size: 100,
+                            size: 50,
                             color: cyan400,
                           ),
                           const SizedBox(

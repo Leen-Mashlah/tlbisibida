@@ -214,13 +214,15 @@ class ClientDetailsPage extends StatelessWidget {
             onTap: () {
               showDialog(
                   context: context,
-                  builder: (context) => paymentLogDialog(context));
+                  builder: (context) =>
+                      paymentLogDialog(context, dentistId: clientId ?? 0));
             },
             child: TextButton(
                 onPressed: () {
                   showDialog(
                     context: context,
-                    builder: (context) => paymentLogDialog(context),
+                    builder: (context) =>
+                        paymentLogDialog(context, dentistId: clientId ?? 0),
                   );
                 },
                 child: Text(headerCurrentAccount.toString()))),

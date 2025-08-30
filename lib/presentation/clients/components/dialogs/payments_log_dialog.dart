@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lambda_dent_dash/components/default_button.dart';
 import 'package:lambda_dent_dash/components/default_textfield.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:lambda_dent_dash/presentation/clients/components/tables/payment_log_table.dart';
+import 'package:lambda_dent_dash/presentation/clients/Cubits/clients_cubit.dart';
+import 'package:lambda_dent_dash/presentation/clients/Cubits/clients_state.dart';
 
-Dialog paymentLogDialog(BuildContext context) {
-  TextEditingController itemnamecontroller = TextEditingController();
-  TextEditingController itemunitcontroller = TextEditingController();
+Dialog paymentLogDialog(BuildContext context, {required int dentistId}) {
+  TextEditingController valueController = TextEditingController();
+  TextEditingController confirmValueController = TextEditingController();
 
   return Dialog(
     child: Padding(
@@ -61,23 +64,81 @@ Dialog paymentLogDialog(BuildContext context) {
                               height: 70,
                             ),
                             defaultTextField(
-                              itemnamecontroller,
+                              valueController,
                               context,
                               'القيمة المضافة',
+                              keyboardType: TextInputType.number,
                             ),
                             const SizedBox(
                               height: 50,
                             ),
                             defaultTextField(
-                                itemunitcontroller, context, 'تأكيد القيمة'),
+                                confirmValueController, context, 'تأكيد القيمة',
+                                keyboardType: TextInputType.number),
                             const SizedBox(
                               height: 70,
                             ),
-                            defaultButton(
-                                text: 'إضافة',
-                                function: () {
-                                  Navigator.of(context).pop();
-                                })
+                            BlocConsumer<ClientsCubit, ClientsState>(
+                              listener: (context, state) {
+                                if (state is DentistPaymentsError) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text(state.message)),
+                                  );
+                                }
+                              },
+                              builder: (context, state) {
+                                return defaultButton(
+                                    text: state is DentistPaymentsLoading
+                                        ? 'جاري الإضافة...'
+                                        : 'إضافة',
+                                    function: state is DentistPaymentsLoading
+                                        ? () {}
+                                        : () async {
+                                            final value = int.tryParse(
+                                                valueController.text.trim());
+                                            final confirmValue = int.tryParse(
+                                                confirmValueController.text
+                                                    .trim());
+
+                                            if (value == null ||
+                                                confirmValue == null) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                    content: Text(
+                                                        'يرجى إدخال قيمة صحيحة')),
+                                              );
+                                              return;
+                                            }
+
+                                            if (value != confirmValue) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                    content: Text(
+                                                        'القيمتان غير متطابقتين')),
+                                              );
+                                              return;
+                                            }
+
+                                            final success = await context
+                                                .read<ClientsCubit>()
+                                                .addDentistPayment(
+                                                    dentistId, value);
+                                            if (success) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                  content: Text(
+                                                      'تم إضافة الدفعة بنجاح'),
+                                                  backgroundColor: Colors.green,
+                                                ),
+                                              );
+                                              Navigator.of(context).pop();
+                                            }
+                                          });
+                              },
+                            )
                           ],
                         ),
                       ),
@@ -103,7 +164,7 @@ Dialog paymentLogDialog(BuildContext context) {
                                 SizedBox(
                                   height: 20,
                                 ),
-                                PaymentLogTable(),
+                                PaymentLogTable(dentistId: dentistId),
                               ],
                             ))),
                       ),

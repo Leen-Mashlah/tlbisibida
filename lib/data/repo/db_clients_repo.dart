@@ -11,6 +11,8 @@ import 'package:lambda_dent_dash/domain/models/lab_clients/lab_client.dart';
 import 'package:lambda_dent_dash/data/models/bills/db_preview_bill.dart';
 import 'package:lambda_dent_dash/domain/models/bills/preview_bill.dart';
 import 'package:lambda_dent_dash/data/models/lab_clients/db_join_requests.dart';
+import 'package:lambda_dent_dash/data/models/clients/db_dentist_payment.dart';
+import 'package:lambda_dent_dash/domain/models/clients/dentist_payment.dart';
 
 class DBClientsRepo extends ClientsRepo {
   DBMedicalCasesForDentistResponse? dbMedicalCasesForDentistResponse;
@@ -190,5 +192,45 @@ class DBClientsRepo extends ClientsRepo {
           [],
       successMessage: dbResp?.successMessage ?? '',
     );
+  }
+
+  @override
+  Future<DentistPaymentsResponse> getDentistPayments(int dentistId) async {
+    try {
+      final response = await DioHelper.getData(
+        'lab-manager/show-dentist-payments-in-lab/$dentistId',
+        token: CacheHelper.get('token'),
+      );
+
+      if (response?.data != null) {
+        final dbResponse = DBDentistPaymentsResponse.fromJson(response!.data);
+        return dbResponse.toDomain();
+      } else {
+        throw Exception('No response data');
+      }
+    } catch (e) {
+      print('Error getting dentist payments: $e');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<bool> addDentistPayment(int dentistId, int value) async {
+    try {
+      final response = await DioHelper.postData(
+        'lab-manager/add-dentist-payments-in-lab/$dentistId',
+        {'value': value},
+        token: CacheHelper.get('token'),
+      );
+
+      if (response?.data != null && response!.data['status'] == true) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print('Error adding dentist payment: $e');
+      return false;
+    }
   }
 }
