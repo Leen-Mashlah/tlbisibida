@@ -21,6 +21,18 @@ class CaseDetails extends StatelessWidget {
             }
           },
           builder: (context, state) {
+            final casesCubit = context.read<CasesCubit>();
+
+            // Load case details if not already loaded
+            if (casesCubit.medicalCase == null) {
+              final int? caseId =
+                  ModalRoute.of(context)?.settings.arguments as int?;
+              if (caseId != null) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  casesCubit.getCaseDetails(caseId);
+                });
+              }
+            }
             if (state is CaseDetailsLoading) {
               return Center(child: CircularProgressIndicator());
             } else if (state is CaseDetailsLoaded) {

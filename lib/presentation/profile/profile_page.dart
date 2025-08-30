@@ -72,6 +72,49 @@ class ProfilePage extends StatelessWidget {
               ),
             );
           }
+
+          // Profile is loaded, show the main content
+          return Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 80.0, vertical: 20.0),
+              child: Column(
+                children: [
+                  Card(
+                    color: const Color.fromARGB(215, 211, 241, 238),
+                    child: Padding(
+                      padding: const EdgeInsets.all(30.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width / 2.5,
+                              child: ProfileSection()),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width / 2.5,
+                            child: const Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                AccountsSection(),
+                                SizedBox(height: 20),
+                                SubscriptionStatus(),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  defaultButton(
+                      text: 'تسجيل الخروج',
+                      function: () {
+                        authCubit.logout();
+                      })
+                ],
+              ));
         }
 
         // If profile is not loaded yet, load it
@@ -93,47 +136,17 @@ class ProfilePage extends StatelessWidget {
           );
         }
 
-        return Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 80.0, vertical: 20.0),
-            child: Column(
-              children: [
-                Card(
-                  color: const Color.fromARGB(215, 211, 241, 238),
-                  child: Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                            width: MediaQuery.of(context).size.width / 2.5,
-                            child: ProfileSection()),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width / 2.5,
-                          child: const Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              AccountsSection(),
-                              SizedBox(height: 20),
-                              SubscriptionStatus(),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                defaultButton(
-                    text: 'تسجيل الخروج',
-                    function: () {
-                      authCubit.logout();
-                    })
-              ],
-            ));
+        // Fallback: If we reach here, show loading
+        return const Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 20),
+              Text('Loading profile...'),
+            ],
+          ),
+        );
       },
     );
   }

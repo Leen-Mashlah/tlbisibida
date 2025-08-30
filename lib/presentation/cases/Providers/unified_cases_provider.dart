@@ -7,11 +7,7 @@ import 'package:lambda_dent_dash/presentation/cases/Cubits/cases_cubit.dart';
 import 'package:lambda_dent_dash/presentation/cases/Views/cases_list_page.dart';
 import 'package:lambda_dent_dash/presentation/cases/Views/case_details_page.dart';
 
-enum CasesPageType {
-  casesList,
-  caseDetails,
-  addCase
-}
+enum CasesPageType { casesList, caseDetails, addCase }
 
 class UnifiedCasesProvider extends StatelessWidget {
   final CasesPageType pageType;
@@ -26,17 +22,7 @@ class UnifiedCasesProvider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) {
-        final cubit = CasesCubit(casesRepo);
-        if (pageType == CasesPageType.caseDetails) {
-          final int? caseId =
-              ModalRoute.of(context)?.settings.arguments as int?;
-          if (caseId != null) {
-            cubit.getCaseDetails(caseId);
-          }
-        }
-        return cubit;
-      },
+      create: (context) => CasesCubit(casesRepo),
       child: _buildPage(),
     );
   }
@@ -48,7 +34,7 @@ class UnifiedCasesProvider extends StatelessWidget {
       case CasesPageType.caseDetails:
         return CaseDetails();
       case CasesPageType.addCase:
-        return  AddCasePage();
+        return AddCasePage();
     }
   }
 }
