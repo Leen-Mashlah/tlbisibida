@@ -74,7 +74,7 @@ Dialog OpPaymentsLogDialog(BuildContext context,
                               'اسم المصروف',
                             ),
                             const SizedBox(
-                              height: 50,
+                              height: 20,
                             ),
                             defaultTextField(
                               valueController,
@@ -82,7 +82,7 @@ Dialog OpPaymentsLogDialog(BuildContext context,
                               'القيمة المضافة',
                             ),
                             const SizedBox(
-                              height: 50,
+                              height: 20,
                             ),
                             defaultTextField(confirmValueController, context,
                                 'تأكيد القيمة'),
@@ -114,9 +114,9 @@ Dialog OpPaymentsLogDialog(BuildContext context,
                                         final ok =
                                             await cubit.addOperatingPayment(
                                                 name: name, value: value);
-                                        if (ok) {
-                                          Navigator.of(context).pop();
-                                        }
+                                        // if (ok) {
+                                        //   Navigator.of(context).pop();
+                                        // }
                                       }();
                                     });
                               },
