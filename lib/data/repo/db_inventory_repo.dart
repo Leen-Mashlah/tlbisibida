@@ -5,6 +5,7 @@ import 'package:lambda_dent_dash/data/models/inventory/db_show_quants_for_items.
 import 'package:lambda_dent_dash/data/models/inventory/db_show_subcats.dart';
 import 'package:lambda_dent_dash/domain/repo/inv_repo.dart';
 import 'package:lambda_dent_dash/services/dio/dio.dart';
+import 'package:lambda_dent_dash/services/cache/cache_helper.dart';
 
 class DbInventoryRepo implements InvRepo {
   @override
@@ -24,189 +25,222 @@ class DbInventoryRepo implements InvRepo {
 
   @override
   Future<void> getCats() async {
-    return await DioHelper.getData('inventory/categories', token: '')
-        .then((value) {
-      dbCategoriesResponse = DBCategoriesResponse.fromJson(value?.data);
-    }).catchError((error) {
+    try {
+      final response = await DioHelper.getData('inventory/categories',
+          token: CacheHelper.get('token'));
+      dbCategoriesResponse = DBCategoriesResponse.fromJson(response?.data);
+    } catch (error) {
       print('error in getCats: ' + error.toString());
-    });
+      rethrow;
+    }
   }
 
   @override
   Future<void> getItems(int id) async {
-    return await DioHelper.getData('inventory/items/$id', token: '')
-        .then((value) {
-      dbItemsResponse = DBItemsResponse.fromJson(value?.data);
-    }).catchError((error) {
+    try {
+      final response = await DioHelper.getData('inventory/items/$id',
+          token: CacheHelper.get('token'));
+      dbItemsResponse = DBItemsResponse.fromJson(response?.data);
+    } catch (error) {
       print('error in getItems: ' + error.toString());
-    });
+      rethrow;
+    }
   }
 
   @override
   Future<void> getItemsLog() async {
-    return await DioHelper.getData('inventory/Repeated_item_histories',
-            token: '')
-        .then((value) {
-      dbRepeatedItemsResponse = DBRepeatedItemsResponse.fromJson(value?.data);
-    }).catchError((error) {
+    try {
+      final response = await DioHelper.getData(
+          'inventory/Repeated_item_histories',
+          token: CacheHelper.get('token'));
+      dbRepeatedItemsResponse =
+          DBRepeatedItemsResponse.fromJson(response?.data);
+    } catch (error) {
       print('error in getItemsLog: ' + error.toString());
-    });
+      rethrow;
+    }
   }
 
   @override
   Future<void> getQuantities(int id) async {
-    return await DioHelper.getData('inventory/itemhistories/$id', token: '')
-        .then((value) {
+    try {
+      final response = await DioHelper.getData('inventory/itemhistories/$id',
+          token: CacheHelper.get('token'));
       dbItemQuantityHistoryResponse =
-          DBItemQuantityHistoryResponse.fromJson(value?.data);
-    }).catchError((error) {
+          DBItemQuantityHistoryResponse.fromJson(response?.data);
+    } catch (error) {
       print('error in getQuantities: ' + error.toString());
-    });
+      rethrow;
+    }
   }
 
   @override
   Future<void> getSubCats(int id) async {
-    return await DioHelper.getData('inventory/subcategories/$id', token: '')
-        .then((value) {
+    try {
+      final response = await DioHelper.getData('inventory/subcategories/$id',
+          token: CacheHelper.get('token'));
       dbSubCategoryRepositoriesResponse =
-          DBSubCategoryRepositoriesResponse.fromJson(value?.data);
-    }).catchError((error) {
+          DBSubCategoryRepositoriesResponse.fromJson(response?.data);
+    } catch (error) {
       print('error in getSubCats: ' + error.toString());
-    });
+      rethrow;
+    }
   }
 
   // CRUD operations for Categories
   @override
   Future<void> addCategory(String name) async {
-    return await DioHelper.postData(
-            'inventory/addcategory',
-            {
-              'name': name,
-            },
-            token: '')
-        .then((value) {
+    try {
+      await DioHelper.postData(
+        'inventory/addcategory',
+        {
+          'name': name,
+        },
+        token: CacheHelper.get('token'),
+      );
       // Refresh categories after adding
       getCats();
-    }).catchError((error) {
+    } catch (error) {
       print('error in addCategory: ' + error.toString());
-    });
+      rethrow;
+    }
   }
 
   @override
   Future<void> updateCategory(int id, String name) async {
-    return await DioHelper.updateData(
-            'inventory/updateCategory/$id?name=$name', {},
-            token: '')
-        .then((value) {
+    try {
+      await DioHelper.updateData(
+        'inventory/updateCategory/$id?name=$name',
+        {},
+        token: CacheHelper.get('token'),
+      );
       // Refresh categories after updating
       getCats();
-    }).catchError((error) {
+    } catch (error) {
       print('error in updateCategory: ' + error.toString());
-    });
+      rethrow;
+    }
   }
 
   @override
   Future<void> deleteCategory(int id) async {
-    return await DioHelper.deleteData('inventory/deletecategory/$id', token: '')
-        .then((value) {
+    try {
+      await DioHelper.deleteData('inventory/deletecategory/$id',
+          token: CacheHelper.get('token'));
       // Refresh categories after deleting
       getCats();
-    }).catchError((error) {
+    } catch (error) {
       print('error in deleteCategory: ' + error.toString());
-    });
+      rethrow;
+    }
   }
 
   // CRUD operations for Subcategories
   @override
   Future<void> addSubcategory(int categoryId, String name) async {
-    return await DioHelper.postData(
-            'inventory/addsubcategory/$categoryId',
-            {
-              'name': name,
-            },
-            token: '')
-        .then((value) {
+    try {
+      await DioHelper.postData(
+        'inventory/addsubcategory/$categoryId',
+        {
+          'name': name,
+        },
+        token: CacheHelper.get('token'),
+      );
       // Refresh subcategories after adding
       getSubCats(categoryId);
-    }).catchError((error) {
+    } catch (error) {
       print('error in addSubcategory: ' + error.toString());
-    });
+      rethrow;
+    }
   }
 
   @override
   Future<void> updateSubcategory(int id, String name) async {
-    return await DioHelper.updateData(
-            'inventory/updateSubCategory/$id?name=$name', {},
-            token: '')
-        .then((value) {
+    try {
+      await DioHelper.updateData(
+        'inventory/updateSubCategory/$id?name=$name',
+        {},
+        token: CacheHelper.get('token'),
+      );
       // Note: We need the categoryId to refresh subcategories
       // This will be handled in the cubit
-    }).catchError((error) {
+    } catch (error) {
       print('error in updateSubcategory: ' + error.toString());
-    });
+      rethrow;
+    }
   }
 
   @override
   Future<void> deleteSubcategory(int id) async {
-    return await DioHelper.deleteData('inventory/deleteSubcategory/$id',
-            token: '')
-        .then((value) {
+    try {
+      await DioHelper.deleteData('inventory/deleteSubcategory/$id',
+          token: CacheHelper.get('token'));
       // Note: We need the categoryId to refresh subcategories
       // This will be handled in the cubit
-    }).catchError((error) {
+    } catch (error) {
       print('error in deleteSubcategory: ' + error.toString());
-    });
+      rethrow;
+    }
   }
 
   // CRUD operations for Items
   @override
   Future<void> addItem(int subcategoryId, Map<String, dynamic> itemData) async {
-    return await DioHelper.postData(
-            'inventory/additem/$subcategoryId', itemData,
-            token: '')
-        .then((value) {
+    try {
+      await DioHelper.postData(
+        'inventory/additem/$subcategoryId',
+        itemData,
+        token: CacheHelper.get('token'),
+      );
       // Refresh items after adding
       getItems(subcategoryId);
-    }).catchError((error) {
+    } catch (error) {
       print('error in addItem: ' + error.toString());
-    });
+      rethrow;
+    }
   }
 
   @override
   Future<void> updateItem(int id, Map<String, dynamic> itemData) async {
-    return await DioHelper.updateData('inventory/updateitem/$id', itemData,
-            token: '')
-        .then((value) {
+    try {
+      await DioHelper.updateData('inventory/updateitem/$id', itemData,
+          token: CacheHelper.get('token'));
       // Note: We need the subcategoryId to refresh items
       // This will be handled in the cubit
-    }).catchError((error) {
+    } catch (error) {
       print('error in updateItem: ' + error.toString());
-    });
+      rethrow;
+    }
   }
 
   @override
   Future<void> deleteItem(int id) async {
-    return await DioHelper.deleteData('inventory/deleteitem/$id', token: '')
-        .then((value) {
+    try {
+      await DioHelper.deleteData('inventory/deleteitem/$id',
+          token: CacheHelper.get('token'));
       // Note: We need the subcategoryId to refresh items
       // This will be handled in the cubit
-    }).catchError((error) {
+    } catch (error) {
       print('error in deleteItem: ' + error.toString());
-    });
+      rethrow;
+    }
   }
 
   // Item quantity history
   @override
   Future<void> addItemHistory(
       int itemId, Map<String, dynamic> historyData) async {
-    return await DioHelper.postData(
-            'inventory/additemhistory/$itemId', historyData,
-            token: '')
-        .then((value) {
+    try {
+      await DioHelper.postData(
+        'inventory/additemhistory/$itemId',
+        historyData,
+        token: CacheHelper.get('token'),
+      );
       // Refresh item history after adding
       getQuantities(itemId);
-    }).catchError((error) {
+    } catch (error) {
       print('error in addItemHistory: ' + error.toString());
-    });
+      rethrow;
+    }
   }
 }
