@@ -148,7 +148,7 @@ Widget employeeCard(BuildContext context, int index, Employees employees) {
                     color: cyan50op,
                     border: Border.all(width: .5, color: cyan200),
                     borderRadius: BorderRadius.circular(10)),
-                width: 380,
+                width: 580,
                 height: 255,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -157,30 +157,38 @@ Widget employeeCard(BuildContext context, int index, Employees employees) {
                       padding: const EdgeInsets.all(10.0),
                       child: Column(
                         children: [
-                          const Icon(
-                            Icons.co_present_outlined,
-                            size: 50,
-                            color: cyan400,
-                          ),
-                          const SizedBox(
-                            height: 25,
-                          ),
                           if (activeEmployee != null) ...[
+                            Text(
+                              activeEmployee.fullName ?? 'غير محدد',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: cyan600),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            const Icon(
+                              Icons.co_present_outlined,
+                              size: 30,
+                              color: cyan400,
+                            ),
+                            const SizedBox(
+                              height: 25,
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Column(
+                                Column(
                                   children: [
-                                    Text(
-                                      'البريد الإلكتروني',
-                                      style: TextStyle(
-                                          fontSize: 12, color: cyan500),
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
+                                    const Text(
                                       'رقم الهاتف',
+                                      style: TextStyle(
+                                          fontSize: 14, color: cyan600),
+                                    ),
+                                    SizedBox(height: 5),
+                                    Text(
+                                      activeEmployee.phone ?? 'غير محدد',
                                       style: TextStyle(
                                           fontSize: 14, color: cyan600),
                                     ),
@@ -197,18 +205,19 @@ Widget employeeCard(BuildContext context, int index, Employees employees) {
                                 const SizedBox(
                                   width: 20,
                                 ),
-                                const Column(
+                                Column(
                                   children: [
-                                    Text(
+                                    const Text(
                                       'تاريخ بدء العمل: ',
                                       style: TextStyle(fontSize: 14),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 5,
                                     ),
+                                    const SizedBox(height: 5),
                                     Text(
-                                      'تاريخ البدء',
-                                      style: TextStyle(fontSize: 14),
+                                      activeEmployee.startAt ?? 'غير محدد',
+                                      style: const TextStyle(fontSize: 14),
                                     ),
                                   ],
                                 ),
@@ -217,27 +226,18 @@ Widget employeeCard(BuildContext context, int index, Employees employees) {
                             const SizedBox(
                               height: 10,
                             ),
-                            Text(
-                              activeEmployee.fullName ?? 'غير محدد',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: cyan600),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              activeEmployee.email ?? 'غير محدد',
+                            const Text(
+                              'البريد الإلكتروني',
                               style: TextStyle(fontSize: 12, color: cyan500),
                             ),
-                            SizedBox(height: 5),
-                            Text(
-                              activeEmployee.phone ?? 'غير محدد',
-                              style: TextStyle(fontSize: 14, color: cyan600),
+                            const SizedBox(
+                              height: 5,
                             ),
-                            SizedBox(height: 5),
+                            const SizedBox(height: 5),
                             Text(
-                              activeEmployee.startAt ?? 'غير محدد',
-                              style: TextStyle(fontSize: 14),
+                              activeEmployee.email ?? 'غير محدد',
+                              style:
+                                  const TextStyle(fontSize: 12, color: cyan500),
                             ),
                           ] else ...[
                             Column(
@@ -269,13 +269,13 @@ Widget employeeCard(BuildContext context, int index, Employees employees) {
                 height: 15,
               ),
               SizedBox(
-                  width: 400,
+                  width: 500,
                   height: MediaQuery.sizeOf(context).height / 2.6,
                   child: CustomScrollView(slivers: [
                     SliverFillRemaining(
                       child: Padding(
                           padding: EdgeInsets.symmetric(
-                              vertical: 8.0, horizontal: 8.0),
+                              vertical: 4.0, horizontal: 4.0),
                           child: EmployeeLogTable(employeeType: employeeType)),
                     ),
                   ])),

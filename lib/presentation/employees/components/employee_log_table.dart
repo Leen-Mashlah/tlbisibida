@@ -38,16 +38,20 @@ class EmployeeLogTable extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: DataTable(
               columns: const [
-                DataColumn(label: Text('الاسم')),
-                DataColumn(label: Text('تاريخ البدء')),
-                DataColumn(label: Text('تاريخ الانتهاء')),
+                DataColumn(label: Center(child: Text('الاسم'))),
+                DataColumn(label: Center(child: Text('تاريخ البدء'))),
+                DataColumn(label: Center(child: Text('تاريخ الانتهاء'))),
               ],
               rows: inactiveEmployees.map((employee) {
                 return DataRow(
                   cells: [
-                    DataCell(Text(employee.fullName ?? 'غير محدد')),
-                    DataCell(Text(employee.startAt ?? 'غير محدد')),
-                    DataCell(Text(employee.terminationAt ?? 'غير محدد')),
+                    DataCell(
+                        Center(child: Text(employee.fullName ?? 'غير محدد'))),
+                    DataCell(
+                        Center(child: Text(employee.startAt ?? 'غير محدد'))),
+                    DataCell(Center(
+                        child: Text(employee.terminationAt!.substring(0, 10) ??
+                            'غير محدد'))),
                   ],
                 );
               }).toList(),
