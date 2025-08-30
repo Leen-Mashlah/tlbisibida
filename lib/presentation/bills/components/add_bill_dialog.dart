@@ -52,6 +52,7 @@ class _AddBillDialogState extends State<AddBillDialog> {
                           children: [
                             ChoiceButtonWithSearch(
                               hintText: 'اختر الزبون',
+                              clientsCubit: widget.clientsCubit,
                               onClientSelected: (client) {
                                 selectedDentistId = client.id;
                                 setState(() {});
