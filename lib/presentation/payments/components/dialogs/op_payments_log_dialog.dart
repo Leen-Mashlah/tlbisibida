@@ -147,7 +147,7 @@ Dialog OpPaymentsLogDialog(BuildContext context,
                                 SizedBox(
                                   height: 20,
                                 ),
-                                OpPaymentsLogTable(),
+                                OpPaymentsLogTable(cubit: cubit),
                               ],
                             ))),
                       ),

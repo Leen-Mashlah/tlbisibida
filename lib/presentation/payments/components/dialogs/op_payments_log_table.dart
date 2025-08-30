@@ -10,7 +10,9 @@ import 'package:lambda_dent_dash/presentation/payments/cubit/payments_state.dart
 /// Example without datasource
 // ignore: must_be_immutable
 class OpPaymentsLogTable extends StatelessWidget {
-  const OpPaymentsLogTable({super.key});
+  final PaymentsCubit cubit;
+
+  const OpPaymentsLogTable({super.key, required this.cubit});
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +30,11 @@ class OpPaymentsLogTable extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 30),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           BlocBuilder<PaymentsCubit, PaymentsState>(
+            bloc: cubit,
             builder: (context, state) {
               final items = (state is PaymentsOpLoaded)
                   ? state.operatingItems
-                  : context.read<PaymentsCubit>().operatingItems;
+                  : cubit.operatingItems;
               final rowCount = items.isEmpty ? 1 : items.length;
               return SizedBox(
                 height: (56 * rowCount) + 40,
