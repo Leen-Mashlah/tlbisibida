@@ -7,12 +7,11 @@ import 'package:lambda_dent_dash/constants/constants.dart';
 import 'package:lambda_dent_dash/presentation/clients/Cubits/clients_cubit.dart';
 import 'package:lambda_dent_dash/presentation/clients/Cubits/clients_state.dart';
 
-class BillPreviewDialog extends StatelessWidget {
-  const BillPreviewDialog({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Dialog(
+Widget billPreviewDialog(BuildContext context,
+    {required ClientsCubit clientsCubit}) {
+  return BlocProvider.value(
+    value: clientsCubit,
+    child: Dialog(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
         child: BlocBuilder<ClientsCubit, ClientsState>(
@@ -126,6 +125,6 @@ class BillPreviewDialog extends StatelessWidget {
           },
         ),
       ),
-    );
-  }
+    ),
+  );
 }
