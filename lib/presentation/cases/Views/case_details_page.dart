@@ -14,13 +14,7 @@ class CaseDetails extends StatelessWidget {
   CaseDetails({super.key, required this.caseId});
   @override
   Widget build(BuildContext context) {
-    return BlocListener<CasesCubit, CasesState>(
-      listener: (context, state) {
-        if (state is CommentsLoaded) {
-          Scaffold.of(context).openDrawer();
-        }
-      },
-      child: Scaffold(
+    return Scaffold(
         body: BlocBuilder<CasesCubit, CasesState>(
           builder: (context, state) {
             // Load case details if not already loaded
@@ -282,7 +276,7 @@ class CaseDetails extends StatelessWidget {
                                                   color: cyan600, fontSize: 16),
                                             ),
                                             Text(casesCubit.medicalCase!
-                                                    .medicalCaseDetails!.repeat!
+                                                    .medicalCaseDetails!.needTrial!
                                                 ? 'نعم'
                                                 : 'لا'),
                                             const SizedBox(
@@ -375,6 +369,9 @@ class CaseDetails extends StatelessWidget {
                                   ],
                                 ),
                                 onPressed: () {
+                                  // Open the drawer immediately
+                                  Scaffold.of(context).openDrawer();
+                                  // Then load comments
                                   casesCubit.getcomment(casesCubit
                                       .medicalCase!.medicalCaseDetails!.id!);
                                 },
@@ -393,7 +390,7 @@ class CaseDetails extends StatelessWidget {
           },
         ),
         drawer: caseComments(context),
-      ),
-    );
+      );
+    
   }
 }
