@@ -58,7 +58,7 @@ class DBClientsRepo extends ClientsRepo {
   Future<ClientsResponse> getClients() async {
     DBClientsResponse? dbClientsResponse;
     await DioHelper.getData(
-      'lab-manager/medical-cases/show-lab-clients',
+      'lab-manager/clients',
       token: CacheHelper.get('token'),
     ).then((value) {
       dbClientsResponse = DBClientsResponse.fromJson(value?.data);
