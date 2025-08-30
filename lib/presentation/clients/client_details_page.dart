@@ -17,12 +17,14 @@ class ClientDetailsPage extends StatelessWidget {
       required this.clientId,
       this.initialName,
       this.initialPhone,
-      this.initialAddress});
+      this.initialAddress,
+      this.initialCurrentAccount});
 
   final int? clientId;
   final String? initialName;
   final String? initialPhone;
   final String? initialAddress;
+  final String? initialCurrentAccount;
   //List choices = ['cases', 'bills'];
   final ValueNotifier<bool> _iscase = ValueNotifier<bool>(true);
 
@@ -41,6 +43,9 @@ class ClientDetailsPage extends StatelessWidget {
             (initialPhone?.isNotEmpty == true) ? initialPhone! : '—';
         final headerAddress =
             (initialAddress?.isNotEmpty == true) ? initialAddress! : '—';
+        final headerCurrentAccount = (initialCurrentAccount?.isNotEmpty == true)
+            ? initialCurrentAccount!
+            : 0;
 
         // Initial loads based on default tab
         if (_iscase.value) {
@@ -102,7 +107,7 @@ class ClientDetailsPage extends StatelessWidget {
                           const SizedBox(width: 30),
                           Row(
                             children: [
-                              showpaymentlog(context),
+                              showpaymentlog(context, headerCurrentAccount),
                               const SizedBox(width: 10),
                               const Icon(
                                 Icons.credit_card_rounded,
@@ -189,7 +194,7 @@ class ClientDetailsPage extends StatelessWidget {
     ));
   }
 
-  Positioned showpaymentlog(BuildContext context) {
+  Positioned showpaymentlog(BuildContext context, headerCurrentAccount) {
     return Positioned(
       child: InfoPopupWidget(
         enabledAutomaticConstraint: false,
@@ -218,7 +223,7 @@ class ClientDetailsPage extends StatelessWidget {
                     builder: (context) => paymentLogDialog(context),
                   );
                 },
-                child: const Text('300,000,000'))),
+                child: Text(headerCurrentAccount.toString()))),
       ),
     );
   }
