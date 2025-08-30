@@ -15,6 +15,11 @@ class ClientsCubit extends Cubit<ClientsState> {
   bool _isLoadingClients = false;
   bool _hasLoadedClients = false;
 
+  // Public method to reset loading state
+  void resetClientsLoadingState() {
+    _hasLoadedClients = false;
+  }
+
   MedicalCasesForDentist? casesList;
   Future<void> getCases(int id) async {
     if (isClosed) return;
@@ -75,12 +80,12 @@ class ClientsCubit extends Cubit<ClientsState> {
   ClientsResponse? clientsResponse;
   Future<void> getClients() async {
     if (isClosed) return;
-    if (_isLoadingClients || _hasLoadedClients) return;
+    if (_isLoadingClients) return;
     _isLoadingClients = true;
     emit(ClientsLoading());
     try {
       clientsResponse = await repo.getClients();
-      if (clientsResponse != null && clientsResponse!.clients.isNotEmpty) {
+      if (clientsResponse != null) {
         if (isClosed) return;
         emit(ClientsLoaded(clientsResponse!));
         _hasLoadedClients = true;
@@ -112,6 +117,8 @@ class ClientsCubit extends Cubit<ClientsState> {
         address: address,
       );
       if (success) {
+        // Reset loading state and reload clients
+        _hasLoadedClients = false;
         await getClients();
       } else {
         if (!isClosed) emit(ClientsError('Failed to add client.'));

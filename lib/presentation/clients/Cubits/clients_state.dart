@@ -1,7 +1,6 @@
 import 'package:lambda_dent_dash/domain/models/lab_clients/lab_client.dart';
 import 'package:lambda_dent_dash/domain/models/bills/dentist_bills_list.dart';
 import 'package:lambda_dent_dash/domain/models/bills/preview_bill.dart';
-import 'package:lambda_dent_dash/domain/models/cases/case_details.dart';
 import 'package:lambda_dent_dash/domain/models/cases/cases_by_doc.dart';
 
 abstract class ClientsState {}

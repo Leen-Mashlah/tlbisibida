@@ -17,14 +17,18 @@ class ClientsTable extends StatelessWidget {
     return BlocBuilder<ClientsCubit, ClientsState>(builder: (context, state) {
       final clientsCubit = context.read<ClientsCubit>();
 
-      if (state is ClientsLoading && (clientsCubit.clientsResponse == null)) {
+      if (state is ClientsLoading) {
         return const Center(child: CircularProgressIndicator());
       }
-      if (state is ClientsError && (clientsCubit.clientsResponse == null)) {
+      if (state is ClientsError) {
         return const Center(child: Text('حدث خطأ أثناء تحميل الزبائن'));
       }
 
       final clients = clientsCubit.clientsResponse?.clients ?? [];
+
+      if (clients.isEmpty) {
+        return const Center(child: Text('لا يوجد زبائن مسجلين'));
+      }
 
       return Center(
         child: Container(

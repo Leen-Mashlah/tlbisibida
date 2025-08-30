@@ -25,7 +25,8 @@ class ClientsPage extends StatelessWidget {
       // Initial load: request once via microtask to avoid triggering after dispose
       if (_showregisteredlist.value &&
           clientsCubit.clientsResponse == null &&
-          state is! ClientsLoading) {
+          state is! ClientsLoading &&
+          state is! ClientsError) {
         Future.microtask(() {
           if (!clientsCubit.isClosed) {
             clientsCubit.getClients();
@@ -54,6 +55,8 @@ class ClientsPage extends StatelessWidget {
                             // Trigger a reload of the relevant data when switching tabs
                             if (value) {
                               if (!clientsCubit.isClosed) {
+                                // Reset loading state for clients tab
+                                clientsCubit.resetClientsLoadingState();
                                 clientsCubit.getClients();
                               }
                             } else {
