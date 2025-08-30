@@ -83,18 +83,26 @@ Widget paymentLogDialog(BuildContext context,
                               ),
                               BlocConsumer<ClientsCubit, ClientsState>(
                                 listener: (context, state) {
-                                  if (state is DentistPaymentsError) {
+                                  if (state is DentistPaymentAddError) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(content: Text(state.message)),
                                     );
+                                  } else if (state is DentistPaymentAdded) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('تم إضافة الدفعة بنجاح'),
+                                        backgroundColor: Colors.green,
+                                      ),
+                                    );
+                                    Navigator.of(context).pop();
                                   }
                                 },
                                 builder: (context, state) {
                                   return defaultButton(
-                                      text: state is DentistPaymentsLoading
+                                      text: state is DentistPaymentAdding
                                           ? 'جاري الإضافة...'
                                           : 'إضافة',
-                                      function: state is DentistPaymentsLoading
+                                      function: state is DentistPaymentAdding
                                           ? () {}
                                           : () async {
                                               final value = int.tryParse(
@@ -124,22 +132,10 @@ Widget paymentLogDialog(BuildContext context,
                                                 return;
                                               }
 
-                                              final success = await context
+                                              await context
                                                   .read<ClientsCubit>()
                                                   .addDentistPayment(
                                                       dentistId, value);
-                                              if (success) {
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(
-                                                  const SnackBar(
-                                                    content: Text(
-                                                        'تم إضافة الدفعة بنجاح'),
-                                                    backgroundColor:
-                                                        Colors.green,
-                                                  ),
-                                                );
-                                                Navigator.of(context).pop();
-                                              }
                                             });
                                 },
                               )

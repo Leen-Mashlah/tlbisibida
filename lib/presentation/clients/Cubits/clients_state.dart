@@ -72,3 +72,16 @@ class DentistPaymentsError extends ClientsState {
   final String message;
   DentistPaymentsError(this.message);
 }
+
+// Separate states for adding payments
+class DentistPaymentAdding extends ClientsState {}
+
+class DentistPaymentAdded extends ClientsState {
+  final DentistPaymentsResponse dentistPaymentsResponse;
+  DentistPaymentAdded(this.dentistPaymentsResponse);
+}
+
+class DentistPaymentAddError extends ClientsState {
+  final String message;
+  DentistPaymentAddError(this.message);
+}

@@ -24,8 +24,15 @@ class PaymentLogTable extends StatelessWidget {
       builder: (context, state) {
         if (state is DentistPaymentsLoading) {
           return const Center(child: CircularProgressIndicator());
-        } else if (state is DentistPaymentsLoaded) {
-          final payments = state.dentistPaymentsResponse.dentistPayments;
+        } else if (state is DentistPaymentsLoaded ||
+            state is DentistPaymentAdded) {
+          final payments = state is DentistPaymentsLoaded
+              ? (state as DentistPaymentsLoaded)
+                  .dentistPaymentsResponse
+                  .dentistPayments
+              : (state as DentistPaymentAdded)
+                  .dentistPaymentsResponse
+                  .dentistPayments;
           return Center(
             child: Container(
               decoration: BoxDecoration(
@@ -82,7 +89,11 @@ class PaymentLogTable extends StatelessWidget {
               ]),
             ),
           );
-        } else if (state is DentistPaymentsError) {
+        } else if (state is DentistPaymentsError ||
+            state is DentistPaymentAddError) {
+          final errorMessage = state is DentistPaymentsError
+              ? (state as DentistPaymentsError).message
+              : (state as DentistPaymentAddError).message;
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -90,7 +101,7 @@ class PaymentLogTable extends StatelessWidget {
                 Icon(Icons.error_outline, size: 64, color: Colors.red),
                 SizedBox(height: 20),
                 Text(
-                  'Error: ${state.message}',
+                  'Error: $errorMessage',
                   style: TextStyle(fontSize: 18, color: Colors.red),
                 ),
                 SizedBox(height: 20),

@@ -184,21 +184,22 @@ class ClientsCubit extends Cubit<ClientsState> {
 
   Future<bool> addDentistPayment(int dentistId, int value) async {
     if (isClosed) return false;
-    emit(DentistPaymentsLoading());
+    emit(DentistPaymentAdding());
     try {
       final success = await repo.addDentistPayment(dentistId, value);
       if (success) {
         // Reload payments after successful addition
         await getDentistPayments(dentistId);
         if (isClosed) return true;
-        emit(DentistPaymentsLoaded(dentistPaymentsResponse!));
+        // Emit the added state with the updated data
+        emit(DentistPaymentAdded(dentistPaymentsResponse!));
       } else {
-        if (!isClosed) emit(DentistPaymentsError('Failed to add payment.'));
+        if (!isClosed) emit(DentistPaymentAddError('Failed to add payment.'));
       }
       return success;
     } catch (e) {
       if (!isClosed)
-        emit(DentistPaymentsError('Error adding payment: \\${e.toString()}'));
+        emit(DentistPaymentAddError('Error adding payment: \\${e.toString()}'));
       return false;
     }
   }
