@@ -51,6 +51,21 @@ class DioHelper {
     }
   }
 
+  static Future<Response?> postFormData(String url, FormData formData,
+      {Map<String, dynamic>? query, String? token}) async {
+    dio?.options.headers = {
+      'Accept': 'application/json',
+      'Authorization': token,
+    };
+    print('sending formdata: ${formData.fields}');
+
+    try {
+      return await dio?.post(url, data: formData, queryParameters: query);
+    } on DioException catch (e) {
+      print("Dio Exception, Server response: " + e.response?.data);
+    }
+  }
+
   static Future<Response?> updateData(String url, Map<String, dynamic> body,
       {Map<String, dynamic>? query, String? token}) async {
     dio?.options.headers = {

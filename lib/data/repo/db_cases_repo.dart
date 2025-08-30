@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:dio/dio.dart';
 import 'package:lambda_dent_dash/data/models/cases/db_case_comments.dart';
 import 'package:lambda_dent_dash/data/models/cases/db_case_details.dart';
 import 'package:lambda_dent_dash/data/models/cases/db_cases_list.dart';
@@ -18,7 +19,7 @@ class DBCasesRepo extends CasesRepo {
       final response = await DioHelper.getData(
           'lab-manager/medical-cases/show-lab-cases-groubed-by-case-type',
           token: CacheHelper.get('token'));
-      
+
       if (response?.data == null) {
         print('API response is null');
         return {
@@ -30,7 +31,7 @@ class DBCasesRepo extends CasesRepo {
 
       dbMedicalCasesByTypeResponse =
           DBMedicalCasesByTypeResponse.fromJson(response!.data);
-      
+
       if (dbMedicalCasesByTypeResponse?.medicalCasesByType == null) {
         print('Medical cases by type is null');
         return {
@@ -43,28 +44,34 @@ class DBCasesRepo extends CasesRepo {
       List<MedicalCaseinList> acceptedCases = [];
       List<MedicalCaseinList> inProgressCases = [];
       List<MedicalCaseinList> pendingCases = [];
-      
+
       // Safe access to accepted cases
-      if (dbMedicalCasesByTypeResponse!.medicalCasesByType!.acceptedCases.isNotEmpty) {
-        for (var medcase in dbMedicalCasesByTypeResponse!.medicalCasesByType!.acceptedCases) {
+      if (dbMedicalCasesByTypeResponse!
+          .medicalCasesByType!.acceptedCases.isNotEmpty) {
+        for (var medcase in dbMedicalCasesByTypeResponse!
+            .medicalCasesByType!.acceptedCases) {
           acceptedCases.add(medcase.todomain());
         }
       }
-      
+
       // Safe access to in progress cases
-      if (dbMedicalCasesByTypeResponse!.medicalCasesByType!.inProgressCases.isNotEmpty) {
-        for (var medcase in dbMedicalCasesByTypeResponse!.medicalCasesByType!.inProgressCases) {
+      if (dbMedicalCasesByTypeResponse!
+          .medicalCasesByType!.inProgressCases.isNotEmpty) {
+        for (var medcase in dbMedicalCasesByTypeResponse!
+            .medicalCasesByType!.inProgressCases) {
           inProgressCases.add(medcase.todomain());
         }
       }
-      
+
       // Safe access to pending cases
-      if (dbMedicalCasesByTypeResponse!.medicalCasesByType!.pendingCases.isNotEmpty) {
-        for (var medcase in dbMedicalCasesByTypeResponse!.medicalCasesByType!.pendingCases) {
+      if (dbMedicalCasesByTypeResponse!
+          .medicalCasesByType!.pendingCases.isNotEmpty) {
+        for (var medcase
+            in dbMedicalCasesByTypeResponse!.medicalCasesByType!.pendingCases) {
           pendingCases.add(medcase.todomain());
         }
       }
-      
+
       return {
         'accepted': acceptedCases,
         'in_progress': inProgressCases,
@@ -87,14 +94,14 @@ class DBCasesRepo extends CasesRepo {
       final response = await DioHelper.getData(
           'lab-manager/medical-cases/get-medical-case-details/$id',
           token: CacheHelper.get('token'));
-      
+
       if (response?.data == null) {
         throw Exception('API response is null');
       }
 
       dbMedicalCaseDetailsResponse =
           DBMedicalCaseDetailsResponse.fromJson(response!.data);
-      
+
       if (dbMedicalCaseDetailsResponse?.medicalCase == null) {
         throw Exception('Medical case is null');
       }
@@ -115,7 +122,7 @@ class DBCasesRepo extends CasesRepo {
       final response = await DioHelper.getData(
           'lab-manager/medical-cases/show-comments/$id',
           token: CacheHelper.get('token'));
-      
+
       if (response?.data == null) {
         print('API response is null for comments');
         return [];
@@ -124,13 +131,13 @@ class DBCasesRepo extends CasesRepo {
       dbLabManagerProfileResponse = DBCommentsResponse.fromJson(response!.data);
       List<DBComment>? dbComments = dbLabManagerProfileResponse?.comments;
       List<Comment> comments = [];
-      
+
       if (dbComments != null && dbComments.isNotEmpty) {
         for (var comment in dbComments) {
           comments.add(comment.toDomain());
         }
       }
-      
+
       return comments;
     } catch (error) {
       print('Error in getComments: $error');
@@ -144,11 +151,12 @@ class DBCasesRepo extends CasesRepo {
       final value = await DioHelper.getImage(
           'lab-manager/medical-cases/download-case-image/$id',
           token: CacheHelper.get('token'));
-      
+
       if (value != null && value.data['status']) {
         return value.data;
       } else {
-        print("Image download failed: ${value?.data['message'] ?? 'Unknown error'}");
+        print(
+            "Image download failed: ${value?.data['message'] ?? 'Unknown error'}");
         return Future.value(null);
       }
     } catch (error) {
@@ -161,21 +169,48 @@ class DBCasesRepo extends CasesRepo {
   Future<bool> addMedicalCaseToLocalClient(
       Map<String, dynamic> caseData) async {
     try {
-      final response = await DioHelper.postData(
+      print('Sending case data: $caseData');
+
+      // Convert to FormData for multipart/form-data
+      final formData = FormData();
+
+      // Add all fields to FormData
+      caseData.forEach((key, value) {
+        if (value != null) {
+          formData.fields.add(MapEntry(key, value.toString()));
+        }
+      });
+
+      final response = await DioHelper.postFormData(
         'lab-manager/medical-cases/add-medical-case-to-local-client',
-        caseData,
+        formData,
         token: CacheHelper.get('token'),
       );
+
+      print('Response status: ${response?.statusCode}');
+      print('Response data: ${response?.data}');
 
       if (response?.data != null && response!.data['status'] == true) {
         return true;
       } else {
-        print(
-            'Failed to add medical case: ${response?.data['message'] ?? 'Unknown error'}');
+        String errorMessage = 'Unknown error';
+        if (response?.data != null) {
+          if (response!.data['message'] != null) {
+            errorMessage = response.data['message'];
+          } else if (response.data['error_message'] != null) {
+            errorMessage = response.data['error_message'].toString();
+          } else if (response.data['errors'] != null) {
+            errorMessage = response.data['errors'].toString();
+          }
+        }
+        print('Failed to add medical case: $errorMessage');
         return false;
       }
     } catch (error) {
       print('Error adding medical case: $error');
+      if (error.toString().contains('DioException')) {
+        print('DioException details: $error');
+      }
       return false;
     }
   }

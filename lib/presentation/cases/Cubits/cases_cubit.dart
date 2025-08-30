@@ -222,15 +222,35 @@ class CasesCubit extends Cubit<CasesState> {
       }
     }
 
-    // Format as "tooth1,tooth2,tooth3,material"
+    // Format as "tooth1,tooth2,tooth3,material" (simple format like in Postman)
     List<String> formattedGroups = [];
     for (var entry in groupedByMaterial.entries) {
       String material = entry.key;
       List<String> toothNumbers = entry.value;
-      formattedGroups.add('${toothNumbers.join(',')},$material');
+      // Map Arabic material names to numbers (1=خزف على معدن, 2=خزف على زركون, 3=خزف على معدن)
+      String materialNumber = _getMaterialNumber(material);
+      formattedGroups.add('${toothNumbers.join(',')},$materialNumber');
     }
 
-    return formattedGroups.join(';');
+    String result = formattedGroups.join(';');
+    print('Formatted teeth data: $result');
+    return result;
+  }
+
+  // Map Arabic material names to numbers
+  String _getMaterialNumber(String material) {
+    switch (material.trim()) {
+      case 'زيركون':
+        return '1';
+      case 'خزف على معدن':
+        return '2';
+      case 'شمع':
+        return '3';
+      case 'أكريل مؤقت':
+        return '4';
+      default:
+        return '1'; // Default to 1 if unknown
+    }
   }
 
   // Validation method
@@ -281,8 +301,8 @@ class CasesCubit extends Cubit<CasesState> {
         'bridges_denture': formatTeethData(selectedTeeth['bridges_denture']!),
       };
 
-      // Remove empty fields
-      caseData.removeWhere((key, value) => value == null || value == '');
+      // Remove only null values, keep empty strings for teeth data
+      caseData.removeWhere((key, value) => value == null);
 
       final success = await repo.addMedicalCaseToLocalClient(caseData);
 
