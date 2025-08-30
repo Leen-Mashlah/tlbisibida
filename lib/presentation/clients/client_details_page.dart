@@ -11,7 +11,7 @@ import 'package:lambda_dent_dash/presentation/clients/components/tables/client_b
 import 'package:lambda_dent_dash/presentation/clients/components/tables/client_cases_table.dart';
 import 'package:lambda_dent_dash/presentation/clients/components/dialogs/payments_log_dialog.dart';
 
-class ClientDetailsPage extends StatelessWidget {
+class ClientDetailsPage extends StatefulWidget {
   ClientDetailsPage(
       {super.key,
       required this.clientId,
@@ -25,8 +25,28 @@ class ClientDetailsPage extends StatelessWidget {
   final String? initialPhone;
   final String? initialAddress;
   final String? initialCurrentAccount;
+
+  @override
+  State<ClientDetailsPage> createState() => _ClientDetailsPageState();
+}
+
+class _ClientDetailsPageState extends State<ClientDetailsPage> {
   //List choices = ['cases', 'bills'];
   final ValueNotifier<bool> _iscase = ValueNotifier<bool>(true);
+
+  @override
+  void initState() {
+    super.initState();
+    // Load initial data based on default tab
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final clientsCubit = context.read<ClientsCubit>();
+      if (_iscase.value) {
+        clientsCubit.getCases(widget.clientId ?? 0);
+      } else {
+        clientsCubit.getDentistBills(widget.clientId ?? 0);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,21 +58,14 @@ class ClientDetailsPage extends StatelessWidget {
 
         // Try to use passed values first, handle empty strings
         final headerName =
-            (initialName?.isNotEmpty == true) ? initialName! : '—';
+            (widget.initialName?.isNotEmpty == true) ? widget.initialName! : '—';
         final headerPhone =
-            (initialPhone?.isNotEmpty == true) ? initialPhone! : '—';
+            (widget.initialPhone?.isNotEmpty == true) ? widget.initialPhone! : '—';
         final headerAddress =
-            (initialAddress?.isNotEmpty == true) ? initialAddress! : '—';
-        final headerCurrentAccount = (initialCurrentAccount?.isNotEmpty == true)
-            ? initialCurrentAccount!
+            (widget.initialAddress?.isNotEmpty == true) ? widget.initialAddress! : '—';
+        final headerCurrentAccount = (widget.initialCurrentAccount?.isNotEmpty == true)
+            ? widget.initialCurrentAccount!
             : 0;
-
-        // Initial loads based on default tab
-        if (_iscase.value) {
-          clientsCubit.getCases(clientId ?? 0);
-        } else {
-          clientsCubit.getDentistBills(clientId ?? 0);
-        }
 
         return SingleChildScrollView(
           child: Padding(
@@ -76,9 +89,9 @@ class ClientDetailsPage extends StatelessWidget {
                                   value == null ? value = false : value = value;
                                   _iscase.value = value;
                                   if (value) {
-                                    clientsCubit.getCases(clientId ?? 0);
+                                    clientsCubit.getCases(widget.clientId ?? 0);
                                   } else {
-                                    clientsCubit.getDentistBills(clientId ?? 0);
+                                    clientsCubit.getDentistBills(widget.clientId ?? 0);
                                   }
                                 },
                                 clearable: false,
@@ -175,16 +188,26 @@ class ClientDetailsPage extends StatelessWidget {
                 ValueListenableBuilder(
                     valueListenable: _iscase,
                     builder: (context, isShowingCases, child) {
-                      if (isShowingCases && state is ClientCasesLoaded) {
-                        return const ClientCasesTable();
-                      } else if (!isShowingCases &&
-                          state is DentistBillsLoaded) {
-                        return const ClientBillsTable();
-                      } else if (state is ClientsError) {
-                        return const Center(
-                            child: Text('حدث خطأ في تحميل بيانات الزبون'));
+                      if (isShowingCases) {
+                        if (state is ClientCasesLoaded) {
+                          return const ClientCasesTable();
+                        } else if (state is ClientsError) {
+                          return const Center(
+                              child: Text('حدث خطأ في تحميل بيانات الزبون'));
+                        } else {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        }
                       } else {
-                        return const Center(child: CircularProgressIndicator());
+                        if (state is DentistBillsLoaded) {
+                          return const ClientBillsTable();
+                        } else if (state is ClientsError) {
+                          return const Center(
+                              child: Text('حدث خطأ في تحميل بيانات الزبون'));
+                        } else {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        }
                       }
                     }),
               ],
@@ -195,40 +218,38 @@ class ClientDetailsPage extends StatelessWidget {
     ));
   }
 
-  Positioned showpaymentlog(
+  Widget showpaymentlog(
       BuildContext context, headerCurrentAccount, ClientsCubit clientsCubit) {
-    return Positioned(
-      child: InfoPopupWidget(
-        enabledAutomaticConstraint: false,
-        arrowTheme: const InfoPopupArrowTheme(arrowSize: Size(0, 0)),
-        contentOffset: const Offset(0, 0),
-        customContent: () => Container(
-          decoration: const BoxDecoration(
-              color: cyan50op,
-              borderRadius: BorderRadius.horizontal(
-                  left: Radius.elliptical(53, 100),
-                  right: Radius.elliptical(25, 40))),
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-          height: 60,
-          child: const Text('سجل الدفعات', style: TextStyle(color: cyan500)),
-        ),
-        child: InkWell(
-            onTap: () {
-              showDialog(
+    return InfoPopupWidget(
+      enabledAutomaticConstraint: false,
+      arrowTheme: const InfoPopupArrowTheme(arrowSize: Size(0, 0)),
+      contentOffset: const Offset(0, 0),
+      customContent: () => Container(
+        decoration: const BoxDecoration(
+            color: cyan50op,
+            borderRadius: BorderRadius.horizontal(
+                left: Radius.elliptical(53, 100),
+                right: Radius.elliptical(25, 40))),
+        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+        height: 60,
+        child: const Text('سجل الدفعات', style: TextStyle(color: cyan500)),
+      ),
+      child: InkWell(
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (context) => paymentLogDialog(context,
+                    dentistId: widget.clientId ?? 0, clientsCubit: clientsCubit));
+          },
+          child: TextButton(
+              onPressed: () {
+                showDialog(
                   context: context,
                   builder: (context) => paymentLogDialog(context,
-                      dentistId: clientId ?? 0, clientsCubit: clientsCubit));
-            },
-            child: TextButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => paymentLogDialog(context,
-                        dentistId: clientId ?? 0, clientsCubit: clientsCubit),
-                  );
-                },
-                child: Text(headerCurrentAccount.toString()))),
-      ),
+                      dentistId: widget.clientId ?? 0, clientsCubit: clientsCubit),
+                );
+              },
+              child: Text(headerCurrentAccount.toString()))),
     );
   }
 }

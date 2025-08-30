@@ -12,7 +12,7 @@ import 'package:lambda_dent_dash/data/models/bills/db_preview_bill.dart';
 import 'package:lambda_dent_dash/domain/models/bills/preview_bill.dart';
 import 'package:lambda_dent_dash/data/models/lab_clients/db_join_requests.dart';
 import 'package:lambda_dent_dash/data/models/clients/db_dentist_payment.dart';
-import 'package:lambda_dent_dash/domain/models/clients/dentist_payment.dart';
+import 'package:lambda_dent_dash/domain/models/lab_clients/dentist_payment.dart';
 
 class DBClientsRepo extends ClientsRepo {
   DBMedicalCasesForDentistResponse? dbMedicalCasesForDentistResponse;
@@ -201,7 +201,8 @@ class DBClientsRepo extends ClientsRepo {
         'lab-manager/show-dentist-payments-in-lab/$dentistId',
         token: CacheHelper.get('token'),
       );
-
+      print('dentistId: $dentistId');
+      print('response: ${response}');
       if (response?.data != null) {
         final dbResponse = DBDentistPaymentsResponse.fromJson(response!.data);
         return dbResponse.toDomain();
@@ -222,7 +223,7 @@ class DBClientsRepo extends ClientsRepo {
         {'value': value},
         token: CacheHelper.get('token'),
       );
-
+      print('response: ${response}');
       if (response?.data != null && response!.data['status'] == true) {
         return true;
       } else {

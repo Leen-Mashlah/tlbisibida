@@ -5,7 +5,7 @@ import 'package:lambda_dent_dash/domain/models/cases/cases_by_doc.dart';
 import 'package:lambda_dent_dash/domain/models/bills/dentist_bills_list.dart';
 import 'package:lambda_dent_dash/domain/repo/clients_repo.dart';
 import 'package:lambda_dent_dash/domain/models/lab_clients/lab_client.dart';
-import 'package:lambda_dent_dash/domain/models/clients/dentist_payment.dart';
+import 'package:lambda_dent_dash/domain/models/lab_clients/dentist_payment.dart';
 import 'clients_state.dart';
 
 class ClientsCubit extends Cubit<ClientsState> {
@@ -169,6 +169,7 @@ class ClientsCubit extends Cubit<ClientsState> {
   // Dentist payments methods
   DentistPaymentsResponse? dentistPaymentsResponse;
   Future<void> getDentistPayments(int dentistId) async {
+    print('dentistId: $dentistId');
     if (isClosed) return;
     emit(DentistPaymentsLoading());
     try {

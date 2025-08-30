@@ -4,19 +4,37 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:lambda_dent_dash/components/custom_text.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
-import 'package:lambda_dent_dash/domain/models/clients/dentist_payment.dart';
 import 'package:lambda_dent_dash/presentation/clients/Cubits/clients_cubit.dart';
 import 'package:lambda_dent_dash/presentation/clients/Cubits/clients_state.dart';
 
 /// Example without datasource
 // ignore: must_be_immutable
-class PaymentLogTable extends StatelessWidget {
+class PaymentLogTable extends StatefulWidget {
   final int dentistId;
 
   const PaymentLogTable({
     super.key,
     required this.dentistId,
   });
+
+  @override
+  State<PaymentLogTable> createState() => _PaymentLogTableState();
+}
+
+class _PaymentLogTableState extends State<PaymentLogTable> {
+  bool _hasLoadedData = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Load data only once when widget is first created
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!_hasLoadedData) {
+        context.read<ClientsCubit>().getDentistPayments(widget.dentistId);
+        _hasLoadedData = true;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +51,12 @@ class PaymentLogTable extends StatelessWidget {
               : (state as DentistPaymentAdded)
                   .dentistPaymentsResponse
                   .dentistPayments;
+
+          // Mark data as loaded when we receive it
+          if (!_hasLoadedData) {
+            _hasLoadedData = true;
+          }
+
           return Center(
             child: Container(
               decoration: BoxDecoration(
@@ -106,20 +130,27 @@ class PaymentLogTable extends StatelessWidget {
                 ),
                 SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () => context
-                      .read<ClientsCubit>()
-                      .getDentistPayments(dentistId),
+                  onPressed: () {
+                    context
+                        .read<ClientsCubit>()
+                        .getDentistPayments(widget.dentistId);
+                  },
                   child: Text('Retry'),
                 ),
               ],
             ),
           );
         } else {
-          // Load payments when widget is first built
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            context.read<ClientsCubit>().getDentistPayments(dentistId);
-          });
-          return const Center(child: CircularProgressIndicator());
+          // Show loading indicator if data hasn't been loaded yet
+          if (!_hasLoadedData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          // If we have loaded data but state doesn't match expected states,
+          // show empty state or loading
+          return const Center(
+            child: Text('لا توجد بيانات متاحة'),
+          );
         }
       },
     );

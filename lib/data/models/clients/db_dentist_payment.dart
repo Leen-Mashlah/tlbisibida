@@ -1,4 +1,4 @@
-import 'package:lambda_dent_dash/domain/models/clients/dentist_payment.dart';
+import 'package:lambda_dent_dash/domain/models/lab_clients/dentist_payment.dart';
 
 class DBDentistPayment {
   final int id;
