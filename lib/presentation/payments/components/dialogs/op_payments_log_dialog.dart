@@ -7,13 +7,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lambda_dent_dash/presentation/payments/cubit/payments_cubit.dart';
 import 'package:lambda_dent_dash/presentation/payments/cubit/payments_state.dart';
 
-Dialog OpPaymentsLogDialog(BuildContext context) {
+Dialog OpPaymentsLogDialog(BuildContext context,
+    {required PaymentsCubit cubit}) {
   TextEditingController valueController = TextEditingController();
   TextEditingController confirmValueController = TextEditingController();
   TextEditingController nameController = TextEditingController();
 
-  // Reuse existing PaymentsCubit instance provided by the page and trigger fetch
-  final cubit = BlocProvider.of<PaymentsCubit>(context);
+  // Use the provided cubit instance and trigger fetch
   cubit.fetchOperatingPayments();
 
   return Dialog(

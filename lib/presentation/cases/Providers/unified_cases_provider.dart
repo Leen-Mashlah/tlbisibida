@@ -5,9 +5,8 @@ import 'package:lambda_dent_dash/presentation/cases/Views/add_case_page.dart';
 import 'package:lambda_dent_dash/services/navigation/locator.dart';
 import 'package:lambda_dent_dash/presentation/cases/Cubits/cases_cubit.dart';
 import 'package:lambda_dent_dash/presentation/cases/Views/cases_list_page.dart';
-import 'package:lambda_dent_dash/presentation/cases/Views/case_details_page.dart';
 
-enum CasesPageType { casesList, caseDetails, addCase }
+enum CasesPageType { casesList, addCase }
 
 class UnifiedCasesProvider extends StatelessWidget {
   final CasesPageType pageType;
@@ -31,8 +30,6 @@ class UnifiedCasesProvider extends StatelessWidget {
     switch (pageType) {
       case CasesPageType.casesList:
         return const CasesListPage();
-      case CasesPageType.caseDetails:
-        return CaseDetails();
       case CasesPageType.addCase:
         return AddCasePage();
     }

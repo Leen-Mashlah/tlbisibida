@@ -24,6 +24,9 @@ import 'package:lambda_dent_dash/presentation/clients/client_details_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lambda_dent_dash/presentation/clients/Cubits/clients_cubit.dart';
 import 'package:lambda_dent_dash/data/repo/db_clients_repo.dart';
+import 'package:lambda_dent_dash/presentation/cases/Cubits/cases_cubit.dart';
+import 'package:lambda_dent_dash/data/repo/db_cases_repo.dart';
+import 'package:lambda_dent_dash/presentation/cases/Views/case_details_page.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   print('generateRoute: ${settings.name}');
@@ -76,8 +79,23 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case caseDetailsPageRoute:
       return _getPageRoute(
-          const UnifiedCasesProvider(pageType: CasesPageType.caseDetails),
-          caseDetailsPageDisplayName);
+        BlocProvider(
+          create: (context) => CasesCubit(locator<DBCasesRepo>()),
+          child: Builder(
+            builder: (context) {
+              final caseId = settings.arguments as int?;
+              if (caseId != null) {
+                return CaseDetails(caseId: caseId);
+              } else {
+                return const Center(
+                  child: Text('خطأ: لم يتم تحديد معرف الحالة'),
+                );
+              }
+            },
+          ),
+        ),
+        caseDetailsPageDisplayName,
+      );
 
     case addCasePageRoute:
       //return _getPageRoute(AddCasePage(), addCasePageDisplayName);
