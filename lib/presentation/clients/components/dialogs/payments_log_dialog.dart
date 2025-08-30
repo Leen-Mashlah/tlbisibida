@@ -94,7 +94,7 @@ Widget paymentLogDialog(BuildContext context,
                                         backgroundColor: Colors.green,
                                       ),
                                     );
-                                    Navigator.of(context).pop();
+                                    // Navigator.of(context).pop();
                                   }
                                 },
                                 builder: (context, state) {
