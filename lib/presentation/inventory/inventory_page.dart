@@ -29,16 +29,50 @@ class _InventoryPageState extends State<InventoryPage> {
     // Initialize categories when page loads
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
-        final token = CacheHelper.get('token');
-        if (token == null || token.isEmpty) {
-          print('InventoryPage - No token found, redirecting to auth');
-          Navigator.pushReplacementNamed(context, '/auth');
-          return;
-        }
-        print('InventoryPage - Token found, loading categories');
-        context.read<InventoryCubit>().getCats();
+        _loadCategories();
       }
     });
+  }
+
+  void _loadCategories() async {
+    // Add a small delay to ensure token is properly stored
+    await Future.delayed(const Duration(milliseconds: 100));
+
+    // Test CacheHelper functionality
+    print('InventoryPage - Testing CacheHelper...');
+    final testValue = CacheHelper.get('test_key');
+    print('InventoryPage - Test value: $testValue');
+
+    final token = CacheHelper.get('token');
+    print(
+        'InventoryPage - Token check: ${token != null ? 'Found' : 'Not found'}');
+    print('InventoryPage - Token type: ${token.runtimeType}');
+    print(
+        'InventoryPage - Token value: ${token?.toString().substring(0, 20)}...'); // Show first 20 chars
+
+    if (token == null || token.toString().isEmpty) {
+      // Try one more time after a longer delay
+      await Future.delayed(const Duration(milliseconds: 500));
+      final retryToken = CacheHelper.get('token');
+      if (retryToken == null || retryToken.toString().isEmpty) {
+        print(
+            'InventoryPage - No token found after retry, redirecting to auth');
+        Navigator.pushReplacementNamed(context, '/auth');
+        return;
+      }
+      print('InventoryPage - Token found on retry, loading categories');
+      context.read<InventoryCubit>().getCats(retryToken.toString());
+      return;
+    }
+
+    print('InventoryPage - Token found, loading categories');
+    // Double-check token right before calling getCats
+    final doubleCheckToken = CacheHelper.get('token');
+    print(
+        'InventoryPage - Double check token: ${doubleCheckToken != null ? 'Present' : 'Null'}');
+    print(
+        'InventoryPage - Double check token type: ${doubleCheckToken.runtimeType}');
+    context.read<InventoryCubit>().getCats(token.toString());
   }
 
   @override
@@ -49,14 +83,7 @@ class _InventoryPageState extends State<InventoryPage> {
         if (state is InventoryInitial) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (mounted) {
-              final token = CacheHelper.get('token');
-              if (token == null || token.isEmpty) {
-                print(
-                    'InventoryPage - No token found in build, redirecting to auth');
-                Navigator.pushReplacementNamed(context, '/auth');
-                return;
-              }
-              context.read<InventoryCubit>().getCats();
+              _loadCategories();
             }
           });
         }

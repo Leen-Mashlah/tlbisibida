@@ -98,6 +98,7 @@ class DBClientsRepo extends ClientsRepo {
       },
       token: CacheHelper.get('token'),
     ).then((value) {
+      print(value);
       dbPreviewBillResponse = DBPreviewBillResponse.fromJson(value?.data);
     });
     return PreviewBillResponse(

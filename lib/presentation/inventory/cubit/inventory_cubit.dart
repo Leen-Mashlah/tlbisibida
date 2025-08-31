@@ -25,14 +25,18 @@ class InventoryCubit extends Cubit<InventoryState> {
   SubCategoryRepository? selectedSubCategory;
 
   // Get categories
-  Future<void> getCats() async {
+  Future<void> getCats([String? token]) async {
+    print(
+        'InventoryCubit - getCats called with token: ${token != null ? 'Present' : 'Not provided'}');
     if (isClosed) return;
     emit(InventoryLoading());
     lastError = null;
     categories.clear();
 
     try {
-      await repo.getCats();
+      print('InventoryCubit - About to call repo.getCats()');
+      await repo.getCats(token);
+      print('InventoryCubit - repo.getCats() completed');
       if (repo.dbCategoriesResponse?.categories != null) {
         categories = repo.dbCategoriesResponse!.categories!
             .map((e) => e.toDomain())
@@ -45,6 +49,7 @@ class InventoryCubit extends Cubit<InventoryState> {
       }
     } catch (e, stack) {
       lastError = e.toString();
+      print('InventoryCubit - Error in getCats: $e');
       if (!isClosed) emit(InventoryError(lastError!, stackTrace: stack));
     }
   }

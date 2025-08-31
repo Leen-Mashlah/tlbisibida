@@ -13,7 +13,7 @@ abstract class InvRepo {
   DBSubCategoryRepositoriesResponse? dbSubCategoryRepositoriesResponse;
 
   //inventory
-  Future<void> getCats();
+  Future<void> getCats([String? token]);
   Future<void> getItemsLog();
   Future<void> getItems(int id);
   Future<void> getQuantities(int id);

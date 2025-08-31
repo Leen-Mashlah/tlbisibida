@@ -24,14 +24,33 @@ class DbInventoryRepo implements InvRepo {
   DBSubCategoryRepositoriesResponse? dbSubCategoryRepositoriesResponse;
 
   @override
-  Future<void> getCats() async {
+  Future<void> getCats([String? token]) async {
     try {
-      final token = CacheHelper.get('token');
-      if (token == null || token.isEmpty) {
+      // Use passed token if provided, otherwise fall back to CacheHelper
+      final authToken = token ?? CacheHelper.get('token');
+      print(
+          'DbInventoryRepo - getCats called with token: ${authToken != null ? 'Present' : 'Null'}');
+      print('DbInventoryRepo - Token type: ${authToken.runtimeType}');
+      print(
+          'DbInventoryRepo - Token value: ${authToken?.toString().substring(0, 20)}...');
+
+      if (authToken == null || authToken.toString().isEmpty) {
+        print(
+            'DbInventoryRepo - Token validation failed: ${authToken == null ? 'null' : 'empty'}');
         throw Exception('Authentication token not found');
       }
+
+      // Ensure token is a string and starts with 'Bearer '
+      final tokenString = authToken.toString();
+      if (!tokenString.startsWith('Bearer ')) {
+        print('DbInventoryRepo - Token format invalid: $tokenString');
+        throw Exception('Invalid token format');
+      }
+
+      print('DbInventoryRepo - Making API call to inventory/categories');
       final response =
-          await DioHelper.getData('inventory/categories', token: token);
+          await DioHelper.getData('inventory/categories', token: tokenString);
+      print('DbInventoryRepo - API call successful');
       dbCategoriesResponse = DBCategoriesResponse.fromJson(response?.data);
     } catch (error) {
       print('error in getCats: ' + error.toString());

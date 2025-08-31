@@ -15,10 +15,15 @@ class DBAuthRepo extends AuthRepo {
 
       if (response != null && response.data['status']) {
         print('response: ' + response.data.toString());
+        final tokenValue = 'Bearer ' + response.data['data']['access_token'];
+        print('DBAuthRepo - Storing token: ${tokenValue.substring(0, 20)}...');
         // AWAIT this line to ensure the token is saved before you try to get it
-        await CacheHelper.setString(
-            'token', 'Bearer ' + response.data['data']['access_token']);
-        print("Login successful. Token: ${CacheHelper.get('token')}");
+        await CacheHelper.setString('token', tokenValue);
+        final retrievedToken = CacheHelper.get('token');
+        print(
+            "Login successful. Token stored: ${retrievedToken != null ? 'Yes' : 'No'}");
+        print(
+            "Login successful. Token value: ${retrievedToken?.toString().substring(0, 20)}...");
         return true;
       } else {
         print("Login failed: ${response?.data ?? 'Unknown error'}");
@@ -51,7 +56,8 @@ class DBAuthRepo extends AuthRepo {
     try {
       final value = await DioHelper.postData('register', data);
       if (value != null && value.data['status'] == true) {
-        CacheHelper.setString(
+        // AWAIT this line to ensure the token is saved before you try to get it
+        await CacheHelper.setString(
             'token', 'Bearer ' + value.data['data']['access_token']);
         print("Register successful. Token: ${CacheHelper.get('token')}");
         return true;
