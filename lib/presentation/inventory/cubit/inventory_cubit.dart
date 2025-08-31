@@ -159,7 +159,8 @@ class InventoryCubit extends Cubit<InventoryState> {
   void selectCategory(Category category) {
     selectedCategory = category;
     selectedSubCategory = null;
-    if (!isClosed) emit(CategoriesLoaded(categories));
+    // Load subcategories for the selected category
+    getSubCats(category.id!);
   }
 
   void selectSubCategory(SubCategoryRepository subCategory) {

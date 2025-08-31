@@ -68,18 +68,16 @@ class _AddBillDialogState extends State<AddBillDialog> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 const SizedBox(width: 30),
-                                GestureDetector(
-                                  onTap: () async {
-                                    final picked = await showDatePicker(
-                                      context: context,
-                                      initialDate: fromDate,
-                                      firstDate: DateTime(2000),
-                                      lastDate: DateTime(2050),
-                                    );
-                                    if (picked != null)
-                                      setState(() => fromDate = picked);
+                                datePicker(
+                                  context,
+                                  fromDate,
+                                  onDateChanged: (date) {
+                                    print(
+                                        'AddBillDialog - FromDate changed to: $date');
+                                    setState(() {
+                                      fromDate = date;
+                                    });
                                   },
-                                  child: datePicker(context, fromDate),
                                 ),
                                 const SizedBox(width: 30),
                                 const Text('بداية الفاتورة',
@@ -92,18 +90,16 @@ class _AddBillDialogState extends State<AddBillDialog> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 const SizedBox(width: 30),
-                                GestureDetector(
-                                  onTap: () async {
-                                    final picked = await showDatePicker(
-                                      context: context,
-                                      initialDate: toDate,
-                                      firstDate: DateTime(2000),
-                                      lastDate: DateTime(2050),
-                                    );
-                                    if (picked != null)
-                                      setState(() => toDate = picked);
+                                datePicker(
+                                  context,
+                                  toDate,
+                                  onDateChanged: (date) {
+                                    print(
+                                        'AddBillDialog - ToDate changed to: $date');
+                                    setState(() {
+                                      toDate = date;
+                                    });
                                   },
-                                  child: datePicker(context, toDate),
                                 ),
                                 const SizedBox(width: 30),
                                 const Text('نهاية الفاتورة',
@@ -137,6 +133,12 @@ class _AddBillDialogState extends State<AddBillDialog> {
                 defaultButton(
                   text: 'معاينة',
                   function: () async {
+                    print('AddBillDialog - Submit button pressed');
+                    print('AddBillDialog - Current fromDate: $fromDate');
+                    print('AddBillDialog - Current toDate: $toDate');
+                    print(
+                        'AddBillDialog - Selected dentist ID: $selectedDentistId');
+
                     if (selectedDentistId == null) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('يرجى اختيار الزبون')),
@@ -145,6 +147,9 @@ class _AddBillDialogState extends State<AddBillDialog> {
                     }
                     final dateFrom = _fmt(fromDate);
                     final dateTo = _fmt(toDate);
+                    print('AddBillDialog - Formatted dateFrom: $dateFrom');
+                    print('AddBillDialog - Formatted dateTo: $dateTo');
+
                     await widget.clientsCubit.previewBill(
                       dentistId: selectedDentistId!,
                       dateFrom: dateFrom,

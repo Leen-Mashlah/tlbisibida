@@ -4,7 +4,6 @@ import 'package:lambda_dent_dash/constants/constants.dart';
 
 Widget datePicker(BuildContext context, DateTime birthdate,
     {Function(DateTime)? onDateChanged}) {
-  DateTime dateTime = birthdate;
   void getDatePicker() {
     showDatePicker(
       //barrierColor: green400,
@@ -14,7 +13,6 @@ Widget datePicker(BuildContext context, DateTime birthdate,
       lastDate: DateTime(2050),
     ).then((value) {
       if (value != null) {
-        dateTime = value;
         onDateChanged?.call(value);
       }
     });
@@ -37,7 +35,7 @@ Widget datePicker(BuildContext context, DateTime birthdate,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '${dateTime.year}/${dateTime.month}/${dateTime.day}',
+                '${birthdate.year}/${birthdate.month}/${birthdate.day}',
                 style: const TextStyle(fontSize: 20),
               ),
               const Icon(Icons.calendar_month_outlined),
