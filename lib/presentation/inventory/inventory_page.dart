@@ -13,6 +13,7 @@ import 'package:lambda_dent_dash/presentation/inventory/components/item_edit_qua
 import 'package:lambda_dent_dash/presentation/inventory/cubit/inventory_cubit.dart';
 import 'package:lambda_dent_dash/presentation/inventory/cubit/inventory_states.dart';
 import 'package:lambda_dent_dash/presentation/inventory/components/dialogs/cat_management_dialog.dart';
+import 'package:lambda_dent_dash/services/Cache/cache_helper.dart';
 
 class InventoryPage extends StatefulWidget {
   const InventoryPage({super.key});
@@ -28,6 +29,13 @@ class _InventoryPageState extends State<InventoryPage> {
     // Initialize categories when page loads
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
+        final token = CacheHelper.get('token');
+        if (token == null || token.isEmpty) {
+          print('InventoryPage - No token found, redirecting to auth');
+          Navigator.pushReplacementNamed(context, '/auth');
+          return;
+        }
+        print('InventoryPage - Token found, loading categories');
         context.read<InventoryCubit>().getCats();
       }
     });
@@ -41,6 +49,13 @@ class _InventoryPageState extends State<InventoryPage> {
         if (state is InventoryInitial) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (mounted) {
+              final token = CacheHelper.get('token');
+              if (token == null || token.isEmpty) {
+                print(
+                    'InventoryPage - No token found in build, redirecting to auth');
+                Navigator.pushReplacementNamed(context, '/auth');
+                return;
+              }
               context.read<InventoryCubit>().getCats();
             }
           });
@@ -69,15 +84,29 @@ class _InventoryPageState extends State<InventoryPage> {
                 Icon(Icons.error_outline, size: 80, color: Colors.red),
                 const SizedBox(height: 20),
                 Text(
-                  'خطأ: ${state.message}',
+                  state.message.contains('Authentication token not found') ||
+                          state.message.contains('401') ||
+                          state.message.contains('Unauthorized')
+                      ? 'يرجى تسجيل الدخول أولاً'
+                      : 'خطأ: ${state.message}',
                   style: const TextStyle(color: Colors.red, fontSize: 18),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () => context.read<InventoryCubit>().getCats(),
-                  child: const Text('إعادة المحاولة'),
-                ),
+                if (state.message.contains('Authentication token not found') ||
+                    state.message.contains('401') ||
+                    state.message.contains('Unauthorized'))
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/auth');
+                    },
+                    child: const Text('تسجيل الدخول'),
+                  )
+                else
+                  ElevatedButton(
+                    onPressed: () => context.read<InventoryCubit>().getCats(),
+                    child: const Text('إعادة المحاولة'),
+                  ),
               ],
             ),
           );

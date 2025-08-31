@@ -26,8 +26,12 @@ class DbInventoryRepo implements InvRepo {
   @override
   Future<void> getCats() async {
     try {
-      final response = await DioHelper.getData('inventory/categories',
-          token: CacheHelper.get('token'));
+      final token = CacheHelper.get('token');
+      if (token == null || token.isEmpty) {
+        throw Exception('Authentication token not found');
+      }
+      final response =
+          await DioHelper.getData('inventory/categories', token: token);
       dbCategoriesResponse = DBCategoriesResponse.fromJson(response?.data);
     } catch (error) {
       print('error in getCats: ' + error.toString());
