@@ -6,6 +6,7 @@ import 'package:lambda_dent_dash/domain/models/inventory/show_quants_for_items.d
 import 'package:lambda_dent_dash/domain/models/inventory/show_subcats.dart';
 import 'package:lambda_dent_dash/domain/repo/inv_repo.dart';
 import 'package:lambda_dent_dash/presentation/inventory/cubit/inventory_states.dart';
+import 'package:lambda_dent_dash/services/Cache/cache_helper.dart';
 
 class InventoryCubit extends Cubit<InventoryState> {
   final InvRepo repo;
@@ -55,14 +56,14 @@ class InventoryCubit extends Cubit<InventoryState> {
   }
 
   // Get items by category ID
-  Future<void> getItems(int categoryId) async {
+  Future<void> getItems(int categoryId, [String? token]) async {
     if (isClosed) return;
     emit(InventoryLoading());
     lastError = null;
     items.clear();
 
     try {
-      await repo.getItems(categoryId);
+      await repo.getItems(categoryId, token);
       if (repo.dbItemsResponse?.items != null) {
         items = repo.dbItemsResponse!.items!.map((e) => e.toDomain()).toList();
         if (isClosed) return;
@@ -78,14 +79,14 @@ class InventoryCubit extends Cubit<InventoryState> {
   }
 
   // Get repeated items log
-  Future<void> getItemsLog() async {
+  Future<void> getItemsLog([String? token]) async {
     if (isClosed) return;
     emit(InventoryLoading());
     lastError = null;
     repeatedItems.clear();
 
     try {
-      await repo.getItemsLog();
+      await repo.getItemsLog(token);
       if (repo.dbRepeatedItemsResponse?.repeatedItems != null) {
         // Convert DB models to domain models
         repeatedItems = repo.dbRepeatedItemsResponse!.repeatedItems!
@@ -104,14 +105,14 @@ class InventoryCubit extends Cubit<InventoryState> {
   }
 
   // Get item quantities by item ID
-  Future<void> getQuantities(int itemId) async {
+  Future<void> getQuantities(int itemId, [String? token]) async {
     if (isClosed) return;
     emit(InventoryLoading());
     lastError = null;
     itemQuantities.clear();
 
     try {
-      await repo.getQuantities(itemId);
+      await repo.getQuantities(itemId, token);
       if (repo.dbItemQuantityHistoryResponse?.items != null) {
         itemQuantities = repo.dbItemQuantityHistoryResponse!.items!
             .map((e) => e.toDomain())
@@ -129,14 +130,14 @@ class InventoryCubit extends Cubit<InventoryState> {
   }
 
   // Get subcategories by category ID
-  Future<void> getSubCats(int categoryId) async {
+  Future<void> getSubCats(int categoryId, [String? token]) async {
     if (isClosed) return;
     emit(InventoryLoading());
     lastError = null;
     subCategories.clear();
 
     try {
-      await repo.getSubCats(categoryId);
+      await repo.getSubCats(categoryId, token);
       if (repo.dbSubCategoryRepositoriesResponse?.subCategoryRepositories !=
           null) {
         subCategories = repo
@@ -160,7 +161,9 @@ class InventoryCubit extends Cubit<InventoryState> {
     selectedCategory = category;
     selectedSubCategory = null;
     // Load subcategories for the selected category
-    getSubCats(category.id!);
+    // We need to get the token from CacheHelper since this method doesn't receive it
+    final token = CacheHelper.get('token');
+    getSubCats(category.id!, token);
   }
 
   void selectSubCategory(SubCategoryRepository subCategory) {
@@ -246,7 +249,8 @@ class InventoryCubit extends Cubit<InventoryState> {
       await repo.updateSubcategory(id, name);
       // Refresh subcategories manually since we need the categoryId
       if (selectedCategory != null) {
-        await getSubCats(selectedCategory!.id!);
+        final token = CacheHelper.get('token');
+        await getSubCats(selectedCategory!.id!, token);
       }
     } catch (e, stack) {
       lastError = e.toString();
@@ -262,7 +266,8 @@ class InventoryCubit extends Cubit<InventoryState> {
       await repo.deleteSubcategory(id);
       // Refresh subcategories manually since we need the categoryId
       if (selectedCategory != null) {
-        await getSubCats(selectedCategory!.id!);
+        final token = CacheHelper.get('token');
+        await getSubCats(selectedCategory!.id!, token);
       }
     } catch (e, stack) {
       lastError = e.toString();
@@ -278,7 +283,8 @@ class InventoryCubit extends Cubit<InventoryState> {
     try {
       await repo.addItem(subcategoryId, itemData);
       // Refresh items after adding
-      await getItems(subcategoryId);
+      final token = CacheHelper.get('token');
+      await getItems(subcategoryId, token);
     } catch (e, stack) {
       lastError = e.toString();
       emit(InventoryError(lastError!, stackTrace: stack));
@@ -293,7 +299,8 @@ class InventoryCubit extends Cubit<InventoryState> {
       await repo.updateItem(id, itemData);
       // Refresh items manually since we need the subcategoryId
       if (selectedSubCategory != null) {
-        await getItems(selectedSubCategory!.id!);
+        final token = CacheHelper.get('token');
+        await getItems(selectedSubCategory!.id!, token);
       }
     } catch (e, stack) {
       lastError = e.toString();
@@ -309,7 +316,8 @@ class InventoryCubit extends Cubit<InventoryState> {
       await repo.deleteItem(id);
       // Refresh items manually since we need the subcategoryId
       if (selectedSubCategory != null) {
-        await getItems(selectedSubCategory!.id!);
+        final token = CacheHelper.get('token');
+        await getItems(selectedSubCategory!.id!, token);
       }
     } catch (e, stack) {
       lastError = e.toString();

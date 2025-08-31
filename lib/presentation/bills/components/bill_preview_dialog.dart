@@ -122,9 +122,31 @@ class BillPreviewDialog extends StatelessWidget {
                 );
               }
               if (state is PreviewBillError) {
-                return const SizedBox(
+                return SizedBox(
                     height: 200,
-                    child: Center(child: Text('فشل في تحميل معاينة الفاتورة')));
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.error_outline,
+                            color: Colors.red,
+                            size: 48,
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            state.message.isNotEmpty
+                                ? state.message
+                                : 'فشل في تحميل معاينة الفاتورة',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.red,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ));
               }
               return const SizedBox(
                   height: 200, child: Center(child: Text('لا توجد بيانات')));

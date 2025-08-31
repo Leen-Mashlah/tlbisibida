@@ -59,10 +59,11 @@ class DbInventoryRepo implements InvRepo {
   }
 
   @override
-  Future<void> getItems(int id) async {
+  Future<void> getItems(int id, [String? token]) async {
     try {
-      final response = await DioHelper.getData('inventory/items/$id',
-          token: CacheHelper.get('token'));
+      final authToken = token ?? CacheHelper.get('token');
+      final response =
+          await DioHelper.getData('inventory/items/$id', token: authToken);
       dbItemsResponse = DBItemsResponse.fromJson(response?.data);
     } catch (error) {
       print('error in getItems: ' + error.toString());
@@ -71,11 +72,12 @@ class DbInventoryRepo implements InvRepo {
   }
 
   @override
-  Future<void> getItemsLog() async {
+  Future<void> getItemsLog([String? token]) async {
     try {
+      final authToken = token ?? CacheHelper.get('token');
       final response = await DioHelper.getData(
           'inventory/Repeated_item_histories',
-          token: CacheHelper.get('token'));
+          token: authToken);
       dbRepeatedItemsResponse =
           DBRepeatedItemsResponse.fromJson(response?.data);
     } catch (error) {
@@ -85,10 +87,11 @@ class DbInventoryRepo implements InvRepo {
   }
 
   @override
-  Future<void> getQuantities(int id) async {
+  Future<void> getQuantities(int id, [String? token]) async {
     try {
+      final authToken = token ?? CacheHelper.get('token');
       final response = await DioHelper.getData('inventory/itemhistories/$id',
-          token: CacheHelper.get('token'));
+          token: authToken);
       dbItemQuantityHistoryResponse =
           DBItemQuantityHistoryResponse.fromJson(response?.data);
     } catch (error) {
@@ -98,10 +101,11 @@ class DbInventoryRepo implements InvRepo {
   }
 
   @override
-  Future<void> getSubCats(int id) async {
+  Future<void> getSubCats(int id, [String? token]) async {
     try {
+      final authToken = token ?? CacheHelper.get('token');
       final response = await DioHelper.getData('inventory/subcategories/$id',
-          token: CacheHelper.get('token'));
+          token: authToken);
       dbSubCategoryRepositoriesResponse =
           DBSubCategoryRepositoriesResponse.fromJson(response?.data);
     } catch (error) {

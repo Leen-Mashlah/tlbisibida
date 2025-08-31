@@ -14,10 +14,10 @@ abstract class InvRepo {
 
   //inventory
   Future<void> getCats([String? token]);
-  Future<void> getItemsLog();
-  Future<void> getItems(int id);
-  Future<void> getQuantities(int id);
-  Future<void> getSubCats(int id);
+  Future<void> getItemsLog([String? token]);
+  Future<void> getItems(int id, [String? token]);
+  Future<void> getQuantities(int id, [String? token]);
+  Future<void> getSubCats(int id, [String? token]);
 
   // CRUD operations for Categories
   Future<void> addCategory(String name);
