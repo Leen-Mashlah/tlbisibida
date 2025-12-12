@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lambda_dent_dash/components/default_button.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
-import 'package:lambda_dent_dash/presentation/clients/Cubits/clients_cubit.dart';
 
-Dialog confirmAddDialog(
-    BuildContext context, int joinRequestId, ClientsCubit clientsCubit) {
+Dialog confirmAddDialog(BuildContext context) {
   return Dialog(
     child: Padding(
       padding: const EdgeInsets.all(16.0),
@@ -45,17 +42,8 @@ Dialog confirmAddDialog(
                     ),
                     defaultButton(
                         text: 'إضافة',
-                        function: () async {
-                          final success = await clientsCubit
-                              .approveJoinRequest(joinRequestId);
-                          if (success) {
-                            Navigator.of(context).pop();
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text('فشل في تأكيد الإضافة')),
-                            );
-                          }
+                        function: () {
+                          Navigator.of(context).pop();
                         })
                   ],
                 ),

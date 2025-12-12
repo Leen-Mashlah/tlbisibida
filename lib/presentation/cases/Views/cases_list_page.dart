@@ -2,11 +2,8 @@
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lambda_dent_dash/components/float_button.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
-import 'package:lambda_dent_dash/presentation/cases/Cubits/cases_cubit.dart';
-import 'package:lambda_dent_dash/presentation/cases/Cubits/cases_state.dart';
 import 'package:lambda_dent_dash/services/navigation/locator.dart';
 import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
 import 'package:lambda_dent_dash/services/navigation/routes.dart';
@@ -17,101 +14,68 @@ class CasesListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<CasesCubit, CasesState>(
-        listener: (context, state) {
-          // TODO: implement listener
-        },
-        builder: (context, state) {
-          CasesCubit casesCubit = context.read<CasesCubit>();
-          Widget body;
-          if (state is CasesLoading) {
-            body =
-                const Center(child: CircularProgressIndicator(color: cyan400));
-          } else if (state is CasesError) {
-            body = const Center(
-              child: Text('لم يتم تحميل الحالات، تأكد من اتصال الانترنت'),
-            );
-          } else if (state is CasesLoaded) {
-            body = Padding(
-              padding: const EdgeInsets.only(top: 75.0),
-              child: Center(
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width / 1.3,
-                  child: Row(
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 75.0),
+            child: Center(
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width / 1.3,
+                // height: MediaQuery.of(context).size.height / 1.4,
+                child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       _column(
-                          'accepted',
-                          casesCubit,
                           'لم تنجز بعد',
                           const Icon(
                             Icons.checklist,
                             color: cyan500,
                           ),
-                          const Color.fromARGB(50, 41, 157, 144),
+                          Color.fromARGB(50, 41, 157, 144),
                           cyan500,
                           context),
                       _column(
-                          'in_progress',
-                          casesCubit,
                           'قيد الإنجاز',
                           const Icon(
                             Icons.work_history_rounded,
                             color: Color.fromARGB(91, 130, 99, 6),
                           ),
-                          const Color.fromARGB(50, 255, 193, 7),
-                          const Color.fromARGB(91, 94, 72, 8),
+                          Color.fromARGB(50, 255, 193, 7),
+                          Color.fromARGB(91, 94, 72, 8),
                           context),
                       _column(
-                        'pending',
-                        casesCubit,
                         'بحاجة موافقة',
                         const Icon(
                           Icons.warning_rounded,
                           color: redmid,
                         ),
-                        const Color.fromARGB(50, 255, 82, 82),
+                        Color.fromARGB(50, 255, 82, 82),
                         redmid,
                         context,
                       ),
-                    ],
-                  ),
-                ),
+                      // _columnEntity(),
+                    ]),
               ),
-            );
-          } else if (state is CasesInitial) {
-            // Show loading when initializing
-            body =
-                const Center(child: CircularProgressIndicator(color: cyan400));
-          } else {
-            body = const SizedBox();
-          }
-
-          return Stack(
-            children: [
-              body,
-              Positioned(
-                bottom: 20,
-                right: 20,
-                child: floatButton(
-                  icon: Icons.add,
-                  onTap: () {
-                    locator<NavigationService>().navigateTo(addCasePageRoute);
-                  },
-                ),
-              ),
-            ],
-          );
-        },
+            ),
+          ),
+          Positioned(
+            bottom: 20,
+            right: 20,
+            child: floatButton(
+              icon: Icons.add,
+              onTap: () {
+                locator<NavigationService>().navigateTo(addCasePageRoute);
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
-Widget _column(String type, CasesCubit casesCubit, String title, Widget icon,
-    Color color, Color secondaryColor, BuildContext context) {
-  // Safe access to casesList with null safety
-  final List cases = casesCubit.casesList?[type] ?? [];
+Widget _column(String title, Widget icon, Color color, Color secondaryColor,
+    BuildContext context) {
   return SizedBox(
     width: MediaQuery.of(context).size.width / 4.8,
     // height: MediaQuery.of(context).size.height / 1.2,
@@ -145,7 +109,7 @@ Widget _column(String type, CasesCubit casesCubit, String title, Widget icon,
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 5.0),
                             child: Text(
-                              cases.length.toString(),
+                              '5',
                               style: TextStyle(
                                   color: secondaryColor,
                                   fontSize: 16,
@@ -163,47 +127,27 @@ Widget _column(String type, CasesCubit casesCubit, String title, Widget icon,
           height: 010,
         ),
         Expanded(
-            child: cases.isEmpty
-                ? Center(
-                    child: Text(
-                      'لا توجد حالات',
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 16,
-                      ),
-                    ),
-                  )
-                : ListView.separated(
-                    itemBuilder: (context, index) {
-                      return _itembuilder(
-                          index, type, casesCubit, context, icon, color);
-                    },
-                    itemCount: cases.length,
-                    separatorBuilder: (context, index) {
-                      return const SizedBox(
-                        height: 10,
-                      );
-                    },
-                  ))
+            child: ListView.separated(
+          itemBuilder: (context, index) {
+            return _itembuilder(context, icon, color);
+          },
+          itemCount: 5,
+          separatorBuilder: (context, index) {
+            return const SizedBox(
+              height: 10,
+            );
+          },
+        ))
       ],
     ),
   );
 }
 
 Widget _itembuilder(
-  int index,
-  String type,
-  CasesCubit cubit,
   context,
   Widget icon,
   Color color,
 ) {
-  // Safe access to casesList with null safety
-  final list = cubit.casesList?[type] ?? [];
-  if (index < 0 || index >= list.length) {
-    return const SizedBox.shrink();
-  }
-  var info = list[index];
   return Card(
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -218,22 +162,8 @@ Widget _itembuilder(
       borderRadius: BorderRadius.only(
           topRight: Radius.circular(16), bottomLeft: Radius.circular(16)),
       hoverColor: const Color.fromARGB(63, 48, 195, 178),
-      onTap: () {
-        // Get the case ID from the current case
-        final caseId = info.id;
-        print('CasesList - Navigating to case details with ID: $caseId');
-        if (caseId != null) {
-          locator<NavigationService>()
-              .navigateTo(caseDetailsPageRoute, arguments: caseId);
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('خطأ: لا يمكن العثور على معرف الحالة'),
-              backgroundColor: Colors.red,
-            ),
-          );
-        }
-      },
+      onTap: () =>
+          locator<NavigationService>().navigateTo(caseDetailsPageRoute),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -257,11 +187,7 @@ Widget _itembuilder(
                     // mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        (info.createdAt != null)
-                            ? (info.createdAt is DateTime
-                                ? (info.createdAt as DateTime).toIso8601String()
-                                : info.createdAt.toString())
-                            : '-',
+                        '2024/11/15',
                         style: TextStyle(
                           color: cyan500,
                         ),
@@ -307,10 +233,8 @@ Widget _itembuilder(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
-                            'الطبيب: '
-                            '${(info.dentist?.firstName ?? '')} '
-                            '${(info.dentist?.lastName ?? '')}',
+                          const Text(
+                            'الطبيب: د. تحسين التحسيني',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: cyan500,
@@ -319,8 +243,8 @@ Widget _itembuilder(
                           const SizedBox(
                             height: 10,
                           ),
-                          Text(
-                            'المريض: ${info.patient?.fullName ?? '-'}',
+                          const Text(
+                            'المريض: اسماعيل أحمد كنباوي',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: cyan500,

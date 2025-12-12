@@ -1,20 +1,15 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lambda_dent_dash/components/date_picker.dart';
 import 'package:lambda_dent_dash/components/default_button.dart';
 import 'package:lambda_dent_dash/components/default_textfield.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
-import 'package:lambda_dent_dash/presentation/employees/Cubits/employees_cubit.dart';
-import 'package:lambda_dent_dash/presentation/employees/Cubits/employees_state.dart';
 
 class EmployeeAddDialog extends StatefulWidget {
-  final EmployeesCubit employeesCubit;
 
   const EmployeeAddDialog({
     super.key,
-    required this.employeesCubit,
   });
 
   @override
@@ -29,7 +24,6 @@ class _EmployeeAddDialogState extends State<EmployeeAddDialog> {
       TextEditingController();
   DateTime _startDate = DateTime.now();
   String? _selectedGuard;
-  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -67,63 +61,9 @@ class _EmployeeAddDialogState extends State<EmployeeAddDialog> {
     return true;
   }
 
-  void _submitForm() {
-    if (!_validateForm()) return;
-
-    setState(() {
-      _isLoading = true;
-    });
-
-    widget.employeesCubit
-        .createEmployee(
-      guard: _selectedGuard!,
-      fullName: _employeeNameController.text.trim(),
-      email: _employeeEmailController.text.trim(),
-      phone: _employeePhoneController.text.trim(),
-      workStartAt:
-          _startDate.toIso8601String().split('T')[0], // Format as YYYY-MM-DD
-    )
-        .then((success) {
-      if (success) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('تم إضافة الموظف بنجاح')),
-          );
-          Navigator.of(context).pop();
-        }
-      } else {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('فشل في إضافة الموظف')),
-          );
-        }
-      }
-    }).catchError((error) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('خطأ: $error')),
-        );
-      }
-    }).whenComplete(() {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return BlocListener<EmployeesCubit, EmployeesState>(
-      listener: (context, state) {
-        if (state is EmployeesError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
-        }
-      },
-      child: Dialog(
+    return Dialog(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Container(
@@ -250,8 +190,8 @@ class _EmployeeAddDialogState extends State<EmployeeAddDialog> {
                         ),
                         const SizedBox(height: 20),
                         defaultButton(
-                          text: _isLoading ? 'جاري الإضافة...' : 'إضافة',
-                          function: _isLoading ? () {} : _submitForm,
+                          text: 'إضافة',
+                          function: (){}
                         ),
                       ],
                     ),
@@ -261,11 +201,6 @@ class _EmployeeAddDialogState extends State<EmployeeAddDialog> {
             ),
           ),
         ),
-      ),
     );
   }
-}
-
-Widget employeeAddDialog(BuildContext context, EmployeesCubit employeesCubit) {
-  return EmployeeAddDialog(employeesCubit: employeesCubit);
 }

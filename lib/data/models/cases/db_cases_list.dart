@@ -16,8 +16,11 @@ class DBMedicalCasesByTypeResponse {
   DBMedicalCasesByTypeResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     successCode = json['success_code'];
-    medicalCasesByType =
-        DBMedicalCasesByType.fromJson(json['medical_cases_by_type']);
+// Safely check for the key's existence before calling fromJson
+    if (json['medical_cases_by_type'] != null) {
+      medicalCasesByType =
+          DBMedicalCasesByType.fromJson(json['medical_cases_by_type']);
+    }
     successMessage = json['success_message'];
   }
 
@@ -25,7 +28,10 @@ class DBMedicalCasesByTypeResponse {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['status'] = status;
     data['success_code'] = successCode;
-    if (medicalCasesByType != null) data['medical_cases_by_type'];
+    // Corrected Line:
+    if (medicalCasesByType != null) {
+      data['medical_cases_by_type'] = medicalCasesByType!.toJson();
+    }
     data['success_message'] = successMessage;
     return data;
   }

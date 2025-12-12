@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/components/default_button.dart';
-import 'package:lambda_dent_dash/components/default_textfield.dart';
+
 import 'package:lambda_dent_dash/constants/constants.dart';
+import 'package:lambda_dent_dash/view/inventory/components/item_edit_quantity_card.dart';
 
-Dialog editCatDialog(BuildContext context) {
-  TextEditingController catnamecontroller =
-      TextEditingController();
-
+Dialog addQuantityForItem(BuildContext context) {
   return Dialog(
     child: Padding(
       padding: const EdgeInsets.all(16.0),
@@ -15,7 +13,7 @@ Dialog editCatDialog(BuildContext context) {
               border: Border.all(width: 2, color: cyan200),
               borderRadius: BorderRadius.circular(20)),
           width: MediaQuery.of(context).size.width / 4,
-          height: MediaQuery.of(context).size.height / 2.3,
+          height: MediaQuery.of(context).size.height / 2.1,
           child: CustomScrollView(slivers: [
             SliverFillRemaining(
               child: Padding(
@@ -25,7 +23,7 @@ Dialog editCatDialog(BuildContext context) {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     const Text(
-                      'تعديل صنف رئيسي',
+                      'تعديل كمية',
                       style: TextStyle(
                           color: cyan400,
                           fontSize: 18,
@@ -40,17 +38,14 @@ Dialog editCatDialog(BuildContext context) {
                     const SizedBox(
                       height: 10,
                     ),
-                    Text('أدخل الاسم الجديد'),
-                    SizedBox(
-                      width: 250,
-                      child: defaultTextField(
-                          catnamecontroller, context, ''),
+                    itemEditQuantityCard(
+                      context,
                     ),
-                    const SizedBox(
+                    SizedBox(
                       height: 10,
                     ),
                     defaultButton(
-                        text: 'تعديل',
+                        text: 'تم',
                         function: () {
                           Navigator.of(context).pop();
                         })

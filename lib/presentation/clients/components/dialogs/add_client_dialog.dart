@@ -1,21 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lambda_dent_dash/components/default_button.dart';
 import 'package:lambda_dent_dash/components/default_textfield.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
-import 'package:lambda_dent_dash/presentation/clients/Cubits/clients_cubit.dart';
 
 class AddClientDialog extends StatelessWidget {
   AddClientDialog({
     super.key,
-    required this.clientsCubit,
   });
-
-  final ClientsCubit clientsCubit;
-  TextEditingController clientNameController = TextEditingController();
-  TextEditingController clientPhoneController = TextEditingController();
-  TextEditingController clientAddressController = TextEditingController();
-
+  TextEditingController titleController = TextEditingController();
+  TextEditingController costController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -46,18 +39,15 @@ class AddClientDialog extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    defaultTextField(
-                        clientNameController, context, 'اسم الزبون'),
+                    defaultTextField(titleController, context, 'اسم الزبون'),
                     const SizedBox(
                       height: 20,
                     ),
-                    defaultTextField(
-                        clientPhoneController, context, 'رقم الهاتف'),
+                    defaultTextField(costController, context, 'رقم الهاتف'),
                     const SizedBox(
                       height: 20,
                     ),
-                    defaultTextField(
-                        clientAddressController, context, 'العنوان'),
+                    defaultTextField(costController, context, 'العنوان'),
                     const SizedBox(
                       height: 20,
                     ),
@@ -69,29 +59,8 @@ class AddClientDialog extends StatelessWidget {
               ),
               defaultButton(
                   text: 'إضافة',
-                  function: () async {
-                    final nameParts =
-                        clientNameController.text.trim().split(' ');
-                    final firstName =
-                        nameParts.isNotEmpty ? nameParts.first : '';
-                    final lastName = nameParts.length > 1
-                        ? nameParts.sublist(1).join(' ')
-                        : '';
-                    final phone = clientPhoneController.text.trim();
-                    final address = clientAddressController.text.trim();
-                    final success = await clientsCubit.addLocalClient(
-                      firstName: firstName,
-                      lastName: lastName,
-                      phone: phone,
-                      address: address,
-                    );
-                    if (success) {
-                      Navigator.pop(context);
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('فشل في إضافة الزبون')),
-                      );
-                    }
+                  function: () {
+                    Navigator.pop(context);
                   })
             ],
           ),

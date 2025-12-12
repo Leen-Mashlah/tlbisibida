@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "27a18d49-c938-4630-aa96-0554e39115e2",
-		"name": "Tusk-Project (●'◡'●)",
+		"_postman_id": "1f701ec9-02d7-4490-b710-1f84f4b3e6f8",
+		"name": "Gitlab-Tusk-Project-Beta-V0",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -134,132 +134,6 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"status\": true,\n    \"success_code\": 200,\n    \"data\": {\n        \"access_token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzQ3MjA0NTgxLCJleHAiOjE3NDcyMDgxODEsIm5iZiI6MTc0NzIwNDU4MSwianRpIjoibW5NTWR3UkhDRXpFVlk1QyIsInN1YiI6IjIiLCJwcnYiOiIwMjkwZWZkNjQwZDFhODdiZTQ4OWQ1NmM3MjgwMzFhOGUzOGUyZTYzIn0.J36KdILx3T-jazNTKnfR72fsyzomqexpPRsWPJSvB2U\",\n        \"expires_at\": 3600\n    },\n    \"success_message\": \"تم تسجيل الدخول بنجاح\"\n}"
-								}
-							]
-						},
-						{
-							"name": "inventory employee login",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "email",
-											"value": "inventory.employee1.5@gmail.com",
-											"type": "text"
-										},
-										{
-											"key": "password",
-											"value": "password",
-											"type": "text"
-										},
-										{
-											"key": "guard",
-											"value": "inventory_employee",
-											"type": "text"
-										}
-									]
-								},
-								"url": {
-									"raw": "localhost:8000/api/login",
-									"host": [
-										"localhost"
-									],
-									"port": "8000",
-									"path": [
-										"api",
-										"login"
-									]
-								},
-								"description": "Login for all user in Tusk platform"
-							},
-							"response": [
-								{
-									"name": "inventory employee login",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Accept",
-												"type": "text",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "formdata",
-											"formdata": [
-												{
-													"key": "email",
-													"value": "inventory.employee1.5@gmail.com",
-													"type": "text"
-												},
-												{
-													"key": "password",
-													"value": "password",
-													"type": "text"
-												},
-												{
-													"key": "guard",
-													"value": "inventory_employee",
-													"type": "text"
-												}
-											]
-										},
-										"url": {
-											"raw": "localhost:8000/api/login",
-											"host": [
-												"localhost"
-											],
-											"port": "8000",
-											"path": [
-												"api",
-												"login"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Host",
-											"value": "localhost:8000"
-										},
-										{
-											"key": "Connection",
-											"value": "close"
-										},
-										{
-											"key": "X-Powered-By",
-											"value": "PHP/8.3.3"
-										},
-										{
-											"key": "Cache-Control",
-											"value": "no-cache, private"
-										},
-										{
-											"key": "Date",
-											"value": "Wed, 14 May 2025 06:36:33 GMT"
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										},
-										{
-											"key": "Access-Control-Allow-Origin",
-											"value": "*"
-										}
-									],
-									"cookie": [],
-									"body": "{\n    \"status\": true,\n    \"success_code\": 200,\n    \"data\": {\n        \"access_token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzQ3MjA0NTkzLCJleHAiOjE3NDcyMDgxOTMsIm5iZiI6MTc0NzIwNDU5MywianRpIjoiU29OT0xlMDQwN2lKY3pMdCIsInN1YiI6IjkiLCJwcnYiOiI4NjUwNjNkYmJlZTYxNjYyZjgzOTI0ZWEyNTBhZGE3YzA3ZGYwYjYzIn0.h_ndpUzWrbmHGtI_DlxvibzDiNwhxYdHnRyt-FG5ijc\",\n        \"expires_at\": 3600\n    },\n    \"success_message\": \"تم تسجيل الدخول بنجاح\"\n}"
 								}
 							]
 						},
@@ -793,12 +667,12 @@
 										},
 										{
 											"key": "full_name",
-											"value": "مخبر محمود",
+											"value": "طارق العربي",
 											"type": "text"
 										},
 										{
 											"key": "email",
-											"value": "hussamo14@gmail.com",
+											"value": "tareklahham@gmail.com",
 											"type": "text"
 										},
 										{
@@ -819,7 +693,7 @@
 										},
 										{
 											"key": "lab_name",
-											"value": "مخبر الفرونت اند",
+											"value": "مخبر الإحسان",
 											"type": "text"
 										},
 										{
@@ -834,7 +708,7 @@
 										},
 										{
 											"key": "lab_address",
-											"value": "دمشق - طريق المطار - الهمك - كلية الهندسة المعلوماتية - جانب طاولة البينغ بونغ .",
+											"value": "دمشق - طريق المطار - جانب كلية الهندسة المعلوماتية",
 											"type": "text"
 										},
 										{
@@ -1171,17 +1045,17 @@
 										},
 										{
 											"key": "first_name",
-											"value": "محمود",
+											"value": "Leen",
 											"type": "text"
 										},
 										{
 											"key": "last_name",
-											"value": "وحش اللارافل",
+											"value": "Mashlah",
 											"type": "text"
 										},
 										{
 											"key": "email",
-											"value": "mashlahmahmod2000@gmail.com",
+											"value": "lemashenlah@gmail.com",
 											"type": "text"
 										},
 										{
@@ -1196,12 +1070,12 @@
 										},
 										{
 											"key": "phone",
-											"value": "0998877444",
+											"value": "0998855462",
 											"type": "text"
 										},
 										{
 											"key": "address",
-											"value": "دمشق - طريق المطار - الهمك - كلية الهندسة المعلوماتية - جانب طاولة البينغ بونغ ",
+											"value": "دمشق - شارع الأمين - جانب صيدلية الوفاء",
 											"type": "text"
 										},
 										{
@@ -1256,7 +1130,7 @@
 										{
 											"key": "image",
 											"type": "file",
-											"src": "/C:/Users/Lenovo/Desktop/Me.jpg"
+											"src": "/C:/الصور والفيديو و الصوتيات/كرتون/Detective Conan All  المحقق كونان/صور/others/187.jpg"
 										}
 									],
 									"options": {
@@ -1266,7 +1140,8 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8000/api/register",
+									"raw": "http://localhost:8000/api/register",
+									"protocol": "http",
 									"host": [
 										"localhost"
 									],
@@ -1612,7 +1487,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzUxOTM5NTgyLCJleHAiOjE3NTQ1MzE1ODIsIm5iZiI6MTc1MTkzOTU4MiwianRpIjoiY0Q1Znp2ODdhYXREQlp3ZyIsInN1YiI6IjkiLCJwcnYiOiI4NjUwNjNkYmJlZTYxNjYyZjgzOTI0ZWEyNTBhZGE3YzA3ZGYwYjYzIn0.99kvw4Va9mUfAtFBceOBr3M-n-C9OqVrpwXMjStwdHQ",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzYzNTU5MjgwLCJleHAiOjE3NjYxNTEyODAsIm5iZiI6MTc2MzU1OTI4MCwianRpIjoiY1FzaFNMS2hPdGlpSVRUQyIsInN1YiI6IjEiLCJwcnYiOiIwMjkwZWZkNjQwZDFhODdiZTQ4OWQ1NmM3MjgwMzFhOGUzOGUyZTYzIn0.eex84C0zamP_aXwgKX-RvO_z8TWY40C9KI5TCQ1tJK4",
 											"type": "string"
 										}
 									]
@@ -5904,7 +5779,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzQ4NzgyMzkwLCJleHAiOjE3NTEzNzQzOTAsIm5iZiI6MTc0ODc4MjM5MCwianRpIjoiUDYwVVZURjRhZXg2QmlSOSIsInN1YiI6IjYiLCJwcnYiOiIwMjkwZWZkNjQwZDFhODdiZTQ4OWQ1NmM3MjgwMzFhOGUzOGUyZTYzIn0.nYmvVcYesRYSENCgOOgW_Fo37EO_KanxUAU06v57upM",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzYzNTU3NDE4LCJleHAiOjE3NjYxNDk0MTgsIm5iZiI6MTc2MzU1NzQxOCwianRpIjoiUGNxRWJaV01nY0dVaVNJbyIsInN1YiI6IjEiLCJwcnYiOiIwMjkwZWZkNjQwZDFhODdiZTQ4OWQ1NmM3MjgwMzFhOGUzOGUyZTYzIn0.H9HCfeVmS0sNb6SMQuctELV5FPHJZeZlKW_4WeqQZrY",
 											"type": "string"
 										}
 									]
@@ -5961,7 +5836,7 @@
 										},
 										{
 											"key": "X-Powered-By",
-											"value": "PHP/8.3.3"
+											"value": "PHP/8.2.12"
 										},
 										{
 											"key": "Cache-Control",
@@ -5969,7 +5844,7 @@
 										},
 										{
 											"key": "Date",
-											"value": "Sun, 01 Jun 2025 13:17:57 GMT"
+											"value": "Wed, 19 Nov 2025 13:11:45 GMT"
 										},
 										{
 											"key": "Content-Type",
@@ -5981,7 +5856,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"status\": true,\n    \"success_code\": 200,\n    \"treatments_statistics\": {\n        \"1\": {\n            \"ترميم\": 7,\n            \"سحب عصب\": 6,\n            \"قلع جراحي\": 16\n        },\n        \"2\": {\n            \"ترميم\": 20,\n            \"سحب عصب\": 8,\n            \"قلع جراحي\": 13\n        },\n        \"3\": {\n            \"ترميم\": 11,\n            \"سحب عصب\": 12,\n            \"قلع جراحي\": 17\n        },\n        \"4\": {\n            \"ترميم\": 17,\n            \"سحب عصب\": 10,\n            \"قلع جراحي\": 13\n        },\n        \"5\": {\n            \"ترميم\": 11,\n            \"سحب عصب\": 20,\n            \"قلع جراحي\": 9\n        },\n        \"6\": {\n            \"ترميم\": 8,\n            \"سحب عصب\": 5,\n            \"قلع جراحي\": 17\n        },\n        \"7\": {\n            \"ترميم\": 8,\n            \"سحب عصب\": 14,\n            \"قلع جراحي\": 8\n        },\n        \"8\": {\n            \"ترميم\": 10,\n            \"سحب عصب\": 7,\n            \"قلع جراحي\": 13\n        },\n        \"9\": {\n            \"ترميم\": 12,\n            \"سحب عصب\": 8,\n            \"قلع جراحي\": 10\n        },\n        \"10\": {\n            \"ترميم\": 7,\n            \"سحب عصب\": 7,\n            \"قلع جراحي\": 16\n        },\n        \"11\": {\n            \"ترميم\": 5,\n            \"سحب عصب\": 10,\n            \"قلع جراحي\": 15\n        },\n        \"12\": {\n            \"ترميم\": 11,\n            \"سحب عصب\": 14,\n            \"قلع جراحي\": 5\n        }\n    },\n    \"success_message\": \" احصائيات المعالجات \"\n}"
+									"body": "{\n    \"status\": true,\n    \"success_code\": 200,\n    \"treatments_statistics\": [\n        {\n            \"month_number\": 10,\n            \"teeth_treatment_1\": 1,\n            \"teeth_treatment_2\": 0,\n            \"teeth_treatment_3\": 0,\n            \"teeth_treatment_4\": 2,\n            \"teeth_treatment_5\": 0\n        },\n        {\n            \"month_number\": 11,\n            \"teeth_treatment_1\": 12,\n            \"teeth_treatment_2\": 0,\n            \"teeth_treatment_3\": 0,\n            \"teeth_treatment_4\": 12,\n            \"teeth_treatment_5\": 0\n        }\n    ],\n    \"success_message\": \" احصائيات المعالجات \"\n}"
 								}
 							]
 						},
@@ -7320,6 +7195,229 @@
 					"name": "Treatments (dentist Sessions الجلسات العلاجية)",
 					"item": [
 						{
+							"name": "get tooth treatments history (by patient_id and tooth_id)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzYzNTU5MjgwLCJleHAiOjE3NjYxNTEyODAsIm5iZiI6MTc2MzU1OTI4MCwianRpIjoiY1FzaFNMS2hPdGlpSVRUQyIsInN1YiI6IjEiLCJwcnYiOiIwMjkwZWZkNjQwZDFhODdiZTQ4OWQ1NmM3MjgwMzFhOGUzOGUyZTYzIn0.eex84C0zamP_aXwgKX-RvO_z8TWY40C9KI5TCQ1tJK4",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/vnd.api+json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "patient_id",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "tooth_id",
+											"value": "25",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8000/api/dentist/treatments/show-tooth-treatments",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"dentist",
+										"treatments",
+										"show-tooth-treatments"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "لا يوجد سجل معالجات لهذا السن",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/vnd.api+json",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/vnd.api+json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "patient_id",
+													"value": "1",
+													"type": "text"
+												},
+												{
+													"key": "tooth_id",
+													"value": "26",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "http://localhost:8000/api/dentist/treatments/show-tooth-treatments",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"api",
+												"dentist",
+												"treatments",
+												"show-tooth-treatments"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "localhost:8000"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.2.12"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 22 Nov 2025 08:33:07 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": false,\n    \"error_message\": \"لا يوجد سجل معالجات لهذا السن\",\n    \"error_code\": 200\n}"
+								},
+								{
+									"name": "get tooth treatments history (by patient_id and tooth_id)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/vnd.api+json",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/vnd.api+json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "patient_id",
+													"value": "1",
+													"type": "text"
+												},
+												{
+													"key": "tooth_id",
+													"value": "25",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "http://localhost:8000/api/dentist/treatments/show-tooth-treatments",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"api",
+												"dentist",
+												"treatments",
+												"show-tooth-treatments"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "localhost:8000"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.2.12"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 22 Nov 2025 08:54:46 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": true,\n    \"success_code\": 200,\n    \"tooth_treatments_history\": [\n        {\n            \"treatment_type_number\": 4,\n            \"treatment_date\": \"2025-11-19T13:35:19.000000Z\"\n        },\n        {\n            \"treatment_type_number\": 5,\n            \"treatment_date\": \"2025-10-10T13:35:19.000000Z\"\n        }\n    ],\n    \"success_message\": \"25 سجل معالجات السن\"\n}"
+								}
+							]
+						},
+						{
 							"name": "add treatment",
 							"request": {
 								"auth": {
@@ -7327,7 +7425,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzUyNjU5NTQ5LCJleHAiOjE3NTUyNTE1NDksIm5iZiI6MTc1MjY1OTU0OSwianRpIjoiajJ3S0w3dlNIRno2WkRtZSIsInN1YiI6IjIiLCJwcnYiOiIwMjkwZWZkNjQwZDFhODdiZTQ4OWQ1NmM3MjgwMzFhOGUzOGUyZTYzIn0.PUt4OKIWRhPxBGHPb7i8kpoxXXrX1Cq-IRgskd1DwIw",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzYzNTU5MjgwLCJleHAiOjE3NjYxNTEyODAsIm5iZiI6MTc2MzU1OTI4MCwianRpIjoiY1FzaFNMS2hPdGlpSVRUQyIsInN1YiI6IjEiLCJwcnYiOiIwMjkwZWZkNjQwZDFhODdiZTQ4OWQ1NmM3MjgwMzFhOGUzOGUyZTYzIn0.eex84C0zamP_aXwgKX-RvO_z8TWY40C9KI5TCQ1tJK4",
 											"type": "string"
 										}
 									]
@@ -7374,17 +7472,39 @@
 											"type": "text"
 										},
 										{
+											"key": "teeth_treatment_1",
+											"value": "21,22",
+											"type": "text"
+										},
+										{
+											"key": "teeth_treatment_2",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "teeth_treatment_3",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "teeth_treatment_4",
+											"value": "24,25",
+											"type": "text"
+										},
+										{
+											"key": "teeth_treatment_5",
+											"value": "",
+											"type": "text"
+										},
+										{
 											"key": "images[]",
 											"type": "file",
-											"src": [
-												"/C:/Users/Lenovo/Desktop/detective conan33.jpg",
-												"/C:/Users/Lenovo/Desktop/father.jpg"
-											]
+											"src": "/C:/Users/Lenovo/Desktop/wade-meng-LgCj9qcrfhI-unsplash.jpg"
 										},
 										{
 											"key": "treatment_screenshot",
 											"type": "file",
-											"src": "/C:/Users/Lenovo/Desktop/detective conan33.jpg"
+											"src": "/C:/Users/Lenovo/Pictures/abc.png"
 										}
 									]
 								},
@@ -7537,7 +7657,7 @@
 												},
 												{
 													"key": "cost",
-													"value": "25000000",
+													"value": "45000",
 													"type": "text"
 												},
 												{
@@ -7552,21 +7672,43 @@
 												},
 												{
 													"key": "date",
-													"value": "2025-05-24",
+													"value": "2025-06-29",
+													"type": "text"
+												},
+												{
+													"key": "teeth_treatment_1",
+													"value": "21,22",
+													"type": "text"
+												},
+												{
+													"key": "teeth_treatment_2",
+													"value": "",
+													"type": "text"
+												},
+												{
+													"key": "teeth_treatment_3",
+													"value": "",
+													"type": "text"
+												},
+												{
+													"key": "teeth_treatment_4",
+													"value": "24,25",
+													"type": "text"
+												},
+												{
+													"key": "teeth_treatment_5",
+													"value": "",
 													"type": "text"
 												},
 												{
 													"key": "images[]",
 													"type": "file",
-													"src": [
-														"/C:/Users/Lenovo/Pictures/abc.png",
-														"/C:/Users/Lenovo/Pictures/first left lab .png"
-													]
+													"src": "/C:/Users/Lenovo/Desktop/wade-meng-LgCj9qcrfhI-unsplash.jpg"
 												},
 												{
 													"key": "treatment_screenshot",
 													"type": "file",
-													"src": "/C:/Users/Lenovo/Pictures/lab 2 .png"
+													"src": "/C:/Users/Lenovo/Pictures/abc.png"
 												}
 											]
 										},
@@ -7599,7 +7741,7 @@
 										},
 										{
 											"key": "X-Powered-By",
-											"value": "PHP/8.3.3"
+											"value": "PHP/8.2.12"
 										},
 										{
 											"key": "Cache-Control",
@@ -7607,7 +7749,7 @@
 										},
 										{
 											"key": "Date",
-											"value": "Wed, 21 May 2025 12:03:17 GMT"
+											"value": "Wed, 19 Nov 2025 11:31:11 GMT"
 										},
 										{
 											"key": "Content-Type",
@@ -7883,7 +8025,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzQ3NjAyMzU5LCJleHAiOjE3NDc2MDU5NTksIm5iZiI6MTc0NzYwMjM1OSwianRpIjoiZFZhTDVvZXlOQTNTRGh3WiIsInN1YiI6IjYiLCJwcnYiOiIwMjkwZWZkNjQwZDFhODdiZTQ4OWQ1NmM3MjgwMzFhOGUzOGUyZTYzIn0.JEKYIsrO-NWxS8t9m78kYNJtE3CYPgVLR_XX4nPUsYg",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzYzNTU5MjgwLCJleHAiOjE3NjYxNTEyODAsIm5iZiI6MTc2MzU1OTI4MCwianRpIjoiY1FzaFNMS2hPdGlpSVRUQyIsInN1YiI6IjEiLCJwcnYiOiIwMjkwZWZkNjQwZDFhODdiZTQ4OWQ1NmM3MjgwMzFhOGUzOGUyZTYzIn0.eex84C0zamP_aXwgKX-RvO_z8TWY40C9KI5TCQ1tJK4",
 											"type": "string"
 										}
 									]
@@ -7902,7 +8044,7 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:8000/api/dentist/treatments/show-treatment-details/2",
+									"raw": "http://localhost:8000/api/dentist/treatments/show-treatment-details/1",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -7913,7 +8055,7 @@
 										"dentist",
 										"treatments",
 										"show-treatment-details",
-										"2"
+										"1"
 									]
 								}
 							},
@@ -7935,7 +8077,7 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:8000/api/dentist/treatments/show-treatment-details/2",
+											"raw": "http://localhost:8000/api/dentist/treatments/show-treatment-details/1",
 											"protocol": "http",
 											"host": [
 												"localhost"
@@ -7946,7 +8088,7 @@
 												"dentist",
 												"treatments",
 												"show-treatment-details",
-												"2"
+												"1"
 											]
 										}
 									},
@@ -7964,7 +8106,7 @@
 										},
 										{
 											"key": "X-Powered-By",
-											"value": "PHP/8.3.3"
+											"value": "PHP/8.2.12"
 										},
 										{
 											"key": "Cache-Control",
@@ -7972,7 +8114,7 @@
 										},
 										{
 											"key": "Date",
-											"value": "Sun, 18 May 2025 21:33:52 GMT"
+											"value": "Wed, 19 Nov 2025 13:35:31 GMT"
 										},
 										{
 											"key": "Content-Type",
@@ -7984,7 +8126,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"status\": true,\n    \"success_code\": 200,\n    \"treatment_details\": {\n        \"id\": 2,\n        \"patient_id\": 1,\n        \"dentist_id\": 6,\n        \"medical_case_id\": null,\n        \"cost\": 40000,\n        \"title\": \"جلسة 1\",\n        \"type\": \"قلع ضرس\",\n        \"details\": \"54321\",\n        \"date\": \"2025-05-05\",\n        \"is_paid\": 0,\n        \"created_at\": \"2025-05-18T14:31:50.000000Z\",\n        \"updated_at\": \"2025-05-18T14:31:50.000000Z\",\n        \"images\": [\n            {\n                \"id\": 1,\n                \"treatment_id\": 2,\n                \"name\": \"image1.jpg\",\n                \"is_diagram\": 1\n            },\n            {\n                \"id\": 2,\n                \"treatment_id\": 2,\n                \"name\": \"image2.jpg\",\n                \"is_diagram\": 1\n            },\n            {\n                \"id\": 3,\n                \"treatment_id\": 2,\n                \"name\": \"image2.jpg\",\n                \"is_diagram\": 0\n            }\n        ]\n    },\n    \"success_message\": \"تفاصيل الجلسة\"\n}"
+									"body": "{\n    \"status\": true,\n    \"success_code\": 200,\n    \"treatment_details\": {\n        \"id\": 1,\n        \"patient_id\": 1,\n        \"dentist_id\": 1,\n        \"medical_case_id\": null,\n        \"cost\": 45000,\n        \"details\": \"any details\",\n        \"date\": \"2025-06-29\",\n        \"is_paid\": 0,\n        \"created_at\": \"2025-11-19T13:35:19.000000Z\",\n        \"updated_at\": \"2025-11-19T13:35:19.000000Z\",\n        \"treatment_case\": {\n            \"id\": 1,\n            \"dentist_id\": 1,\n            \"treatment_id\": 1,\n            \"patient_id\": 1,\n            \"teeth_treatment_1\": \"21,22\",\n            \"teeth_treatment_2\": null,\n            \"teeth_treatment_3\": null,\n            \"teeth_treatment_4\": \"24,25\",\n            \"teeth_treatment_5\": null,\n            \"created_at\": \"2025-11-19T13:35:19.000000Z\",\n            \"updated_at\": \"2025-11-19T13:35:19.000000Z\"\n        },\n        \"images\": [\n            {\n                \"id\": 1,\n                \"treatment_id\": 1,\n                \"name\": \"2025_11_19_13_35_19_wade-meng-LgCj9qcrfhI-unsplash.jpg\",\n                \"is_diagram\": 0\n            },\n            {\n                \"id\": 2,\n                \"treatment_id\": 1,\n                \"name\": \"2025_11_19_13_35_19_abc.png\",\n                \"is_diagram\": 1\n            }\n        ]\n    },\n    \"success_message\": \"تفاصيل الجلسة\"\n}"
 								}
 							]
 						},
@@ -11861,7 +12003,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3JlZ2lzdGVyIiwiaWF0IjoxNzQ5MzI1NzUxLCJleHAiOjE3NTE5MTc3NTEsIm5iZiI6MTc0OTMyNTc1MSwianRpIjoicWh0bTk2MXVtWnVyeG5YZiIsInN1YiI6IjYiLCJwcnYiOiIwMjkwZWZkNjQwZDFhODdiZTQ4OWQ1NmM3MjgwMzFhOGUzOGUyZTYzIn0.OyLed03xkSnFrjWc68GsOuhNjnZWG8d96Toh43dZRmo",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZWJlYTc4ZmNkMGNjLm5ncm9rLWZyZWUuYXBwL2FwaS9yZWdpc3RlciIsImlhdCI6MTc1NjQxNDczNSwiZXhwIjoxNzU5MDA2NzM1LCJuYmYiOjE3NTY0MTQ3MzUsImp0aSI6IjdsQ2lPN2I4cmZodVVCNFMiLCJzdWIiOiIxOSIsInBydiI6IjAyOTBlZmQ2NDBkMWE4N2JlNDg5ZDU2YzcyODAzMWE4ZTM4ZTJlNjMifQ.k2gjHvoUnVYHIdrZ-GzR2fQbWc_dK6WfGZ0Q5hrfKpM",
 											"type": "string"
 										}
 									]
@@ -12238,329 +12380,8 @@
 					]
 				},
 				{
-					"name": "Patients Management & Appointments المرضى والمواعيد",
+					"name": "Patients",
 					"item": [
-						{
-							"name": "Book an appointment in two steps",
-							"item": [
-								{
-									"name": "step-1 get the available times to book an appointment",
-									"protocolProfileBehavior": {
-										"disableBodyPruning": true
-									},
-									"request": {
-										"auth": {
-											"type": "bearer",
-											"bearer": [
-												{
-													"key": "token",
-													"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzUwOTYzNTY3LCJleHAiOjE3NTM1NTU1NjcsIm5iZiI6MTc1MDk2MzU2NywianRpIjoiZkVhWkM1RjlyYnYxQlJKeSIsInN1YiI6IjYiLCJwcnYiOiIwMjkwZWZkNjQwZDFhODdiZTQ4OWQ1NmM3MjgwMzFhOGUzOGUyZTYzIn0.4xpFHh8ihYTzBtmLBvmpxnxqHt4cBTwoyZ7HNn0Iif0",
-													"type": "string"
-												}
-											]
-										},
-										"method": "GET",
-										"header": [],
-										"body": {
-											"mode": "formdata",
-											"formdata": []
-										},
-										"url": {
-											"raw": "http://127.0.0.1:8000/api/dentist/patients/appointments/get-avilable-slots?date=2025-5-29&duration=30",
-											"protocol": "http",
-											"host": [
-												"127",
-												"0",
-												"0",
-												"1"
-											],
-											"port": "8000",
-											"path": [
-												"api",
-												"dentist",
-												"patients",
-												"appointments",
-												"get-avilable-slots"
-											],
-											"query": [
-												{
-													"key": "date",
-													"value": "2025-5-29"
-												},
-												{
-													"key": "duration",
-													"value": "30"
-												}
-											]
-										}
-									},
-									"response": [
-										{
-											"name": "يوم الاثنين ليس ضمن أيام دوام العيادة . يرجى تغيير التاريخ أو تعديل أوقات الدوام",
-											"originalRequest": {
-												"method": "GET",
-												"header": [],
-												"body": {
-													"mode": "formdata",
-													"formdata": [
-														{
-															"key": "date",
-															"value": "2025-5-21",
-															"type": "text",
-															"disabled": true
-														},
-														{
-															"key": "duration",
-															"value": "30",
-															"description": "in minute",
-															"type": "text",
-															"disabled": true
-														}
-													]
-												},
-												"url": {
-													"raw": "http://127.0.0.1:8000/api/dentist/patients/appointments/get-avilable-slots?date=2025-5-12&duration=30",
-													"protocol": "http",
-													"host": [
-														"127",
-														"0",
-														"0",
-														"1"
-													],
-													"port": "8000",
-													"path": [
-														"api",
-														"dentist",
-														"patients",
-														"appointments",
-														"get-avilable-slots"
-													],
-													"query": [
-														{
-															"key": "date",
-															"value": "2025-5-12"
-														},
-														{
-															"key": "duration",
-															"value": "30"
-														}
-													]
-												}
-											},
-											"status": "OK",
-											"code": 200,
-											"_postman_previewlanguage": "json",
-											"header": [
-												{
-													"key": "Host",
-													"value": "127.0.0.1:8000"
-												},
-												{
-													"key": "Connection",
-													"value": "close"
-												},
-												{
-													"key": "X-Powered-By",
-													"value": "PHP/8.3.3"
-												},
-												{
-													"key": "Cache-Control",
-													"value": "no-cache, private"
-												},
-												{
-													"key": "Date",
-													"value": "Sat, 07 Jun 2025 20:29:38 GMT"
-												},
-												{
-													"key": "Content-Type",
-													"value": "application/json"
-												},
-												{
-													"key": "Access-Control-Allow-Origin",
-													"value": "*"
-												}
-											],
-											"cookie": [],
-											"body": "{\n    \"status\": false,\n    \"error_message\": \"يوم الاثنين ليس ضمن أيام دوام العيادة . يرجى تغيير التاريخ أو تعديل أوقات الدوام \",\n    \"error_code\": 422\n}"
-										}
-									]
-								},
-								{
-									"name": "step-2 select available time and  book an appointment",
-									"protocolProfileBehavior": {
-										"disabledSystemHeaders": {
-											"accept": true
-										}
-									},
-									"request": {
-										"auth": {
-											"type": "bearer",
-											"bearer": [
-												{
-													"key": "token",
-													"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3JlZ2lzdGVyIiwiaWF0IjoxNzQ5MDU4MjE2LCJleHAiOjE3NTE2NTAyMTYsIm5iZiI6MTc0OTA1ODIxNiwianRpIjoiSkE1YktaNXZQTHRHVlhiYiIsInN1YiI6IjYiLCJwcnYiOiIwMjkwZWZkNjQwZDFhODdiZTQ4OWQ1NmM3MjgwMzFhOGUzOGUyZTYzIn0.boSqq2npLgUNJDvTHHOLMC3P_r95o-IhBtY7mu9l8yk",
-													"type": "string"
-												}
-											]
-										},
-										"method": "POST",
-										"header": [
-											{
-												"key": "Accept",
-												"value": "application/json",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "formdata",
-											"formdata": [
-												{
-													"key": " date",
-													"value": "2025-05-27",
-													"type": "text"
-												},
-												{
-													"key": "time_from",
-													"value": "09:00",
-													"type": "text"
-												},
-												{
-													"key": "time_to",
-													"value": "10:00",
-													"type": "text"
-												},
-												{
-													"key": "patient_name",
-													"value": "محمود مشلح",
-													"type": "text"
-												},
-												{
-													"key": "patient_phone",
-													"value": "0995832706",
-													"type": "text"
-												}
-											]
-										},
-										"url": {
-											"raw": "http://127.0.0.1:8000/api/dentist/patients/appointments/book-an-appointment",
-											"protocol": "http",
-											"host": [
-												"127",
-												"0",
-												"0",
-												"1"
-											],
-											"port": "8000",
-											"path": [
-												"api",
-												"dentist",
-												"patients",
-												"appointments",
-												"book-an-appointment"
-											]
-										}
-									},
-									"response": [
-										{
-											"name": "step-2 select available time and  book an appointment",
-											"originalRequest": {
-												"method": "POST",
-												"header": [
-													{
-														"key": "Accept",
-														"value": "application/json",
-														"type": "text"
-													}
-												],
-												"body": {
-													"mode": "formdata",
-													"formdata": [
-														{
-															"key": " date",
-															"value": "2025-5-21",
-															"type": "text"
-														},
-														{
-															"key": "time_from",
-															"value": "09:00",
-															"type": "text"
-														},
-														{
-															"key": "time_to",
-															"value": "10:00",
-															"type": "text"
-														},
-														{
-															"key": "patient_name",
-															"value": "محمود مشلح",
-															"type": "text"
-														},
-														{
-															"key": "patient_phone",
-															"value": "0995832706",
-															"type": "text"
-														}
-													]
-												},
-												"url": {
-													"raw": "http://127.0.0.1:8000/api/dentist/patients/appointments/book-an-appointment",
-													"protocol": "http",
-													"host": [
-														"127",
-														"0",
-														"0",
-														"1"
-													],
-													"port": "8000",
-													"path": [
-														"api",
-														"dentist",
-														"patients",
-														"appointments",
-														"book-an-appointment"
-													]
-												}
-											},
-											"status": "OK",
-											"code": 200,
-											"_postman_previewlanguage": "json",
-											"header": [
-												{
-													"key": "Host",
-													"value": "127.0.0.1:8000"
-												},
-												{
-													"key": "Connection",
-													"value": "close"
-												},
-												{
-													"key": "X-Powered-By",
-													"value": "PHP/8.3.3"
-												},
-												{
-													"key": "Cache-Control",
-													"value": "no-cache, private"
-												},
-												{
-													"key": "Date",
-													"value": "Wed, 04 Jun 2025 18:27:06 GMT"
-												},
-												{
-													"key": "Content-Type",
-													"value": "application/json"
-												},
-												{
-													"key": "Access-Control-Allow-Origin",
-													"value": "*"
-												}
-											],
-											"cookie": [],
-											"body": "{\n    \"status\": true,\n    \"success_code\": 201,\n    \"success_message\": \"تم حجز الموعد بنجاح\"\n}"
-										}
-									]
-								}
-							]
-						},
 						{
 							"name": "add patient",
 							"request": {
@@ -12569,7 +12390,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzUyNjU5NTQ5LCJleHAiOjE3NTUyNTE1NDksIm5iZiI6MTc1MjY1OTU0OSwianRpIjoiajJ3S0w3dlNIRno2WkRtZSIsInN1YiI6IjIiLCJwcnYiOiIwMjkwZWZkNjQwZDFhODdiZTQ4OWQ1NmM3MjgwMzFhOGUzOGUyZTYzIn0.PUt4OKIWRhPxBGHPb7i8kpoxXXrX1Cq-IRgskd1DwIw",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzYzNTUxNTM1LCJleHAiOjE3NjYxNDM1MzUsIm5iZiI6MTc2MzU1MTUzNSwianRpIjoid0pCS3J2NHp4cGdGTldiRCIsInN1YiI6IjEiLCJwcnYiOiIwMjkwZWZkNjQwZDFhODdiZTQ4OWQ1NmM3MjgwMzFhOGUzOGUyZTYzIn0.UgViMNjVdOQgsizPzV80f3JhB0v5iRpGxKlcvYwg8SQ",
 											"type": "string"
 										}
 									]
@@ -13628,155 +13449,6 @@
 							]
 						},
 						{
-							"name": "Get booked appointments",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true,
-								"disabledSystemHeaders": {
-									"accept": true
-								}
-							},
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzUwOTYzNTY3LCJleHAiOjE3NTM1NTU1NjcsIm5iZiI6MTc1MDk2MzU2NywianRpIjoiZkVhWkM1RjlyYnYxQlJKeSIsInN1YiI6IjYiLCJwcnYiOiIwMjkwZWZkNjQwZDFhODdiZTQ4OWQ1NmM3MjgwMzFhOGUzOGUyZTYzIn0.4xpFHh8ihYTzBtmLBvmpxnxqHt4cBTwoyZ7HNn0Iif0",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "date",
-											"value": "2025-5-21",
-											"type": "text",
-											"disabled": true
-										}
-									]
-								},
-								"url": {
-									"raw": "http://127.0.0.1:8000/api/dentist/patients/appointments/get-booked-appointments?date=2025-05-05",
-									"protocol": "http",
-									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
-									],
-									"port": "8000",
-									"path": [
-										"api",
-										"dentist",
-										"patients",
-										"appointments",
-										"get-booked-appointments"
-									],
-									"query": [
-										{
-											"key": "date",
-											"value": "2025-05-05"
-										}
-									]
-								}
-							},
-							"response": [
-								{
-									"name": "Get booked appointments",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Accept",
-												"value": "application/json",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "formdata",
-											"formdata": [
-												{
-													"key": "date",
-													"value": "2025-5-21",
-													"type": "text",
-													"disabled": true
-												}
-											]
-										},
-										"url": {
-											"raw": "http://127.0.0.1:8000/api/dentist/patients/appointments/get-booked-appointments?date=2025-05-05",
-											"protocol": "http",
-											"host": [
-												"127",
-												"0",
-												"0",
-												"1"
-											],
-											"port": "8000",
-											"path": [
-												"api",
-												"dentist",
-												"patients",
-												"appointments",
-												"get-booked-appointments"
-											],
-											"query": [
-												{
-													"key": "date",
-													"value": "2025-05-05"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Host",
-											"value": "127.0.0.1:8000"
-										},
-										{
-											"key": "Connection",
-											"value": "close"
-										},
-										{
-											"key": "X-Powered-By",
-											"value": "PHP/8.3.3"
-										},
-										{
-											"key": "Cache-Control",
-											"value": "no-cache, private"
-										},
-										{
-											"key": "Date",
-											"value": "Wed, 04 Jun 2025 18:11:13 GMT"
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										},
-										{
-											"key": "Access-Control-Allow-Origin",
-											"value": "*"
-										}
-									],
-									"cookie": [],
-									"body": "{\n    \"status\": true,\n    \"success_code\": 200,\n    \"appointments\": [\n        {\n            \"id\": 1,\n            \"dentist_id\": 6,\n            \"creatorable_type\": \"dentist\",\n            \"creatorable_id\": 6,\n            \"patient_name\": \"husam\",\n            \"patient_phone\": \"0987070700\",\n            \"time_from\": \"18:00:00\",\n            \"time_to\": \"18:30:00\",\n            \"date\": \"2025-05-05\",\n            \"created_at\": \"2025-05-05T11:47:30.000000Z\",\n            \"updated_at\": null\n        },\n        {\n            \"id\": 2,\n            \"dentist_id\": 6,\n            \"creatorable_type\": \"dentist\",\n            \"creatorable_id\": 6,\n            \"patient_name\": \"mahmod\",\n            \"patient_phone\": \"0987070789\",\n            \"time_from\": \"18:30:00\",\n            \"time_to\": \"19:30:00\",\n            \"date\": \"2025-05-05\",\n            \"created_at\": \"2025-05-05T11:47:30.000000Z\",\n            \"updated_at\": null\n        }\n    ],\n    \"success_message\": \"كل المواعيد المحجوزة\"\n}"
-								}
-							]
-						},
-						{
 							"name": "download Patient image (by image_id in url )",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
@@ -14044,6 +13716,481 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"status\": false,\n    \"error_message\": \"أعد تسمية الصورة  Dentist Register.jpg رجاءً وحاول مجدداً\",\n    \"error_code\": 422\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Appointments",
+					"item": [
+						{
+							"name": "Book an appointment in two steps",
+							"item": [
+								{
+									"name": "step-1 get the available times to book an appointment",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzUwOTYzNTY3LCJleHAiOjE3NTM1NTU1NjcsIm5iZiI6MTc1MDk2MzU2NywianRpIjoiZkVhWkM1RjlyYnYxQlJKeSIsInN1YiI6IjYiLCJwcnYiOiIwMjkwZWZkNjQwZDFhODdiZTQ4OWQ1NmM3MjgwMzFhOGUzOGUyZTYzIn0.4xpFHh8ihYTzBtmLBvmpxnxqHt4cBTwoyZ7HNn0Iif0",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": []
+										},
+										"url": {
+											"raw": "http://127.0.0.1:8000/api/dentist/patients/appointments/get-avilable-slots?date=2025-5-29&duration=30",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"api",
+												"dentist",
+												"patients",
+												"appointments",
+												"get-avilable-slots"
+											],
+											"query": [
+												{
+													"key": "date",
+													"value": "2025-5-29"
+												},
+												{
+													"key": "duration",
+													"value": "30"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "يوم الاثنين ليس ضمن أيام دوام العيادة . يرجى تغيير التاريخ أو تعديل أوقات الدوام",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"body": {
+													"mode": "formdata",
+													"formdata": [
+														{
+															"key": "date",
+															"value": "2025-5-21",
+															"type": "text",
+															"disabled": true
+														},
+														{
+															"key": "duration",
+															"value": "30",
+															"description": "in minute",
+															"type": "text",
+															"disabled": true
+														}
+													]
+												},
+												"url": {
+													"raw": "http://127.0.0.1:8000/api/dentist/patients/appointments/get-avilable-slots?date=2025-5-12&duration=30",
+													"protocol": "http",
+													"host": [
+														"127",
+														"0",
+														"0",
+														"1"
+													],
+													"port": "8000",
+													"path": [
+														"api",
+														"dentist",
+														"patients",
+														"appointments",
+														"get-avilable-slots"
+													],
+													"query": [
+														{
+															"key": "date",
+															"value": "2025-5-12"
+														},
+														{
+															"key": "duration",
+															"value": "30"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Host",
+													"value": "127.0.0.1:8000"
+												},
+												{
+													"key": "Connection",
+													"value": "close"
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "PHP/8.3.3"
+												},
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, private"
+												},
+												{
+													"key": "Date",
+													"value": "Sat, 07 Jun 2025 20:29:38 GMT"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"status\": false,\n    \"error_message\": \"يوم الاثنين ليس ضمن أيام دوام العيادة . يرجى تغيير التاريخ أو تعديل أوقات الدوام \",\n    \"error_code\": 422\n}"
+										}
+									]
+								},
+								{
+									"name": "step-2 select available time and  book an appointment",
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {
+											"accept": true
+										}
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3JlZ2lzdGVyIiwiaWF0IjoxNzQ5MDU4MjE2LCJleHAiOjE3NTE2NTAyMTYsIm5iZiI6MTc0OTA1ODIxNiwianRpIjoiSkE1YktaNXZQTHRHVlhiYiIsInN1YiI6IjYiLCJwcnYiOiIwMjkwZWZkNjQwZDFhODdiZTQ4OWQ1NmM3MjgwMzFhOGUzOGUyZTYzIn0.boSqq2npLgUNJDvTHHOLMC3P_r95o-IhBtY7mu9l8yk",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": " date",
+													"value": "2025-05-27",
+													"type": "text"
+												},
+												{
+													"key": "time_from",
+													"value": "09:00",
+													"type": "text"
+												},
+												{
+													"key": "time_to",
+													"value": "10:00",
+													"type": "text"
+												},
+												{
+													"key": "patient_name",
+													"value": "محمود مشلح",
+													"type": "text"
+												},
+												{
+													"key": "patient_phone",
+													"value": "0995832706",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "http://127.0.0.1:8000/api/dentist/patients/appointments/book-an-appointment",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"api",
+												"dentist",
+												"patients",
+												"appointments",
+												"book-an-appointment"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "step-2 select available time and  book an appointment",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "formdata",
+													"formdata": [
+														{
+															"key": " date",
+															"value": "2025-5-21",
+															"type": "text"
+														},
+														{
+															"key": "time_from",
+															"value": "09:00",
+															"type": "text"
+														},
+														{
+															"key": "time_to",
+															"value": "10:00",
+															"type": "text"
+														},
+														{
+															"key": "patient_name",
+															"value": "محمود مشلح",
+															"type": "text"
+														},
+														{
+															"key": "patient_phone",
+															"value": "0995832706",
+															"type": "text"
+														}
+													]
+												},
+												"url": {
+													"raw": "http://127.0.0.1:8000/api/dentist/patients/appointments/book-an-appointment",
+													"protocol": "http",
+													"host": [
+														"127",
+														"0",
+														"0",
+														"1"
+													],
+													"port": "8000",
+													"path": [
+														"api",
+														"dentist",
+														"patients",
+														"appointments",
+														"book-an-appointment"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Host",
+													"value": "127.0.0.1:8000"
+												},
+												{
+													"key": "Connection",
+													"value": "close"
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "PHP/8.3.3"
+												},
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, private"
+												},
+												{
+													"key": "Date",
+													"value": "Wed, 04 Jun 2025 18:27:06 GMT"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"status\": true,\n    \"success_code\": 201,\n    \"success_message\": \"تم حجز الموعد بنجاح\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Get booked appointments",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzUwOTYzNTY3LCJleHAiOjE3NTM1NTU1NjcsIm5iZiI6MTc1MDk2MzU2NywianRpIjoiZkVhWkM1RjlyYnYxQlJKeSIsInN1YiI6IjYiLCJwcnYiOiIwMjkwZWZkNjQwZDFhODdiZTQ4OWQ1NmM3MjgwMzFhOGUzOGUyZTYzIn0.4xpFHh8ihYTzBtmLBvmpxnxqHt4cBTwoyZ7HNn0Iif0",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "date",
+											"value": "2025-5-21",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/dentist/patients/appointments/get-booked-appointments?date=2025-05-05",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"dentist",
+										"patients",
+										"appointments",
+										"get-booked-appointments"
+									],
+									"query": [
+										{
+											"key": "date",
+											"value": "2025-05-05"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get booked appointments",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "date",
+													"value": "2025-5-21",
+													"type": "text",
+													"disabled": true
+												}
+											]
+										},
+										"url": {
+											"raw": "http://127.0.0.1:8000/api/dentist/patients/appointments/get-booked-appointments?date=2025-05-05",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"api",
+												"dentist",
+												"patients",
+												"appointments",
+												"get-booked-appointments"
+											],
+											"query": [
+												{
+													"key": "date",
+													"value": "2025-05-05"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "127.0.0.1:8000"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.3.3"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 04 Jun 2025 18:11:13 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": true,\n    \"success_code\": 200,\n    \"appointments\": [\n        {\n            \"id\": 1,\n            \"dentist_id\": 6,\n            \"creatorable_type\": \"dentist\",\n            \"creatorable_id\": 6,\n            \"patient_name\": \"husam\",\n            \"patient_phone\": \"0987070700\",\n            \"time_from\": \"18:00:00\",\n            \"time_to\": \"18:30:00\",\n            \"date\": \"2025-05-05\",\n            \"created_at\": \"2025-05-05T11:47:30.000000Z\",\n            \"updated_at\": null\n        },\n        {\n            \"id\": 2,\n            \"dentist_id\": 6,\n            \"creatorable_type\": \"dentist\",\n            \"creatorable_id\": 6,\n            \"patient_name\": \"mahmod\",\n            \"patient_phone\": \"0987070789\",\n            \"time_from\": \"18:30:00\",\n            \"time_to\": \"19:30:00\",\n            \"date\": \"2025-05-05\",\n            \"created_at\": \"2025-05-05T11:47:30.000000Z\",\n            \"updated_at\": null\n        }\n    ],\n    \"success_message\": \"كل المواعيد المحجوزة\"\n}"
 								}
 							]
 						}
@@ -17694,39 +17841,110 @@
 					"name": "Statistics الإحصائيات",
 					"item": [
 						{
-							"name": "احصائيات الاصناف عند مدير المخبر",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
+							"name": "المدفوعات",
+							"item": [
+								{
+									"name": "احصائية المدفوعات التشغيلية لمخبر",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzUxMjgzMjI3LCJleHAiOjE3NTM4NzUyMjcsIm5iZiI6MTc1MTI4MzIyNywianRpIjoiTVVoejAzU2diV0hJR1VVRCIsInN1YiI6IjEiLCJwcnYiOiJmOTE5Njk0YWIyOWM5MDExZTMxNTEyYTI2MzMwOWIwYmIxYWM0NWZjIn0.Ab96MiShD1ujqC_3kJD2VQbmS12-PmgQkzyWYQfmjE0",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8000/api/lab-manager/statistics/LabManager_Operating_Payment_statistics",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"api",
+												"lab-manager",
+												"statistics",
+												"LabManager_Operating_Payment_statistics"
+											]
+										}
+									},
+									"response": [
 										{
-											"key": "token",
-											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzUxMjMxMzUyLCJleHAiOjE3NTM4MjMzNTIsIm5iZiI6MTc1MTIzMTM1MiwianRpIjoicEc5dHZDRlVTcXNhcEZGUSIsInN1YiI6IjEiLCJwcnYiOiJmOTE5Njk0YWIyOWM5MDExZTMxNTEyYTI2MzMwOWIwYmIxYWM0NWZjIn0._Xz4wYfy92NSElzfSGk29Ahkmrnq9PV_-13yiONmW_c",
-											"type": "string"
+											"name": "احصائية المدفوعات التشغيلية لمخبر",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:8000/api/lab-manager/statistics/LabManager_Operating_Payment_statistics",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "8000",
+													"path": [
+														"api",
+														"lab-manager",
+														"statistics",
+														"LabManager_Operating_Payment_statistics"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Host",
+													"value": "localhost:8000"
+												},
+												{
+													"key": "Connection",
+													"value": "close"
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "PHP/8.2.12"
+												},
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, private"
+												},
+												{
+													"key": "Date",
+													"value": "Mon, 30 Jun 2025 11:46:24 GMT"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"status\": true,\n    \"success_code\": 200,\n    \"Operating_Payments\": [\n        {\n            \"name\": \"رواتب عمال\",\n            \"total_value\": 434,\n            \"count\": 1,\n            \"percentage\": \"63.17\"\n        },\n        {\n            \"name\": \"طعام\",\n            \"total_value\": 126,\n            \"count\": 1,\n            \"percentage\": \"18.34\"\n        },\n        {\n            \"name\": \"كهرباء\",\n            \"total_value\": 127,\n            \"count\": 1,\n            \"percentage\": \"18.49\"\n        }\n    ],\n    \"success_message\": \" احصائيات الدفعات التشغيلية \"\n}"
 										}
 									]
 								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8000/api/lab-manager/statistics/categories_statistics",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8000",
-									"path": [
-										"api",
-										"lab-manager",
-										"statistics",
-										"categories_statistics"
-									]
-								}
-							},
-							"response": [
 								{
 									"name": "احصائيات الاصناف عند مدير المخبر",
-									"originalRequest": {
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzUxMjMxMzUyLCJleHAiOjE3NTM4MjMzNTIsIm5iZiI6MTc1MTIzMTM1MiwianRpIjoicEc5dHZDRlVTcXNhcEZGUSIsInN1YiI6IjEiLCJwcnYiOiJmOTE5Njk0YWIyOWM5MDExZTMxNTEyYTI2MzMwOWIwYmIxYWM0NWZjIn0._Xz4wYfy92NSElzfSGk29Ahkmrnq9PV_-13yiONmW_c",
+													"type": "string"
+												}
+											]
+										},
 										"method": "GET",
 										"header": [],
 										"url": {
@@ -17744,78 +17962,83 @@
 											]
 										}
 									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
+									"response": [
 										{
-											"key": "Host",
-											"value": "localhost:8000"
-										},
-										{
-											"key": "Connection",
-											"value": "close"
-										},
-										{
-											"key": "X-Powered-By",
-											"value": "PHP/8.2.12"
-										},
-										{
-											"key": "Cache-Control",
-											"value": "no-cache, private"
-										},
-										{
-											"key": "Date",
-											"value": "Sun, 29 Jun 2025 21:09:25 GMT"
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										},
-										{
-											"key": "Access-Control-Allow-Origin",
-											"value": "*"
+											"name": "احصائيات الاصناف عند مدير المخبر",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:8000/api/lab-manager/statistics/categories_statistics",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "8000",
+													"path": [
+														"api",
+														"lab-manager",
+														"statistics",
+														"categories_statistics"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Host",
+													"value": "localhost:8000"
+												},
+												{
+													"key": "Connection",
+													"value": "close"
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "PHP/8.2.12"
+												},
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, private"
+												},
+												{
+													"key": "Date",
+													"value": "Sun, 29 Jun 2025 21:09:25 GMT"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"status\": true,\n    \"success_code\": 200,\n    \"statistics of categories\": [\n        {\n            \"category_id\": 18,\n            \"category_name\": \"مشروبات\",\n            \"total_price_last_month\": 36,\n            \"total_quantity_last_month\": 36,\n            \"percentage\": \"27.27\"\n        },\n        {\n            \"category_id\": 19,\n            \"category_name\": \"اغذية\",\n            \"total_price_last_month\": 96,\n            \"total_quantity_last_month\": 96,\n            \"percentage\": \"72.73\"\n        }\n    ],\n    \"success_message\": \"احصائيات الفئات \"\n}"
 										}
-									],
-									"cookie": [],
-									"body": "{\n    \"status\": true,\n    \"success_code\": 200,\n    \"statistics of categories\": [\n        {\n            \"category_id\": 18,\n            \"category_name\": \"مشروبات\",\n            \"total_price_last_month\": 36,\n            \"total_quantity_last_month\": 36,\n            \"percentage\": \"27.27\"\n        },\n        {\n            \"category_id\": 19,\n            \"category_name\": \"اغذية\",\n            \"total_price_last_month\": 96,\n            \"total_quantity_last_month\": 96,\n            \"percentage\": \"72.73\"\n        }\n    ],\n    \"success_message\": \"احصائيات الفئات \"\n}"
+									]
 								}
 							]
 						},
 						{
-							"name": "احصائيات الاطباء الاكثر مردورا",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzUxMjcxNDE5LCJleHAiOjE3NTM4NjM0MTksIm5iZiI6MTc1MTI3MTQxOSwianRpIjoicjN5aTRoNFExaVppTE04aSIsInN1YiI6IjEiLCJwcnYiOiJmOTE5Njk0YWIyOWM5MDExZTMxNTEyYTI2MzMwOWIwYmIxYWM0NWZjIn0.vr-kMs2N3is6YYvBNGNeN5twO1dk11TXTRNNnZ4Da1o",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8000/api/lab-manager/statistics/Most_profitable_doctors",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8000",
-									"path": [
-										"api",
-										"lab-manager",
-										"statistics",
-										"Most_profitable_doctors"
-									]
-								}
-							},
-							"response": [
+							"name": "الأرباح",
+							"item": [
 								{
-									"name": "احصائيات الاطباء الاكثر مردورا",
-									"originalRequest": {
+									"name": "احصائيات الاطباء الاكثر مردورا مرتبين تنازليا",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzYyOTM5OTU1LCJleHAiOjE3NjU1MzE5NTUsIm5iZiI6MTc2MjkzOTk1NSwianRpIjoiZTdnM2Q4a21BQVdpRE5uNyIsInN1YiI6IjEiLCJwcnYiOiJmOTE5Njk0YWIyOWM5MDExZTMxNTEyYTI2MzMwOWIwYmIxYWM0NWZjIn0.oLdvQqGauGQeq0_u90TY_rZ2fucdf79eL4SaPsm8du0",
+													"type": "string"
+												}
+											]
+										},
 										"method": "GET",
 										"header": [],
 										"url": {
@@ -17833,49 +18056,138 @@
 											]
 										}
 									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
+									"response": [
 										{
-											"key": "Host",
-											"value": "localhost:8000"
+											"name": "error",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:8000/api/lab-manager/statistics/Most_profitable_doctors",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "8000",
+													"path": [
+														"api",
+														"lab-manager",
+														"statistics",
+														"Most_profitable_doctors"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Host",
+													"value": "localhost:8000"
+												},
+												{
+													"key": "Connection",
+													"value": "close"
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "PHP/8.2.12"
+												},
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, private"
+												},
+												{
+													"key": "Date",
+													"value": "Mon, 30 Jun 2025 08:16:21 GMT"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"status\": false,\n    \"error_message\": \"ليس لديك دفعات \",\n    \"error_code\": 500\n}"
 										},
 										{
-											"key": "Connection",
-											"value": "close"
-										},
-										{
-											"key": "X-Powered-By",
-											"value": "PHP/8.2.12"
-										},
-										{
-											"key": "Cache-Control",
-											"value": "no-cache, private"
-										},
-										{
-											"key": "Date",
-											"value": "Mon, 30 Jun 2025 08:16:21 GMT"
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										},
-										{
-											"key": "Access-Control-Allow-Origin",
-											"value": "*"
+											"name": "احصائيات الاطباء الاكثر مردورا مرتبة تنازليا",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:8000/api/lab-manager/statistics/Most_profitable_doctors",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "8000",
+													"path": [
+														"api",
+														"lab-manager",
+														"statistics",
+														"Most_profitable_doctors"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Host",
+													"value": "localhost:8000"
+												},
+												{
+													"key": "Connection",
+													"value": "close"
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "PHP/8.2.12"
+												},
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, private"
+												},
+												{
+													"key": "Date",
+													"value": "Wed, 12 Nov 2025 10:20:03 GMT"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"status\": true,\n    \"success_code\": 200,\n    \"Most_profitable_doctors\": [\n        {\n            \"fullname\": \"dentist2 dentist2\",\n            \"dentist_id\": 2,\n            \"total_signed_value\": 4000\n        },\n        {\n            \"fullname\": \"dentist1 dentist1\",\n            \"dentist_id\": 1,\n            \"total_signed_value\": 2000\n        },\n        {\n            \"fullname\": \"dentist3 dentist3\",\n            \"dentist_id\": 3,\n            \"total_signed_value\": 1000\n        }\n    ],\n    \"success_message\": \"الاطباء الاكثر مردودا  \"\n}"
 										}
-									],
-									"cookie": [],
-									"body": "{\n    \"status\": false,\n    \"error_message\": \"ليس لديك دفعات \",\n    \"error_code\": 500\n}"
+									]
 								},
 								{
-									"name": "احصائيات الاطباء الاكثر مردورا",
-									"originalRequest": {
+									"name": "إحصائيات الأرباح شهرياً منذ سنة",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzYyOTM5OTU1LCJleHAiOjE3NjU1MzE5NTUsIm5iZiI6MTc2MjkzOTk1NSwianRpIjoiZTdnM2Q4a21BQVdpRE5uNyIsInN1YiI6IjEiLCJwcnYiOiJmOTE5Njk0YWIyOWM5MDExZTMxNTEyYTI2MzMwOWIwYmIxYWM0NWZjIn0.oLdvQqGauGQeq0_u90TY_rZ2fucdf79eL4SaPsm8du0",
+													"type": "string"
+												}
+											]
+										},
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "http://localhost:8000/api/lab-manager/statistics/Most_profitable_doctors",
+											"raw": "http://localhost:8000/api/lab-manager/statistics/outcome",
 											"protocol": "http",
 											"host": [
 												"localhost"
@@ -17885,82 +18197,288 @@
 												"api",
 												"lab-manager",
 												"statistics",
-												"Most_profitable_doctors"
+												"outcome"
 											]
 										}
 									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
+									"response": [
 										{
-											"key": "Host",
-											"value": "localhost:8000"
-										},
-										{
-											"key": "Connection",
-											"value": "close"
-										},
-										{
-											"key": "X-Powered-By",
-											"value": "PHP/8.2.12"
-										},
-										{
-											"key": "Cache-Control",
-											"value": "no-cache, private"
-										},
-										{
-											"key": "Date",
-											"value": "Mon, 30 Jun 2025 08:17:11 GMT"
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										},
-										{
-											"key": "Access-Control-Allow-Origin",
-											"value": "*"
+											"name": "إحصائيات الأرباح شهرياً منذ سنة",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:8000/api/lab-manager/statistics/outcome",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "8000",
+													"path": [
+														"api",
+														"lab-manager",
+														"statistics",
+														"outcome"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Host",
+													"value": "localhost:8000"
+												},
+												{
+													"key": "Connection",
+													"value": "close"
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "PHP/8.2.12"
+												},
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, private"
+												},
+												{
+													"key": "Date",
+													"value": "Thu, 13 Nov 2025 08:54:36 GMT"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"status\": true,\n    \"success_code\": 200,\n    \"outcome\": [\n        {\n            \"month_number\": 1,\n            \"input\": 0,\n            \"output\": 0,\n            \"gain\": 0\n        },\n        {\n            \"month_number\": 2,\n            \"input\": 0,\n            \"output\": 0,\n            \"gain\": 0\n        },\n        {\n            \"month_number\": 3,\n            \"input\": 0,\n            \"output\": 0,\n            \"gain\": 0\n        },\n        {\n            \"month_number\": 4,\n            \"input\": 0,\n            \"output\": 0,\n            \"gain\": 0\n        },\n        {\n            \"month_number\": 5,\n            \"input\": 0,\n            \"output\": 0,\n            \"gain\": 0\n        },\n        {\n            \"month_number\": 6,\n            \"input\": 0,\n            \"output\": 0,\n            \"gain\": 0\n        },\n        {\n            \"month_number\": 7,\n            \"input\": 0,\n            \"output\": 0,\n            \"gain\": 0\n        },\n        {\n            \"month_number\": 8,\n            \"input\": 0,\n            \"output\": 0,\n            \"gain\": 0\n        },\n        {\n            \"month_number\": 9,\n            \"input\": 0,\n            \"output\": 0,\n            \"gain\": 0\n        },\n        {\n            \"month_number\": 10,\n            \"input\": 0,\n            \"output\": 0,\n            \"gain\": 0\n        },\n        {\n            \"month_number\": 11,\n            \"input\": 20,\n            \"output\": 215000,\n            \"gain\": -214980\n        },\n        {\n            \"month_number\": 12,\n            \"input\": 0,\n            \"output\": 0,\n            \"gain\": 0\n        }\n    ],\n    \"success_message\": \"إحصائيات الأرباح شهرياً\"\n}"
 										}
-									],
-									"cookie": [],
-									"body": "{\n    \"status\": true,\n    \"success_code\": 200,\n    \"Most_profitable_doctors\": [\n        {\n            \"fullname\": \"dentist1 dentist1\",\n            \"dentist_id\": 1,\n            \"total_signed_value\": 6\n        },\n        {\n            \"fullname\": \"dentist2 dentist2\",\n            \"dentist_id\": 2,\n            \"total_signed_value\": 4\n        }\n    ],\n    \"success_message\": \"الاطباء الاكثر مردودا  \"\n}"
+									]
 								}
 							]
 						},
 						{
-							"name": "عرض المواد من اجل احصائية الاستهلاك الشهري للمواد",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
+							"name": "المواد",
+							"item": [
+								{
+									"name": "إحصائية عدد القطع المصنعة شهرياً  month->piece_id->count_number",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzUxNjY4MzA3LCJleHAiOjE3NTQyNjAzMDcsIm5iZiI6MTc1MTY2ODMwNywianRpIjoieTh5aGtMVFQwaG9JY3h5ViIsInN1YiI6IjIiLCJwcnYiOiJmOTE5Njk0YWIyOWM5MDExZTMxNTEyYTI2MzMwOWIwYmIxYWM0NWZjIn0.RfC0me2pQcRQZ7iBs8aUiqYVGGHNd5unksC_5F4QLLA",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8000/api/lab-manager/statistics/monthly-number-of-manufactured-pieces",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"api",
+												"lab-manager",
+												"statistics",
+												"monthly-number-of-manufactured-pieces"
+											]
+										}
+									},
+									"response": [
 										{
-											"key": "token",
-											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzUxMjk1MDU5LCJleHAiOjE3NTM4ODcwNTksIm5iZiI6MTc1MTI5NTA1OSwianRpIjoiTm5mcFJMekFocXJuOWpCTyIsInN1YiI6IjEiLCJwcnYiOiJmOTE5Njk0YWIyOWM5MDExZTMxNTEyYTI2MzMwOWIwYmIxYWM0NWZjIn0.LGUMmNo9zE4rZ-rTP_cZty7yVBJvhufnpgq98uY7eRM",
-											"type": "string"
+											"name": "error",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:8000/api/lab-manager/statistics/monthly-number-of-manufactured-pieces",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "8000",
+													"path": [
+														"api",
+														"lab-manager",
+														"statistics",
+														"monthly-number-of-manufactured-pieces"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Host",
+													"value": "localhost:8000"
+												},
+												{
+													"key": "Connection",
+													"value": "close"
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "PHP/8.2.12"
+												},
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, private"
+												},
+												{
+													"key": "Date",
+													"value": "Fri, 04 Jul 2025 22:28:14 GMT"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"status\": false,\n    \"error_message\": \"حدث خطأ ما أثناء عرض إحصائية عدد القطع المصنعة شهرياً, الرجاء إعادة المحاولة مرة أخرى\",\n    \"error_code\": 200\n}"
+										},
+										{
+											"name": "example 1",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:8000/api/lab-manager/statistics/monthly-number-of-manufactured-pieces",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "8000",
+													"path": [
+														"api",
+														"lab-manager",
+														"statistics",
+														"monthly-number-of-manufactured-pieces"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Host",
+													"value": "localhost:8000"
+												},
+												{
+													"key": "Connection",
+													"value": "close"
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "PHP/8.2.12"
+												},
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, private"
+												},
+												{
+													"key": "Date",
+													"value": "Fri, 04 Jul 2025 22:40:52 GMT"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"status\": true,\n    \"success_code\": 200,\n    \"manufactured_pieces_statistics\": {\n        \"7\": {\n            \"1\": 8,\n            \"3\": 5,\n            \"5\": 3\n        }\n    },\n    \"success_message\": \"عدد القطع المصنعة شهرياً \"\n}"
+										},
+										{
+											"name": "example2",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:8000/api/lab-manager/statistics/monthly-number-of-manufactured-pieces",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "8000",
+													"path": [
+														"api",
+														"lab-manager",
+														"statistics",
+														"monthly-number-of-manufactured-pieces"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Host",
+													"value": "localhost:8000"
+												},
+												{
+													"key": "Connection",
+													"value": "close"
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "PHP/8.2.12"
+												},
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, private"
+												},
+												{
+													"key": "Date",
+													"value": "Fri, 04 Jul 2025 22:43:08 GMT"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"status\": true,\n    \"success_code\": 200,\n    \"manufactured_pieces_statistics\": {\n        \"2\": {\n            \"1\": 2\n        },\n        \"7\": {\n            \"1\": 14,\n            \"3\": 5,\n            \"5\": 6\n        },\n        \"8\": {\n            \"3\": 3\n        },\n        \"11\": {\n            \"3\": 2\n        }\n    },\n    \"success_message\": \"عدد القطع المصنعة شهرياً \"\n}"
 										}
 									]
 								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8000/api/lab-manager/statistics/items_of_user",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8000",
-									"path": [
-										"api",
-										"lab-manager",
-										"statistics",
-										"items_of_user"
-									]
-								}
-							},
-							"response": [
 								{
 									"name": "عرض المواد من اجل احصائية الاستهلاك الشهري للمواد",
-									"originalRequest": {
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzUxMjk1MDU5LCJleHAiOjE3NTM4ODcwNTksIm5iZiI6MTc1MTI5NTA1OSwianRpIjoiTm5mcFJMekFocXJuOWpCTyIsInN1YiI6IjEiLCJwcnYiOiJmOTE5Njk0YWIyOWM5MDExZTMxNTEyYTI2MzMwOWIwYmIxYWM0NWZjIn0.LGUMmNo9zE4rZ-rTP_cZty7yVBJvhufnpgq98uY7eRM",
+													"type": "string"
+												}
+											]
+										},
 										"method": "GET",
 										"header": [],
 										"url": {
@@ -17978,79 +18496,78 @@
 											]
 										}
 									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
+									"response": [
 										{
-											"key": "Host",
-											"value": "localhost:8000"
-										},
-										{
-											"key": "Connection",
-											"value": "close"
-										},
-										{
-											"key": "X-Powered-By",
-											"value": "PHP/8.2.12"
-										},
-										{
-											"key": "Cache-Control",
-											"value": "no-cache, private"
-										},
-										{
-											"key": "Date",
-											"value": "Mon, 30 Jun 2025 11:52:33 GMT"
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										},
-										{
-											"key": "Access-Control-Allow-Origin",
-											"value": "*"
-										}
-									],
-									"cookie": [],
-									"body": "{\n    \"status\": true,\n    \"success_code\": 200,\n    \"items\": [\n        {\n            \"id\": 59,\n            \"name\": \"كولا\"\n        },\n        {\n            \"id\": 60,\n            \"name\": \"سردين\"\n        }\n    ],\n    \"success_message\": \"المواد\"\n}"
-								}
-							]
-						},
-						{
-							"name": "احصائية استهلاك مادة معينة",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzUxMjgzMjI3LCJleHAiOjE3NTM4NzUyMjcsIm5iZiI6MTc1MTI4MzIyNywianRpIjoiTVVoejAzU2diV0hJR1VVRCIsInN1YiI6IjEiLCJwcnYiOiJmOTE5Njk0YWIyOWM5MDExZTMxNTEyYTI2MzMwOWIwYmIxYWM0NWZjIn0.Ab96MiShD1ujqC_3kJD2VQbmS12-PmgQkzyWYQfmjE0",
-											"type": "string"
+											"name": "عرض المواد من اجل احصائية الاستهلاك الشهري للمواد",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:8000/api/lab-manager/statistics/items_of_user",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "8000",
+													"path": [
+														"api",
+														"lab-manager",
+														"statistics",
+														"items_of_user"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Host",
+													"value": "localhost:8000"
+												},
+												{
+													"key": "Connection",
+													"value": "close"
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "PHP/8.2.12"
+												},
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, private"
+												},
+												{
+													"key": "Date",
+													"value": "Mon, 30 Jun 2025 11:52:33 GMT"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"status\": true,\n    \"success_code\": 200,\n    \"items\": [\n        {\n            \"id\": 59,\n            \"name\": \"كولا\"\n        },\n        {\n            \"id\": 60,\n            \"name\": \"سردين\"\n        }\n    ],\n    \"success_message\": \"المواد\"\n}"
 										}
 									]
 								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8000/api/lab-manager/statistics/The_monthly_consumption_of_item/60",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8000",
-									"path": [
-										"api",
-										"lab-manager",
-										"statistics",
-										"The_monthly_consumption_of_item",
-										"60"
-									]
-								}
-							},
-							"response": [
 								{
 									"name": "احصائية استهلاك مادة معينة",
-									"originalRequest": {
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzUxMjgzMjI3LCJleHAiOjE3NTM4NzUyMjcsIm5iZiI6MTc1MTI4MzIyNywianRpIjoiTVVoejAzU2diV0hJR1VVRCIsInN1YiI6IjEiLCJwcnYiOiJmOTE5Njk0YWIyOWM5MDExZTMxNTEyYTI2MzMwOWIwYmIxYWM0NWZjIn0.Ab96MiShD1ujqC_3kJD2VQbmS12-PmgQkzyWYQfmjE0",
+													"type": "string"
+												}
+											]
+										},
 										"method": "GET",
 										"header": [],
 										"url": {
@@ -18069,331 +18586,65 @@
 											]
 										}
 									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
+									"response": [
 										{
-											"key": "Host",
-											"value": "localhost:8000"
-										},
-										{
-											"key": "Connection",
-											"value": "close"
-										},
-										{
-											"key": "X-Powered-By",
-											"value": "PHP/8.2.12"
-										},
-										{
-											"key": "Cache-Control",
-											"value": "no-cache, private"
-										},
-										{
-											"key": "Date",
-											"value": "Mon, 30 Jun 2025 14:36:09 GMT"
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										},
-										{
-											"key": "Access-Control-Allow-Origin",
-											"value": "*"
-										}
-									],
-									"cookie": [],
-									"body": "{\n    \"status\": true,\n    \"success_code\": 200,\n    \"statistic of monthly consumption of item\": [\n        {\n            \"month\": 1,\n            \"Negative quantity\": 0\n        },\n        {\n            \"month\": 2,\n            \"Negative quantity\": 0\n        },\n        {\n            \"month\": 3,\n            \"Negative quantity\": 0\n        },\n        {\n            \"month\": 4,\n            \"Negative quantity\": 0\n        },\n        {\n            \"month\": 5,\n            \"Negative quantity\": 5\n        },\n        {\n            \"month\": 6,\n            \"Negative quantity\": 135\n        },\n        {\n            \"month\": 7,\n            \"Negative quantity\": 0\n        },\n        {\n            \"month\": 8,\n            \"Negative quantity\": 0\n        },\n        {\n            \"month\": 9,\n            \"Negative quantity\": 0\n        },\n        {\n            \"month\": 10,\n            \"Negative quantity\": 0\n        },\n        {\n            \"month\": 11,\n            \"Negative quantity\": 0\n        },\n        {\n            \"month\": 12,\n            \"Negative quantity\": 0\n        }\n    ],\n    \"success_message\": \"احصائية استهلاك مادة معينة\"\n}"
-								}
-							]
-						},
-						{
-							"name": "احصائية المدفوعات التشغيلية لمخبر",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzUxMjgzMjI3LCJleHAiOjE3NTM4NzUyMjcsIm5iZiI6MTc1MTI4MzIyNywianRpIjoiTVVoejAzU2diV0hJR1VVRCIsInN1YiI6IjEiLCJwcnYiOiJmOTE5Njk0YWIyOWM5MDExZTMxNTEyYTI2MzMwOWIwYmIxYWM0NWZjIn0.Ab96MiShD1ujqC_3kJD2VQbmS12-PmgQkzyWYQfmjE0",
-											"type": "string"
+											"name": "احصائية استهلاك مادة معينة",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:8000/api/lab-manager/statistics/The_monthly_consumption_of_item/60",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "8000",
+													"path": [
+														"api",
+														"lab-manager",
+														"statistics",
+														"The_monthly_consumption_of_item",
+														"60"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Host",
+													"value": "localhost:8000"
+												},
+												{
+													"key": "Connection",
+													"value": "close"
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "PHP/8.2.12"
+												},
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, private"
+												},
+												{
+													"key": "Date",
+													"value": "Mon, 30 Jun 2025 14:36:09 GMT"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"status\": true,\n    \"success_code\": 200,\n    \"statistic of monthly consumption of item\": [\n        {\n            \"month\": 1,\n            \"Negative quantity\": 0\n        },\n        {\n            \"month\": 2,\n            \"Negative quantity\": 0\n        },\n        {\n            \"month\": 3,\n            \"Negative quantity\": 0\n        },\n        {\n            \"month\": 4,\n            \"Negative quantity\": 0\n        },\n        {\n            \"month\": 5,\n            \"Negative quantity\": 5\n        },\n        {\n            \"month\": 6,\n            \"Negative quantity\": 135\n        },\n        {\n            \"month\": 7,\n            \"Negative quantity\": 0\n        },\n        {\n            \"month\": 8,\n            \"Negative quantity\": 0\n        },\n        {\n            \"month\": 9,\n            \"Negative quantity\": 0\n        },\n        {\n            \"month\": 10,\n            \"Negative quantity\": 0\n        },\n        {\n            \"month\": 11,\n            \"Negative quantity\": 0\n        },\n        {\n            \"month\": 12,\n            \"Negative quantity\": 0\n        }\n    ],\n    \"success_message\": \"احصائية استهلاك مادة معينة\"\n}"
 										}
 									]
-								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8000/api/lab-manager/statistics/LabManager_Operating_Payment_statistics",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8000",
-									"path": [
-										"api",
-										"lab-manager",
-										"statistics",
-										"LabManager_Operating_Payment_statistics"
-									]
-								}
-							},
-							"response": [
-								{
-									"name": "احصائية المدفوعات التشغيلية لمخبر",
-									"originalRequest": {
-										"method": "GET",
-										"header": [],
-										"url": {
-											"raw": "http://localhost:8000/api/lab-manager/statistics/LabManager_Operating_Payment_statistics",
-											"protocol": "http",
-											"host": [
-												"localhost"
-											],
-											"port": "8000",
-											"path": [
-												"api",
-												"lab-manager",
-												"statistics",
-												"LabManager_Operating_Payment_statistics"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Host",
-											"value": "localhost:8000"
-										},
-										{
-											"key": "Connection",
-											"value": "close"
-										},
-										{
-											"key": "X-Powered-By",
-											"value": "PHP/8.2.12"
-										},
-										{
-											"key": "Cache-Control",
-											"value": "no-cache, private"
-										},
-										{
-											"key": "Date",
-											"value": "Mon, 30 Jun 2025 11:46:24 GMT"
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										},
-										{
-											"key": "Access-Control-Allow-Origin",
-											"value": "*"
-										}
-									],
-									"cookie": [],
-									"body": "{\n    \"status\": true,\n    \"success_code\": 200,\n    \"Operating_Payments\": [\n        {\n            \"name\": \"رواتب عمال\",\n            \"total_value\": 434,\n            \"count\": 1,\n            \"percentage\": \"63.17\"\n        },\n        {\n            \"name\": \"طعام\",\n            \"total_value\": 126,\n            \"count\": 1,\n            \"percentage\": \"18.34\"\n        },\n        {\n            \"name\": \"كهرباء\",\n            \"total_value\": 127,\n            \"count\": 1,\n            \"percentage\": \"18.49\"\n        }\n    ],\n    \"success_message\": \" احصائيات الدفعات التشغيلية \"\n}"
-								}
-							]
-						},
-						{
-							"name": "إحصائية عدد القطع المصنعة شهرياً  month->piece_id->count_number",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzUxNjY4MzA3LCJleHAiOjE3NTQyNjAzMDcsIm5iZiI6MTc1MTY2ODMwNywianRpIjoieTh5aGtMVFQwaG9JY3h5ViIsInN1YiI6IjIiLCJwcnYiOiJmOTE5Njk0YWIyOWM5MDExZTMxNTEyYTI2MzMwOWIwYmIxYWM0NWZjIn0.RfC0me2pQcRQZ7iBs8aUiqYVGGHNd5unksC_5F4QLLA",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8000/api/lab-manager/statistics/monthly-number-of-manufactured-pieces",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8000",
-									"path": [
-										"api",
-										"lab-manager",
-										"statistics",
-										"monthly-number-of-manufactured-pieces"
-									]
-								}
-							},
-							"response": [
-								{
-									"name": "error",
-									"originalRequest": {
-										"method": "GET",
-										"header": [],
-										"url": {
-											"raw": "http://localhost:8000/api/lab-manager/statistics/monthly-number-of-manufactured-pieces",
-											"protocol": "http",
-											"host": [
-												"localhost"
-											],
-											"port": "8000",
-											"path": [
-												"api",
-												"lab-manager",
-												"statistics",
-												"monthly-number-of-manufactured-pieces"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Host",
-											"value": "localhost:8000"
-										},
-										{
-											"key": "Connection",
-											"value": "close"
-										},
-										{
-											"key": "X-Powered-By",
-											"value": "PHP/8.2.12"
-										},
-										{
-											"key": "Cache-Control",
-											"value": "no-cache, private"
-										},
-										{
-											"key": "Date",
-											"value": "Fri, 04 Jul 2025 22:28:14 GMT"
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										},
-										{
-											"key": "Access-Control-Allow-Origin",
-											"value": "*"
-										}
-									],
-									"cookie": [],
-									"body": "{\n    \"status\": false,\n    \"error_message\": \"حدث خطأ ما أثناء عرض إحصائية عدد القطع المصنعة شهرياً, الرجاء إعادة المحاولة مرة أخرى\",\n    \"error_code\": 200\n}"
-								},
-								{
-									"name": "example 1",
-									"originalRequest": {
-										"method": "GET",
-										"header": [],
-										"url": {
-											"raw": "http://localhost:8000/api/lab-manager/statistics/monthly-number-of-manufactured-pieces",
-											"protocol": "http",
-											"host": [
-												"localhost"
-											],
-											"port": "8000",
-											"path": [
-												"api",
-												"lab-manager",
-												"statistics",
-												"monthly-number-of-manufactured-pieces"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Host",
-											"value": "localhost:8000"
-										},
-										{
-											"key": "Connection",
-											"value": "close"
-										},
-										{
-											"key": "X-Powered-By",
-											"value": "PHP/8.2.12"
-										},
-										{
-											"key": "Cache-Control",
-											"value": "no-cache, private"
-										},
-										{
-											"key": "Date",
-											"value": "Fri, 04 Jul 2025 22:40:52 GMT"
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										},
-										{
-											"key": "Access-Control-Allow-Origin",
-											"value": "*"
-										}
-									],
-									"cookie": [],
-									"body": "{\n    \"status\": true,\n    \"success_code\": 200,\n    \"manufactured_pieces_statistics\": {\n        \"7\": {\n            \"1\": 8,\n            \"3\": 5,\n            \"5\": 3\n        }\n    },\n    \"success_message\": \"عدد القطع المصنعة شهرياً \"\n}"
-								},
-								{
-									"name": "example2",
-									"originalRequest": {
-										"method": "GET",
-										"header": [],
-										"url": {
-											"raw": "http://localhost:8000/api/lab-manager/statistics/monthly-number-of-manufactured-pieces",
-											"protocol": "http",
-											"host": [
-												"localhost"
-											],
-											"port": "8000",
-											"path": [
-												"api",
-												"lab-manager",
-												"statistics",
-												"monthly-number-of-manufactured-pieces"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Host",
-											"value": "localhost:8000"
-										},
-										{
-											"key": "Connection",
-											"value": "close"
-										},
-										{
-											"key": "X-Powered-By",
-											"value": "PHP/8.2.12"
-										},
-										{
-											"key": "Cache-Control",
-											"value": "no-cache, private"
-										},
-										{
-											"key": "Date",
-											"value": "Fri, 04 Jul 2025 22:43:08 GMT"
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										},
-										{
-											"key": "Access-Control-Allow-Origin",
-											"value": "*"
-										}
-									],
-									"cookie": [],
-									"body": "{\n    \"status\": true,\n    \"success_code\": 200,\n    \"manufactured_pieces_statistics\": {\n        \"2\": {\n            \"1\": 2\n        },\n        \"7\": {\n            \"1\": 14,\n            \"3\": 5,\n            \"5\": 6\n        },\n        \"8\": {\n            \"3\": 3\n        },\n        \"11\": {\n            \"3\": 2\n        }\n    },\n    \"success_message\": \"عدد القطع المصنعة شهرياً \"\n}"
 								}
 							]
 						}
@@ -20072,7 +20323,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzUyNTE0MTMwLCJleHAiOjE3NTUxMDYxMzAsIm5iZiI6MTc1MjUxNDEzMCwianRpIjoieTdhNWNlYjJQSjBmcmtLZSIsInN1YiI6IjIiLCJwcnYiOiJmOTE5Njk0YWIyOWM5MDExZTMxNTEyYTI2MzMwOWIwYmIxYWM0NWZjIn0._B106Z56E8D_OG-HeJU8tft40gP6ziK6PnTKsoiNPII",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3JlZ2lzdGVyIiwiaWF0IjoxNzU2NDc3MzQyLCJleHAiOjE3NTkwNjkzNDIsIm5iZiI6MTc1NjQ3NzM0MiwianRpIjoiOGg5UUR3UlMxMHlCZkNyMCIsInN1YiI6IjYiLCJwcnYiOiJmOTE5Njk0YWIyOWM5MDExZTMxNTEyYTI2MzMwOWIwYmIxYWM0NWZjIn0.tbZAKqyHzetyWB-onjAH8PfKNhqOBH0z0FsE5MLSGEQ",
 											"type": "string"
 										}
 									]
@@ -20402,6 +20653,372 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"message\": \"هذا الرقم مستخدم سابقاً. يجب إدخال رقم آخر\",\n    \"errors\": {\n        \"phone\": [\n            \"هذا الرقم مستخدم سابقاً. يجب إدخال رقم آخر\"\n        ]\n    }\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Dentist Payments دفعات الطبيب عند مخبر",
+					"item": [
+						{
+							"name": "عرض دفعات طبيب by_dintist_id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3JlZ2lzdGVyIiwiaWF0IjoxNzU2NDc3MzQyLCJleHAiOjE3NTkwNjkzNDIsIm5iZiI6MTc1NjQ3NzM0MiwianRpIjoiOGg5UUR3UlMxMHlCZkNyMCIsInN1YiI6IjYiLCJwcnYiOiJmOTE5Njk0YWIyOWM5MDExZTMxNTEyYTI2MzMwOWIwYmIxYWM0NWZjIn0.tbZAKqyHzetyWB-onjAH8PfKNhqOBH0z0FsE5MLSGEQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/lab-manager/show-dentist-payments-in-lab/6",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"lab-manager",
+										"show-dentist-payments-in-lab",
+										"6"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "ليس لدى الطبيب دفعات بعد",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://127.0.0.1:8000/api/lab-manager/show-dentist-payments-in-lab/1",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"api",
+												"lab-manager",
+												"show-dentist-payments-in-lab",
+												"1"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "127.0.0.1:8000"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.2.12"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 30 Aug 2025 10:14:51 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": false,\n    \"error_message\": \"ليس لدى الطبيب دفعات بعد \",\n    \"error_code\": 200\n}"
+								},
+								{
+									"name": "عرض دفعات طبيب by_dintist_id",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://127.0.0.1:8000/api/lab-manager/show-dentist-payments-in-lab/6",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"api",
+												"lab-manager",
+												"show-dentist-payments-in-lab",
+												"6"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "127.0.0.1:8000"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.2.12"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 30 Aug 2025 10:40:59 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": true,\n    \"success_code\": 200,\n    \"dentist_payments\": [\n        {\n            \"id\": 6,\n            \"signed_value\": 150000,\n            \"created_at\": \"2025-08-30T10:32:16.000000Z\"\n        },\n        {\n            \"id\": 5,\n            \"signed_value\": 150000,\n            \"created_at\": \"2025-08-30T10:30:21.000000Z\"\n        },\n        {\n            \"id\": 7,\n            \"signed_value\": 150000,\n            \"created_at\": \"2025-08-30T10:30:21.000000Z\"\n        },\n        {\n            \"id\": 4,\n            \"signed_value\": 150000,\n            \"created_at\": \"2025-08-30T10:29:27.000000Z\"\n        },\n        {\n            \"id\": 3,\n            \"signed_value\": 150000,\n            \"created_at\": \"2025-08-30T10:21:21.000000Z\"\n        }\n    ],\n    \"success_message\": \"دفعات الطبيب\"\n}"
+								}
+							]
+						},
+						{
+							"name": "إضافة  دفعة مالية لطبيب by_dintist_id",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3JlZ2lzdGVyIiwiaWF0IjoxNzU2NDc3MzQyLCJleHAiOjE3NTkwNjkzNDIsIm5iZiI6MTc1NjQ3NzM0MiwianRpIjoiOGg5UUR3UlMxMHlCZkNyMCIsInN1YiI6IjYiLCJwcnYiOiJmOTE5Njk0YWIyOWM5MDExZTMxNTEyYTI2MzMwOWIwYmIxYWM0NWZjIn0.tbZAKqyHzetyWB-onjAH8PfKNhqOBH0z0FsE5MLSGEQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "value",
+											"value": "150000",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/lab-manager/add-dentist-payments-in-lab/6",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"lab-manager",
+										"add-dentist-payments-in-lab",
+										"6"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "حدث خطأ أثناء دفع المبلغ للطبيب",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "value",
+													"value": "150000",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "http://127.0.0.1:8000/api/lab-manager/add-dentist-payments-in-lab/6",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"api",
+												"lab-manager",
+												"add-dentist-payments-in-lab",
+												"6"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "127.0.0.1:8000"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.2.12"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 30 Aug 2025 10:29:27 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": false,\n    \"error_message\": \"حدث خطأ أثناء دفع المبلغ للطبيب\",\n    \"error_code\": 200\n}"
+								},
+								{
+									"name": "إضافة  دفعة مالية لطبيب by_dintist_id",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "value",
+													"value": "150000",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "http://127.0.0.1:8000/api/lab-manager/add-dentist-payments-in-lab/6",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"api",
+												"lab-manager",
+												"add-dentist-payments-in-lab",
+												"6"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "127.0.0.1:8000"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.2.12"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 30 Aug 2025 10:32:16 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": true,\n    \"success_code\": 200,\n    \"success_message\": \"تم إضافة دفعة جديدة للطبيب\"\n}"
 								}
 							]
 						}

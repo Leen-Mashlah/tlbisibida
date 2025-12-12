@@ -1,50 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:info_popup/info_popup.dart';
 import 'package:lambda_dent_dash/components/searchbar.dart';
 import 'package:lambda_dent_dash/components/float_button.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
-import 'package:lambda_dent_dash/presentation/clients/components/dialogs/payments_log_dialog.dart';
-import 'package:lambda_dent_dash/presentation/payments/components/dialogs/op_payments_log_dialog.dart';
-import 'package:lambda_dent_dash/presentation/payments/components/payments_log_table.dart';
-import 'package:lambda_dent_dash/presentation/payments/cubit/payments_cubit.dart';
-import 'package:lambda_dent_dash/presentation/payments/cubit/payments_state.dart';
+import 'package:lambda_dent_dash/view/clients/components/dialogs/payments_log_dialog.dart';
+import 'package:lambda_dent_dash/view/payments/components/payments_log_table.dart';
 
 class PaymentsLogPage extends StatelessWidget {
   const PaymentsLogPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PaymentsCubit, PaymentsState>(
-      builder: (context, state) {
-        return Scaffold(
-            body: Stack(
-          children: [
-            SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.0),
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    searchBar(context),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const PaymentsLogTable(),
-                  ],
+    return Scaffold(
+        body: Stack(
+      children: [
+        SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 20,
                 ),
-              ),
+                searchBar(context),
+                const SizedBox(
+                  height: 20,
+                ),
+                const PaymentsLogTable(),
+              ],
             ),
-            addconstantpayment(context, context.read<PaymentsCubit>()),
-          ],
-        ));
-      },
-    );
+          ),
+        ),
+        addconstantpayment(context),
+      ],
+    ));
   }
 
-  Positioned addconstantpayment(BuildContext context, PaymentsCubit cubit) {
+  Positioned addconstantpayment(BuildContext context) {
     return Positioned(
       bottom: 40,
       right: 45,
@@ -69,8 +61,7 @@ class PaymentsLogPage extends StatelessWidget {
           onTap: () {
             showDialog(
                 context: context,
-                builder: (context) =>
-                    OpPaymentsLogDialog(context, cubit: cubit));
+                builder: (context) => paymentLogDialog(context));
           },
           child: floatButton(
             icon: Icons.post_add_rounded,

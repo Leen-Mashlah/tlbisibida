@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 // Assuming this contains your Indicator widget
 import 'package:intl/intl.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
-import 'package:lambda_dent_dash/presentation/statistics/components/charts/indicator.dart'; // Import for number formatting
+import 'package:lambda_dent_dash/view/statistics/components/charts/indicator.dart'; // Import for number formatting
 // import 'dart:math'; // Import for random number generation (not needed for this approach)
 
 // Define a class to hold the data for each section
@@ -18,18 +18,26 @@ class ChartData {
 }
 
 class MonthlyOpExpensesChart extends StatefulWidget {
-  const MonthlyOpExpensesChart({super.key, required this.rawChartData});
-
-  final List<Map<String, dynamic>> rawChartData;
+  const MonthlyOpExpensesChart({super.key});
 
   @override
   State<StatefulWidget> createState() => MonthlyOpExpensesChartState();
 }
 
-class MonthlyOpExpensesChartState extends State<MonthlyOpExpensesChart> {
+class MonthlyOpExpensesChartState extends State {
   int touchedIndex = -1;
 
-  late List<Map<String, dynamic>> rawChartData;
+  // Define the raw data for the pie chart sections
+  final List<Map<String, dynamic>> rawChartData = [
+    {'text': 'مواصلات', 'value': 500000.0},
+    {'text': 'رواتب', 'value': 2000000.0},
+    {'text': 'كهرباء', 'value': 400000.0},
+    {'text': 'وقود', 'value': 600000.0},
+    {'text': 'آجار مكان', 'value': 2500000.0},
+    // {'text': 'ماء', 'value': 100000.0},
+    {'text': 'تدفئة', 'value': 1500000.0},
+    {'text': 'نت', 'value': 300000.0},
+  ];
 
   final List<Color> cyanColorRange = [
     cyan400,
@@ -41,67 +49,48 @@ class MonthlyOpExpensesChartState extends State<MonthlyOpExpensesChart> {
     const Color.fromARGB(255, 201, 118, 114),
   ];
 
-  late List<Map<String, dynamic>> sortedRawChartData;
+  // Sort the raw data by value in ascending order
+  late final List<Map<String, dynamic>> sortedRawChartData =
+      List.from(rawChartData)..sort((a, b) => b['value'].compareTo(a['value']));
 
-  late List<ChartData> chartData;
+  // Process sorted raw data to create ChartData objects with sequential gradient colors
+  late final List<ChartData> chartData =
+      List.generate(sortedRawChartData.length, (index) {
+    final data = sortedRawChartData[index];
 
-  @override
-  void initState() {
-    super.initState();
-    rawChartData = List.from(widget.rawChartData);
-    _process();
-  }
+    // Calculate the midpoint of the data list
+    final int midpoint = (sortedRawChartData.length / 2).ceil();
 
-  @override
-  void didUpdateWidget(covariant MonthlyOpExpensesChart oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.rawChartData != widget.rawChartData) {
-      rawChartData = List.from(widget.rawChartData);
-      _process();
-      touchedIndex = -1;
+    Color generatedColor;
+
+    if (index < midpoint) {
+      // For the first half, use the cyan gradient
+      // Calculate t relative to the first half's length
+      final double t = midpoint > 1 ? index / (midpoint - 1) : 0.0;
+      generatedColor = Color.lerp(
+        cyanColorRange.first,
+        cyanColorRange.last,
+        t,
+      )!;
+    } else {
+      // For the second half, use the pink gradient
+      // Calculate t relative to the second half's length
+      final double t = (sortedRawChartData.length - midpoint) > 1
+          ? (index - midpoint) / (sortedRawChartData.length - midpoint - 1)
+          : 0.0;
+      generatedColor = Color.lerp(
+        pinkColorRange.first,
+        pinkColorRange.last,
+        t,
+      )!;
     }
-  }
 
-  void _process() {
-    sortedRawChartData = List.from(rawChartData)
-      ..sort((a, b) => b['value'].compareTo(a['value']));
-    chartData = List.generate(sortedRawChartData.length, (index) {
-      final data = sortedRawChartData[index];
-
-      // Calculate the midpoint of the data list
-      final int midpoint = (sortedRawChartData.length / 2).ceil();
-
-      Color generatedColor;
-
-      if (index < midpoint) {
-        // For the first half, use the cyan gradient
-        // Calculate t relative to the first half's length
-        final double t = midpoint > 1 ? index / (midpoint - 1) : 0.0;
-        generatedColor = Color.lerp(
-          cyanColorRange.first,
-          cyanColorRange.last,
-          t,
-        )!;
-      } else {
-        // For the second half, use the pink gradient
-        // Calculate t relative to the second half's length
-        final double t = (sortedRawChartData.length - midpoint) > 1
-            ? (index - midpoint) / (sortedRawChartData.length - midpoint - 1)
-            : 0.0;
-        generatedColor = Color.lerp(
-          pinkColorRange.first,
-          pinkColorRange.last,
-          t,
-        )!;
-      }
-
-      return ChartData(
-        text: data['text'],
-        value: data['value'],
-        color: generatedColor, // Assign the uniquely generated color
-      );
-    });
-  }
+    return ChartData(
+      text: data['text'],
+      value: data['value'],
+      color: generatedColor, // Assign the uniquely generated color
+    );
+  });
 
   // Calculate the total value dynamically from the chartData list
   double get totalValue => chartData.fold(0, (sum, item) => sum + item.value);
@@ -167,6 +156,8 @@ class MonthlyOpExpensesChartState extends State<MonthlyOpExpensesChart> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: chartData.asMap().entries.map((entry) {
+                  // Iterate through the chartData to create an Indicator for each item
+                  int index = entry.key;
                   ChartData data = entry.value;
                   return Padding(
                     padding: const EdgeInsets.symmetric(
