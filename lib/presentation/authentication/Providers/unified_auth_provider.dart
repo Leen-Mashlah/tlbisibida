@@ -29,8 +29,11 @@ class UnifiedAuthProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthCubit(authrepo),
+    // Reuse a singleton AuthCubit from the service locator so state (e.g. registrydata)
+    // persists across the multi-step registration screens.
+    final authCubit = locator<AuthCubit>();
+    return BlocProvider.value(
+      value: authCubit,
       child: _buildPage(),
     );
   }

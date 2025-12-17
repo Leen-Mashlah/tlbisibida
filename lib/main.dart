@@ -17,6 +17,20 @@ void main() async {
   DioHelper.init();
   setupLocator();
 
+  bool rememberMe = CacheHelper.get('rememberme') ?? false;
+  print('rememberMe on startup: $rememberMe');
+
+  if (!rememberMe) {
+    // If they didn't want to be remembered, clear only the sensitive data
+    // We keep 'remember_me' as false so the checkbox remains unchecked
+    await CacheHelper.removeString('token');
+    print("Session cleared on startup.");
+    print("token after clearing: ${CacheHelper.get('token')}");
+  } else {
+    print("User remembered. Proceeding with token.");
+    print("token after remembering: ${CacheHelper.get('token')}");
+  }
+
   // Initialize navigation service after setup
   final navigationService = locator<NavigationService>();
   runApp(const MyApp());

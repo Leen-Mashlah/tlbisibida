@@ -1,12 +1,14 @@
-import 'package:dio/dio.dart';
 import 'package:lambda_dent_dash/data/models/auth/profile/db_lab_profile.dart';
 import 'package:lambda_dent_dash/domain/models/auth/profile/lab_profile.dart';
 import 'package:lambda_dent_dash/domain/repo/auth_repo.dart';
 import 'package:lambda_dent_dash/services/Cache/cache_helper.dart';
 import 'package:lambda_dent_dash/services/dio/dio.dart';
+import 'dart:convert';
 
 class DBAuthRepo extends AuthRepo {
-  Future<bool> postlogin(String email, String password, String guard) async {
+  @override
+  Future<bool> postlogin(
+      String email, String password, String guard, bool rememberme) async {
     try {
       final response = await DioHelper.postData(
         'login',
@@ -18,6 +20,9 @@ class DBAuthRepo extends AuthRepo {
         final tokenValue = 'Bearer ' + response.data['data']['access_token'];
         print('DBAuthRepo - Storing token: ${tokenValue.substring(0, 20)}...');
         // AWAIT this line to ensure the token is saved before you try to get it
+        await CacheHelper.setBool('rememberme', rememberme);
+        print('Stored rememberme: ${CacheHelper.get('rememberme')}');
+
         await CacheHelper.setString('token', tokenValue);
         final retrievedToken = CacheHelper.get('token');
         print(
@@ -54,16 +59,36 @@ class DBAuthRepo extends AuthRepo {
   @override
   Future<bool> postregister(Map<String, dynamic> data) async {
     try {
-      final value = await DioHelper.postData('register', data);
-      if (value != null && value.data['status'] == true) {
+      // Some server-side validation expects certain fields (like `lab_phone`) to be
+      // a JSON-encoded string. If the caller passed a List, encode it here so the
+      // backend receives a string and json_decode() calls there won't error.
+      if (data.containsKey('lab_phone') && data['lab_phone'] is List) {
+        data['lab_phone'] = jsonEncode(data['lab_phone']);
+      }
+
+      final value = await DioHelper.postData('register', data); // Normalize server `status` which may be boolean true or string 'success'
+      final resp = value?.data;
+      final statusRaw = resp != null ? resp['status'] : null;
+      final bool isSuccess = statusRaw == true ||
+          (statusRaw is String && statusRaw.toLowerCase() == 'success');
+
+      if (value != null && isSuccess) {
         // AWAIT this line to ensure the token is saved before you try to get it
-        await CacheHelper.setString(
-            'token', 'Bearer ' + value.data['data']['access_token']);
-        print("Register successful. Token: ${CacheHelper.get('token')}");
+        final accessToken = resp['data']?['access_token'];
+        if (accessToken != null) {
+          await CacheHelper.setString('token', 'Bearer ' + accessToken);
+          print("Register successful. Token: ${CacheHelper.get('token')}");
+        } else {
+          print('Register successful but no access_token returned.');
+        }
         return true;
       } else {
-        print('Register response: ${value?.data}');
-        print("Register failed: ${value?.data['message'] ?? 'Unknown error'}");
+        print('Register response: ${resp}');
+        final message = resp?['message'] ??
+            resp?['success_message'] ??
+            resp?['error'] ??
+            'Unknown error';
+        print("Register failed: ${message}");
         return false;
       }
     } catch (error) {

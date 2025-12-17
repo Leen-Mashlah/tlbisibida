@@ -9,20 +9,29 @@ class AuthCubit extends Cubit<AuthState> {
 
   bool showPassword = false;
 
+  bool rememberme = true;
+
   void togglePasswordVisibility() {
     if (isClosed) return;
     showPassword = !showPassword;
     emit(AuthPasswordVisibilityChanged());
   }
 
+  void toggleRememberMe() {
+    if (isClosed) return;
+    rememberme = !rememberme;
+    print("rememberme = ${rememberme}");
+    emit(AuthRememberMeStatusChanged());
+  }
+
   bool success = false;
-  String? lastErrorMessage;
+  String? lastErrorMessage = '';
 
   Future<void> login(String email, String password, String guard) async {
     if (isClosed) return;
     emit(AuthLoading());
     try {
-      success = await repo.postlogin(email, password, guard);
+      success = await repo.postlogin(email, password, guard, rememberme);
       if (success) {
         if (isClosed) return;
         emit(AuthLoggedIn());
@@ -107,11 +116,13 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> register() async {
     if (isClosed) return;
     emit(AuthLoading());
+    print('register data: ' + registrydata.toString());
     try {
       success = await repo.postregister(registrydata);
       if (success) {
         if (isClosed) return;
-        emit(AuthRegistered());
+        emit(AuthRegistered(
+            'تم إرسال الطلب بنجاح، الرجاء التحقق من صحة بريدك الالكتروني'));
         registrydata.clear();
       } else {
         lastErrorMessage = 'Registration failed.';

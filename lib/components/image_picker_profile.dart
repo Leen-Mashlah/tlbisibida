@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker_web/image_picker_web.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
@@ -18,25 +16,11 @@ Widget imagePickerPro(List<Image> images) {
                 }
               });
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.image_search,
               color: cyan500,
             ),
           ),
-          // const SizedBox(height: 10),
-          // Wrap(
-          //   direction: Axis.horizontal,
-          //   children: images.map((image) {
-          //     return Padding(
-          //       padding: const EdgeInsets.all(8.0),
-          //       child: SizedBox(
-          //         child: image,
-          //         width: 100,
-          //         height: 100,
-          //       ),
-          //     );
-          //   }).toList(),
-          // ),
         ],
       );
     },

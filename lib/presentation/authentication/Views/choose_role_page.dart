@@ -10,7 +10,7 @@ class ChooseRolePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage(
                   'assets/teeth_pattern.png',
@@ -48,8 +48,8 @@ class ChooseRolePage extends StatelessWidget {
                         color: const Color.fromARGB(127, 143, 229, 220),
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(color: cyan500, width: .5)),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20.0),
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 20.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [

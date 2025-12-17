@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:lambda_dent_dash/data/repo/db_auth_repo.dart';
+import 'package:lambda_dent_dash/presentation/authentication/Cubits/auth_cubit.dart';
 import 'package:lambda_dent_dash/data/repo/db_bills_repo.dart';
 import 'package:lambda_dent_dash/data/repo/db_cases_repo.dart';
 import 'package:lambda_dent_dash/data/repo/db_clients_repo.dart';
@@ -14,6 +15,8 @@ GetIt locator = GetIt.instance;
 void setupLocator() {
   locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton(() => DBAuthRepo());
+  // Provide a singleton AuthCubit so auth flow pages share the same instance
+  locator.registerLazySingleton(() => AuthCubit(locator<DBAuthRepo>()));
   locator.registerLazySingleton(() => DBEmailRepo());
   locator.registerLazySingleton(() => DBCasesRepo());
   locator.registerLazySingleton(() => DBClientsRepo());

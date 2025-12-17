@@ -47,7 +47,7 @@ class DioHelper {
     try {
       return await dio?.post(url, data: data, queryParameters: query);
     } on DioException catch (e) {
-      print("Dio Exception, Server response: " + e.response?.data);
+      print("Dio Exception, Server response: ${e.response?.data}");
     }
   }
 
@@ -62,7 +62,7 @@ class DioHelper {
     try {
       return await dio?.post(url, data: formData, queryParameters: query);
     } on DioException catch (e) {
-      print("Dio Exception, Server response: " + e.response?.data);
+      print("Dio Exception, Server response: ${e.response?.data}");
     }
   }
 

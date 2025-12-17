@@ -1,70 +1,68 @@
-// ignore_for_file: prefer_const_constructors
-
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:choice/choice.dart';
 import 'package:cupertino_calendar_picker/cupertino_calendar_picker.dart';
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lambda_dent_dash/components/animated_snack_bar.dart';
 import 'package:lambda_dent_dash/components/custom_text.dart';
-import 'package:lambda_dent_dash/components/default_textfield.dart';
-import 'package:lambda_dent_dash/components/image_picker.dart';
 import 'package:lambda_dent_dash/components/image_picker_profile.dart';
-
-//import 'package:google_fonts/google_fonts.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
+import 'package:lambda_dent_dash/services/navigation/locator.dart';
+import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
+import 'package:lambda_dent_dash/services/navigation/routes.dart';
 
 import '../Cubits/auth_cubit.dart';
 import '../Cubits/auth_state.dart';
 
 class Register2Page extends StatelessWidget {
-  // AdminLoginController adminAuth=Get.put(AdminLoginController());
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
-  TextEditingController startTime = TextEditingController();
-  TextEditingController endTime = TextEditingController();
-  // TextEditingController _addressController = TextEditingController();
+  Register2Page({super.key});
 
   final List _labtypes = ['تعويض', 'تقويم', 'بدلات'];
   final ValueNotifier<List<String>> _targetlabtype =
       ValueNotifier<List<String>>([
     'تعويض',
   ]);
-  final List _subsicribe = ['سنوي', 'نصف سنوي', 'ربع سنوي'];
-  final ValueNotifier<String> _subtype = ValueNotifier('سنوي');
-  // final List<String> provincesList = [
-  //   'دمشق',
-  //   'ريف دمشق',
-  //   'القنيطرة',
-  //   'درعا',
-  //   'السويداء',
-  //   'حمص',
-  //   'حماة',
-  //   'اللاذقية',
-  //   'طرطوس',
-  //   'حلب',
-  //   'إدلب',
-  //   'الرقة',
-  //   'دير الزور',
-  //   'الحسكة',
-  // ];
+
+  TextEditingController startTime = TextEditingController();
+  TextEditingController endTime = TextEditingController();
+
   List<Image> images = [];
 
-  // String selectedProvince = 'دمشق';
-
-  Register2Page({super.key});
+  final List<int> _subscription_length = [12, 6, 3];
+  final ValueNotifier<int> _subtype = ValueNotifier<int>(12);
 
   @override
   Widget build(BuildContext context) {
+    AuthCubit cubit = context.read<AuthCubit>();
+    if (startTime.text.isEmpty) {
+      const def = TimeOfDay(hour: 9, minute: 0);
+      final hh = def.hour.toString().padLeft(2, '0');
+      final mm = def.minute.toString().padLeft(2, '0');
+      startTime.text = '$hh:$mm';
+    }
+    if (endTime.text.isEmpty) {
+      const def = TimeOfDay(hour: 21, minute: 0);
+      final hh = def.hour.toString().padLeft(2, '0');
+      final mm = def.minute.toString().padLeft(2, '0');
+      endTime.text = '$hh:$mm';
+    }
     return Scaffold(
       body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is AuthError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-                backgroundColor: redmain,
-              ),
+            showSnackBar(
+              context,
+              message: state.message,
+              type: AnimatedSnackBarType.error,
             );
+          }
+          if (state is AuthRegistered) {
+            showSnackBar(
+              context,
+              message: state.message,
+              type: AnimatedSnackBarType.success,
+            );
+            locator<NavigationService>().navigateTo(emailVerificationPageRoute);
           }
         },
         builder: (context, state) {
@@ -94,14 +92,14 @@ class Register2Page extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(60),
                           topRight: Radius.circular(10),
                           bottomRight: Radius.circular(60),
                           bottomLeft: Radius.circular(10),
                         ),
-                        gradient: const LinearGradient(
+                        gradient: LinearGradient(
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                             colors: [
@@ -150,7 +148,7 @@ class Register2Page extends StatelessWidget {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                Text(
+                                const Text(
                                   'اختر الاختصاص',
                                   style:
                                       TextStyle(color: cyan500, fontSize: 16),
@@ -213,11 +211,11 @@ class Register2Page extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      Text('من'),
+                                      const Text('من'),
                                       CupertinoTimePickerButton(
                                         mainColor: cyan400,
                                         initialTime: const TimeOfDay(
-                                            hour: 9, minute: 41),
+                                            hour: 9, minute: 00),
                                         onTimeChanged: (time) {
                                           final hh = time.hour
                                               .toString()
@@ -228,11 +226,11 @@ class Register2Page extends StatelessWidget {
                                           startTime.text = '$hh:$mm';
                                         },
                                       ),
-                                      Text('إلى'),
+                                      const Text('إلى'),
                                       CupertinoTimePickerButton(
                                         mainColor: cyan400,
                                         initialTime: const TimeOfDay(
-                                            hour: 19, minute: 41),
+                                            hour: 19, minute: 00),
                                         onTimeChanged: (time) {
                                           final hh = time.hour
                                               .toString()
@@ -261,12 +259,12 @@ class Register2Page extends StatelessWidget {
                               child: Row(
                                 // mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'اختر صورة الملف الشخصي',
                                     style:
                                         TextStyle(color: cyan600, fontSize: 14),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 50,
                                   ),
                                   Padding(
@@ -286,31 +284,37 @@ class Register2Page extends StatelessWidget {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                Text(
+                                const Text(
                                   'اختر الاشتراك',
                                   style:
                                       TextStyle(color: cyan500, fontSize: 16),
                                 ),
                                 SizedBox(
                                   width: double.infinity,
-                                  child: InlineChoice<String>.single(
+                                  child: InlineChoice<int>.single(
                                       value: _subtype.value,
                                       onChanged: (obj) {
-                                        _subtype.value = obj!;
+                                        if (obj != null) _subtype.value = obj;
                                         // print(_targetlabtype.toString());
                                       },
                                       clearable: false,
-                                      itemCount: _subsicribe.length,
+                                      itemCount: _subscription_length.length,
                                       itemBuilder: (state, i) {
                                         return ChoiceChip(
                                           selectedColor: cyan200,
                                           side:
                                               const BorderSide(color: cyan300),
-                                          selected:
-                                              state.selected(_subsicribe[i]),
-                                          onSelected:
-                                              state.onSelected(_subsicribe[i]),
-                                          label: Text(_subsicribe[i]),
+                                          selected: state.selected(
+                                              _subscription_length[i]),
+                                          onSelected: state.onSelected(
+                                              _subscription_length[i]),
+                                          label: Text(
+                                            _subscription_length[i] == 12
+                                                ? 'سنوي'
+                                                : _subscription_length[i] == 6
+                                                    ? 'نصف سنوي'
+                                                    : 'ربع سنوي',
+                                          ),
                                         );
                                       },
                                       listBuilder: ChoiceList.createWrapped(
@@ -318,8 +322,6 @@ class Register2Page extends StatelessWidget {
                                           alignment: WrapAlignment.center,
                                           direction: Axis.horizontal,
                                           textDirection: TextDirection.rtl,
-                                          //spacing: 10,
-                                          //runSpacing: 10,
                                           padding: const EdgeInsets.symmetric(
                                             horizontal: 20,
                                             vertical: 5,
@@ -330,13 +332,16 @@ class Register2Page extends StatelessWidget {
                           ),
                           ElevatedButton(
                             onPressed: () {
-                              // onTap: adminAuth.isLoading.value
-                              //     ? null
-                              //     : ()async {
-                              //         adminAuth.admin_login(email.text, password.text);
-                              //          Get.offNamed("Employees");
-
-                              //       },
+                              final start = startTime.text.isEmpty
+                                  ? '09:00'
+                                  : startTime.text;
+                              final end =
+                                  endTime.text.isEmpty ? '21:00' : endTime.text;
+                              cubit.cookregistrysecond(
+                                  labType: _targetlabtype.value[0],
+                                  startHour: start,
+                                  endHour: end,
+                                  subscriptionDuration: _subtype.value);
                             },
                             style: ButtonStyle(
                                 shadowColor:
@@ -367,148 +372,20 @@ class Register2Page extends StatelessWidget {
                                         side: const BorderSide(color: cyan500),
                                         borderRadius:
                                             BorderRadius.circular(15)))),
-                            child: const CustomText(
-                                //  adminAuth.isLoading.value
-                                //     ? CircularProgressIndicator(
-                                //         valueColor:
-                                //             AlwaysStoppedAnimation<Color>(Colors.white))
-                                //
-                                text: "إنشاء حساب",
-                                color: cyan500),
+                            child: cubit.state is AuthLoading
+                                ? const CircularProgressIndicator(
+                                    valueColor:
+                                        AlwaysStoppedAnimation<Color>(cyan500))
+                                : cubit.state is AuthRegistered
+                                    ? const Icon(
+                                        Icons.check_rounded,
+                                        color: cyan500,
+                                      )
+                                    : const CustomText(
+                                        text: "إنشاء حساب", color: cyan500),
                           ),
                         ],
                       ),
-                      // const SizedBox(
-                      //   height: 15,
-                      // ),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   children: [
-                      //     Row(
-                      //       children: [
-                      //         Checkbox(value: true, onChanged: (value) {}),
-                      //         const CustomText(
-                      //           text: "Remeber Me",
-                      //         ),
-                      //       ],
-                      //     ),
-                      //     const CustomText(text: "Forgot password?", color: cyan400)
-                      //   ],
-                      // ),
-                      // const SizedBox(
-                      //   height: 15,
-                      // ),
-
-                      // Padding(
-                      //   padding: const EdgeInsets.only(right: 12),
-                      //   child: Image.asset(
-                      //     "assets/logo_v2.png",
-                      //     width: 250,
-                      //     height: 250,
-                      //   ),
-                      // ),
-                      // Expanded(child: Container()),
-                      // const SizedBox(
-                      //   height: 30,
-                      // ),
-                      // Row(
-                      //   children: [
-                      //     Text("Login",
-                      //         style: TextStyle(
-                      //             fontSize: 30, fontWeight: FontWeight.bold)),
-                      //   ],
-                      // ),
-                      // const SizedBox(
-                      //   height: 10,
-                      // ),
-                      // Row(
-                      //   children: [
-                      //     CustomText(
-                      //       text: "Welcome back to the admin panel.",
-                      //       color: Colors.grey[300],
-                      //     ),
-                      //   ],
-                      // ),
-                      // const SizedBox(
-                      //   height: 15,
-                      // ),
-                      // // TextField(
-                      // //   controller: email,
-                      // //   decoration: InputDecoration(
-                      // //       labelText: "Email",
-                      // //       hintText: "abc@domain.com",
-                      // //       border: OutlineInputBorder(
-                      // //           borderRadius: BorderRadius.circular(20))),
-                      // // ),
-                      // const SizedBox(
-                      //   height: 15,
-                      // ),
-                      // // TextField(
-                      // //   controller: password,
-                      // //   obscureText: true,
-                      // //   decoration: InputDecoration(
-                      // //       labelText: "Password",
-                      // //       hintText: "123",
-                      // //       border: OutlineInputBorder(
-                      // //           borderRadius: BorderRadius.circular(20))),
-                      // // ),
-                      // const SizedBox(
-                      //   height: 15,
-                      // ),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   children: [
-                      //     Row(
-                      //       children: [
-                      //         Checkbox(value: true, onChanged: (value) {}),
-                      //         const CustomText(
-                      //           text: "Remeber Me",
-                      //         ),
-                      //       ],
-                      //     ),
-                      //     const CustomText(text: "Forgot password?", color: cyan400)
-                      //   ],
-                      // ),
-                      // const SizedBox(
-                      //   height: 15,
-                      // ),
-                      // // InkWell(
-                      // //   // onTap: adminAuth.isLoading.value
-                      // //   //     ? null
-                      // //   //     : ()async {
-                      // //   //         adminAuth.admin_login(email.text, password.text);
-                      // //   //          Get.offNamed("Employees");
-
-                      // //   //       },
-                      // //   child: Container(
-                      // //     decoration: BoxDecoration(
-                      // //         color: cyan400,
-                      // //         borderRadius: BorderRadius.circular(20)),
-                      // //     alignment: Alignment.center,
-                      // //     // width: double.maxFinite,
-                      // //     padding: const EdgeInsets.symmetric(vertical: 16),
-                      // //     child:
-                      // //         //  adminAuth.isLoading.value
-                      // //         //     ? CircularProgressIndicator(
-                      // //         //         valueColor:
-                      // //         //             AlwaysStoppedAnimation<Color>(Colors.white))
-                      // //         //     :
-                      // //         const CustomText(
-                      // //       text: "Login",
-                      // //       color: Colors.white,
-                      // //     ),
-                      // //   ),
-                      // // ),
-                      // const SizedBox(
-                      //   height: 15,
-                      // ),
-                      // RichText(
-                      //     text: const TextSpan(children: [
-                      //   TextSpan(text: "Do not have admin credentials? "),
-                      //   TextSpan(
-                      //       text: "Request Credentials! ",
-                      //       style: TextStyle(color: cyan400))
-                      // ]))
                     ),
                   ),
                 ),

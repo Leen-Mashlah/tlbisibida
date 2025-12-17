@@ -10,7 +10,10 @@ class AuthLoggedIn extends AuthState {}
 
 class AuthLoggedOut extends AuthState {}
 
-class AuthRegistered extends AuthState {}
+class AuthRegistered extends AuthState {
+  final String message;
+  AuthRegistered(this.message);
+}
 
 class AuthRegisterCooking extends AuthState {}
 
@@ -20,6 +23,8 @@ class AuthProfileLoaded extends AuthState {
 }
 
 class AuthPasswordVisibilityChanged extends AuthState {}
+
+class AuthRememberMeStatusChanged extends AuthState {}
 
 class AuthError extends AuthState {
   final String message;
