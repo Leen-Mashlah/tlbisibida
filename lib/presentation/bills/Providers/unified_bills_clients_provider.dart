@@ -59,10 +59,10 @@ class UnifiedBillsClientsProvider extends StatelessWidget {
           clientId = args;
         }
         return ClientDetailsPage(
-          clientId: clientId,
-          initialName: name,
-          initialPhone: phone,
-          initialAddress: address,
+          // clientId: clientId,
+          // initialName: name,
+          // initialPhone: phone,
+          // initialAddress: address,
         );
     }
   }

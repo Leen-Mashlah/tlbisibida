@@ -3,13 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:info_popup/info_popup.dart';
 
 import 'package:lambda_dent_dash/constants/constants.dart';
-
-import 'package:lambda_dent_dash/view/clients/components/tables/client_bills_table.dart';
-import 'package:lambda_dent_dash/view/clients/components/tables/client_cases_table.dart';
-import 'package:lambda_dent_dash/view/clients/components/dialogs/payments_log_dialog.dart';
-import 'package:lambda_dent_dash/view/payments/components/dialogs/add_constant_payment_dialog.dart';
-import 'package:lottie/lottie.dart';
-// import 'package:lambda_dent_dash/view/clients/clients_table.dart';
+import 'package:lambda_dent_dash/presentation/clients/components/dialogs/payments_log_dialog.dart';
+import 'package:lambda_dent_dash/presentation/clients/components/tables/client_bills_table.dart';
+import 'package:lambda_dent_dash/presentation/clients/components/tables/client_cases_table.dart';
 
 class ClientDetailsPage extends StatelessWidget {
   ClientDetailsPage({super.key});
@@ -219,11 +215,11 @@ class ClientDetailsPage extends StatelessWidget {
           ),
         ),
         child: InkWell(
-            onTap: () {
-              showDialog(
-                  context: context,
-                  builder: (context) => AddConstantPaymentDialog());
-            },
+            // onTap: () {
+            //   showDialog(
+            //       context: context,
+            //       builder: (context) => AddConstantPaymentDialog());
+            // },
             child: TextButton(
                 onPressed: () {
                   showDialog(

@@ -2,7 +2,8 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
-import 'package:lambda_dent_dash/view/statistics/components/searchable_drop.dart';
+
+import '../searchable_drop.dart';
 
 class LineChartSample20 extends StatefulWidget {
   const LineChartSample20({super.key});

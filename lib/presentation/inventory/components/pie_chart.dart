@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
-import 'package:lambda_dent_dash/view/inventory/components/dialogs/cat_management_dialog.dart';
-import 'package:lambda_dent_dash/view/inventory/components/secondary_chart.dart';
+
+import 'dialogs/cat_management_dialog.dart';
+import 'secondary_chart.dart';
 
 class InteractiveDonutChart extends StatefulWidget {
   const InteractiveDonutChart({super.key});

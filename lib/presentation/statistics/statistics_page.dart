@@ -1,13 +1,15 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
-import 'package:lambda_dent_dash/view/statistics/components/charts/inventory_count_chart.dart';
-import 'package:lambda_dent_dash/view/statistics/components/charts/items_line_chart.dart';
-import 'package:lambda_dent_dash/view/statistics/components/charts/monthly_financial_chart.dart';
-import 'package:lambda_dent_dash/view/statistics/components/charts/monthly_op_expenses_chart.dart';
-import 'package:lambda_dent_dash/view/statistics/components/charts/monthly_teeth_type_chart.dart';
-import 'package:lambda_dent_dash/view/statistics/components/charts/revenue_per_client.dart';
-import 'package:lambda_dent_dash/view/statistics/components/taps.dart';
+
+import 'components/charts/inventory_count_chart.dart';
+import 'components/charts/items_line_chart.dart';
+import 'components/charts/monthly_financial_chart.dart';
+import 'components/charts/monthly_op_expenses_chart.dart';
+import 'components/charts/monthly_teeth_type_chart.dart';
+import 'components/charts/revenue_per_client.dart';
+import 'components/taps.dart';
+
 
 class StatisticsPage extends StatelessWidget {
   StatisticsPage({super.key});

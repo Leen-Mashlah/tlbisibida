@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
-import 'package:lambda_dent_dash/view/employees/components/bottom_action_buttons.dart';
-import 'package:lambda_dent_dash/view/employees/components/employee_log_table.dart';
+import 'package:lambda_dent_dash/presentation/employees/components/bottom_action_buttons.dart';
+import 'package:lambda_dent_dash/presentation/employees/components/employee_log_table.dart';
 
 class EmplyoeesPage extends StatelessWidget {
   const EmplyoeesPage({super.key});

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:lambda_dent_dash/components/custom_text.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
-import 'package:lambda_dent_dash/view/bills/components/bill_details_dialog.dart';
+import 'package:lambda_dent_dash/presentation/bills/components/bill_details_dialog.dart';
 
 /// Example without datasource
 // ignore: must_be_immutable
