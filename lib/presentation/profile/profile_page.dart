@@ -3,7 +3,8 @@ import 'package:lambda_dent_dash/components/default_button.dart';
 import 'package:lambda_dent_dash/services/navigation/locator.dart';
 import 'package:lambda_dent_dash/services/navigation/navigation_service.dart';
 import 'package:lambda_dent_dash/services/navigation/routes.dart';
-import 'package:lambda_dent_dash/view/profile/components/profile_card.dart';
+
+import 'components/profile_card.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});

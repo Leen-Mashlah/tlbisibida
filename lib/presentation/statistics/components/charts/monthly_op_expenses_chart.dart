@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 // Assuming this contains your Indicator widget
 import 'package:intl/intl.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
-import 'package:lambda_dent_dash/view/statistics/components/charts/indicator.dart'; // Import for number formatting
+
+import 'indicator.dart';
 // import 'dart:math'; // Import for random number generation (not needed for this approach)
 
 // Define a class to hold the data for each section

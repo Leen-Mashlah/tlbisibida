@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lambda_dent_dash/data/repo/db_auth_repo.dart';
+import 'package:lambda_dent_dash/presentation/authentication/Views/choose_role_page.dart';
 import 'package:lambda_dent_dash/services/navigation/locator.dart';
 import 'package:lambda_dent_dash/presentation/authentication/Cubits/auth_cubit.dart';
 import 'package:lambda_dent_dash/presentation/authentication/Views/authentication.dart';
@@ -9,6 +10,7 @@ import 'package:lambda_dent_dash/presentation/authentication/Views/register_2.da
 import 'package:lambda_dent_dash/presentation/profile/profile_page.dart';
 
 enum AuthPageType {
+  role,
   authentication,
   register,
   register2,
@@ -43,6 +45,8 @@ class UnifiedAuthProvider extends StatelessWidget {
         return Register2Page();
       case AuthPageType.profile:
         return const ProfilePage();
+      case AuthPageType.role:
+        return const ChooseRolePage();
     }
   }
 }

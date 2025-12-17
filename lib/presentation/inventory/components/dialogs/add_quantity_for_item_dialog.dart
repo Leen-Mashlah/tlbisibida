@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/components/default_button.dart';
 
 import 'package:lambda_dent_dash/constants/constants.dart';
-import 'package:lambda_dent_dash/view/inventory/components/item_edit_quantity_card.dart';
+
+import '../item_edit_quantity_card.dart';
 
 Dialog addQuantityForItem(BuildContext context) {
   return Dialog(

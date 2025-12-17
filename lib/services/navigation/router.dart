@@ -37,8 +37,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         return _getPageRoute(const HomePage(), homePageDisplayName);
       } else {
         return _getPageRoute(
-            const UnifiedAuthProvider(pageType: AuthPageType.authentication),
-            authenticationPageDisplayName);
+            const UnifiedAuthProvider(pageType: AuthPageType.role),
+            rolePageDisplayName);
       }
 
     //Auth
@@ -85,11 +85,14 @@ Route<dynamic> generateRoute(RouteSettings settings) {
             builder: (context) {
               final caseId = settings.arguments as int?;
               if (caseId != null) {
-                return CaseDetails(caseId: caseId);
+                return CaseDetails();
+                // return CaseDetails(caseId: caseId);
               } else {
-                return const Center(
-                  child: Text('خطأ: لم يتم تحديد معرف الحالة'),
-                );
+                return CaseDetails();
+
+                // return const Center(
+                //   child: Text('خطأ: لم يتم تحديد معرف الحالة'),
+                // );
               }
             },
           ),
@@ -116,24 +119,24 @@ Route<dynamic> generateRoute(RouteSettings settings) {
             builder: (context) {
               final args = settings.arguments;
               if (args is Map<String, dynamic>) {
-                final clientId = args['id'] as int?;
-                final name = args['name'] as String?;
-                final phone = args['phone']?.toString();
-                final address = args['address'] as String?;
+                // final clientId = args['id'] as int?;
+                // final name = args['name'] as String?;
+                // final phone = args['phone']?.toString();
+                // final address = args['address'] as String?;
 
                 return ClientDetailsPage(
-                  clientId: clientId,
-                  initialName: name,
-                  initialPhone: phone,
-                  initialAddress: address,
-                );
+                    // clientId: clientId,
+                    // initialName: name,
+                    // initialPhone: phone,
+                    // initialAddress: address,
+                    );
               } else {
                 return ClientDetailsPage(
-                  clientId: 0,
-                  initialName: 'Unknown',
-                  initialPhone: 'Unknown',
-                  initialAddress: 'Unknown',
-                );
+                    // clientId: 0,
+                    // initialName: 'Unknown',
+                    // initialPhone: 'Unknown',
+                    // initialAddress: 'Unknown',
+                    );
               }
             },
           ),

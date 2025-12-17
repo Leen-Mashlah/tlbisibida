@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:lambda_dent_dash/components/custom_text.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
-import 'package:lambda_dent_dash/view/clients/components/dialogs/confirm_add_dialog%20.dart';
+import 'package:lambda_dent_dash/presentation/clients/components/dialogs/confirm_add_dialog%20.dart';
 
 /// Example without datasource
 // ignore: must_be_immutable

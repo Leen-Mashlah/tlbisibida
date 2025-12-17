@@ -3,19 +3,27 @@ import 'package:lambda_dent_dash/constants/constants.dart';
 // import 'package:power_overload/Shared/constants.dart';
 
 Widget defaultTextField(
-    TextEditingController controller, BuildContext context, String label,
-    {Icon? prefixIcon,
-    int height = 1,
-    int maxLines = 1,
-    Widget? postfixicon,
-    bool obscureText = false,
-    String? Function(String?)? validator,
-    TextInputType? keyboardType,
-    Color inactiveColor = Colors.grey,
-    Color activeColor = cyan300,
-    bool autofocus = false,
-    Function(String)? onChanged}) {
+  TextEditingController controller,
+  BuildContext context,
+  String label, {
+  Icon? prefixIcon,
+  int height = 1,
+  int maxLines = 1,
+  Widget? postfixicon,
+  bool obscureText = false,
+  String? Function(String?)? validator,
+  TextInputType? keyboardType,
+  Color inactiveColor = Colors.grey,
+  Color activeColor = cyan300,
+  bool autofocus = false,
+  Function(String)? onChanged,
+  AutovalidateMode autovalidateMode = AutovalidateMode.onUserInteraction,
+  TextStyle? labelStyle,
+  BorderRadius? enabledBorderRadius,
+  BorderRadius? focusedBorderRadius,
+}) {
   return TextFormField(
+    autovalidateMode: autovalidateMode,
     autofocus: autofocus,
     minLines: height,
     maxLines: maxLines,
@@ -25,15 +33,20 @@ Widget defaultTextField(
     obscureText: obscureText,
     onChanged: onChanged,
     decoration: InputDecoration(
-      label: Text(label),
+      label: Text(label, style: labelStyle),
+      errorStyle: TextStyle(color: redmain),
       prefixIcon: prefixIcon,
       suffixIcon: postfixicon,
       enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: inactiveColor, width: 1.0),
-          borderRadius: standardBorderRadius),
+          borderRadius: enabledBorderRadius ?? standardBorderRadius),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(color: activeColor, width: 1.5),
-        borderRadius: standardBorderRadius,
+        borderRadius: focusedBorderRadius ?? standardBorderRadius,
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: redmain, width: 1.5),
+        borderRadius: focusedBorderRadius ?? standardBorderRadius,
       ),
       errorBorder: OutlineInputBorder(
         borderSide: const BorderSide(color: redmain, width: 2.0),

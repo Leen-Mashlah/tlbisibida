@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
-import 'package:lambda_dent_dash/view/inventory/components/dialogs/item_add_edit_dialog.dart';
-import 'package:lambda_dent_dash/view/inventory/components/dialogs/item_delete_dialog.dart';
+import 'package:lambda_dent_dash/presentation/inventory/components/dialogs/item_add_edit_dialog.dart';
+import 'package:lambda_dent_dash/presentation/inventory/components/dialogs/item_delete_dialog.dart';
 
 Row bottomActionButtons(BuildContext context) {
   return Row(

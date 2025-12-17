@@ -12,10 +12,14 @@ class AuthLoggedOut extends AuthState {}
 
 class AuthRegistered extends AuthState {}
 
+class AuthRegisterCooking extends AuthState {}
+
 class AuthProfileLoaded extends AuthState {
   final LabProfile profile;
   AuthProfileLoaded(this.profile);
 }
+
+class AuthPasswordVisibilityChanged extends AuthState {}
 
 class AuthError extends AuthState {
   final String message;

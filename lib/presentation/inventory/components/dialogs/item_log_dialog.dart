@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
-import 'package:lambda_dent_dash/view/inventory/components/item_log_table.dart';
+
+import '../item_log_table.dart';
 
 Dialog itemLogDialog(BuildContext context) {
   return Dialog(

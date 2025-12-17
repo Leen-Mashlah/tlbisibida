@@ -7,6 +7,14 @@ class AuthCubit extends Cubit<AuthState> {
   AuthCubit(this.repo) : super(AuthInitial());
   final AuthRepo repo;
 
+  bool showPassword = false;
+
+  void togglePasswordVisibility() {
+    if (isClosed) return;
+    showPassword = !showPassword;
+    emit(AuthPasswordVisibilityChanged());
+  }
+
   bool success = false;
   String? lastErrorMessage;
 
@@ -72,6 +80,7 @@ class AuthCubit extends Cubit<AuthState> {
       'lab_province': province,
       'lab_address': address,
     });
+    emit(AuthRegisterCooking());
     print('first cook: ' + registrydata.toString());
     if (!isClosed) emit(AuthInitial());
   }
@@ -134,4 +143,3 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 }
-

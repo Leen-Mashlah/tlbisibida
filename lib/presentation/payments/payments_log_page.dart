@@ -3,8 +3,10 @@ import 'package:info_popup/info_popup.dart';
 import 'package:lambda_dent_dash/components/searchbar.dart';
 import 'package:lambda_dent_dash/components/float_button.dart';
 import 'package:lambda_dent_dash/constants/constants.dart';
-import 'package:lambda_dent_dash/view/clients/components/dialogs/payments_log_dialog.dart';
-import 'package:lambda_dent_dash/view/payments/components/payments_log_table.dart';
+
+import '../clients/components/dialogs/payments_log_dialog.dart';
+import 'components/payments_log_table.dart';
+
 
 class PaymentsLogPage extends StatelessWidget {
   const PaymentsLogPage({super.key});
